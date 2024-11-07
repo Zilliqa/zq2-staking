@@ -27,11 +27,13 @@ export const dummyWallets: Array<DummyWallet> = [
     stakedZil: [
       {
         address: "0x1234567890234567890234567890234567890",
-        stakedZil: 1000
+        stakedZil: 1000,
+        rewardAcumulated: 10
       },
       {
         address: "0x96525678902345678902345678918278372212",
-        stakedZil: 60
+        stakedZil: 60,
+        rewardAcumulated: 50
       },
     ]
   },
@@ -42,11 +44,13 @@ export const dummyWallets: Array<DummyWallet> = [
     stakedZil: [
       {
         address: "0x96525678902345678902345678918278372212",
-        stakedZil: 123
+        stakedZil: 123,
+        rewardAcumulated: 40
       },
       {
         address: "0x82245678902345678902345678918278372382",
-        stakedZil: 999
+        stakedZil: 999,
+        rewardAcumulated: 0
       },
     ]
   },

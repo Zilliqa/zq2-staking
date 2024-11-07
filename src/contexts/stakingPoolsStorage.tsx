@@ -21,6 +21,7 @@ export interface StakingPoolData extends StakingPoolDefinition {
 export interface UserStakingPoolData {
   address: string;
   stakedZil: number;
+  rewardAcumulated: number;
 }
 
 const useStakingPoolsStorage = () => {
@@ -34,7 +35,7 @@ const useStakingPoolsStorage = () => {
       id: "pool1",
       name: "Pool 1",
       tvl: 3621786,
-      apy: 0.13,
+      apy: 0.135,
       description: "This is the first pool, it has a lot of TVL, you should stake here",
       address: "0x1234567890234567890234567890234567890",
       rewardFee: 0.1,
@@ -61,7 +62,8 @@ const useStakingPoolsStorage = () => {
 
   const [userStakingPoolsData, setUserStakingPoolsData] = useState<UserStakingPoolData[]>([]);
 
-  const [selectedStakingPool, setSelectedStakingPool] = useState<StakingPoolData | null>(null);
+  const [stakingPoolForView, setSelectedStakingPool] = useState<StakingPoolData | null>(null);
+  const [stakingPoolForStaking, setStakingPoolForStaking] = useState<StakingPoolData | null>(null);
 
   useEffect(() => {
     if (!walletAddress) {
@@ -72,15 +74,35 @@ const useStakingPoolsStorage = () => {
 
   }, [walletAddress]);
 
-  const selectStakingPool = (stakingPoolId: string) => {
+  const selectStakingPoolForView = (stakingPoolId: string | null) => {
+    if (!stakingPoolId) {
+      setSelectedStakingPool(null);
+      return;
+    }
+
     const selectedPool = availableStakingPoolsData.find((pool) => pool.id === stakingPoolId);
 
     if (selectedPool) {
-      if (selectedPool?.id === selectedStakingPool?.id) {
+      if (selectedPool?.id === stakingPoolForView?.id) {
         setSelectedStakingPool(null);
       } else {
         setSelectedStakingPool(selectedPool);
       }
+    }
+
+    setStakingPoolForStaking(null);
+  }
+
+  const selectStakingPoolForStaking = (stakingPoolId: string | null) => {
+    if (!stakingPoolId) {
+      setStakingPoolForStaking(null);
+      return;
+    }
+    
+    const selectedPool = availableStakingPoolsData.find((pool) => pool.id === stakingPoolId);
+
+    if (selectedPool) {
+        setStakingPoolForStaking(selectedPool);
     }
   }
 
@@ -93,10 +115,22 @@ const useStakingPoolsStorage = () => {
     }
   });
 
+  const combinedSelectedStakingPoolForViewData = stakingPoolForView ? {
+    stakingPool: stakingPoolForView,
+    userData: userStakingPoolsData.find((userPool) => userPool.address === stakingPoolForView.address),
+  } : null;
+
+  const combinedSelectedStakingPoolForStakingData = stakingPoolForStaking ? {
+    stakingPool: stakingPoolForStaking,
+    userData: userStakingPoolsData.find((userPool) => userPool.address === stakingPoolForStaking.address),
+  } : null;
+
   return {
     availableStakingPools: availableStakingPoolsData,
-    selectedStakingPool,
-    selectStakingPool,
+    stakingPoolForView: combinedSelectedStakingPoolForViewData,
+    stakingPoolForStaking: combinedSelectedStakingPoolForStakingData,
+    selectStakingPoolForView,
+    selectStakingPoolForStaking,
     combinedStakingPoolsData,
   };
 };
