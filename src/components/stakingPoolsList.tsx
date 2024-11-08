@@ -15,14 +15,20 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
     combinedStakingPoolsData,
     selectStakingPoolForView,
     selectStakingPoolForStaking,
+    selectStakingPoolForUnstaking,
     stakingPoolForView,
-    stakingPoolForStaking
+    stakingPoolForStaking,
+    stakingPoolForUnstaking,
   } = StakingPoolsStorage.useContainer();
 
+  const selectedStakingPool = stakingPoolForStaking || stakingPoolForUnstaking;
 
-  if (stakingPoolForStaking) {
+  if (selectedStakingPool) {
     return (
-      <div className="bg-black p-10 flex justify-between" onClick={() => selectStakingPoolForStaking(null)}>
+      <div className="bg-black p-10 flex justify-between" onClick={() => {
+        selectStakingPoolForStaking(null);
+        selectStakingPoolForUnstaking(null);
+      }}>
         <div className="flex items-center text-4xl">
           <LeftOutlined className="text-2xl mr-2" />
           <div>
@@ -34,10 +40,10 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
           <div className="grid">
             {/* align text to end */}
             <div className="text-xs text-right">
-              {stakingPoolForStaking.stakingPool.name}
+              {selectedStakingPool.stakingPool.name}
             </div>
             <div className="text-xs text-right">
-              {formatPercentage(stakingPoolForStaking.stakingPool.apy)}
+              {formatPercentage(selectedStakingPool.stakingPool.apy)}
             </div>
           </div>
           <div className="flex items-center ml-2">

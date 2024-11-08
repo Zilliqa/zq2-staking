@@ -6,6 +6,7 @@ import StakingPoolsList from '@/components/stakingPoolsList';
 import StakingCalculator from '@/components/stakingCalculator';
 import StakingPoolDetailsView from '@/components/stakingPoolDetailsView';
 import { useState } from 'react';
+import UnstakingCalculator from '@/components/unstakingCalculator';
 
 const HomePage = () => {
   const {
@@ -20,8 +21,11 @@ const HomePage = () => {
 
   const {
     stakingPoolForView,
+    stakingPoolForStaking,
+    stakingPoolForUnstaking,
     selectStakingPoolForStaking,
-    selectStakingPoolForView
+    selectStakingPoolForView,
+    selectStakingPoolForUnstaking,
   } = StakingPoolsStorage.useContainer();
 
   const [isDummyPopupOpen, setIsDummyPopupOpen] = useState(false);
@@ -71,15 +75,33 @@ const HomePage = () => {
         <div className="p-8">
           <StakingPoolsList />
           <StakingCalculator onStakeClick={onStake} />
+          <UnstakingCalculator onStakeClick={onUnstake} />
         </div>
 
         {/* Right column - only visible on desktop */}
         <div className="hidden md:grid h-full">
           <div>
             {
-              stakingPoolForView ? (
+              stakingPoolForStaking ? (
+                <div className="items-center justify-center text-center text-white p-8">
+                  <h1 className="text-4xl font-bold">Liquid Staking with Zilliqa</h1>
+                    <p className="mt-4 text-lg">
+                      Stake with {stakingPoolForStaking.stakingPool.name} and earn {stakingPoolForStaking.stakingPool.apy}% APY
+                    </p>
+                </div>
+              ) : stakingPoolForUnstaking ? (
+                <div className="items-center justify-center text-center text-white p-8">
+                  <h1 className="text-4xl font-bold">Liquid Staking with Zilliqa</h1>
+                    <p className="mt-4 text-lg">
+                      Unstake your stZIL from {stakingPoolForUnstaking.stakingPool.name} and get your ZIL back
+                    </p>
+                </div>
+              ) : stakingPoolForView ? (
                 <StakingPoolDetailsView
-                  selectStakingPoolForStaking={selectStakingPoolForStaking}
+                  selectStakingPoolForStaking={(id) => {
+                    selectStakingPoolForStaking(id);
+                    selectStakingPoolForUnstaking(null);
+                  }}
                   stakingPoolData={stakingPoolForView.stakingPool}
                 />
               ) : (
@@ -96,47 +118,57 @@ const HomePage = () => {
           {/* User data section */}
           <div className='mt-auto'>
             {
-              isWalletConnected ? <div className='p-8'>
-                {
-                  stakingPoolForView && (
-                    <div className='flex justify-between my-5 gap-3'>
-                      <Button
-                        type="default"
-                        size="large"
-                        className='btn-primary-white text-3xl w-full'
-                        disabled={(stakingPoolForView.userData?.stakedZil || 0) === 0}
-                        onClick={onUnstake}
-                      >
-                        UNSTAKE <ArrowRightOutlined className='ml-2' />
-                      </Button>
+              isWalletConnected ? (
+                <div className='p-8'>
+                  {
+                    stakingPoolForView && !stakingPoolForStaking && !stakingPoolForUnstaking && (
+                      <div className='flex justify-between my-5 gap-3'>
+                        <Button
+                          type="default"
+                          size="large"
+                          className='btn-primary-white text-3xl w-full'
+                          disabled={(stakingPoolForView.userData?.stakedZil || 0) === 0}
+                          onClick={() => {
+                            selectStakingPoolForStaking(null);
+                            selectStakingPoolForUnstaking(stakingPoolForView.stakingPool.id);
+                          }}
+                        >
+                          UNSTAKE <ArrowRightOutlined className='ml-2' />
+                        </Button>
 
+                        <Button
+                          type="default"
+                          size="large"
+                          className='btn-primary-cyan text-3xl w-full'
+                          disabled={(stakingPoolForView.userData?.rewardAcumulated || 0) === 0}
+                          onClick={() => onClaimRewards(stakingPoolForView.userData?.rewardAcumulated || 0)}
+                        >
+                          CLAIM <ArrowRightOutlined className='ml-2' />
+                        </Button>
+                      </div>
+                    )
+                  }
+
+                  <div className='border-2 border-black p-2'>
+                    <div className='flex justify-between'>
+                      <p className="text-lg">Wallet Address: {walletAddress}</p>
                       <Button
-                        type="default"
-                        size="large"
-                        className='btn-primary-cyan text-3xl w-full'
-                        disabled={(stakingPoolForView.userData?.rewardAcumulated || 0) === 0}
-                        onClick={() => onClaimRewards(stakingPoolForView.userData?.rewardAcumulated || 0)}
+                        onClick={disconnectWallet}
+                        className='btn-custom-white-text'
                       >
-                        CLAIM <ArrowRightOutlined className='ml-2' />
+                          Disconnect
                       </Button>
                     </div>
-                  )
-                }
-
-                <div className='border-2 border-black p-2'>
-                  <div className='flex justify-between'>
-                    <p className="text-lg">Wallet Address: {walletAddress}</p>
-                    <Button onClick={disconnectWallet}>Disconnect</Button>
-                  </div>
-                  <div className='flex justify-between'>
-                    <p className="text-lg">{zilAvailable} ZIL</p>
-                    <p>{zilAvailable * 0.06}$</p>
-                  </div>
-                  <div>
-                    <p className="mt-4 text-lg">{stakedZilAvailable} stZIL</p>
+                    <div className='flex justify-between'>
+                      <p className="text-lg">{zilAvailable} ZIL</p>
+                      <p>{zilAvailable * 0.06}$</p>
+                    </div>
+                    <div>
+                      <p className="mt-4 text-lg">{stakedZilAvailable} stZIL</p>
+                    </div>
                   </div>
                 </div>
-              </div> : (
+              ) : (
                 <div className='flex flex-col items-center my-32'>
                   <Button
                     type="primary"
@@ -153,6 +185,7 @@ const HomePage = () => {
           </div>
         </div>
 
+        {/* Mobile only */}
         {
           stakingPoolForView && (
               <div className='absolute block md:hidden top-0 left-0 z-25 bg-black pt-[4em] h-full'>
@@ -165,14 +198,45 @@ const HomePage = () => {
                     selectStakingPoolForStaking(stakingPoolId);
                   }}
                   stakingPoolData={stakingPoolForView.stakingPool}
+                  userStakingPoolData={stakingPoolForView.userData}
                 />
+                <div className='fixed bottom-0 left-0 flex md:hidden justify-between w-full gap-3'>
+                  <Button
+                    type="default"
+                    size="large"
+                    className='btn-primary-white text-3xl w-full'
+                    onClick={() => {
+                      selectStakingPoolForView(null);
+                      selectStakingPoolForUnstaking(stakingPoolForView.stakingPool.id);
+                    }}
+                    disabled={(stakingPoolForView?.userData?.stakedZil || 0) === 0}
+                  >
+                    UNSTAKE <ArrowRightOutlined className='ml-2' />
+                  </Button>
+
+                  <Button
+                    type="default"
+                    size="large"
+                    className='btn-primary-cyan text-3xl w-full'
+                    onClick={() => onClaimRewards(stakingPoolForView.userData?.rewardAcumulated || 0)}
+                    disabled={(stakingPoolForView?.userData?.rewardAcumulated || 0) === 0}
+                  >
+                    CLAIM <ArrowRightOutlined className='ml-2' />
+                  </Button>
+                </div>
               </div>
           )
         }
 
       </div>
 
-      <Modal title="User Wallet Interaction" open={isDummyPopupOpen} onOk={() => setIsDummyPopupOpen(false)} onCancel={() => setIsDummyPopupOpen(false)}>
+      <Modal
+        title="User Wallet Interaction"
+        open={isDummyPopupOpen}
+        okButtonProps={{ className: 'btn-primary-cyan' }}
+        onOk={() => setIsDummyPopupOpen(false)}
+        onCancel={() => setIsDummyPopupOpen(false)}
+      >
         <div>
           {dummyPopupContent}
         </div>

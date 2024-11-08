@@ -4,62 +4,61 @@ import { Button } from "antd";
 import { WalletConnector } from "@/contexts/walletConnector";
 import { formatPercentage } from "@/misc/formatting";
 
-interface StakingCalculatorProps {
+interface UnstakingCalculatorProps {
   onStakeClick: (zilToStake: number) => void;
 }
 
-const StakingCalculator: React.FC<StakingCalculatorProps> = ({
+const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
   onStakeClick
 }) => {
   const {
-    zilAvailable,
     connectWallet,
     isWalletConnecting,
     isWalletConnected
   } = WalletConnector.useContainer();
 
   const {
-    stakingPoolForStaking
+    stakingPoolForUnstaking
   } = StakingPoolsStorage.useContainer();
 
-  const [zilToStake, setZilToStake] = useState(0);
+  const [zilToUnstake, setZilToUnstake] = useState(0);
+
 
   useEffect(() => {
-    setZilToStake(0);
-  }, [stakingPoolForStaking])
+    setZilToUnstake(0);
+  }, [stakingPoolForUnstaking])
 
-  return stakingPoolForStaking && (
+  return stakingPoolForUnstaking && (
     <div className="bg-black p-10">
       <div className="text-4xl pb-5">
-        Staking calculator
+        Unstaking calculator
       </div>
 
-      
       <div>
         <div className="flex justify-between my-3 p-5 border-2 bg-[#20202580] bg-opacity-50">
           <div className='grid text-3xl justify-center my-auto'>
             <div>
-              {zilToStake} ZIL
+              {zilToUnstake} stZIL
             </div>
             <div className='text-xs'>
-              ~{zilToStake} stZIL + {formatPercentage(stakingPoolForStaking!.stakingPool.apy)} APY
+              {zilToUnstake} ZIL
             </div>
             
           </div>
           <div className='grid'>
-            <Button className='mb-3 btn-primary-white' onClick={() => setZilToStake(zilAvailable)} >MAX</Button>
-            <Button className="btn-primary-white" onClick={() => setZilToStake(0)}>MIN</Button>
+            <Button className='mb-3 btn-primary-white' onClick={() => setZilToUnstake(stakingPoolForUnstaking.userData?.stakedZil || 0)} >MAX</Button>
+            <Button className="btn-primary-white" onClick={() => setZilToUnstake(0)}>MIN</Button>
           </div>
         </div>
 
         <div className="flex justify-between my-3">
           <p className="text-lg font-bold">You will receive</p>
-          <p>Reward fee {formatPercentage(stakingPoolForStaking!.stakingPool.rewardFee)}</p>
+          <p>Reward fee {formatPercentage(stakingPoolForUnstaking!.stakingPool.rewardFee)}</p>
         </div>
         
         <div className="flex justify-between my-3">
-          <p className="text-gray-500">Max transaction cost {zilToStake ? '0.01' : '0' }$</p>
-          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForStaking!.stakingPool.apy)}</p>
+          <p className="text-gray-500">Max transaction cost {zilToUnstake ? '0.01' : '0' }$</p>
+          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForUnstaking!.stakingPool.apy)}</p>
         </div>
 
         {
@@ -80,10 +79,10 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
                 type="default"
                 size="large"
                 className='w-full text-3xl btn-primary-white'
-                disabled={zilToStake === 0}
-                onClick={() => onStakeClick(zilToStake)}
+                disabled={zilToUnstake === 0}
+                onClick={() => onStakeClick(zilToUnstake)}
               >
-                STAKE
+                UNSTAKE
               </Button>
           </div>
           )
@@ -93,4 +92,4 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
   )
 }
 
-export default StakingCalculator;
+export default UnstakingCalculator;

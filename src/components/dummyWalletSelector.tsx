@@ -21,7 +21,14 @@ const DummyWalletSelector: React.FC = () => {
 
   return (
     <>
-      <Modal title="Basic Modal" open={isDummyWalletSelectorOpen} okText="Connect" onOk={() => setDummyWallet(dummyWallets[walletIndex])} onCancel={disconnectWallet}>
+      <Modal
+        title="Basic Modal"
+        open={isDummyWalletSelectorOpen}
+        okText="Connect"
+        onOk={() => setDummyWallet(dummyWallets[walletIndex])}
+        onCancel={disconnectWallet}
+        okButtonProps={{ className: 'btn-primary-cyan' }}
+      >
         <Radio.Group onChange={selectedWalletChanged} value={walletIndex}>
         <Space direction="vertical">
           {

@@ -50,26 +50,6 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       <div className="block md:hidden">
           {earnButton}
       </div>
-
-      <div className='fixed bottom-0 left-0 flex md:hidden justify-between w-full gap-3'>
-        <Button
-          type="default"
-          size="large"
-          className='btn-primary-white text-3xl w-full'
-          disabled={(userStakingPoolData?.stakedZil || 0) === 0}
-        >
-          UNSTAKE <ArrowRightOutlined className='ml-2' />
-        </Button>
-
-        <Button
-          type="default"
-          size="large"
-          className='btn-primary-cyan text-3xl w-full'
-          disabled={(userStakingPoolData?.rewardAcumulated || 0) === 0}
-        >
-          CLAIM <ArrowRightOutlined className='ml-2' />
-        </Button>
-      </div>
     </div>
   )
 

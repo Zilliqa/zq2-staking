@@ -63,7 +63,9 @@ const useStakingPoolsStorage = () => {
   const [userStakingPoolsData, setUserStakingPoolsData] = useState<UserStakingPoolData[]>([]);
 
   const [stakingPoolForView, setSelectedStakingPool] = useState<StakingPoolData | null>(null);
+
   const [stakingPoolForStaking, setStakingPoolForStaking] = useState<StakingPoolData | null>(null);
+  const [stakingPoolForUnstaking, setStakingPoolForUnstaking] = useState<StakingPoolData | null>(null);
 
   useEffect(() => {
     if (!walletAddress) {
@@ -106,6 +108,19 @@ const useStakingPoolsStorage = () => {
     }
   }
 
+  const selectStakingPoolForUnstaking = (stakingPoolId: string | null) => {
+    if (!stakingPoolId) {
+      setStakingPoolForUnstaking(null);
+      return;
+    }
+    
+    const selectedPool = availableStakingPoolsData.find((pool) => pool.id === stakingPoolId);
+
+    if (selectedPool) {
+        setStakingPoolForUnstaking(selectedPool);
+    }
+  }
+
   const combinedStakingPoolsData = availableStakingPoolsData.map((stakingPool) => {
     const userStakingPoolData = userStakingPoolsData.find((userPool) => userPool.address === stakingPool.address);
 
@@ -125,12 +140,19 @@ const useStakingPoolsStorage = () => {
     userData: userStakingPoolsData.find((userPool) => userPool.address === stakingPoolForStaking.address),
   } : null;
 
+  const combinedSelectedStakingPoolForUnstakingData = stakingPoolForUnstaking ? {
+    stakingPool: stakingPoolForUnstaking,
+    userData: userStakingPoolsData.find((userPool) => userPool.address === stakingPoolForUnstaking.address),
+  } : null;
+
   return {
     availableStakingPools: availableStakingPoolsData,
     stakingPoolForView: combinedSelectedStakingPoolForViewData,
     stakingPoolForStaking: combinedSelectedStakingPoolForStakingData,
+    stakingPoolForUnstaking: combinedSelectedStakingPoolForUnstakingData,
     selectStakingPoolForView,
     selectStakingPoolForStaking,
+    selectStakingPoolForUnstaking,
     combinedStakingPoolsData,
   };
 };
