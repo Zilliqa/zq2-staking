@@ -4,24 +4,33 @@ import { useEffect, useState } from "react";
 import { createContainer } from "./context";
 import { WalletConnector } from "./walletConnector";
 import { dummyWallets } from "./dummyWalletsData";
+import { DateTime } from "luxon";
 
 export interface StakingPoolDefinition {
   id: string;
   name: string;
-  description: string;
   address: string;
+  tokenSymbol: string;
 }
 
 export interface StakingPoolData extends StakingPoolDefinition {
   tvl: number;
   apy: number;
-  rewardFee: number;
+  commission: number;
+  votingPower: number;
+  zilToTokenRate: number;
 }
 
 export interface UserStakingPoolData {
   address: string;
   stakedZil: number;
   rewardAcumulated: number;
+}
+
+export interface UserUnstakingPoolData {
+  address: string;
+  unstakedZil: number;
+  availableAt: DateTime;
 }
 
 const useStakingPoolsStorage = () => {
@@ -33,34 +42,41 @@ const useStakingPoolsStorage = () => {
   const [availableStakingPoolsData, setAvailableStakingPoolsData] = useState<StakingPoolData[]>([
     {
       id: "pool1",
-      name: "Pool 1",
+      name: "Avely",
       tvl: 3621786,
       apy: 0.135,
-      description: "This is the first pool, it has a lot of TVL, you should stake here",
       address: "0x1234567890234567890234567890234567890",
-      rewardFee: 0.1,
+      commission: 0.1,
+      tokenSymbol: "avZIL",
+      votingPower: 0.3,
+      zilToTokenRate: 1.2,
     },
     {
       id: "pool2",
-      name: "Pool 2",
+      name: "Plunderswap",
       tvl: 0,
       apy: 0.21,
-      description: "This is the second pool, it has no TVL, you should not stake here",
       address: "0x82245678902345678902345678918278372382",
-      rewardFee: 0.011,
+      commission: 0.011,
+      tokenSymbol: "plZIL",
+      votingPower: 0.5,
+      zilToTokenRate: 1.1,
     },
     {
       id: "pool3",
-      name: "Pool 3",
-      tvl: 98173829347194,
+      name: "IgniteDao",
+      tvl: 98173829,
       apy: 1.1,
-      description: "This is the third pool, if it works you will be rich",
       address: "0x96525678902345678902345678918278372212",
-      rewardFee: 0.05,
+      commission: 0.05,
+      tokenSymbol: "igZIL",
+      votingPower: 0.2,
+      zilToTokenRate: 1.3,
     },
   ]);
 
   const [userStakingPoolsData, setUserStakingPoolsData] = useState<UserStakingPoolData[]>([]);
+  const [userUnstakesData, setUserUnstakesData] = useState<UserUnstakingPoolData[]>([]);
 
   const [stakingPoolForView, setSelectedStakingPool] = useState<StakingPoolData | null>(null);
 
@@ -69,10 +85,16 @@ const useStakingPoolsStorage = () => {
 
   useEffect(() => {
     if (!walletAddress) {
+      setUserStakingPoolsData([]);
       return
     }
 
-    setUserStakingPoolsData(dummyWallets.find((wallet) => wallet.address === walletAddress)?.stakedZil || []);
+    const dummyWallet = dummyWallets.find((wallet) => wallet.address === walletAddress);
+
+    console.log({dummyWallet})
+
+    setUserStakingPoolsData(dummyWallet?.stakedZil || []);
+    setUserUnstakesData(dummyWallet?.unstakedZil || []);
 
   }, [walletAddress]);
 
@@ -128,7 +150,9 @@ const useStakingPoolsStorage = () => {
       stakingPool,
       userData: userStakingPoolData,
     }
-  });
+  }).toSorted(
+    (a, b) => (b.userData?.stakedZil) || 0 - (a.userData?.stakedZil || 0)
+  );
 
   const combinedSelectedStakingPoolForViewData = stakingPoolForView ? {
     stakingPool: stakingPoolForView,
@@ -145,6 +169,16 @@ const useStakingPoolsStorage = () => {
     userData: userStakingPoolsData.find((userPool) => userPool.address === stakingPoolForUnstaking.address),
   } : null;
 
+  const combinedUserUnstakesData = userUnstakesData?.map(
+    (unstakeInfo) => ({
+      unstakeInfo,
+      stakingPool: availableStakingPoolsData.find((pool) => pool.address === unstakeInfo.address)!,
+    })
+  ) || [];
+
+  const availableForUnstaking = combinedUserUnstakesData.filter((unstakeData) => unstakeData.unstakeInfo.availableAt <= DateTime.now());
+  const pendingUnstaking = combinedUserUnstakesData.filter((unstakeData) => unstakeData.unstakeInfo.availableAt > DateTime.now());
+
   return {
     availableStakingPools: availableStakingPoolsData,
     stakingPoolForView: combinedSelectedStakingPoolForViewData,
@@ -154,6 +188,9 @@ const useStakingPoolsStorage = () => {
     selectStakingPoolForStaking,
     selectStakingPoolForUnstaking,
     combinedStakingPoolsData,
+    userUnstakesData,
+    availableForUnstaking,
+    pendingUnstaking,
   };
 };
 

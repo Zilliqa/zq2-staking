@@ -18,7 +18,7 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
   } = WalletConnector.useContainer();
 
   const {
-    stakingPoolForUnstaking
+    stakingPoolForView
   } = StakingPoolsStorage.useContainer();
 
   const [zilToUnstake, setZilToUnstake] = useState(0);
@@ -26,14 +26,10 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
 
   useEffect(() => {
     setZilToUnstake(0);
-  }, [stakingPoolForUnstaking])
+  }, [stakingPoolForView])
 
-  return stakingPoolForUnstaking && (
-    <div className="bg-black p-10">
-      <div className="text-4xl pb-5">
-        Unstaking calculator
-      </div>
-
+  return stakingPoolForView && (
+    <div className="bg-black">
       <div>
         <div className="flex justify-between my-3 p-5 border-2 bg-[#20202580] bg-opacity-50">
           <div className='grid text-3xl justify-center my-auto'>
@@ -46,19 +42,19 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
             
           </div>
           <div className='grid'>
-            <Button className='mb-3 btn-primary-white' onClick={() => setZilToUnstake(stakingPoolForUnstaking.userData?.stakedZil || 0)} >MAX</Button>
+            <Button className='mb-3 btn-primary-white' onClick={() => setZilToUnstake(stakingPoolForView.userData?.stakedZil || 0)} >MAX</Button>
             <Button className="btn-primary-white" onClick={() => setZilToUnstake(0)}>MIN</Button>
           </div>
         </div>
 
         <div className="flex justify-between my-3">
           <p className="text-lg font-bold">You will receive</p>
-          <p>Reward fee {formatPercentage(stakingPoolForUnstaking!.stakingPool.rewardFee)}</p>
+          <p>Reward fee {formatPercentage(stakingPoolForView!.stakingPool.commission)}</p>
         </div>
         
         <div className="flex justify-between my-3">
           <p className="text-gray-500">Max transaction cost {zilToUnstake ? '0.01' : '0' }$</p>
-          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForUnstaking!.stakingPool.apy)}</p>
+          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForView!.stakingPool.apy)}</p>
         </div>
 
         {

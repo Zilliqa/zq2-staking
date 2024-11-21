@@ -34,14 +34,10 @@ body {
 
 @layer components {
   .btn-primary-white {
-    @apply !py-5 px-5 !bg-white !text-black font-semibold rounded-none !border-0;
+    @apply !py-5 px-5 !bg-white !text-black font-semibold rounded-none !border-0 cursor-pointer;
     
     &:hover {
       @apply !bg-[#00D0C6];
-    }
-
-    &:hover {
-      @apply cursor-pointer;
     }
 
     &:disabled {
@@ -50,14 +46,10 @@ body {
   }
 
   .btn-primary-cyan {
-    @apply py-2 px-5 !bg-[#00D0C6] !text-black font-semibold rounded-none border-0;
+    @apply py-2 px-5 !bg-[#00D0C6] !text-black font-semibold rounded-none border-0 cursor-pointer;
     
     &:hover {
       @apply !bg-white;
-    }
-
-    &:hover {
-      @apply cursor-pointer;
     }
 
     &:disabled {
@@ -66,14 +58,10 @@ body {
   }
 
   .btn-custom-white-text {
-    @apply py-2 px-5 !bg-transparent !text-white rounded-none border-0;
+    @apply py-2 px-5 !bg-transparent !text-white rounded-none border-0 cursor-pointer;
     
     &:hover {
       @apply !bg-white;
-    }
-
-    &:hover {
-      @apply cursor-pointer;
     }
 
     &:disabled {

@@ -1,267 +1,183 @@
 import { Button, Modal } from 'antd';
-import { UserOutlined, MenuOutlined, SearchOutlined, BellOutlined, RightOutlined, ArrowRightOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { RightOutlined, ArrowRightOutlined, CloseCircleOutlined, WalletOutlined, LeftOutlined } from '@ant-design/icons';
 import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
 import { WalletConnector } from '@/contexts/walletConnector';
 import StakingPoolsList from '@/components/stakingPoolsList';
-import StakingCalculator from '@/components/stakingCalculator';
 import StakingPoolDetailsView from '@/components/stakingPoolDetailsView';
+import LoginView from '@/components/loginView';
+import WithdrawZilView from '@/components/withdrawZilView';
+import { formatAddress } from '@/misc/formatting';
 import { useState } from 'react';
-import UnstakingCalculator from '@/components/unstakingCalculator';
 
 const HomePage = () => {
   const {
     connectWallet,
     isWalletConnected,
     isWalletConnecting,
-    stakedZilAvailable,
     zilAvailable,
     walletAddress,
     disconnectWallet,
+    dummyWalletPopupContent,
+    isDummyWalletPopupOpen,
+    setDummyWalletPopupContent,
+    setIsDummyWalletPopupOpen
   } = WalletConnector.useContainer();
 
   const {
     stakingPoolForView,
-    stakingPoolForStaking,
-    stakingPoolForUnstaking,
     selectStakingPoolForStaking,
     selectStakingPoolForView,
-    selectStakingPoolForUnstaking,
+    availableForUnstaking,
+    pendingUnstaking,
   } = StakingPoolsStorage.useContainer();
 
-  const [isDummyPopupOpen, setIsDummyPopupOpen] = useState(false);
-  const [dummyPopupContent, setDummyPopupContent] = useState<string | null>(null);
-
-  const onStake = (zilToStake: number) => {
-    setDummyPopupContent(`Now User gonna approve the wallet transaction for staking ${zilToStake} ZIL`);
-    setIsDummyPopupOpen(true);
-  }
-
-  const onUnstake = () => {
-    setDummyPopupContent(`Now User gonna approve the wallet transaction for unstaking`);
-    setIsDummyPopupOpen(true);
-  }
-
   const onClaimRewards = (reward: number) => {
-    setDummyPopupContent(`Now User gonna approve the wallet transaction for claiming ${reward} rewards`);
-    setIsDummyPopupOpen(true);
+    setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for claiming ${reward} rewards`);
+    setIsDummyWalletPopupOpen(true);
   }
+
+  const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false);
+
+  const mobileOverlayView = (children: React.ReactNode) => (
+    <div className='absolute md:hidden top-0 left-0 z-25 h-full w-full bg-black w-full p-4 pt-[5em]'>
+      {children}
+    </div>
+  )
 
   return (
-    <div className="h-screen w-screen relative bg-[url('https://s3-alpha-sig.figma.com/img/acca/f051/9680833a8fdb37b0832ba5eaa00687e3?Expires=1731888000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=SifuNWtD60CUj-Z2RX3XVGB2XbymEPkmFrbgdnjwkEL2dn6BQjqOH43KjAAIf905WUJtCp4HWTU1rIFrG04uO7t2A8o2-Esx4bMXo5aMZdJtaDwaEx~xuKEQcxdBGhry7~8IfSqs~AdsIYpvs~2MeuLE7dv4hr1jcU6G2r3LKFrW9DMDUc6H4Umkz3yxFuXyl0HABYDhBHEzUhRccwsHczrfIG9TMQKp3hDK2leHrRgf0q7I73yjqUYxJNw97j4UpCGgDjNII1jNMe9KeY5A8xTSkXkB2GvbNXn-A~1V9iKuugWYvCKogUx6GD2OeE5DoxOZpkd-ehlJnbK3~5oLTg__')] bg-center bg-no-repeat bg-cover bg-origin-content">
+    <div className="h-screen w-screen relative bg-[url('https://s3-alpha-sig.figma.com/img/2094/27b4/0031fd7fbc83ae7020637ddc7c563ea4?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Kqd3RVzZ5qHkIJoS4q45mvtbfLBVz3iJA879jwkqn3PydxJUjtSd9LX-FGW~Zkey9mCDOO-ZiX4fSGl2O-Ur9Ck3qL-jNorGoxxzhvN8MrBCdMBis2gyc11glVLh4dUR7sohttYIffOETquCISkigUJjPZStuvI2qP806mwwtQTKnqmf4Of5Dw07bjERivJEvMiI34LdDyEeUjo97qeqWaZBhZA2E1YFdBJcsZ3UpaZm63Lo93lU5T7MSz6tPfcIJIi7tov8E~X6iuxE-pZV~jrslzcq1tYURdMYif~36n-Jomo3POBd2Ln0HPWIl-K~8s6tp2xkV7l7Otr2w4a2xQ__')] bg-center bg-no-repeat bg-cover bg-origin-content">
 
       {/* Header */}
-      <div className="absolute z-50 top-0 left-0 h-[4em] w-full flex items-center justify-between p-4 text-white border-b-2 border-white">
-        <div className="flex items-center">
-          <img src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg" alt="Zilliqa Logo" className="h-8 w-auto" />
-        </div>
+      <div className="absolute z-50 top-0 left-0 h-[4em] w-full flex items-center justify-center text-white border-b-2 border-white">
+        <div className="flex max-w-screen-2xl w-full justify-between px-4">
 
-        <div className="flex items-center space-x-4">
-          <SearchOutlined className="text-xl" />
-          <a href="#" className="hover:underline">
-            HELP
-          </a>
-          <a href="#" className="hover:underline">
-            DEV DOCS
-          </a>
-          <BellOutlined className="text-xl" />
-          <UserOutlined className="text-xl" />
-          <MenuOutlined className="text-xl" />
+          <div className="flex items-center">
+            <img src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg" alt="Zilliqa Logo" className="h-8 w-auto" />
+          </div>
+
+          <div className="flex items-center space-x-4">
+            {
+              !isWalletConnected ? (
+                <Button
+                  type="primary"
+                  onClick={connectWallet}
+                  loading={isWalletConnecting}
+                  className="btn-primary-cyan rounded-lg"
+                >
+                  CONNECT WALLET
+                </Button>
+              ) : (
+                <div className='flex gap-3'>
+                  <div
+                    className='group w-32 relative btn-primary-cyan rounded-lg'
+                    onClick={disconnectWallet}
+                  >
+                    <div className='absolute inset-0 group-hover:opacity-0 transition-opacity flex items-center justify-center'>
+                      <WalletOutlined className="mr-2 !text-black-100"/>
+                      {formatAddress(walletAddress || '')}
+                    </div>
+                    <span className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center'>
+                      Disconnect
+                    </span>
+                  </div>
+
+                  <span className="btn-primary-cyan rounded-lg">
+                    {zilAvailable} ZIL
+                  </span>
+                </div>
+                
+              )
+            }
+          </div>
         </div>
       </div>
 
-
-      {/* Left column */}
-      <div className="relative grid grid-cols-1 md:grid-cols-2 h-screen gap-5 pt-[4em]">
-        <div className="p-8">
+      <div className="relative max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 h-screen gap-5 px-4 pt-[5em]">
+        {/* Left column */}
+        <div className="bg-black p-5 rounded-lg">
           <StakingPoolsList />
         </div>
 
         {/* Right column - only visible on desktop */}
-        <div className="hidden md:grid h-full">
-          <div>
-            {
-              stakingPoolForStaking ? (
-                <div className="items-center justify-center text-center text-white p-8">
-                  <h1 className="text-4xl font-bold">Liquid Staking with Zilliqa</h1>
-                  <p className="mt-4 text-lg">
-                    Stake with {stakingPoolForStaking.stakingPool.name} and earn {stakingPoolForStaking.stakingPool.apy}% APY
-                  </p>
+        <div className="hidden md:grid h-full bg-black p-5 rounded-lg">
 
-                  <StakingCalculator onStakeClick={onStake} />
-                </div>
-              ) : stakingPoolForUnstaking ? (
-                <div className="items-center justify-center text-center text-white p-8">
-                  <h1 className="text-4xl font-bold">Liquid Staking with Zilliqa</h1>
-                  <p className="mt-4 text-lg">
-                    Unstake your stZIL from {stakingPoolForUnstaking.stakingPool.name} and get your ZIL back
-                  </p>
-
-                  <UnstakingCalculator onStakeClick={onUnstake} />
-                </div>
-              ) : stakingPoolForView ? (
-                <StakingPoolDetailsView
-                  selectStakingPoolForStaking={(id) => {
-                    selectStakingPoolForStaking(id);
-                    selectStakingPoolForUnstaking(null);
-                  }}
-                  stakingPoolData={stakingPoolForView.stakingPool}
-                />
-              ) : (
-                <div className="items-center justify-center text-center text-white p-8">
-                  <h1 className="text-4xl font-bold">Liquid Staking with Zilliqa</h1>
-                    <p className="mt-4 text-lg">
-                      Help us Empower and secure the Zilliqa Chain
-                    </p>
-                </div>
-              )
-            }
-          </div>
-
-          {/* User data section */}
-          <div className='mt-auto'>
-            {
-              isWalletConnected ? (
-                <div className='p-8'>
-                  {
-                    stakingPoolForView && !stakingPoolForStaking && !stakingPoolForUnstaking && (
-                      <div className='flex justify-between my-5 gap-3'>
-                        <Button
-                          type="default"
-                          size="large"
-                          className='btn-primary-white text-3xl w-full'
-                          disabled={(stakingPoolForView.userData?.stakedZil || 0) === 0}
-                          onClick={() => {
-                            selectStakingPoolForStaking(null);
-                            selectStakingPoolForUnstaking(stakingPoolForView.stakingPool.id);
-                          }}
-                        >
-                          UNSTAKE <ArrowRightOutlined className='ml-2' />
-                        </Button>
-
-                        <Button
-                          type="default"
-                          size="large"
-                          className='btn-primary-cyan text-3xl w-full'
-                          disabled={(stakingPoolForView.userData?.rewardAcumulated || 0) === 0}
-                          onClick={() => onClaimRewards(stakingPoolForView.userData?.rewardAcumulated || 0)}
-                        >
-                          CLAIM <ArrowRightOutlined className='ml-2' />
-                        </Button>
-                      </div>
-                    )
-                  }
-
-                  <div className='border-2 border-black p-2'>
-                    <div className='flex justify-between'>
-                      <p className="text-lg">Wallet Address: {walletAddress}</p>
-                      <Button
-                        onClick={disconnectWallet}
-                        className='btn-custom-white-text'
-                      >
-                          Disconnect
-                      </Button>
-                    </div>
-                    <div className='flex justify-between'>
-                      <p className="text-lg">{zilAvailable} ZIL</p>
-                      <p>{zilAvailable * 0.06}$</p>
-                    </div>
-                    <div>
-                      <p className="mt-4 text-lg">{stakedZilAvailable} stZIL</p>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className='flex flex-col items-center my-32'>
-                  <Button
-                    type="primary"
-                    size="large"
-                    onClick={connectWallet}
-                    loading={isWalletConnecting}
-                    className="mt-8 btn-primary-cyan text-3xl min-w-1/2"
-                  >
-                    SIGN IN / CONNECT WALLET<RightOutlined />
-                  </Button>
-                </div>
-              )
-            }
-          </div>
+          {
+            !isWalletConnected ? (
+              <LoginView />
+            ) : stakingPoolForView ? (
+              <StakingPoolDetailsView
+                selectStakingPoolForStaking={(stakingPoolId) => {
+                  selectStakingPoolForView(null);
+                  selectStakingPoolForStaking(stakingPoolId);
+                }}
+                stakingPoolData={stakingPoolForView.stakingPool}
+                userStakingPoolData={stakingPoolForView.userData}
+              />
+            ) : (
+              <WithdrawZilView />
+            )
+          }
         </div>
 
         {/* Mobile only */}
 
-          <div className='absolute block md:hidden top-0 left-0 z-25 bg-black pt-[4em] h-full'>
+          {
+            mobileShowClaims
+              ? mobileOverlayView(<WithdrawZilView />)
+             : stakingPoolForView && mobileOverlayView(
+                <StakingPoolDetailsView
+                  selectStakingPoolForStaking={(stakingPoolId) => {
+                    selectStakingPoolForView(null);
+                    selectStakingPoolForStaking(stakingPoolId);
+                  }}
+                  stakingPoolData={stakingPoolForView.stakingPool}
+                  userStakingPoolData={stakingPoolForView.userData}
+                />
+              )
+          }
+
+          <div className='fixed bottom-0 left-0 flex md:hidden justify-between w-full gap-1'>
             {
-              stakingPoolForStaking ? (
+              isWalletConnected ? (
                 <>
-                    <div className='flex justify-end p-3'>
-                      <CloseCircleOutlined className='m-2 text-5xl' onClick={() => selectStakingPoolForStaking(null)} />
-                    </div>
-                    <StakingPoolsList />
-                    <StakingCalculator onStakeClick={onStake} />
-                </>
-              ) : stakingPoolForUnstaking ? (
-                <>
-                    <div className='flex justify-end p-3'>
-                      <CloseCircleOutlined className='m-2 text-5xl' onClick={() => selectStakingPoolForUnstaking(null)} />
-                    </div>
-                    <StakingPoolsList />
-                    <UnstakingCalculator onStakeClick={onUnstake} />
-                </>
-              ) : stakingPoolForView && (
-                <>
-                  <div className='flex justify-end p-3'>
-                    <CloseCircleOutlined className='m-2 text-5xl' onClick={() => selectStakingPoolForView(null)} />
-                  </div>
-                  <StakingPoolDetailsView
-                    selectStakingPoolForStaking={(stakingPoolId) => {
-                      selectStakingPoolForView(null);
-                      selectStakingPoolForStaking(stakingPoolId);
-                    }}
-                    stakingPoolData={stakingPoolForView.stakingPool}
-                    userStakingPoolData={stakingPoolForView.userData}
-                  />
+                  {
+                    (mobileShowClaims || stakingPoolForView) && (
+                      <Button
+                        type="default"
+                        size="large"
+                        className='btn-primary-white text-3xl w-full'
+                        onClick={() => {
+                          selectStakingPoolForView(null);
+                          setMobileShowClaims(false);
+                        }}
+                      >
+                        <LeftOutlined /> Validators
+                      </Button>
+                    )
+                  }
 
                   {
-                    isWalletConnected ? (
-                      <div className='fixed bottom-0 left-0 flex md:hidden justify-between w-full gap-3'>
-                        <Button
-                          type="default"
-                          size="large"
-                          className='btn-primary-white text-3xl w-full'
-                          onClick={() => {
-                            selectStakingPoolForView(null);
-                            selectStakingPoolForUnstaking(stakingPoolForView.stakingPool.id);
-                          }}
-                          disabled={(stakingPoolForView?.userData?.stakedZil || 0) === 0}
-                        >
-                          UNSTAKE <ArrowRightOutlined className='ml-2' />
-                        </Button>
-
-                        <Button
-                          type="default"
-                          size="large"
-                          className='btn-primary-cyan text-3xl w-full'
-                          onClick={() => onClaimRewards(stakingPoolForView.userData?.rewardAcumulated || 0)}
-                          disabled={(stakingPoolForView?.userData?.rewardAcumulated || 0) === 0}
-                        >
-                          CLAIM <ArrowRightOutlined className='ml-2' />
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className='flex flex-col items-center my-32'>
-                        <Button
-                          type="primary"
-                          size="large"
-                          onClick={connectWallet}
-                          loading={isWalletConnecting}
-                          className="mt-8 btn-primary-cyan text-3xl min-w-1/2"
-                        >
-                          CONNECT WALLET<RightOutlined />
-                        </Button>
-                      </div>
+                    !mobileShowClaims && (
+                      <Button
+                        type="default"
+                        size="large"
+                        className='btn-primary-cyan text-3xl w-full'
+                        onClick={() => setMobileShowClaims(true)}
+                      >
+                        Claims ({availableForUnstaking.length + pendingUnstaking.length})
+                      </Button>
                     )
                   }
                 </>
+              ) : (
+                <Button
+                  type="primary"
+                  onClick={connectWallet}
+                  loading={isWalletConnecting}
+                  className="btn-primary-cyan text-3xl w-full"
+                >
+                  CONNECT WALLET<RightOutlined/>
+                </Button>
               )
             }
           </div>
@@ -269,13 +185,13 @@ const HomePage = () => {
 
       <Modal
         title="User Wallet Interaction"
-        open={isDummyPopupOpen}
+        open={isDummyWalletPopupOpen}
         okButtonProps={{ className: 'btn-primary-cyan' }}
-        onOk={() => setIsDummyPopupOpen(false)}
-        onCancel={() => setIsDummyPopupOpen(false)}
+        onOk={() => setIsDummyWalletPopupOpen(false)}
+        onCancel={() => setIsDummyWalletPopupOpen(false)}
       >
         <div>
-          {dummyPopupContent}
+          {dummyWalletPopupContent}
         </div>
       </Modal>
 

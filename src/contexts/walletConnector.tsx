@@ -10,15 +10,16 @@ const useWalletConnector = () => {
   const [isWalletConnecting, setIsWalletConnecting] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
-  const [stakedZilAvailable, setStakedZilAvailable] = useState(0);
   const [zilAvailable, setZilAvailable] = useState(0);
 
   const [isDummyWalletSelectorOpen, setIsDummyWalletSelectorOpen] = useState(false);
+
+  const [isDummyWalletPopupOpen, setIsDummyWalletPopupOpen] = useState(false);
+  const [dummyWalletPopupContent, setDummyWalletPopupContent] = useState<string | null>(null);
   
   const setDummyWallet = (wallet: DummyWallet) => {
     setWalletAddress(wallet.address);
     setZilAvailable(wallet.currentZil);
-    setStakedZilAvailable(wallet.stakedZil.reduce((acc, stakedZil) => acc + stakedZil.stakedZil, 0));
 
     setIsWalletConnected(true);
     setIsDummyWalletSelectorOpen(false);
@@ -35,6 +36,7 @@ const useWalletConnector = () => {
     setWalletAddress(null);
     setIsWalletConnecting(false);
     setIsDummyWalletSelectorOpen(false);
+    setZilAvailable(0);
   };
 
   return {
@@ -43,10 +45,13 @@ const useWalletConnector = () => {
     connectWallet,
     disconnectWallet,
     walletAddress,
-    stakedZilAvailable,
     zilAvailable,
     isDummyWalletSelectorOpen,
     setDummyWallet,
+    isDummyWalletPopupOpen,
+    setIsDummyWalletPopupOpen,
+    dummyWalletPopupContent,
+    setDummyWalletPopupContent,
   };
 };
 

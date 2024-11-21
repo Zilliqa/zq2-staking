@@ -17,7 +17,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
 }) => {
 
   return (
-    <div className={`bg-[#20202580] bg-opacity-50 p-4 rounded-lg shadow-md ${isStakingPoolSelected && "!bg-yellow-500"}`} onClick={onClick}>
+    <div className={`bg-[#20202580] bg-opacity-50 p-4 rounded-lg shadow-md ${isStakingPoolSelected && "!bg-yellow-500"} hover:cursor-pointer`} onClick={onClick}>
       <div className="flex justify-between">
         <div className="grid w-full">
           <div className="flex justify-between">
@@ -29,10 +29,6 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
             <p className="text-gray-500">TVL: {stakingPoolData.tvl}</p>
             <p className="text-gray-500">APY: {formatPercentage(stakingPoolData.apy)}</p>
           </div>
-        </div>
-
-        <div className="w-[2em]">
-          <RightOutlined />
         </div>
       </div>
 

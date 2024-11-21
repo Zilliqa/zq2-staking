@@ -19,22 +19,17 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
   } = WalletConnector.useContainer();
 
   const {
-    stakingPoolForStaking
+    stakingPoolForView
   } = StakingPoolsStorage.useContainer();
 
   const [zilToStake, setZilToStake] = useState(0);
 
   useEffect(() => {
     setZilToStake(0);
-  }, [stakingPoolForStaking])
+  }, [stakingPoolForView])
 
-  return stakingPoolForStaking && (
-    <div className="bg-black p-10">
-      <div className="text-4xl pb-5">
-        Staking calculator
-      </div>
-
-      
+  return stakingPoolForView && (
+    <>
       <div>
         <div className="flex justify-between my-3 p-5 border-2 bg-[#20202580] bg-opacity-50">
           <div className='grid text-3xl justify-center my-auto'>
@@ -42,7 +37,7 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
               {zilToStake} ZIL
             </div>
             <div className='text-xs'>
-              ~{zilToStake} stZIL + {formatPercentage(stakingPoolForStaking!.stakingPool.apy)} APY
+              ~{zilToStake} stZIL + {formatPercentage(stakingPoolForView!.stakingPool.apy)} APY
             </div>
             
           </div>
@@ -54,12 +49,12 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
 
         <div className="flex justify-between my-3">
           <p className="text-lg font-bold">You will receive</p>
-          <p>Reward fee {formatPercentage(stakingPoolForStaking!.stakingPool.rewardFee)}</p>
+          <p>Reward fee {formatPercentage(stakingPoolForView!.stakingPool.commission)}</p>
         </div>
         
         <div className="flex justify-between my-3">
           <p className="text-gray-500">Max transaction cost {zilToStake ? '0.01' : '0' }$</p>
-          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForStaking!.stakingPool.apy)}</p>
+          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForView!.stakingPool.apy)}</p>
         </div>
 
         {
@@ -89,7 +84,7 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
           )
         }
       </div>
-    </div>
+    </>
   )
 }
 
