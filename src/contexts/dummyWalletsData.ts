@@ -88,9 +88,19 @@ export const dummyWallets: Array<DummyWallet> = [
         availableAt: DateTime.now().minus({ days: 5 }),
       },
       {
+        address: "0x82245678902345678902345678918278372382",
+        unstakedZil: 100,
+        availableAt: DateTime.now().plus({ days: 1 }),
+      },
+      {
         address: "0x96525678902345678902345678918278372212",
         unstakedZil: 500,
         availableAt: DateTime.now().plus({ days: 5 }),
+      },
+      {
+        address: "0x96525678902345678902345678918278372212",
+        unstakedZil: 1000,
+        availableAt: DateTime.now().plus({ days: 13 }),
       },
     ],
   },

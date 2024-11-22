@@ -99,20 +99,22 @@ const HomePage = () => {
         </div>
 
         {/* Right column - only visible on desktop */}
-        <div className="hidden md:grid h-full bg-black p-5 rounded-lg">
-
+        <div className="hidden md:grid h-full">
           {
             !isWalletConnected ? (
               <LoginView />
             ) : stakingPoolForView ? (
-              <StakingPoolDetailsView
-                selectStakingPoolForStaking={(stakingPoolId) => {
-                  selectStakingPoolForView(null);
-                  selectStakingPoolForStaking(stakingPoolId);
-                }}
-                stakingPoolData={stakingPoolForView.stakingPool}
-                userStakingPoolData={stakingPoolForView.userData}
-              />
+              <div className="bg-black p-5 rounded-lg">
+                <StakingPoolDetailsView
+                  selectStakingPoolForStaking={(stakingPoolId) => {
+                    selectStakingPoolForView(null);
+                    selectStakingPoolForStaking(stakingPoolId);
+                  }}
+                  stakingPoolData={stakingPoolForView.stakingPool}
+                  userStakingPoolData={stakingPoolForView.userData.staked}
+                  userUnstakingPoolData={stakingPoolForView.userData.unstaked}
+                />
+              </div>
             ) : (
               <WithdrawZilView />
             )
@@ -120,7 +122,6 @@ const HomePage = () => {
         </div>
 
         {/* Mobile only */}
-
           {
             mobileShowClaims
               ? mobileOverlayView(<WithdrawZilView />)
@@ -131,7 +132,8 @@ const HomePage = () => {
                     selectStakingPoolForStaking(stakingPoolId);
                   }}
                   stakingPoolData={stakingPoolForView.stakingPool}
-                  userStakingPoolData={stakingPoolForView.userData}
+                  userStakingPoolData={stakingPoolForView.userData.staked}
+                  userUnstakingPoolData={stakingPoolForView.userData.unstaked}
                 />
               )
           }
@@ -141,14 +143,28 @@ const HomePage = () => {
               isWalletConnected ? (
                 <>
                   {
-                    (mobileShowClaims || stakingPoolForView) && (
+                    mobileShowClaims && (
+                        <Button
+                          type="default"
+                          size="large"
+                          className='btn-primary-white text-3xl w-full'
+                          onClick={() => {
+                            setMobileShowClaims(false);
+                          }}
+                        >
+                          <LeftOutlined /> { stakingPoolForView ? stakingPoolForView?.stakingPool.name : "Validators" }
+                        </Button>
+                      )
+                  }
+
+                  {
+                    !mobileShowClaims && stakingPoolForView && (
                       <Button
                         type="default"
                         size="large"
                         className='btn-primary-white text-3xl w-full'
                         onClick={() => {
                           selectStakingPoolForView(null);
-                          setMobileShowClaims(false);
                         }}
                       >
                         <LeftOutlined /> Validators

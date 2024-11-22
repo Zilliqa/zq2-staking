@@ -1,8 +1,8 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import { useEffect, useState } from "react";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import { WalletConnector } from "@/contexts/walletConnector";
-import { formatPercentage } from "@/misc/formatting";
+import { formatPercentage, formattedZilValueInToken } from "@/misc/formatting";
 
 interface StakingCalculatorProps {
   onStakeClick: (zilToStake: number) => void;
@@ -12,38 +12,60 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
   onStakeClick
 }) => {
   const {
-    zilAvailable,
-    connectWallet,
-    isWalletConnecting,
-    isWalletConnected
+    zilAvailable
   } = WalletConnector.useContainer();
 
   const {
     stakingPoolForView
   } = StakingPoolsStorage.useContainer();
 
-  const [zilToStake, setZilToStake] = useState(0);
+  const [zilToStake, setZilToStake] = useState<string>("");
 
   useEffect(() => {
-    setZilToStake(0);
+    setZilToStake("0");
   }, [stakingPoolForView])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value: inputValue } = e.target;
+    const reg = /^-?\d*(\.\d*)?$/;
+    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+      setZilToStake(inputValue);
+    }
+  };
+
+  const handleBlur = () => {
+    let valueTemp = zilToStake;
+    if (zilToStake.charAt(zilToStake.length - 1) === '.' || zilToStake === '-') {
+      valueTemp = zilToStake.slice(0, -1);
+    }
+    setZilToStake(valueTemp.replace(/0*(\d+)/, '$1'));
+  };
+
+  const zilToStakeNumber = parseFloat(zilToStake);
+  const zilToStakeOk =  !isNaN(zilToStakeNumber) && zilToStakeNumber <= zilAvailable;
+  const canStake = zilToStakeNumber > 0 && zilToStakeNumber <= zilAvailable;
 
   return stakingPoolForView && (
     <>
       <div>
         <div className="flex justify-between my-3 p-5 border-2 bg-[#20202580] bg-opacity-50">
           <div className='grid text-3xl justify-center my-auto'>
-            <div>
-              {zilToStake} ZIL
-            </div>
-            <div className='text-xs'>
-              ~{zilToStake} stZIL + {formatPercentage(stakingPoolForView!.stakingPool.apy)} APY
+            <Input
+              className={`!bg-[#20202580] !border-[#20202580] ${zilToStakeOk ? "!text-white" : "!text-red-500"} !text-3xl`}
+              value={zilToStake}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              suffix="ZIL"
+              status={ !zilToStakeOk ? "error" : undefined }
+            />
+            <div className='text-xs ml-2 mt-3'>
+              ~{formattedZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.zilToTokenRate)} {stakingPoolForView.stakingPool.tokenSymbol} + {formatPercentage(stakingPoolForView!.stakingPool.apy)} APY
             </div>
             
           </div>
           <div className='grid'>
-            <Button className='mb-3 btn-primary-white' onClick={() => setZilToStake(zilAvailable)} >MAX</Button>
-            <Button className="btn-primary-white" onClick={() => setZilToStake(0)}>MIN</Button>
+            <Button className='mb-3 btn-primary-white' onClick={() => setZilToStake(`${zilAvailable}`)} >MAX</Button>
+            <Button className="btn-primary-white" onClick={() => setZilToStake("0")}>MIN</Button>
           </div>
         </div>
 
@@ -57,32 +79,17 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
           <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForView!.stakingPool.apy)}</p>
         </div>
 
-        {
-          !isWalletConnected ? (
-            <div className="mt-8">
-              <Button
-                onClick={connectWallet}
-                loading={isWalletConnecting}
-                type="primary"
-                className="w-full text-3xl btn-primary-cyan"
-              >
-                Connect Wallet First
-              </Button>
-            </div>
-          ) : (
-            <div className='flex my-5'>
-              <Button
-                type="default"
-                size="large"
-                className='w-full text-3xl btn-primary-white'
-                disabled={zilToStake === 0}
-                onClick={() => onStakeClick(zilToStake)}
-              >
-                STAKE
-              </Button>
-          </div>
-          )
-        }
+        <div className='flex my-5'>
+          <Button
+            type="default"
+            size="large"
+            className='w-full text-3xl btn-primary-white'
+            disabled={!canStake}
+            onClick={() => onStakeClick(zilToStakeNumber)}
+          >
+            STAKE
+          </Button>
+      </div>
       </div>
     </>
   )

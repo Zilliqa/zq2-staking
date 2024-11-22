@@ -1,6 +1,8 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import { WalletConnector } from "@/contexts/walletConnector";
+import { formattedTokenValueInZil } from "@/misc/formatting";
 import { Button } from "antd";
+import Image from 'next/image';
 
 const WithdrawZilView: React.FC = () => {
   const {
@@ -36,17 +38,40 @@ const WithdrawZilView: React.FC = () => {
         unstakingItems.length > 0 ? (
           <div className="grid grid-cols-1 gap-3">
             {
-              unstakingItems.map((item) => (
-                <div className="bg-[#20202580] bg-opacity-50 p-4 rounded-lg flex justify-between">
+              unstakingItems.map((claim, claimIdx) => (
+                <div
+                  className="bg-[#20202580] bg-opacity-50 p-4 rounded-lg flex justify-between items-center"
+                  key={claimIdx}
+                >
                   <div>
-                    {item.stakingPool.name}
+                    <div className="flex items-center">
+                      <Image
+                          className="mr-4 rounded-lg"
+                          src={claim.stakingPool.iconUrl}
+                          alt={`${claim.stakingPool.name} icon`}
+                          width={32}
+                          height={32}
+                        />
+                      <div>
+                        {claim.stakingPool.name}
+                      </div>
+                    </div>
+                    <div className="flex mt-2 ml-1 items-end">
+                      <div className="text-xl font-bold">
+                        {claim.unstakeInfo.unstakedZil} {claim.stakingPool.tokenSymbol}
+                      </div>
+                      <div className="text-sm text-gray-400 ml-3">
+                        {formattedTokenValueInZil(claim.unstakeInfo.unstakedZil, claim.stakingPool.zilToTokenRate)} ZIL
+                      </div>
+                    </div>
                   </div>
+
                   <Button
                     className="btn-primary-white"
-                    disabled={!item.available}
-                    onClick={() => onClaim(item.unstakeInfo.unstakedZil)}
+                    disabled={!claim.available}
+                    onClick={() => onClaim(claim.unstakeInfo.unstakedZil)}
                   >
-                    {item.available ? 'Claim' : item.unstakeInfo.availableAt.diffNow("days").days.toFixed(0) + ' days left'}
+                    {claim.available ? 'Claim' : claim.unstakeInfo.availableAt.diffNow("days").days.toFixed(0) + ' days left'}
                   </Button>
                 </div>
               ))

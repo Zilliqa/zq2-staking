@@ -1,26 +1,32 @@
-import { StakingPoolData, UserStakingPoolData } from "@/contexts/stakingPoolsStorage";
-import { formatPercentage } from "@/misc/formatting";
-import { useState } from "react";
-import StakingCalculator from "./stakingCalculator";
+import StakingCalculator from "@/components/stakingCalculator";
+import UnstakingCalculator from "@/components/unstakingCalculator";
+import WithdrawZilPanel from "@/components/withdrawUnstakedZilPanel";
+import { StakingPoolData, UserStakingPoolData, UserUnstakingPoolData } from "@/contexts/stakingPoolsStorage";
 import { WalletConnector } from "@/contexts/walletConnector";
-import UnstakingCalculator from "./unstakingCalculator";
+import { formatPercentage } from "@/misc/formatting";
+import { DateTime } from "luxon";
+import { useState } from "react";
 
 interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPoolData;
   userStakingPoolData?: UserStakingPoolData;
+  userUnstakingPoolData?: Array<UserUnstakingPoolData>;
   selectStakingPoolForStaking: (stakingPoolId: string) => void;
 }
 
 const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   stakingPoolData,
+  userStakingPoolData,
+  userUnstakingPoolData,
 }) => {
 
   const {
     setDummyWalletPopupContent,
-    setIsDummyWalletPopupOpen
+    setIsDummyWalletPopupOpen,
+    zilAvailable,
   } = WalletConnector.useContainer();
 
-  const [selectedPane, setSelectedPane] = useState<string>('stake');
+  const [selectedPane, setSelectedPane] = useState<string>('Stake');
 
   const onUnstake = () => {
     setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for unstaking`);
@@ -32,6 +38,49 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     setIsDummyWalletPopupOpen(true);
   }
 
+  const onClaim = () => {
+    setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for withdrawing/claiming the unstaked ZIL`);
+    setIsDummyWalletPopupOpen(true);
+  }
+
+  const colorInfoEntry = (title: string, value: string) => (
+    <div className="pl-3 md:pl-0">
+      <div className='text-xl text-[#6DD3C2]'>
+        { value }
+      </div>
+      <div className='text-[#6DD3C2] text-sm'>
+        { title }
+      </div>
+    </div>
+  )
+
+  const greyInfoEntry = (title: string, value: string) => (
+    <div className="pl-3 md:pl-0">
+      <div className='text-xl text-gray-500 whitespace-nowrap'>
+        { value }
+      </div>
+      <div className='text-gray-500 text-sm whitespace-nowrap'>
+        { title }
+      </div>
+    </div>
+  )
+
+  const pendingUnstakesValue = userUnstakingPoolData?.filter(
+    (item) => item.availableAt > DateTime.now()
+  ).reduce(
+    (acc, item) => acc + item.unstakedZil,
+    0
+  );
+
+  const availableToClaim = userUnstakingPoolData?.filter(
+    (item) => item.availableAt <= DateTime.now()
+  ).reduce(
+    (acc, item) => acc + item.unstakedZil,
+    0
+  );
+
+  const doesUserHoldAnyFundsInThisPool = !!(userStakingPoolData?.stakedZil || pendingUnstakesValue || availableToClaim);
+
   return (
     <div className="relative">
       <span className='text-5xl'>
@@ -41,51 +90,25 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         {stakingPoolData.tokenSymbol}
       </span>
 
+      <div className="gradient-bg-2 grid grid-cols-2 md:grid-cols-4 gap-4 md:-mx-5 md:px-10 mt-10 py-3">
 
-      <div className="bg-gray-900 grid grid-cols-2 md:flex gap-4 md:gap-0 md:justify-between mt-10 md:-mx-12 md:px-10 py-3">
-        <div>
-          <div className='text-xl text-gray-500'>
-            {formatPercentage(stakingPoolData.votingPower)}
-          </div>
-          <div className='text-gray-500 text-sm'>
-            Voting power
-          </div>
-        </div>
+        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to stake", `${zilAvailable} ZIL`) }
+        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Staked", `${userStakingPoolData?.stakedZil || 0} ${stakingPoolData.tokenSymbol}`) }
+        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${pendingUnstakesValue} ${stakingPoolData.tokenSymbol}`: "-" ) }
+        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to claim", availableToClaim ? `${availableToClaim} ${stakingPoolData.tokenSymbol}` : "-") }
 
-        <div>
-          <div className='text-xl text-gray-500'>
-            {stakingPoolData.tvl}
-          </div>
-          <div className='text-gray-500 text-sm'>
-            Total supply
-          </div>
-        </div>
-
-        <div>
-          <div className='text-xl text-gray-500'>
-            {formatPercentage(stakingPoolData.commission)}
-          </div>
-          <div className='text-gray-500 text-sm'>
-            Commision
-          </div>
-        </div>
-
-        <div>
-          <div className='text-xl text-gray-500'>
-            1 ZIL = {stakingPoolData.zilToTokenRate} {stakingPoolData.tokenSymbol}
-          </div>
-          <div className='text-gray-500 text-sm'>
-            Rate
-          </div>
-        </div>
+        { greyInfoEntry("Voting power", formatPercentage(stakingPoolData.votingPower)) }
+        { greyInfoEntry("Total supply", `${stakingPoolData.tvl}`) }
+        { greyInfoEntry("Commission", formatPercentage(stakingPoolData.commission)) }
+        { greyInfoEntry("Rate", `ZIL = ${stakingPoolData.zilToTokenRate} ${stakingPoolData.tokenSymbol}`) }
       </div>
 
-      <div className="grid grid-cols-2 md:-mx-12 my-5">
+      <div className="grid grid-cols-3 md:-mx-5 my-5">
         {
-          ['stake', 'unstake'].map((pane) => (
+          ['Stake', 'Unstake', 'Claim'].map((pane) => (
             <div
               key={pane}
-              className={`text-2xl text-center py-2 cursor-pointer border-solid border-b-4 ${selectedPane === pane ? "text-white-100 border-indigo-500" : "text-gray-600 border-black"} `}
+              className={`text-2xl text-center py-2 cursor-pointer border-solid border-b-4 ${selectedPane === pane ? "text-white-100 border-gradient-1" : "text-gray-600 border-black"} `}
               onClick={() => setSelectedPane(pane)}
             >
               {pane}
@@ -95,10 +118,16 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       </div>
 
       {
-        selectedPane === 'stake' ? (
+        selectedPane === 'Stake' ? (
           <StakingCalculator onStakeClick={onStake} />
-        ) : (
+        ) : selectedPane === 'Unstake' ? (
           <UnstakingCalculator onStakeClick={onUnstake} />
+        ) : (
+          <WithdrawZilPanel
+            onClaimClick={onClaim}
+            userUnstakingPoolData={userUnstakingPoolData}
+            stakingPoolData={stakingPoolData}
+          />
         )
       }
 
