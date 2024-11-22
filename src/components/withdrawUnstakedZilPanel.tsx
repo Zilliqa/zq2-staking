@@ -72,8 +72,8 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             </div>
 
             {
-              pendingUnstake?.map((claim) => (
-                <div className="flex justify-between my-2">
+              pendingUnstake?.map((claim, claimIdx) => (
+                <div className="flex justify-between my-2" key={claimIdx}>
                   <div>
                     {claim.unstakedZil} {stakingPoolData.tokenSymbol} ~= {formattedTokenValueInZil(claim.unstakedZil, stakingPoolData.zilToTokenRate)} ZILs
                   </div>

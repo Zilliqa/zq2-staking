@@ -19,7 +19,6 @@ const HomePage = () => {
     disconnectWallet,
     dummyWalletPopupContent,
     isDummyWalletPopupOpen,
-    setDummyWalletPopupContent,
     setIsDummyWalletPopupOpen
   } = WalletConnector.useContainer();
 
@@ -31,16 +30,111 @@ const HomePage = () => {
     pendingUnstaking,
   } = StakingPoolsStorage.useContainer();
 
-  const onClaimRewards = (reward: number) => {
-    setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for claiming ${reward} rewards`);
-    setIsDummyWalletPopupOpen(true);
-  }
-
   const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false);
 
-  const mobileOverlayView = (children: React.ReactNode) => (
+  const mobileOverlayWrapper = (children: React.ReactNode) => (
     <div className='absolute md:hidden top-0 left-0 z-25 h-full w-full bg-black w-full p-4 pt-[5em]'>
       {children}
+    </div>
+  )
+
+  const desktopColumnContent = (
+    <div className="hidden md:grid h-full">
+      {
+        !isWalletConnected ? (
+          <LoginView />
+        ) : stakingPoolForView ? (
+          <div className="bg-black p-5 rounded-lg">
+            <StakingPoolDetailsView
+              selectStakingPoolForStaking={(stakingPoolId) => {
+                selectStakingPoolForView(null);
+                selectStakingPoolForStaking(stakingPoolId);
+              }}
+              stakingPoolData={stakingPoolForView.stakingPool}
+              userStakingPoolData={stakingPoolForView.userData.staked}
+              userUnstakingPoolData={stakingPoolForView.userData.unstaked}
+            />
+          </div>
+        ) : (
+          <WithdrawZilView />
+        )
+      }
+    </div>
+  )
+
+  const mobileOverlayContent = mobileShowClaims
+    ? mobileOverlayWrapper(<WithdrawZilView />)
+    : stakingPoolForView && mobileOverlayWrapper(
+      <StakingPoolDetailsView
+        selectStakingPoolForStaking={(stakingPoolId) => {
+          selectStakingPoolForView(null);
+          selectStakingPoolForStaking(stakingPoolId);
+        }}
+        stakingPoolData={stakingPoolForView.stakingPool}
+        userStakingPoolData={stakingPoolForView.userData.staked}
+        userUnstakingPoolData={stakingPoolForView.userData.unstaked}
+      />
+    )
+
+  const mobileBottomNavition = (
+    <div className='fixed bottom-0 left-0 flex md:hidden justify-between w-full gap-1'>
+      {
+        isWalletConnected ? (
+          <>
+            {
+              mobileShowClaims && (
+                  <Button
+                    type="default"
+                    size="large"
+                    className='btn-primary-white text-3xl w-full'
+                    onClick={() => {
+                      setMobileShowClaims(false);
+                    }}
+                  >
+                    <LeftOutlined /> { stakingPoolForView ? stakingPoolForView?.stakingPool.name : "Validators" }
+                  </Button>
+                )
+            }
+
+            {
+              !mobileShowClaims && stakingPoolForView && (
+                <Button
+                  type="default"
+                  size="large"
+                  className='btn-primary-white text-3xl w-full'
+                  onClick={() => {
+                    selectStakingPoolForView(null);
+                  }}
+                >
+                  <LeftOutlined /> Validators
+                </Button>
+              )
+            }
+
+            {
+              !mobileShowClaims && (
+                <Button
+                  type="default"
+                  size="large"
+                  className='btn-primary-cyan text-3xl w-full'
+                  onClick={() => setMobileShowClaims(true)}
+                >
+                  Claims ({availableForUnstaking.length + pendingUnstaking.length})
+                </Button>
+              )
+            }
+          </>
+        ) : (
+          <Button
+            type="primary"
+            onClick={connectWallet}
+            loading={isWalletConnecting}
+            className="btn-primary-cyan text-3xl w-full"
+          >
+            CONNECT WALLET<RightOutlined/>
+          </Button>
+        )
+      }
     </div>
   )
 
@@ -98,105 +192,10 @@ const HomePage = () => {
           <StakingPoolsList />
         </div>
 
-        {/* Right column - only visible on desktop */}
-        <div className="hidden md:grid h-full">
-          {
-            !isWalletConnected ? (
-              <LoginView />
-            ) : stakingPoolForView ? (
-              <div className="bg-black p-5 rounded-lg">
-                <StakingPoolDetailsView
-                  selectStakingPoolForStaking={(stakingPoolId) => {
-                    selectStakingPoolForView(null);
-                    selectStakingPoolForStaking(stakingPoolId);
-                  }}
-                  stakingPoolData={stakingPoolForView.stakingPool}
-                  userStakingPoolData={stakingPoolForView.userData.staked}
-                  userUnstakingPoolData={stakingPoolForView.userData.unstaked}
-                />
-              </div>
-            ) : (
-              <WithdrawZilView />
-            )
-          }
-        </div>
+        { desktopColumnContent }
 
-        {/* Mobile only */}
-          {
-            mobileShowClaims
-              ? mobileOverlayView(<WithdrawZilView />)
-             : stakingPoolForView && mobileOverlayView(
-                <StakingPoolDetailsView
-                  selectStakingPoolForStaking={(stakingPoolId) => {
-                    selectStakingPoolForView(null);
-                    selectStakingPoolForStaking(stakingPoolId);
-                  }}
-                  stakingPoolData={stakingPoolForView.stakingPool}
-                  userStakingPoolData={stakingPoolForView.userData.staked}
-                  userUnstakingPoolData={stakingPoolForView.userData.unstaked}
-                />
-              )
-          }
-
-          <div className='fixed bottom-0 left-0 flex md:hidden justify-between w-full gap-1'>
-            {
-              isWalletConnected ? (
-                <>
-                  {
-                    mobileShowClaims && (
-                        <Button
-                          type="default"
-                          size="large"
-                          className='btn-primary-white text-3xl w-full'
-                          onClick={() => {
-                            setMobileShowClaims(false);
-                          }}
-                        >
-                          <LeftOutlined /> { stakingPoolForView ? stakingPoolForView?.stakingPool.name : "Validators" }
-                        </Button>
-                      )
-                  }
-
-                  {
-                    !mobileShowClaims && stakingPoolForView && (
-                      <Button
-                        type="default"
-                        size="large"
-                        className='btn-primary-white text-3xl w-full'
-                        onClick={() => {
-                          selectStakingPoolForView(null);
-                        }}
-                      >
-                        <LeftOutlined /> Validators
-                      </Button>
-                    )
-                  }
-
-                  {
-                    !mobileShowClaims && (
-                      <Button
-                        type="default"
-                        size="large"
-                        className='btn-primary-cyan text-3xl w-full'
-                        onClick={() => setMobileShowClaims(true)}
-                      >
-                        Claims ({availableForUnstaking.length + pendingUnstaking.length})
-                      </Button>
-                    )
-                  }
-                </>
-              ) : (
-                <Button
-                  type="primary"
-                  onClick={connectWallet}
-                  loading={isWalletConnecting}
-                  className="btn-primary-cyan text-3xl w-full"
-                >
-                  CONNECT WALLET<RightOutlined/>
-                </Button>
-              )
-            }
-          </div>
+        { mobileOverlayContent }
+        { mobileBottomNavition }
       </div>
 
       <Modal
