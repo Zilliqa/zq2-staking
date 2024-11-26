@@ -1,14 +1,7 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import StakingPoolCard from "./stakingPoolCard";
-import { RightOutlined } from '@ant-design/icons';
 
-interface StakingPoolsListProps {
-
-}
-
-const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
-
-}) => {
+const StakingPoolsList: React.FC = () => {
   const {
     combinedStakingPoolsData,
     selectStakingPoolForView,

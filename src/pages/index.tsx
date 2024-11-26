@@ -1,12 +1,13 @@
-import { Button, Modal } from 'antd';
-import { RightOutlined, ArrowRightOutlined, CloseCircleOutlined, WalletOutlined, LeftOutlined } from '@ant-design/icons';
+import LoginView from '@/components/loginView';
+import StakingPoolDetailsView from '@/components/stakingPoolDetailsView';
+import StakingPoolsList from '@/components/stakingPoolsList';
+import WithdrawZilView from '@/components/withdrawZilView';
 import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
 import { WalletConnector } from '@/contexts/walletConnector';
-import StakingPoolsList from '@/components/stakingPoolsList';
-import StakingPoolDetailsView from '@/components/stakingPoolDetailsView';
-import LoginView from '@/components/loginView';
-import WithdrawZilView from '@/components/withdrawZilView';
 import { formatAddress } from '@/misc/formatting';
+import { LeftOutlined, RightOutlined, WalletOutlined } from '@ant-design/icons';
+import { Button, Modal } from 'antd';
+import Image from 'next/image';
 import { useState } from 'react';
 
 const HomePage = () => {
@@ -146,7 +147,13 @@ const HomePage = () => {
         <div className="flex max-w-screen-2xl w-full justify-between px-4">
 
           <div className="flex items-center">
-            <img src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg" alt="Zilliqa Logo" className="h-8 w-auto" />
+            <Image
+              src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg"
+              alt="Zilliqa Logo"
+              width={32}
+              height={32}
+              className="h-8 w-auto"
+            />
           </div>
 
           <div className="flex items-center space-x-4">
