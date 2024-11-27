@@ -31,3 +31,59 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer components {
+  .btn-primary-white {
+    @apply !py-5 px-5 !bg-white !text-black font-semibold rounded-lg !border-0 cursor-pointer;
+    
+    &:hover {
+      @apply !bg-[#00D0C6];
+    }
+
+    &:disabled {
+      @apply !bg-[#202025] !text-[#686A6C] cursor-not-allowed;
+    }
+  }
+
+  .btn-primary-cyan {
+    @apply py-2 px-5 !bg-[#00D0C6] !text-black font-semibold rounded-lg border-0 cursor-pointer;
+    
+    &:hover {
+      @apply !bg-white;
+    }
+
+    &:disabled {
+      @apply !bg-[#202025] !text-[#686A6C] cursor-not-allowed;
+    }
+  }
+
+  .btn-custom-white-text {
+    @apply py-2 px-5 !bg-transparent !text-white rounded-lg border-0 cursor-pointer;
+    
+    &:hover {
+      @apply !bg-white;
+    }
+
+    &:disabled {
+      @apply !bg-[#202025] !text-[#686A6C] cursor-not-allowed;
+    }
+  }
+}
+
+.gradient-bg-1 {
+  background: linear-gradient(129.93deg, rgba(175, 175, 175, 0.12) 16.6%, rgba(17, 243, 179, 0.12) 90.65%);
+}
+
+.gradient-bg-2 {
+  background: linear-gradient(314.92deg, rgba(12, 34, 49, 0.4) 2.58%, rgba(17, 39, 49, 0.4) 47.47%, rgba(12, 22, 31, 0.4) 97.04%);
+}
+
+.border-gradient-1 {
+  border-image-slice: 1;
+  border-image-source: linear-gradient(270deg, #00DABA 8%, #4AA1A3 23%, #8A7191 36%, #B15485 46%, #C14981 51%, #A73993 62%, #8726AA 78%, #741BB7 91%, #6D17BD 100%);  
+}
+
+.border-gradient-2 {
+  border-image-slice: 1;
+  border-image-source: linear-gradient(270deg, #00DABA 8%, #4AA1A3 23%, #8A7191 36%, #B15485 46%, #C14981 51%, #A73993 62%, #8726AA 78%, #741BB7 91%, #6D17BD 100%);
+}

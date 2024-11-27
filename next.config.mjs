@@ -14,6 +14,14 @@ const nextConfig = {
     "rc-tree",
     "rc-table",
   ],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
