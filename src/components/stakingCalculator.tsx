@@ -59,7 +59,7 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
               status={ !zilToStakeOk ? "error" : undefined }
             />
             <div className='text-xs ml-2 mt-3'>
-              ~{formattedZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.zilToTokenRate)} {stakingPoolForView.stakingPool.tokenSymbol} + {formatPercentage(stakingPoolForView!.stakingPool.apy)} APY
+              ~{formattedZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.zilToTokenRate)} {stakingPoolForView.stakingPool.tokenSymbol} + {formatPercentage(stakingPoolForView!.stakingPool.apr)} APR
             </div>
             
           </div>
@@ -76,7 +76,7 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
         
         <div className="flex justify-between my-3">
           <p className="text-gray-500">Max transaction cost {zilToStake ? '0.01' : '0' }$</p>
-          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForView!.stakingPool.apy)}</p>
+          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForView!.stakingPool.apr)}</p>
         </div>
 
         <div className='flex my-5'>

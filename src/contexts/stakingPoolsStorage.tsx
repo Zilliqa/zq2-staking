@@ -15,7 +15,7 @@ export interface StakingPoolDefinition {
 
 export interface StakingPoolData extends StakingPoolDefinition {
   tvl: number;
-  apy: number;
+  apr: number;
   commission: number;
   votingPower: number;
   zilToTokenRate: number;
@@ -45,7 +45,7 @@ const useStakingPoolsStorage = () => {
       id: "pool1",
       name: "Avely",
       tvl: 3621786,
-      apy: 0.135,
+      apr: 0.135,
       address: "0x1234567890234567890234567890234567890",
       commission: 0.1,
       tokenSymbol: "avZIL",
@@ -57,7 +57,7 @@ const useStakingPoolsStorage = () => {
       id: "pool2",
       name: "Plunderswap",
       tvl: 0,
-      apy: 0.21,
+      apr: 0.21,
       address: "0x82245678902345678902345678918278372382",
       commission: 0.011,
       tokenSymbol: "plZIL",
@@ -69,7 +69,7 @@ const useStakingPoolsStorage = () => {
       id: "pool3",
       name: "IgniteDao",
       tvl: 98173829,
-      apy: 1.1,
+      apr: 1.1,
       address: "0x96525678902345678902345678918278372212",
       commission: 0.05,
       tokenSymbol: "igZIL",
@@ -81,7 +81,7 @@ const useStakingPoolsStorage = () => {
       id: "pool4",
       name: "ADAMine",
       tvl: 100,
-      apy: 0.13,
+      apr: 0.13,
       address: "0x965256789023456789023456789182783K92Uh",
       commission: 0.01,
       tokenSymbol: "adaZIL",

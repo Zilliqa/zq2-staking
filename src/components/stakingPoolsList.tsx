@@ -11,7 +11,7 @@ const StakingPoolsList: React.FC = () => {
   return (
     <>
       <div className="flex items-center mb-3">
-        <div className="text-4xl font-bold">
+        <div className="h3 text-white2">
           Liquid Validators
         </div>
       </div>
