@@ -35,7 +35,7 @@ body {
 @layer components {
   .btn-primary-white {
     @apply !py-5 px-5 !bg-white !text-black font-semibold rounded-lg !border-0 cursor-pointer;
-    
+
     &:hover {
       @apply !bg-[#00D0C6];
     }
@@ -47,7 +47,7 @@ body {
 
   .btn-primary-cyan {
     @apply py-2 px-5 !bg-[#00D0C6] !text-black font-semibold rounded-lg border-0 cursor-pointer;
-    
+
     &:hover {
       @apply !bg-white;
     }
@@ -59,7 +59,7 @@ body {
 
   .btn-custom-white-text {
     @apply py-2 px-5 !bg-transparent !text-white rounded-lg border-0 cursor-pointer;
-    
+
     &:hover {
       @apply !bg-white;
     }
@@ -68,22 +68,252 @@ body {
       @apply !bg-[#202025] !text-[#686A6C] cursor-not-allowed;
     }
   }
+
+  .caption {
+    @apply font-int-medium text-14 leading-5 tracking-2 text-gray1;
+  }
+
+  .base {
+    @apply font-int-bold text-16 leading-6 tracking--1 text-gray2;
+  }
+
+  .base2 {
+    @apply font-int-bold text-15 leading-11 tracking--1 text-gray1;
+  }
+
+  .titles {
+    @apply font-int-bold text-18 leading-9 tracking--1 text-black1;
+  }
+
+  .body2-bold {
+    @apply font-int-bold text-20 leading-8 tracking--2 text-gray2;
+  }
+
+  .body2 {
+    @apply font-int-medium text-20 leading-8 tracking--2 text-gray2;
+  }
+
+  .body1 {
+    @apply font-int-bold text-24 leading-8 tracking--2 text-gray2;
+  }
+
+  .h4 {
+    @apply font-int-extrabold text-32 leading-10 tracking--2 text-black1;
+  }
+
+  .h3 {
+    @apply font-int-extrabold text-48 leading-12 tracking--2 text-black1;
+  }
+
+  .h2 {
+    @apply font-int-extrabold text-64 leading-16 tracking--2 text-black2;
+  }
+
+  .h1 {
+    @apply font-int-extrabold text-80 leading-20 tracking--2 text-black2;
+  }
+
+  .hero {
+    @apply font-int-extrabold text-104 leading-26 text-black2;
+  }
+
+  .opacity-hover {
+    @apply hover:opacity-70 duration-300 ease-in-out;
+  }
+}
+
+.gradient-bottom-border {
+  background: linear-gradient(
+    270deg,
+    #00daba 8%,
+    #4aa1a3 23%,
+    #8a7191 36%,
+    #b15485 46%,
+    #c14981 51%,
+    #a73993 62%,
+    #8726aa 78%,
+    #741bb7 91%,
+    #6d17bd 100%
+  );
+  border-radius: 10px;
+  position: relative;
+}
+
+.gradient-bottom-border::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 1px;
+  background: black;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: 0;
+}
+
+.gradient-bottom-border .content {
+  background: linear-gradient(
+    129.93deg,
+    rgba(175, 175, 175, 0.12) 16.6%,
+    rgba(17, 243, 179, 0.12) 90.65%
+  );
+  border-radius: 10px;
+  padding: 19.5px 30px 20.5px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.gradient-bottom-border-hover:hover {
+  border-bottom: 1px solid;
+  background: radial-gradient(
+    120.62% 683.52% at 110.84% 156.15%,
+    #c5fffd 6.84%,
+    rgba(111, 255, 194, 0.760784) 48.36%,
+    #00daba 100%
+  );
+  border-radius: 10px;
+  position: relative;
+}
+.gradient-bottom-border-hover:hover::before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 1px;
+  background: black;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: 0;
+}
+.gradient-bottom-border-hover:hover .content-hover:hover {
+  background: linear-gradient(
+    314.92deg,
+    rgba(12, 34, 49, 0.4) 2.58%,
+    rgba(17, 39, 49, 0.4) 47.47%,
+    rgba(12, 22, 31, 0.4) 97.04%
+  );
+
+  border-radius: 10px;
+  padding: 20px 30px 20px 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .gradient-bg-1 {
-  background: linear-gradient(129.93deg, rgba(175, 175, 175, 0.12) 16.6%, rgba(17, 243, 179, 0.12) 90.65%);
+  background: linear-gradient(
+    129.93deg,
+    rgba(175, 175, 175, 0.12) 16.6%,
+    rgba(17, 243, 179, 0.12) 90.65%
+  );
 }
 
 .gradient-bg-2 {
-  background: linear-gradient(314.92deg, rgba(12, 34, 49, 0.4) 2.58%, rgba(17, 39, 49, 0.4) 47.47%, rgba(12, 22, 31, 0.4) 97.04%);
+  background: linear-gradient(
+    314.92deg,
+    rgba(12, 34, 49, 0.4) 2.58%,
+    rgba(17, 39, 49, 0.4) 47.47%,
+    rgba(12, 22, 31, 0.4) 97.04%
+  );
 }
 
 .border-gradient-1 {
   border-image-slice: 1;
-  border-image-source: linear-gradient(270deg, #00DABA 8%, #4AA1A3 23%, #8A7191 36%, #B15485 46%, #C14981 51%, #A73993 62%, #8726AA 78%, #741BB7 91%, #6D17BD 100%);  
+  border-image-source: linear-gradient(
+    270deg,
+    #00daba 8%,
+    #4aa1a3 23%,
+    #8a7191 36%,
+    #b15485 46%,
+    #c14981 51%,
+    #a73993 62%,
+    #8726aa 78%,
+    #741bb7 91%,
+    #6d17bd 100%
+  );
 }
 
 .border-gradient-2 {
   border-image-slice: 1;
-  border-image-source: linear-gradient(270deg, #00DABA 8%, #4AA1A3 23%, #8A7191 36%, #B15485 46%, #C14981 51%, #A73993 62%, #8726AA 78%, #741BB7 91%, #6D17BD 100%);
+  border-image-source: linear-gradient(
+    270deg,
+    #00daba 8%,
+    #4aa1a3 23%,
+    #8a7191 36%,
+    #b15485 46%,
+    #c14981 51%,
+    #a73993 62%,
+    #8726aa 78%,
+    #741bb7 91%,
+    #6d17bd 100%
+  );
+}
+
+@font-face {
+  font-family: 'interLight';
+  src: url(../assets/fonts/inter-light-webfont.eot);
+  src: url(../assets/fonts/inter-light-webfont.eot?#iefix)
+      format('embedded-opentype'),
+    url(../assets/fonts/inter-light-webfont.woff2) format('woff2'),
+    url(../assets/fonts/inter-light-webfont.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'interRegular';
+  src: url(../assets/fonts/inter-variablefont_slntwght-webfont.eot);
+  src: url(../assets/fonts/inter-variablefont_slntwght-webfont.eot?#iefix)
+      format('embedded-opentype'),
+    url(../assets/fonts/inter-variablefont_slntwght-webfont.woff2)
+      format('woff2'),
+    url(../assets/fonts/inter-variablefont_slntwght-webfont.woff)
+      format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'interMedium';
+  src: url(../assets/fonts/inter-medium-webfont.eot);
+  src: url(../assets/fonts/inter-medium-webfont.eot?#iefix)
+      format('embedded-opentype'),
+    url(../assets/fonts/inter-medium-webfont.woff2) format('woff2'),
+    url(../assets/fonts/inter-medium-webfont.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'interSemiBold';
+  src: url(../assets/fonts/inter-semibold-webfont.eot);
+  src: url(../assets/fonts/inter-semibold-webfont.eot?#iefix)
+      format('embedded-opentype'),
+    url(../assets/fonts/inter-semibold-webfont.woff2) format('woff2'),
+    url(../assets/fonts/inter-semibold-webfont.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'interBold';
+  src: url(../assets/fonts/inter-bold-webfont.eot);
+  src: url(../assets/fonts/inter-bold-webfont.eot?#iefix)
+      format('embedded-opentype'),
+    url(../assets/fonts/inter-bold-webfont.woff2) format('woff2'),
+    url(../assets/fonts/inter-bold-webfont.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'interExtraBold';
+  src: url(../assets/fonts/inter18pt-ExtraBold.eot);
+  src: url(../assets/fonts/inter18pt-ExtraBold.eot?#iefix)
+      format('embedded-opentype'),
+    url(../assets/fonts/inter18pt-ExtraBold.woff2) format('woff2'),
+    url(../assets/fonts/inter18pt-ExtraBold.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
 }

@@ -80,7 +80,7 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
         
         <div className="flex justify-between my-3">
           <p className="text-gray-500">Max transaction cost {zilToUnstake ? '0.01' : '0' }$</p>
-          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForView!.stakingPool.apy)}</p>
+          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForView!.stakingPool.apr)}</p>
         </div>
 
         {
