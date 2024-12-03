@@ -34,18 +34,18 @@ const HomePage = () => {
   const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false);
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className='absolute md:hidden top-0 left-0 z-25 h-full w-full bg-black w-full p-4 pt-[5em]'>
+    <div className='absolute lg:hidden top-0 left-0 z-25 h-full w-full bg-black p-4 pt-[5em]'>
       {children}
     </div>
   )
 
   const desktopColumnContent = (
-    <div className="hidden md:grid h-full">
+    <div className="hidden lg:grid h-full">
       {
         !isWalletConnected ? (
           <LoginView />
         ) : stakingPoolForView ? (
-          <div className="bg-black p-5 rounded-lg">
+          <div className="bg-black xs:p-5 rounded-lg">
             <StakingPoolDetailsView
               selectStakingPoolForStaking={(stakingPoolId) => {
                 selectStakingPoolForView(null);
@@ -78,7 +78,7 @@ const HomePage = () => {
     )
 
   const mobileBottomNavition = (
-    <div className='fixed bottom-0 left-0 flex md:hidden justify-between w-full gap-1'>
+    <div className='fixed bottom-0 left-0 flex lg:hidden justify-between w-full gap-1'>
       {
         isWalletConnected ? (
           <>
@@ -193,9 +193,9 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="relative max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 h-screen gap-5 px-4 pt-[5em]">
+      <div className="relative max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-2 h-screen gap-5 px-4 pt-[5em]">
         {/* Left column */}
-        <div className="bg-black p-5 rounded-lg">
+        <div className="bg-black xs:p-5 rounded-lg">
           <StakingPoolsList />
         </div>
 

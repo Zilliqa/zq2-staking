@@ -34,9 +34,11 @@ const config: Config = {
         red1:'#D92D20'
       },
       fontSize:{
+        '12': '12px',
         '14': '14px',
         '15': '15px',
         '16': '16px',
+        '18': '18px',
         '20': '20px',
         '24': '24px',
         '32': '32px',
@@ -55,13 +57,7 @@ const config: Config = {
       },
       borderRadius: {
         '10': "10px"
-      },
-      letterSpacing: {
-        '-2': '-2%',
-        '-1': '-1%',
-        '1': '1%',
-        '2': '2%'
-      },
+      }, 
       lineHeight:{
         '11': '44px',
         '12': '48px',
@@ -71,6 +67,9 @@ const config: Config = {
       },
       padding:{
         '7.5': '30px'
+      },
+      screens:{
+        xs: '450px'
       }
     },
   },
