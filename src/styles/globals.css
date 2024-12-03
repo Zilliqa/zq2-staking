@@ -70,47 +70,47 @@ body {
   }
 
   .caption {
-    @apply font-int-medium text-14 leading-5 tracking-2 text-gray1;
+    @apply font-int-medium text-14 leading-5  text-gray1;
   }
 
   .base {
-    @apply font-int-bold text-14 md:text-16 leading-5 md:leading-6 tracking--1 text-gray2;
+    @apply font-int-semibold  text-12 xs:text-14 md:text-16 leading-5 md:leading-6  text-gray2;
   }
 
   .base2 {
-    @apply font-int-bold text-14 md:text-15 leading-11 tracking--1 text-gray1;
+    @apply font-int-semibold text-12 xs:text-14 md:text-15 leading-8 md:leading-11  text-gray1;
   }
 
   .titles {
-    @apply font-int-bold text-18 leading-9 tracking--1 text-black1;
+    @apply font-int-bold text-18 leading-9  text-black1;
   }
 
   .body2-bold {
-    @apply font-int-bold text-20 leading-8 tracking--2 text-gray2;
+    @apply font-int-bold text-20 leading-8  text-gray2;
   }
 
   .body2 {
-    @apply font-int-medium text-20 leading-8 tracking--2 text-gray2;
+    @apply font-int-medium text-20 leading-8  text-gray2;
   }
 
   .body1 {
-    @apply font-int-bold text-24 leading-8 tracking--2 text-gray2;
+    @apply font-int-bold text-24 leading-8  text-gray2;
   }
 
   .h4 {
-    @apply font-int-extrabold text-32 leading-10 tracking--2 text-black1;
+    @apply font-int-extrabold text-20 xs:text-24 md:text-32 leading-8 md:leading-10  text-black1;
   }
 
   .h3 {
-    @apply font-int-extrabold text-32 md:text-48 leading-10 md:leading-12 tracking--2 text-black1;
+    @apply font-int-extrabold text-32 md:text-48 leading-10 md:leading-12  text-black1;
   }
 
   .h2 {
-    @apply font-int-extrabold text-20 md:text-64 leading-6 md:leading-16 tracking--2 text-black2;
+    @apply font-int-extrabold text-64 leading-16  text-black2;
   }
 
   .h1 {
-    @apply font-int-extrabold text-80 leading-20 tracking--2 text-black2;
+    @apply font-int-extrabold text-80 leading-20  text-black2;
   }
 
   .hero {
@@ -122,87 +122,86 @@ body {
   }
 }
 
-.gradient-bottom-border {
-  background: linear-gradient(
-    270deg,
-    #00daba 8%,
-    #4aa1a3 23%,
-    #8a7191 36%,
-    #b15485 46%,
-    #c14981 51%,
-    #a73993 62%,
-    #8726aa 78%,
-    #741bb7 91%,
-    #6d17bd 100%
-  );
-  border-radius: 10px;
-  position: relative;
-}
+@media (min-width: 768px) {
+  .gradient-bottom-border {
+    background: linear-gradient(
+      270deg,
+      #00daba 8%,
+      #4aa1a3 23%,
+      #8a7191 36%,
+      #b15485 46%,
+      #c14981 51%,
+      #a73993 62%,
+      #8726aa 78%,
+      #741bb7 91%,
+      #6d17bd 100%
+    );
+    border-radius: 10px;
+    position: relative;
+  }
 
-.gradient-bottom-border::before {
-  content: '';
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 1px;
-  background: black;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  z-index: 0;
-}
+  .gradient-bottom-border::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 1px;
+    background: black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 0;
+  }
+  .gradient-bottom-border .content {
+    padding: 19.5px 30px 20.5px 20px;
+    background: linear-gradient(
+      129.93deg,
+      rgba(175, 175, 175, 0.12) 16.6%,
+      rgba(17, 243, 179, 0.12) 90.65%
+    );
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .gradient-bottom-border-hover:hover {
+    border-bottom: 1px solid;
+    background: radial-gradient(
+      120.62% 683.52% at 110.84% 156.15%,
+      #c5fffd 6.84%,
+      rgba(111, 255, 194, 0.760784) 48.36%,
+      #00daba 100%
+    );
+    border-radius: 10px;
+    position: relative;
+  }
+  .gradient-bottom-border-hover:hover::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 1px;
+    background: black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 0;
+  }
 
-.gradient-bottom-border .content {
-  padding: 10px 10px 10px 20px;
-  @media (min-width:768px) {
-  padding: 19.5px 30px 20.5px 20px;
-  background: linear-gradient(
-    129.93deg,
-    rgba(175, 175, 175, 0.12) 16.6%,
-    rgba(17, 243, 179, 0.12) 90.65%
-  );
-  border-radius: 10px;
-  position: relative;
-  z-index: 1;
-}
-}
-
-.gradient-bottom-border-hover:hover {
-  border-bottom: 1px solid;
-  background: radial-gradient(
-    120.62% 683.52% at 110.84% 156.15%,
-    #c5fffd 6.84%,
-    rgba(111, 255, 194, 0.760784) 48.36%,
-    #00daba 100%
-  );
-  border-radius: 10px;
-  position: relative;
-}
-.gradient-bottom-border-hover:hover::before {
-  content: '';
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 1px;
-  background: black;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  z-index: 0;
-}
-.gradient-bottom-border-hover:hover .content-hover:hover {
-  padding: 10px 10px 10px 20px;
-  @media (min-width:768px) {
-  background: linear-gradient(
-    314.92deg,
-    rgba(12, 34, 49, 0.4) 2.58%,
-    rgba(17, 39, 49, 0.4) 47.47%,
-    rgba(12, 22, 31, 0.4) 97.04%
-  );
-  border-radius: 10px;
-  padding: 20px 30px 20px 20px;
-  position: relative;
-  z-index: 1;
+  .gradient-bottom-border-hover:hover .content-hover { 
+    position: relative;
+    z-index: 1;
+  }
+  .gradient-bottom-border-hover:hover .content-hover:hover {
+    background: linear-gradient(
+      314.92deg,
+      rgba(12, 34, 49, 0.4) 2.58%,
+      rgba(17, 39, 49, 0.4) 47.47%,
+      rgba(12, 22, 31, 0.4) 97.04%
+    );
+    border-radius: 10px;
+    padding: 20px 30px 20px 20px;
+    position: relative;
+    z-index: 1;
   }
 }
 

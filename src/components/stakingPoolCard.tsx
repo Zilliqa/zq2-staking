@@ -31,7 +31,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         className={`${
           isStakingPoolSelected
             ? 'content'
-            : 'content-hover px-2.5 pt-2.5 pb-5 md:py-[20px] md:pl-5 md:pr-7.5'
+            : 'content-hover max-xs:hover:px-2.5 px-2.5 pt-2.5 pb-5 md:py-[20px] md:pl-5 md:pr-7.5'
         } flex justify-between`}
       >
         <Image
@@ -42,8 +42,8 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
           height={72}
         />
         <div className="grid w-full">
-          <div className="flex justify-between">
-            <div className="flex">
+          <div className="flex justify-between items-center mb-2">
+            <div className="flex ">
               <h3 className="h4 text-white2">
                 {stakingPoolData.name}
               </h3>
@@ -63,7 +63,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               )}
             </div>
             <Image
-              className=" rounded-10 h-[40px] w-[40px] md:hidden block"
+              className=" rounded-10 h[30px] w-[30px] xs:h-[40px] xs:w-[40px] md:hidden block"
               src={stakingPoolData.iconUrl}
               alt={`${stakingPoolData.name} icon`}
               width={40}
@@ -75,17 +75,17 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
             <div className="flex md:justify-between md:w-full">
               <div className="flex max-md:order-2">
                 <div
-                  className={`base max-md:ml-6 ${
-                    stakingPoolData.votingPower * 100 >= 70
-                      ? 'text-gray4'
-                      : stakingPoolData.votingPower * 100 >= 40
+                  className={`base max-xs:ml-2 xs:max-md:ml-6 ${
+                    stakingPoolData.votingPower * 100 >= 50
+                      ? 'text-red1'
+                      : stakingPoolData.votingPower * 100 >= 30
                       ? 'text-orange1'
-                      : 'text-red1'
+                      : 'text-gray4'
                   }`}
                 >
                   VP {stakingPoolData.votingPower * 100}%
                 </div>
-                <div className="base ml-6 text-gray4">
+                <div className="base ml-2 xs:ml-6 text-gray4">
                   Commission:{' '}
                   {Math.floor(stakingPoolData.commission * 100)}%
                 </div>

@@ -45,7 +45,7 @@ const HomePage = () => {
         !isWalletConnected ? (
           <LoginView />
         ) : stakingPoolForView ? (
-          <div className="bg-black p-5 rounded-lg">
+          <div className="bg-black p-2 xs:p-5 rounded-lg">
             <StakingPoolDetailsView
               selectStakingPoolForStaking={(stakingPoolId) => {
                 selectStakingPoolForView(null);
@@ -195,7 +195,7 @@ const HomePage = () => {
 
       <div className="relative max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 h-screen gap-5 px-4 pt-[5em]">
         {/* Left column */}
-        <div className="bg-black p-5 rounded-lg">
+        <div className="bg-black p-2 xs:p-5 rounded-lg">
           <StakingPoolsList />
         </div>
 
