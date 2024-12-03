@@ -3,25 +3,12 @@
 import { useEffect, useState } from "react";
 import { createContainer } from "./context";
 import { WalletConnector } from "./walletConnector";
-import { dummyWallets } from "./dummyWalletsData";
 import { DateTime } from "luxon";
 import { StakingPool, stakingPoolsConfigForChainId } from "@/misc/stakingPoolsConfig";
 import { MOCK_CHAIN } from "@/misc/chainConfig";
-
-export interface UserStakingPoolData {
-  address: string;
-  stakedZil: number;
-  rewardAcumulated: number;
-}
-
-export interface UserUnstakingPoolData {
-  address: string;
-  unstakedZil: number;
-  availableAt: DateTime;
-}
+import { getWalletStakingData, getWalletUnstakingData, UserStakingPoolData, UserUnstakingPoolData } from "@/misc/walletsConfig";
 
 const useStakingPoolsStorage = () => {
-
   const {
     walletAddress,
   } = WalletConnector.useContainer();
@@ -36,18 +23,18 @@ const useStakingPoolsStorage = () => {
   const [stakingPoolForStaking, setStakingPoolForStaking] = useState<StakingPool | null>(null);
   const [stakingPoolForUnstaking, setStakingPoolForUnstaking] = useState<StakingPool | null>(null);
 
-  useEffect(() => {
-    if (!walletAddress) {
-      setUserStakingPoolsData([]);
-      return
-    }
+  useEffect(
+    function triggerUserDataLoadingOnWalletConnect() {
+      if (!walletAddress) {
+        setUserStakingPoolsData([]);
+        return
+      }
 
-    const dummyWallet = dummyWallets.find((wallet) => wallet.address === walletAddress);
-
-    setUserStakingPoolsData(dummyWallet?.stakedZil || []);
-    setUserUnstakesData(dummyWallet?.unstakedZil || []);
-
-  }, [walletAddress]);
+      getWalletStakingData(walletAddress).then(setUserStakingPoolsData).catch(console.error);
+      getWalletUnstakingData(walletAddress).then(setUserUnstakesData).catch(console.error);
+    },
+    [walletAddress]
+  );
 
   useEffect(
     function populateStakingPoolsDefinitionsAndTriggerDataLoading () {
@@ -77,7 +64,7 @@ const useStakingPoolsStorage = () => {
         }
       )
     }));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(
     function updateStakingForViewOnStakingPoolsDataChange () {

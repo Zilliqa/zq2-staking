@@ -1,6 +1,6 @@
-import { UserUnstakingPoolData } from "@/contexts/stakingPoolsStorage";
 import { formattedTokenValueInZil, getHumanFormDuration } from "@/misc/formatting";
 import { StakingPool } from "@/misc/stakingPoolsConfig";
+import { UserUnstakingPoolData } from "@/misc/walletsConfig";
 import { Button } from "antd";
 import { DateTime } from "luxon";
 

@@ -1,8 +1,6 @@
-import {
-  UserStakingPoolData,
-} from '@/contexts/stakingPoolsStorage';
 import { formatPercentage } from '@/misc/formatting';
 import { StakingPool } from '@/misc/stakingPoolsConfig';
+import { UserStakingPoolData } from '@/misc/walletsConfig';
 import Image from 'next/image';
 
 interface StakingPoolCardProps {

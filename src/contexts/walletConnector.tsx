@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { createContainer } from "./context";
-import { DummyWallet } from "./dummyWalletsData";
+import { DummyWallet } from "@/misc/walletsConfig";
 
 const useWalletConnector = () => {
 

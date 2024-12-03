@@ -1,10 +1,10 @@
 import StakingCalculator from "@/components/stakingCalculator";
 import UnstakingCalculator from "@/components/unstakingCalculator";
 import WithdrawZilPanel from "@/components/withdrawUnstakedZilPanel";
-import { UserStakingPoolData, UserUnstakingPoolData } from "@/contexts/stakingPoolsStorage";
 import { WalletConnector } from "@/contexts/walletConnector";
 import { formatPercentage } from "@/misc/formatting";
 import { StakingPool } from "@/misc/stakingPoolsConfig";
+import { UserStakingPoolData, UserUnstakingPoolData } from "@/misc/walletsConfig";
 import { DateTime } from "luxon";
 import { useState } from "react";
 
