@@ -44,7 +44,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   }
 
   const colorInfoEntry = (title: string, value: string) => (
-    <div className="pl-3 md:pl-0">
+    <div className="pl-3 lg:pl-0">
       <div className='text-xl text-[#6DD3C2]'>
         { value }
       </div>
@@ -55,7 +55,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   )
 
   const greyInfoEntry = (title: string, value: string) => (
-    <div className="pl-3 md:pl-0">
+    <div className="pl-3 lg:pl-0">
       <div className='text-xl text-gray-500 whitespace-nowrap'>
         { value }
       </div>
@@ -90,7 +90,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         {stakingPoolData.tokenSymbol}
       </span>
 
-      <div className="gradient-bg-2 grid grid-cols-2 md:grid-cols-4 gap-4 md:-mx-5 md:px-10 mt-10 py-3">
+      <div className="gradient-bg-2 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:-mx-5 lg:px-10 mt-10 py-3">
 
         { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to stake", `${zilAvailable} ZIL`) }
         { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Staked", `${userStakingPoolData?.stakedZil || 0} ${stakingPoolData.tokenSymbol}`) }
@@ -103,7 +103,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         { greyInfoEntry("Rate", `ZIL = ${stakingPoolData.zilToTokenRate} ${stakingPoolData.tokenSymbol}`) }
       </div>
 
-      <div className="grid grid-cols-3 md:-mx-5 my-5">
+      <div className="grid grid-cols-3 lg:-mx-5 my-5">
         {
           ['Stake', 'Unstake', 'Claim'].map((pane) => (
             <div

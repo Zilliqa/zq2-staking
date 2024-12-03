@@ -10,11 +10,11 @@ const StakingPoolsList: React.FC = () => {
 
   return (
     <>
-      <div className="h3 text-white2 max-md:w-1/4  mb-4">
+      <div className="h3 text-white2 max-lg:w-1/4  mb-4">
         Liquid Validators
       </div>
  
-      <div className="grid grid-cols-1 gap-2.5 md:gap-4">
+      <div className="grid grid-cols-1 gap-2.5 lg:gap-4">
         {combinedStakingPoolsData.map(({ stakingPool, userData }) => (
           <StakingPoolCard
             key={stakingPool.name}

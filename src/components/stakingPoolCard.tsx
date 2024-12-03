@@ -31,11 +31,11 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         className={`${
           isStakingPoolSelected
             ? 'content'
-            : 'content-hover max-xs:hover:px-2.5 px-2.5 pt-2.5 pb-5 md:py-[20px] md:pl-5 md:pr-7.5'
+            : 'content-hover max-xs:hover:px-2.5 px-2.5 pt-2.5 pb-5 lg:py-[20px] lg:pl-5 lg:pr-7.5'
         } flex justify-between`}
       >
         <Image
-          className="mr-4 rounded-10 h-[72px] w-[72px] hidden md:block"
+          className="mr-4 rounded-10 h-[72px] w-[72px] hidden lg:block"
           src={stakingPoolData.iconUrl}
           alt={`${stakingPoolData.name} icon`}
           width={72}
@@ -51,7 +51,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                 {stakingPoolData.tokenSymbol}
               </div>
             </div>
-            <div className="base2 md:block hidden">
+            <div className="base2 lg:block hidden">
               {userStakingPoolData &&
               userStakingPoolData.stakedZil ? (
                 <> 
@@ -63,7 +63,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               )}
             </div>
             <Image
-              className=" rounded-10 h[30px] w-[30px] xs:h-[40px] xs:w-[40px] md:hidden block"
+              className=" rounded-10 h[30px] w-[30px] xs:h-[40px] xs:w-[40px] lg:hidden block"
               src={stakingPoolData.iconUrl}
               alt={`${stakingPoolData.name} icon`}
               width={40}
@@ -72,10 +72,10 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
           </div>
 
           <div className="flex justify-between items-center">
-            <div className="flex md:justify-between md:w-full">
-              <div className="flex max-md:order-2">
+            <div className="flex lg:justify-between lg:w-full">
+              <div className="flex max-lg:order-2">
                 <div
-                  className={`base max-xs:ml-2 xs:max-md:ml-6 ${
+                  className={`base max-xs:ml-2 xs:max-lg:ml-6 ${
                     stakingPoolData.votingPower * 100 >= 50
                       ? 'text-red1'
                       : stakingPoolData.votingPower * 100 >= 30
@@ -90,11 +90,11 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   {Math.floor(stakingPoolData.commission * 100)}%
                 </div>
               </div>
-              <div className="base text-aqua1 max-md:order-1">
+              <div className="base text-aqua1 max-lg:order-1">
                 APR: {formatPercentage(stakingPoolData.apr)}
               </div>
             </div>
-            <div className="base2 block md:hidden">
+            <div className="base2 block lg:hidden">
             {userStakingPoolData && userStakingPoolData.stakedZil ? (
               <>
                 {userStakingPoolData &&

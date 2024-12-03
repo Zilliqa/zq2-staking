@@ -74,11 +74,11 @@ body {
   }
 
   .base {
-    @apply font-int-semibold  text-12 xs:text-14 md:text-16 leading-5 md:leading-6  text-gray2;
+    @apply font-int-semibold  text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray2;
   }
 
   .base2 {
-    @apply font-int-semibold text-12 xs:text-14 md:text-15 leading-8 md:leading-11  text-gray1;
+    @apply font-int-semibold text-12 xs:text-14 lg:text-15 leading-8 lg:leading-11  text-gray1;
   }
 
   .titles {
@@ -98,11 +98,11 @@ body {
   }
 
   .h4 {
-    @apply font-int-extrabold text-20 xs:text-24 md:text-32 leading-8 md:leading-10  text-black1;
+    @apply font-int-extrabold text-20 xs:text-24 lg:text-32 leading-8 lg:leading-10  text-black1;
   }
 
   .h3 {
-    @apply font-int-extrabold text-32 md:text-48 leading-10 md:leading-12  text-black1;
+    @apply font-int-extrabold text-32 lg:text-48 leading-10 lg:leading-12  text-black1;
   }
 
   .h2 {
@@ -122,7 +122,7 @@ body {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .gradient-bottom-border {
     background: linear-gradient(
       270deg,
