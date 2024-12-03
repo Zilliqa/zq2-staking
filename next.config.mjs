@@ -6,13 +6,14 @@ const nextConfig = {
     defaultLocale: "en",
   },
   transpilePackages: [
-    "antd",
     "@ant-design",
+    "antd",
+    "rc-input",
     "rc-pagination",
-    "rc-util",
     "rc-picker",
-    "rc-tree",
     "rc-table",
+    "rc-tree",
+    "rc-util",
   ],
   images: {
     remotePatterns: [

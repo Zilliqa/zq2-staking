@@ -43,7 +43,7 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
 
   const zilToStakeNumber = parseFloat(zilToStake);
   const zilToStakeOk =  !isNaN(zilToStakeNumber) && zilToStakeNumber <= zilAvailable;
-  const canStake = zilToStakeNumber > 0 && zilToStakeNumber <= zilAvailable;
+  const canStake = stakingPoolForView?.stakingPool.data && zilToStakeNumber > 0 && zilToStakeNumber <= zilAvailable;
 
   return stakingPoolForView && (
     <>
@@ -58,8 +58,13 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
               suffix="ZIL"
               status={ !zilToStakeOk ? "error" : undefined }
             />
-            <div className='text-xs ml-2 mt-3'>
-              ~{formattedZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.zilToTokenRate)} {stakingPoolForView.stakingPool.tokenSymbol} + {formatPercentage(stakingPoolForView!.stakingPool.apr)} APR
+            <div className='flex items-center text-xs ml-2 mt-3'>
+              {
+                stakingPoolForView!.stakingPool.data ? <>
+                  ~{formattedZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)} {stakingPoolForView.stakingPool.definition.tokenSymbol} + {formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
+                </> : <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
+              }
+              APR
             </div>
             
           </div>
@@ -71,12 +76,26 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
 
         <div className="flex justify-between my-3">
           <p className="text-lg font-bold">You will receive</p>
-          <p>Reward fee {formatPercentage(stakingPoolForView!.stakingPool.commission)}</p>
+          <p className="flex items-center">
+            Reward fee 
+            {
+              stakingPoolForView!.stakingPool.data ? <>
+                {formatPercentage(stakingPoolForView!.stakingPool.data.commission)}
+              </> : <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
+            }
+          </p>
         </div>
         
         <div className="flex justify-between my-3">
           <p className="text-gray-500">Max transaction cost {zilToStake ? '0.01' : '0' }$</p>
-          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForView!.stakingPool.apr)}</p>
+          <p className="flex items-center text-gray-500">
+            Annual % rate:
+            {
+              stakingPoolForView!.stakingPool.data ? <>
+                {formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
+              </> : <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
+            }
+          </p>
         </div>
 
         <div className='flex my-5'>

@@ -92,11 +92,10 @@ const HomePage = () => {
                       setMobileShowClaims(false);
                     }}
                   >
-                    <LeftOutlined /> { stakingPoolForView ? stakingPoolForView?.stakingPool.name : "Validators" }
+                    <LeftOutlined /> { stakingPoolForView ? stakingPoolForView?.stakingPool.definition.name : "Validators" }
                   </Button>
                 )
             }
-
             {
               !mobileShowClaims && stakingPoolForView && (
                 <Button

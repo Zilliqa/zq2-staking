@@ -1,11 +1,12 @@
-import { StakingPoolData, UserUnstakingPoolData } from "@/contexts/stakingPoolsStorage";
+import { UserUnstakingPoolData } from "@/contexts/stakingPoolsStorage";
 import { formattedTokenValueInZil, getHumanFormDuration } from "@/misc/formatting";
+import { StakingPool } from "@/misc/stakingPoolsConfig";
 import { Button } from "antd";
 import { DateTime } from "luxon";
 
 interface WithdrawZilPanelProps {
   onClaimClick: () => void;
-  stakingPoolData: StakingPoolData;
+  stakingPoolData: StakingPool;
   userUnstakingPoolData?: Array<UserUnstakingPoolData>;
 }
 
@@ -30,9 +31,11 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             (claim, claimIdx) => (
               <div className="rounded-lg gradient-bg-1 p-4" key={claimIdx}>
                 <div className="flex justify-between items-center">
-                  <div>
-                    ~{formattedTokenValueInZil(claim.unstakedZil, stakingPoolData.zilToTokenRate)} ZIL
-                  </div>
+                  {
+                    stakingPoolData.data ? <div>
+                      ~{formattedTokenValueInZil(claim.unstakedZil, stakingPoolData.data.zilToTokenRate)} ZIL
+                    </div> : <div className="w-[4em] h-[1em] animated-gradient" />
+                  }
                   <Button
                     className='btn-primary-cyan text-2xl'
                     onClick={onClaimClick}
@@ -52,9 +55,11 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               <div>
                 {getHumanFormDuration(pendingUnstake[0].availableAt)}
               </div>
-              <div>
-                ~{formattedTokenValueInZil(pendingUnstake[0].unstakedZil, stakingPoolData.zilToTokenRate)} ZIL
-              </div>
+              {
+                stakingPoolData.data ? <div>
+                  ~{formattedTokenValueInZil(pendingUnstake[0].unstakedZil, stakingPoolData.data.zilToTokenRate)} ZIL
+                </div> : <div className="w-[4em] h-[1em] animated-gradient" />
+              }
             </div>
           </div>
         ) : (
@@ -74,9 +79,12 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             {
               pendingUnstake?.map((claim, claimIdx) => (
                 <div className="flex justify-between my-2" key={claimIdx}>
-                  <div>
-                    {claim.unstakedZil} {stakingPoolData.tokenSymbol} ~= {formattedTokenValueInZil(claim.unstakedZil, stakingPoolData.zilToTokenRate)} ZILs
-                  </div>
+
+                  {
+                    stakingPoolData.data ? <div>
+                      {claim.unstakedZil} {stakingPoolData.definition.tokenSymbol} ~= {formattedTokenValueInZil(claim.unstakedZil, stakingPoolData.data.zilToTokenRate)} ZILs
+                    </div> : <div className="w-[4em] h-[1em] animated-gradient" />
+                  }
                   <div>
                     {getHumanFormDuration(claim.availableAt)}
                   </div>

@@ -47,7 +47,7 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
 
   const zilToUnstakeNumber = parseFloat(zilToUnstake);
   const zilToUnstakeOk =  !isNaN(zilToUnstakeNumber) && zilToUnstakeNumber <= stakedTokenAvailable;
-  const canUnstake = zilToUnstakeNumber > 0 && zilToUnstakeNumber <= stakedTokenAvailable;
+  const canUnstake = stakingPoolForView?.stakingPool.data && zilToUnstakeNumber > 0 && zilToUnstakeNumber <= stakedTokenAvailable;
 
   return stakingPoolForView && (
     <div className="bg-black">
@@ -59,11 +59,16 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
                 value={zilToUnstake}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                suffix={stakingPoolForView.stakingPool.tokenSymbol}
+                suffix={stakingPoolForView.stakingPool.definition.tokenSymbol}
                 status={ !zilToUnstakeOk ? "error" : undefined }
               />
-              <div className='text-xs ml-2 mt-3'>
-                ~{formattedTokenValueInZil(zilToUnstakeNumber, stakingPoolForView.stakingPool.zilToTokenRate)} ZIL
+              <div className='flex items-center text-xs ml-2 mt-3'>
+                {
+                  stakingPoolForView!.stakingPool.data ? <>
+                    ~{formattedTokenValueInZil(zilToUnstakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)}
+                  </> : <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
+                }
+                ZIL
               </div>
             
           </div>
@@ -74,13 +79,27 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
         </div>
 
         <div className="flex justify-between my-3">
-          <p className="text-lg font-bold">You will receive</p>
-          <p>Reward fee {formatPercentage(stakingPoolForView!.stakingPool.commission)}</p>
+          <p className="flex items-center text-lg font-bold">You will receive</p>
+          <p className="flex items-center">
+            Reward fee
+            {
+              stakingPoolForView!.stakingPool.data ? <>
+                {formatPercentage(stakingPoolForView!.stakingPool.data.commission)}
+              </> : <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
+            }
+          </p>
         </div>
         
         <div className="flex justify-between my-3">
           <p className="text-gray-500">Max transaction cost {zilToUnstake ? '0.01' : '0' }$</p>
-          <p className="text-gray-500">Annual % rate: {formatPercentage(stakingPoolForView!.stakingPool.apr)}</p>
+          <p className="flex items-center text-gray-500">
+            Annual % rate:
+            {
+              stakingPoolForView!.stakingPool.data ? <>
+                {formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
+              </> : <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
+            }
+          </p>
         </div>
 
         {
