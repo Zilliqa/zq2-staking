@@ -34,7 +34,7 @@ const HomePage = () => {
   const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false);
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className='absolute md:hidden top-0 left-0 z-25 h-full w-full bg-black w-full p-4 pt-[5em]'>
+    <div className='absolute md:hidden top-0 left-0 z-25 h-full w-full bg-black p-4 pt-[5em]'>
       {children}
     </div>
   )

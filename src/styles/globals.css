@@ -74,11 +74,11 @@ body {
   }
 
   .base {
-    @apply font-int-bold text-16 leading-6 tracking--1 text-gray2;
+    @apply font-int-bold text-14 md:text-16 leading-5 md:leading-6 tracking--1 text-gray2;
   }
 
   .base2 {
-    @apply font-int-bold text-15 leading-11 tracking--1 text-gray1;
+    @apply font-int-bold text-14 md:text-15 leading-11 tracking--1 text-gray1;
   }
 
   .titles {
@@ -102,11 +102,11 @@ body {
   }
 
   .h3 {
-    @apply font-int-extrabold text-48 leading-12 tracking--2 text-black1;
+    @apply font-int-extrabold text-32 md:text-48 leading-10 md:leading-12 tracking--2 text-black1;
   }
 
   .h2 {
-    @apply font-int-extrabold text-64 leading-16 tracking--2 text-black2;
+    @apply font-int-extrabold text-20 md:text-64 leading-6 md:leading-16 tracking--2 text-black2;
   }
 
   .h1 {
@@ -153,15 +153,18 @@ body {
 }
 
 .gradient-bottom-border .content {
+  padding: 10px 10px 10px 20px;
+  @media (min-width:768px) {
+  padding: 19.5px 30px 20.5px 20px;
   background: linear-gradient(
     129.93deg,
     rgba(175, 175, 175, 0.12) 16.6%,
     rgba(17, 243, 179, 0.12) 90.65%
   );
   border-radius: 10px;
-  padding: 19.5px 30px 20.5px 20px;
   position: relative;
   z-index: 1;
+}
 }
 
 .gradient-bottom-border-hover:hover {
@@ -188,17 +191,19 @@ body {
   z-index: 0;
 }
 .gradient-bottom-border-hover:hover .content-hover:hover {
+  padding: 10px 10px 10px 20px;
+  @media (min-width:768px) {
   background: linear-gradient(
     314.92deg,
     rgba(12, 34, 49, 0.4) 2.58%,
     rgba(17, 39, 49, 0.4) 47.47%,
     rgba(12, 22, 31, 0.4) 97.04%
   );
-
   border-radius: 10px;
   padding: 20px 30px 20px 20px;
   position: relative;
   z-index: 1;
+  }
 }
 
 .gradient-bg-1 {
