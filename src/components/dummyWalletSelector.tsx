@@ -9,8 +9,8 @@ const DummyWalletSelector: React.FC = () => {
 
   const {
     isDummyWalletSelectorOpen,
-    setDummyWallet,
-    disconnectWallet,
+    selectDummyWallet,
+    disconnectDummyWallet,
   } = WalletConnector.useContainer();
 
   const [walletIndex, setValue] = useState(0);
@@ -25,8 +25,8 @@ const DummyWalletSelector: React.FC = () => {
         title="Basic Modal"
         open={isDummyWalletSelectorOpen}
         okText="Connect"
-        onOk={() => setDummyWallet(dummyWallets[walletIndex])}
-        onCancel={disconnectWallet}
+        onOk={() => selectDummyWallet(dummyWallets[walletIndex])}
+        onCancel={disconnectDummyWallet}
         okButtonProps={{ className: 'btn-primary-cyan' }}
       >
         <Radio.Group onChange={selectedWalletChanged} value={walletIndex}>

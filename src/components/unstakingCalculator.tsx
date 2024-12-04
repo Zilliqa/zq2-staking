@@ -5,18 +5,12 @@ import { WalletConnector } from "@/contexts/walletConnector";
 import { formatPercentage, formattedTokenValueInZil } from "@/misc/formatting";
 
 interface UnstakingCalculatorProps {
-  onStakeClick: (zilToStake: number) => void;
+  onUnstakeClick: (zilToStake: number) => void;
 }
 
 const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
-  onStakeClick
+  onUnstakeClick
 }) => {
-  const {
-    connectWallet,
-    isWalletConnecting,
-    isWalletConnected
-  } = WalletConnector.useContainer();
-
   const {
     stakingPoolForView
   } = StakingPoolsStorage.useContainer();
@@ -102,32 +96,18 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
           </p>
         </div>
 
-        {
-          !isWalletConnected ? (
-            <div className="mt-8">
-              <Button
-                onClick={connectWallet}
-                loading={isWalletConnecting}
-                type="primary"
-                className="w-full text-3xl btn-primary-cyan"
-              >
-                Connect Wallet First
-              </Button>
-            </div>
-          ) : (
-            <div className='flex my-5'>
-              <Button
-                type="default"
-                size="large"
-                className='w-full text-3xl btn-primary-white'
-                disabled={!canUnstake}
-                onClick={() => onStakeClick(zilToUnstakeNumber)}
-              >
-                UNSTAKE
-              </Button>
-          </div>
-          )
-        }
+        <div className='flex my-5'>
+          <Button
+            type="default"
+            size="large"
+            className='w-full text-3xl btn-primary-white'
+            disabled={!canUnstake}
+            onClick={() => onUnstakeClick(zilToUnstakeNumber)}
+          >
+            UNSTAKE
+          </Button>
+        </div>
+
       </div>
     </div>
   )

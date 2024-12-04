@@ -42,8 +42,8 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
   };
 
   const zilToStakeNumber = parseFloat(zilToStake);
-  const zilToStakeOk =  !isNaN(zilToStakeNumber) && zilToStakeNumber <= zilAvailable;
-  const canStake = stakingPoolForView?.stakingPool.data && zilToStakeNumber > 0 && zilToStakeNumber <= zilAvailable;
+  const zilToStakeOk =  !isNaN(zilToStakeNumber) && zilToStakeNumber <= (zilAvailable || 0n);
+  const canStake = stakingPoolForView?.stakingPool.data && zilToStakeNumber > 0 && zilToStakeNumber <= (zilAvailable || 0n);
 
   return stakingPoolForView && (
     <>
