@@ -1,12 +1,10 @@
-import {
-  StakingPoolData,
-  UserStakingPoolData,
-} from '@/contexts/stakingPoolsStorage';
 import { formatPercentage } from '@/misc/formatting';
+import { StakingPool } from '@/misc/stakingPoolsConfig';
+import { UserStakingPoolData } from '@/misc/walletsConfig';
 import Image from 'next/image';
 
 interface StakingPoolCardProps {
-  stakingPoolData: StakingPoolData;
+  stakingPoolData: StakingPool;
   userStakingPoolData?: UserStakingPoolData;
   isStakingPoolSelected?: boolean;
   onClick: () => void;
@@ -35,9 +33,9 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         } flex justify-between`}
       >
         <Image
-          className="mr-4 rounded-10 h-[72px] w-[72px] hidden lg:block"
-          src={stakingPoolData.iconUrl}
-          alt={`${stakingPoolData.name} icon`}
+          className="mr-4 rounded-10 h-[72px] w-[72px] hidden md:block"
+          src={stakingPoolData.definition.iconUrl}
+          alt={`${stakingPoolData.definition.name} icon`}
           width={72}
           height={72}
         />
@@ -45,10 +43,10 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
           <div className="flex justify-between items-center mb-2">
             <div className="flex ">
               <h3 className="h4 text-white2">
-                {stakingPoolData.name}
+                {stakingPoolData.definition.name}
               </h3>
               <div className="base2 ml-2.5">
-                {stakingPoolData.tokenSymbol}
+                {stakingPoolData.definition.tokenSymbol}
               </div>
             </div>
             <div className="base2 lg:block hidden">
@@ -63,9 +61,9 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               )}
             </div>
             <Image
-              className=" rounded-10 h[30px] w-[30px] xs:h-[40px] xs:w-[40px] lg:hidden block"
-              src={stakingPoolData.iconUrl}
-              alt={`${stakingPoolData.name} icon`}
+              className=" rounded-10 h[30px] w-[30px] xs:h-[40px] xs:w-[40px] md:hidden block"
+              src={stakingPoolData.definition.iconUrl}
+              alt={`${stakingPoolData.definition.name} icon`}
               width={40}
               height={40}
             />
@@ -74,24 +72,50 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
           <div className="flex justify-between items-center">
             <div className="flex lg:justify-between lg:w-full">
               <div className="flex max-lg:order-2">
-                <div
-                  className={`base max-xs:ml-2 xs:max-lg:ml-6 ${
-                    stakingPoolData.votingPower * 100 >= 50
-                      ? 'text-red1'
-                      : stakingPoolData.votingPower * 100 >= 30
-                      ? 'text-orange1'
-                      : 'text-gray4'
-                  }`}
-                >
-                  VP {stakingPoolData.votingPower * 100}%
-                </div>
-                <div className="base ml-2 xs:ml-6 text-gray4">
-                  Commission:{' '}
-                  {Math.floor(stakingPoolData.commission * 100)}%
+                {
+                  stakingPoolData.data ? (
+                    <div
+                      className={`base max-xs:ml-2 xs:max-md:ml-6 ${
+                        stakingPoolData.data.votingPower * 100 >= 50
+                          ? 'text-red1'
+                          : stakingPoolData.data.votingPower * 100 >= 30
+                          ? 'text-orange1'
+                          : 'text-gray4'
+                      }`}
+                    >
+                      VP {stakingPoolData.data.votingPower * 100}%
+                    </div>
+                  ) : (
+                    <>
+                      <span className='base max-xs:ml-2 xs:max-md:ml-6'>VP</span>
+                      <span className="w-[3em] ml-1 animated-gradient" />
+                    </>
+                  )
+                }
+                <div className="flex base ml-2 xs:ml-6 text-gray4">
+                  Commission{' '}
+                  {
+                    stakingPoolData.data ? (
+                      <>
+                        {Math.floor(stakingPoolData.data.commission * 100)}%
+                      </>
+                    ) : (
+                      <span className="w-[3em] ml-1 animated-gradient" />
+                    )
+                  }
                 </div>
               </div>
-              <div className="base text-aqua1 max-lg:order-1">
-                APR: {formatPercentage(stakingPoolData.apr)}
+              <div className="flex base text-aqua1 max-md:order-1">
+                APR{' '}
+                {
+                  stakingPoolData.data ? (
+                    <>
+                      {formatPercentage(stakingPoolData.data.apr)}
+                    </>
+                  ) : (
+                    <span className="w-[3em] ml-1 animated-gradient" />
+                  )
+                }
               </div>
             </div>
             <div className="base2 block lg:hidden">

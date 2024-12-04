@@ -47,21 +47,29 @@ const WithdrawZilView: React.FC = () => {
                     <div className="flex items-center">
                       <Image
                           className="mr-4 rounded-lg"
-                          src={claim.stakingPool.iconUrl}
-                          alt={`${claim.stakingPool.name} icon`}
+                          src={claim.stakingPool.definition.iconUrl}
+                          alt={`${claim.stakingPool.definition.name} icon`}
                           width={32}
                           height={32}
                         />
                       <div>
-                        {claim.stakingPool.name}
+                        {claim.stakingPool.definition.name}
                       </div>
                     </div>
                     <div className="flex mt-2 ml-1 items-end">
                       <div className="text-xl font-bold">
-                        {claim.unstakeInfo.unstakedZil} {claim.stakingPool.tokenSymbol}
+                        {claim.unstakeInfo.unstakedZil} {claim.stakingPool.definition.tokenSymbol}
                       </div>
                       <div className="text-sm text-gray-400 ml-3">
-                        {formattedTokenValueInZil(claim.unstakeInfo.unstakedZil, claim.stakingPool.zilToTokenRate)} ZIL
+                        {
+                          claim.stakingPool.data ? <>
+                            {formattedTokenValueInZil(claim.unstakeInfo.unstakedZil, claim.stakingPool.data!.zilToTokenRate)} ZIL
+                          </> :
+                          <>
+                            <div className="w-[2em] h-[0.75em] animated-gradient" />
+                          </>
+                        }
+                        
                       </div>
                     </div>
                   </div>

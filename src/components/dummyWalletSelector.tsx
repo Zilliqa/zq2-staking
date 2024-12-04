@@ -1,5 +1,5 @@
-import { dummyWallets } from "@/contexts/dummyWalletsData";
 import { WalletConnector } from "@/contexts/walletConnector";
+import { dummyWallets } from "@/misc/walletsConfig";
 import { Modal, Radio, Space } from "antd";
 import { useState } from "react";
 

@@ -1,5 +1,16 @@
-import { UserStakingPoolData, UserUnstakingPoolData } from "./stakingPoolsStorage";
 import { DateTime } from "luxon";
+
+export interface UserStakingPoolData {
+  address: string;
+  stakedZil: number;
+  rewardAcumulated: number;
+}
+
+export interface UserUnstakingPoolData {
+  address: string;
+  unstakedZil: number;
+  availableAt: DateTime;
+}
 
 export interface DummyWallet {
   name: string;
@@ -123,3 +134,19 @@ export const dummyWallets: Array<DummyWallet> = [
     unstakedZil: [],
   },
 ]
+
+export function getWalletStakingData(wallet: string): Promise<UserStakingPoolData[]> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(dummyWallets.find((dw) => dw.address === wallet)?.stakedZil || []);
+    }, 1000);
+  });
+}
+
+export function getWalletUnstakingData(wallet: string): Promise<UserUnstakingPoolData[]> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(dummyWallets.find((dw) => dw.address === wallet)?.unstakedZil || []);
+    }, 1000);
+  });
+}

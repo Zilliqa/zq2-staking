@@ -17,11 +17,11 @@ const StakingPoolsList: React.FC = () => {
       <div className="grid grid-cols-1 gap-2.5 lg:gap-4">
         {combinedStakingPoolsData.map(({ stakingPool, userData }) => (
           <StakingPoolCard
-            key={stakingPool.name}
+            key={stakingPool.definition.name}
             stakingPoolData={stakingPool}
             userStakingPoolData={userData}
-            isStakingPoolSelected={stakingPoolForView?.stakingPool.id === stakingPool.id}
-            onClick={() => selectStakingPoolForView(stakingPool.id)}
+            isStakingPoolSelected={stakingPoolForView?.stakingPool.definition.id === stakingPool.definition.id}
+            onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
           />
         ))}
       </div>

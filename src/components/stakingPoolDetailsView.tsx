@@ -1,14 +1,15 @@
 import StakingCalculator from "@/components/stakingCalculator";
 import UnstakingCalculator from "@/components/unstakingCalculator";
 import WithdrawZilPanel from "@/components/withdrawUnstakedZilPanel";
-import { StakingPoolData, UserStakingPoolData, UserUnstakingPoolData } from "@/contexts/stakingPoolsStorage";
 import { WalletConnector } from "@/contexts/walletConnector";
 import { formatPercentage } from "@/misc/formatting";
+import { StakingPool } from "@/misc/stakingPoolsConfig";
+import { UserStakingPoolData, UserUnstakingPoolData } from "@/misc/walletsConfig";
 import { DateTime } from "luxon";
 import { useState } from "react";
 
 interface StakingPoolDetailsViewProps {
-  stakingPoolData: StakingPoolData;
+  stakingPoolData: StakingPool;
   userStakingPoolData?: UserStakingPoolData;
   userUnstakingPoolData?: Array<UserUnstakingPoolData>;
   selectStakingPoolForStaking: (stakingPoolId: string) => void;
@@ -43,7 +44,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     setIsDummyWalletPopupOpen(true);
   }
 
-  const colorInfoEntry = (title: string, value: string) => (
+  const colorInfoEntry = (title: string, value: string | null) => (
     <div className="pl-3 lg:pl-0">
       <div className='text-xl text-[#6DD3C2]'>
         { value }
@@ -54,11 +55,17 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     </div>
   )
 
-  const greyInfoEntry = (title: string, value: string) => (
+  const greyInfoEntry = (title: string, value: string | null) => (
     <div className="pl-3 lg:pl-0">
-      <div className='text-xl text-gray-500 whitespace-nowrap'>
-        { value }
-      </div>
+      {
+        value ? (
+          <div className='text-xl text-gray-500 whitespace-nowrap'>
+            { value }
+          </div>
+        ) : (
+          <div className="animated-gradient h-[1.5em] w-[4em]"></div>
+        )
+      }
       <div className='text-gray-500 text-sm whitespace-nowrap'>
         { title }
       </div>
@@ -84,23 +91,23 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   return (
     <div className="relative">
       <span className='text-5xl'>
-        {stakingPoolData.name}
+        {stakingPoolData.definition.name}
       </span>
       <span className='text-xl text-gray-500 ml-2'>
-        {stakingPoolData.tokenSymbol}
+        {stakingPoolData.definition.tokenSymbol}
       </span>
 
       <div className="gradient-bg-2 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:-mx-5 lg:px-10 mt-10 py-3">
 
         { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to stake", `${zilAvailable} ZIL`) }
-        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Staked", `${userStakingPoolData?.stakedZil || 0} ${stakingPoolData.tokenSymbol}`) }
-        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${pendingUnstakesValue} ${stakingPoolData.tokenSymbol}`: "-" ) }
-        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to claim", availableToClaim ? `${availableToClaim} ${stakingPoolData.tokenSymbol}` : "-") }
+        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Staked", `${userStakingPoolData?.stakedZil || 0} ${stakingPoolData.definition.tokenSymbol}`) }
+        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${pendingUnstakesValue} ${stakingPoolData.definition.tokenSymbol}`: "-" ) }
+        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to claim", availableToClaim ? `${availableToClaim} ${stakingPoolData.definition.tokenSymbol}` : "-") }
 
-        { greyInfoEntry("Voting power", formatPercentage(stakingPoolData.votingPower)) }
-        { greyInfoEntry("Total supply", `${stakingPoolData.tvl}`) }
-        { greyInfoEntry("Commission", formatPercentage(stakingPoolData.commission)) }
-        { greyInfoEntry("Rate", `ZIL = ${stakingPoolData.zilToTokenRate} ${stakingPoolData.tokenSymbol}`) }
+        { greyInfoEntry("Voting power", stakingPoolData.data && formatPercentage(stakingPoolData.data.votingPower)) }
+        { greyInfoEntry("Total supply", stakingPoolData.data && `${stakingPoolData.data.tvl}`) }
+        { greyInfoEntry("Commission", stakingPoolData.data && formatPercentage(stakingPoolData.data.commission)) }
+        { greyInfoEntry("Rate", stakingPoolData.data && `ZIL = ${stakingPoolData.data.zilToTokenRate} ${stakingPoolData.definition.tokenSymbol}`) }
       </div>
 
       <div className="grid grid-cols-3 lg:-mx-5 my-5">
