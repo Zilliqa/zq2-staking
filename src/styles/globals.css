@@ -69,6 +69,14 @@ body {
     }
   }
 
+  .btn-secondary-gray{
+    @apply flex w-fit py-2 px-2.5 lg:px-3.5 rounded border border-gray2 items-center bg-transparent cursor-pointer  duration-700 ease-in-out;
+
+    &:hover {
+      @apply bg-gray2;
+    }
+  }
+
   .caption {
     @apply font-int-medium text-14 leading-5  text-gray1;
   }

@@ -1,5 +1,6 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import StakingPoolCard from "./stakingPoolCard";
+import SortBtn from "./sortBtn";
 
 const StakingPoolsList: React.FC = () => {
   const {
@@ -13,7 +14,13 @@ const StakingPoolsList: React.FC = () => {
       <div className="h3 text-white2 max-lg:w-1/4  mb-4">
         Liquid Validators
       </div>
- 
+
+      <div className="flex gap-x-2.5">
+            <SortBtn variable='APR' />     
+            <SortBtn variable='VP' />
+            <SortBtn variable='Commission' />
+      </div>
+      
       <div className="grid grid-cols-1 gap-2.5 lg:gap-4">
         {combinedStakingPoolsData.map(({ stakingPool, userData }) => (
           <StakingPoolCard
