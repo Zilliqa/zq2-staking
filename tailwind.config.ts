@@ -56,7 +56,8 @@ const config: Config = {
         "int-extrabold": "interExtraBold",
       },
       borderRadius: {
-        '10': "10px"
+        '10': "10px",
+        '2.5xl' : '1.25rem'
       }, 
       lineHeight:{
         '11': '44px',
