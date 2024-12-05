@@ -69,6 +69,14 @@ body {
     }
   }
 
+  .btn-secondary-gray{
+    @apply flex w-fit py-1 lg:py-2 px-2.5 lg:px-3.5 rounded border border-gray2 items-center bg-transparent cursor-pointer  duration-700 ease-in-out;
+
+    &:hover {
+      @apply bg-gray2;
+    }
+  }
+
   .caption {
     @apply font-int-medium text-14 leading-5  text-gray1;
   }
@@ -172,7 +180,7 @@ body {
     z-index: 0;
   }
   .gradient-bottom-border .content {
-    padding: 19.5px 30px 20.5px 20px;
+    padding: 19.5px 20px 20.5px 20px;
     background: linear-gradient(
       129.93deg,
       rgba(175, 175, 175, 0.12) 16.6%,
@@ -218,7 +226,7 @@ body {
       rgba(12, 22, 31, 0.4) 97.04%
     );
     border-radius: 10px;
-    padding: 20px 30px 20px 20px;
+    padding: 20px 20px 20px 20px;
     position: relative;
     z-index: 1;
   }

@@ -29,7 +29,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         className={`${
           isStakingPoolSelected
             ? 'content'
-            : 'content-hover max-xs:hover:px-2.5 px-2.5 pt-2.5 pb-5 lg:py-[20px] lg:pl-5 lg:pr-7.5'
+            : 'content-hover p-2.5 lg:p-5'
         } flex justify-between`}
       >
         <Image
@@ -40,7 +40,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
           height={72}
         />
         <div className="grid w-full">
-          <div className="flex justify-between items-center mb-2">
+          <div className="flex justify-between items-center lg:mb-2">
             <div className="flex ">
               <h3 className="h4 text-white2">
                 {stakingPoolData.definition.name}
