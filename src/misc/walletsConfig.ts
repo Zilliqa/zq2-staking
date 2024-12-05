@@ -17,21 +17,21 @@ export interface DummyWallet {
   address: string;
   stakedZil: Array<UserStakingPoolData>;
   unstakedZil: Array<UserUnstakingPoolData>;
-  currentZil: number;
+  currentZil: bigint;
 }
 
 export const dummyWallets: Array<DummyWallet> = [
   {
     name: "No Zil, no ZIL staked, no ZIL unstaked",
     address: "0xCF671756a8238cBeB19BCB4D77FC9091E2fCe1A3",
-    currentZil: 0,
+    currentZil: 0n,
     stakedZil: [],
     unstakedZil: [],
   },
   {
     name: "No Zil, No ZIL staked, Some ZIL unstaked",
     address: "0xCF671756a8238cBeB19BCB4D77FC9091E2fCeYYY",
-    currentZil: 0,
+    currentZil: 0n,
     stakedZil: [],
     unstakedZil: [
       {
@@ -49,14 +49,14 @@ export const dummyWallets: Array<DummyWallet> = [
   {
     name: "Some Zil, No ZIL staked, No ZIL unstaked",
     address: "0xf0a9953B539f9E7c4953279859F924d9212B2111",
-    currentZil: 1000,
+    currentZil: 1000n,
     stakedZil: [],
     unstakedZil: [],
   },
   {
     name: "Some Zil, Some ZIL staked, No ZIL unstaked",
     address: "0xf0a9953B539f9E7c4953279859F924d9212B9383",
-    currentZil: 1000,
+    currentZil: 1000n,
     stakedZil: [
       {
         address: "0x1234567890234567890234567890234567890",
@@ -74,7 +74,7 @@ export const dummyWallets: Array<DummyWallet> = [
   {
     name: "Some Zil, Some ZIL staked, Some ZIL unstaked",
     address: "0xf0a9953B539f9E7c4953279859F924d9212B21A9",
-    currentZil: 1000,
+    currentZil: 1000n,
     stakedZil: [
       {
         address: "0x1234567890234567890234567890234567890",
@@ -118,7 +118,7 @@ export const dummyWallets: Array<DummyWallet> = [
   {
     name: "No Zil, Some ZIL staked, No ZIL unstaked",
     address: "0xf0a9953B539f9E7c4953279859F924d9212BBBBBB",
-    currentZil: 0,
+    currentZil: 0n,
     stakedZil: [
       {
         address: "0x96525678902345678902345678918278372212",

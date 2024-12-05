@@ -3,24 +3,27 @@ import StakingPoolDetailsView from '@/components/stakingPoolDetailsView';
 import StakingPoolsList from '@/components/stakingPoolsList';
 import WithdrawZilView from '@/components/withdrawZilView';
 import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
-import { WalletConnector } from '@/contexts/walletConnector';
+import { ConnectedWalletType, WalletConnector } from '@/contexts/walletConnector';
+import { MOCK_CHAIN } from '@/misc/chainConfig';
 import { formatAddress } from '@/misc/formatting';
-import { LeftOutlined, RightOutlined, WalletOutlined } from '@ant-design/icons';
+import { LeftOutlined, WalletOutlined } from '@ant-design/icons';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Button, Modal } from 'antd';
 import Image from 'next/image';
 import { useState } from 'react';
 
 const HomePage = () => {
   const {
-    connectWallet,
+    connectDummyWallet,
     isWalletConnected,
-    isWalletConnecting,
+    isDummyWalletConnecting,
     zilAvailable,
     walletAddress,
-    disconnectWallet,
+    disconnectDummyWallet,
     dummyWalletPopupContent,
     isDummyWalletPopupOpen,
-    setIsDummyWalletPopupOpen
+    setIsDummyWalletPopupOpen,
+    connectedWalletType,
   } = WalletConnector.useContainer();
 
   const {
@@ -77,6 +80,19 @@ const HomePage = () => {
       />
     )
 
+  const connectWallet = process.env.NEXT_PUBLIC_ENV_CHAIN_ID === MOCK_CHAIN.id.toString() ? (
+    <Button
+        type="primary"
+        onClick={connectDummyWallet}
+        loading={isDummyWalletConnecting}
+        className="btn-primary-cyan rounded-lg"
+      >
+        CONNECT WALLET
+    </Button>
+  ) : (
+    <ConnectButton />
+  )
+
   const mobileBottomNavition = (
     <div className='fixed bottom-0 left-0 flex lg:hidden justify-between w-full gap-1'>
       {
@@ -125,14 +141,7 @@ const HomePage = () => {
             }
           </>
         ) : (
-          <Button
-            type="primary"
-            onClick={connectWallet}
-            loading={isWalletConnecting}
-            className="btn-primary-cyan text-3xl w-full"
-          >
-            CONNECT WALLET<RightOutlined/>
-          </Button>
+          connectWallet
         )
       }
     </div>
@@ -158,34 +167,40 @@ const HomePage = () => {
           <div className="flex items-center space-x-4">
             {
               !isWalletConnected ? (
-                <Button
-                  type="primary"
-                  onClick={connectWallet}
-                  loading={isWalletConnecting}
-                  className="btn-primary-cyan rounded-lg"
-                >
-                  CONNECT WALLET
-                </Button>
+                connectWallet
               ) : (
-                <div className='flex gap-3'>
-                  <div
-                    className='group w-32 relative btn-primary-cyan rounded-lg'
-                    onClick={disconnectWallet}
-                  >
-                    <div className='absolute inset-0 group-hover:opacity-0 transition-opacity flex items-center justify-center'>
-                      <WalletOutlined className="mr-2 !text-black-100"/>
-                      {formatAddress(walletAddress || '')}
-                    </div>
-                    <span className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center'>
-                      Disconnect
-                    </span>
-                  </div>
+                <>
+                  {
+                    connectedWalletType === ConnectedWalletType.MockWallet ? (
+                      <div>
+                        <div
+                          className='group w-32 relative btn-primary-cyan rounded-lg h-[2.5em]'
+                          onClick={disconnectDummyWallet}
+                        >
+                          <div className='absolute inset-0 group-hover:opacity-0 transition-opacity flex items-center justify-center'>
+                            <WalletOutlined className="mr-2 !text-black-100"/>
+                            {formatAddress(walletAddress || '')}
+                          </div>
+                          <span className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center'>
+                            Disconnect
+                          </span>
+                        </div>
 
-                  <span className="btn-primary-cyan rounded-lg">
-                    {zilAvailable} ZIL
-                  </span>
-                </div>
-                
+                        {
+                          zilAvailable === null ? (
+                            <div className="animated-gradient h-[2.5em] w-[4em]"></div>
+                          ) : (
+                            <span className="btn-primary-cyan rounded-lg h-[2.5em]">
+                              <span>{zilAvailable} ZIL</span>
+                            </span>
+                          )
+                        }
+                      </div>
+                    ) : (
+                      <ConnectButton />
+                    )
+                  }
+                </>     
               )
             }
           </div>

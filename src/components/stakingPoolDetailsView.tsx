@@ -22,27 +22,13 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 }) => {
 
   const {
-    setDummyWalletPopupContent,
-    setIsDummyWalletPopupOpen,
+    stake,
+    unstake,
+    claim,
     zilAvailable,
   } = WalletConnector.useContainer();
 
   const [selectedPane, setSelectedPane] = useState<string>('Stake');
-
-  const onUnstake = () => {
-    setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for unstaking`);
-    setIsDummyWalletPopupOpen(true);
-  }
-
-  const onStake = (zilToStake: number) => {
-    setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for staking ${zilToStake} ZIL`);
-    setIsDummyWalletPopupOpen(true);
-  }
-
-  const onClaim = () => {
-    setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for withdrawing/claiming the unstaked ZIL`);
-    setIsDummyWalletPopupOpen(true);
-  }
 
   const colorInfoEntry = (title: string, value: string | null) => (
     <div className="pl-3 lg:pl-0">
@@ -126,12 +112,12 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
       {
         selectedPane === 'Stake' ? (
-          <StakingCalculator onStakeClick={onStake} />
+          <StakingCalculator onStakeClick={stake} />
         ) : selectedPane === 'Unstake' ? (
-          <UnstakingCalculator onStakeClick={onUnstake} />
+          <UnstakingCalculator onUnstakeClick={unstake} />
         ) : (
           <WithdrawZilPanel
-            onClaimClick={onClaim}
+            onClaimClick={claim}
             userUnstakingPoolData={userUnstakingPoolData}
             stakingPoolData={stakingPoolData}
           />
