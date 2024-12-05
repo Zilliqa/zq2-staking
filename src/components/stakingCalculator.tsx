@@ -2,18 +2,20 @@ import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import { useEffect, useState } from "react";
 import { Button, Input } from "antd";
 import { WalletConnector } from "@/contexts/walletConnector";
-import { formatPercentage, formattedZilValueInToken } from "@/misc/formatting";
+import { formatPercentage, convertZilValueInToken } from "@/misc/formatting";
+import { formatUnits, parseEther } from "viem";
+import { StakingOperations } from "@/contexts/stakingOperations";
 
-interface StakingCalculatorProps {
-  onStakeClick: (zilToStake: number) => void;
-}
 
-const StakingCalculator: React.FC<StakingCalculatorProps> = ({
-  onStakeClick
-}) => {
+const StakingCalculator: React.FC = () => {
   const {
-    zilAvailable
+    zilAvailable,
   } = WalletConnector.useContainer();
+
+  const {
+    stake,
+    isStakingInProgress,
+  } = StakingOperations.useContainer();
 
   const {
     stakingPoolForView
@@ -23,7 +25,7 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
 
   useEffect(() => {
     setZilToStake("0");
-  }, [stakingPoolForView])
+  }, [stakingPoolForView]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
@@ -42,8 +44,13 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
   };
 
   const zilToStakeNumber = parseFloat(zilToStake);
+  const zilInWei = parseEther(zilToStake);
   const zilToStakeOk =  !isNaN(zilToStakeNumber) && zilToStakeNumber <= (zilAvailable || 0n);
   const canStake = stakingPoolForView?.stakingPool.data && zilToStakeNumber > 0 && zilToStakeNumber <= (zilAvailable || 0n);
+
+  const onMaxClick = () => {
+    setZilToStake(`${formatUnits(zilAvailable || 0n, 18) }`)
+  }
 
   return stakingPoolForView && (
     <>
@@ -61,15 +68,14 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
             <div className='flex items-center text-xs ml-2 mt-3'>
               {
                 stakingPoolForView!.stakingPool.data ? <>
-                  ~{formattedZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)} {stakingPoolForView.stakingPool.definition.tokenSymbol} + {formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
+                  ~{convertZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)} {stakingPoolForView.stakingPool.definition.tokenSymbol} + {formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
                 </> : <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
               }
               APR
             </div>
-            
           </div>
           <div className='grid'>
-            <Button className='mb-3 btn-primary-white' onClick={() => setZilToStake(`${zilAvailable}`)} >MAX</Button>
+            <Button className='mb-3 btn-primary-white' onClick={onMaxClick} >MAX</Button>
             <Button className="btn-primary-white" onClick={() => setZilToStake("0")}>MIN</Button>
           </div>
         </div>
@@ -104,7 +110,8 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
             size="large"
             className='w-full text-3xl btn-primary-white'
             disabled={!canStake}
-            onClick={() => onStakeClick(zilToStakeNumber)}
+            onClick={() => stake(stakingPoolForView.stakingPool.definition.address, zilInWei)}
+            loading={isStakingInProgress}
           >
             STAKE
           </Button>

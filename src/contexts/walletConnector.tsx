@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import { createContainer } from "./context";
 import { DummyWallet } from "@/misc/walletsConfig";
-import { useWalletClient, useBalance } from "wagmi";
+import { useWalletClient } from "wagmi";
+import { getBalance } from "viem/actions";
+import { viemClient } from "@/misc/appConfig";
+import { Address } from "viem";
 
 export enum ConnectedWalletType {
   None,
@@ -20,8 +23,6 @@ const useWalletConnector = () => {
   const [isDummyWalletConnected, setIsDummyWalletConnected] = useState(false);
   const [isDummyWalletConnecting, setIsDummyWalletConnecting] = useState(false);
   const [isDummyWalletSelectorOpen, setIsDummyWalletSelectorOpen] = useState(false);
-  const [isDummyWalletPopupOpen, setIsDummyWalletPopupOpen] = useState(false);
-  const [dummyWalletPopupContent, setDummyWalletPopupContent] = useState<string | null>(null);
   const [dummyWallet, setDummyWallet] = useState<DummyWallet | null>(null);
 
   const connectDummyWallet = () => {
@@ -59,18 +60,6 @@ const useWalletConnector = () => {
     data: walletClient,
   } = useWalletClient();
 
-  const {
-    data: realWalletBalance,
-  } = useBalance();
-
-  useEffect(
-    function updateZilBalanceOfRainbowWallet() {
-      
-      setZilAvailable(realWalletBalance?.value !== undefined ? realWalletBalance.value : null);
-    },
-    [realWalletBalance]
-  );
-
   /**
    * Wallet data
    */
@@ -79,25 +68,25 @@ const useWalletConnector = () => {
   const connectedWalletType = walletClient ? ConnectedWalletType.RealWallet : isDummyWalletConnected ? ConnectedWalletType.MockWallet : ConnectedWalletType.None;
   const walletAddress = walletClient ? walletClient.account.address : isDummyWalletConnected ? dummyWallet!.address : null;
 
+  const updateWalletBalance = () => {
+    if (!walletAddress) {
+      setZilAvailable(null);
+      return;
+    }
 
-  /**
-   * Wallet operations
-   */
-
-  const stake = () => {
-    setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for staking ZIL`);
-    setIsDummyWalletPopupOpen(true);
+    getBalance(viemClient, {
+      address: walletAddress as Address,
+    }).then(
+      (balanceInWei) => {
+        setZilAvailable(balanceInWei);
+      }
+    );
   }
 
-  const unstake = (zilToUnstake: number) => {
-    setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for unstaking ${zilToUnstake} ZIL`);
-    setIsDummyWalletPopupOpen(true);
-  }
-
-  const claim = () => {
-    setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for withdrawing/claiming the unstaked ZIL`);
-    setIsDummyWalletPopupOpen(true);
-  }
+  useEffect(
+    updateWalletBalance,
+    [walletAddress]
+  );
 
   return {
     isWalletConnected,
@@ -109,14 +98,8 @@ const useWalletConnector = () => {
     zilAvailable,
     isDummyWalletSelectorOpen,
     selectDummyWallet,
-    isDummyWalletPopupOpen,
-    setIsDummyWalletPopupOpen,
-    dummyWalletPopupContent,
-    setDummyWalletPopupContent,
     connectedWalletType,
-    stake,
-    unstake,
-    claim,
+    updateWalletBalance,
   };
 };
 

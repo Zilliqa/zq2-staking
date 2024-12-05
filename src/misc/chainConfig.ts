@@ -1,5 +1,8 @@
-import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { defineChain } from 'viem';
+import { connectorsForWallets, getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { rainbowWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
+import { createClient, defineChain, http } from 'viem';
+import { createConfig } from 'wagmi';
+import { rabbyWallet } from '@rainbow-me/rainbowkit/wallets';
 
 export const CHAIN_ZQ2_PROTOTESTNET = defineChain({
   id: 1,
@@ -19,7 +22,7 @@ export const CHAIN_ZQ2_PROTOTESTNET = defineChain({
 })
 
 export const CHAIN_ZQ2_DOCKERCOMPOSE = defineChain({
-  id: 32769,
+  id: 87362,
   name: 'Zq2 Dockercompose',
   nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
   rpcUrls: {
@@ -46,15 +49,29 @@ export const MOCK_CHAIN = defineChain({
   },
   blockExplorers: {
     default: {
-      name: 'Otterscan',
+      name: 'NOT_USED',
       url: 'NOT_USED',
     },
   },
 })
 
-export const chainsConfig = getDefaultConfig({
-  appName: 'ZQ2 Staking',
-  projectId: '40db54b1a888b3fdc54ac79e2925e762',
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: 'Recommended',
+      wallets: [rainbowWallet, walletConnectWallet, rabbyWallet],
+    },
+  ],
+  {
+    appName: 'ZQ2 Staking',
+    projectId: '40db54b1a888b3fdc54ac79e2925e762', // APT-1601
+  }
+);
+
+export const chainsConfig = createConfig({
   chains: [CHAIN_ZQ2_DOCKERCOMPOSE],
-  ssr: false, // If your dApp uses server side rendering (SSR)
+  client({ chain }) {
+    return createClient({ chain, transport: http() })
+  },
+  connectors,
 });
