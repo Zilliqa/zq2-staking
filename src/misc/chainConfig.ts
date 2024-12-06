@@ -1,22 +1,23 @@
-import { connectorsForWallets, getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import { rainbowWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
-import { createClient, defineChain, http } from 'viem';
+import { createClient, createPublicClient, defineChain, http } from 'viem';
 import { createConfig } from 'wagmi';
 import { rabbyWallet } from '@rainbow-me/rainbowkit/wallets';
+import { getChainId } from './appConfig';
 
-export const CHAIN_ZQ2_PROTOTESTNET = defineChain({
-  id: 1,
-  name: 'Zq2 Prototesnet',
+export const CHAIN_ZQ2_DEVNET = defineChain({
+  id: 33469,
+  name: 'Zq2 Devnet',
   nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
   rpcUrls: {
     default: {
-      http: ['https://api.zq2-prototestnet.zilliqa.com'],
+      http: ['https://api.zq2-devnet.zilliqa.com'],
     },
   },
   blockExplorers: {
     default: {
       name: 'Otterscan',
-      url: 'https://explorer.zq2-prototestnet.zilliqa.com/',
+      url: 'https://explorer.zq2-devnet.zilliqa.com',
     },
   },
 })
@@ -68,10 +69,35 @@ const connectors = connectorsForWallets(
   }
 );
 
-export const chainsConfig = createConfig({
-  chains: [CHAIN_ZQ2_DOCKERCOMPOSE],
-  client({ chain }) {
-    return createClient({ chain, transport: http() })
-  },
-  connectors,
-});
+export function getActiveChain() {
+  const activeChain = [
+    CHAIN_ZQ2_DEVNET,
+    CHAIN_ZQ2_DOCKERCOMPOSE,
+    MOCK_CHAIN,
+  ].find(
+    (chain) => chain.id === getChainId()
+  );
+
+  if (!activeChain) {
+    throw new Error('Active chain is not defined');
+  }
+
+  return activeChain;
+} 
+
+export function getChainsConfig() {
+  return createConfig({
+    chains: [getActiveChain()] as any, // for some reason there is a type mismatch
+    client({ chain }) {
+      return createClient({ chain, transport: http() })
+    },
+    connectors,
+  });
+}
+
+export function getViemClient() {
+  return createPublicClient({
+    chain: getActiveChain(),
+    transport: http(),
+  });
+}

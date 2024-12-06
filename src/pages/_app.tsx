@@ -8,10 +8,10 @@ import DummyWalletSelector from "@/components/dummyWalletSelector";
 import { ConfigProvider } from 'antd';
 import type { ThemeConfig } from 'antd';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { chainsConfig } from "@/misc/chainConfig";
 import { WagmiProvider } from "wagmi";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { StakingOperations } from "@/contexts/stakingOperations";
+import { getChainsConfig } from "@/misc/chainConfig";
 
 
 const customTheme: ThemeConfig = {
@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ConfigProvider theme={customTheme}>
-      <WagmiProvider config={chainsConfig}>
+      <WagmiProvider config={getChainsConfig()}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider>
             <WalletConnector.Provider>
