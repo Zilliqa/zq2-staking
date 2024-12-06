@@ -32,14 +32,14 @@ const useStakingOperations = () => {
    * STAKING
    */
 
-  const [staingCallTxHash, setStakingCallTxHash] = useState<Address | undefined>(undefined);
+  const [stakingCallTxHash, setStakingCallTxHash] = useState<Address | undefined>(undefined);
 
   const {
     isLoading: isStakingInProgress,
     error: stakeContractCallError,
     status: stakingCallReceiptStatus,
   } = useWaitForTransactionReceipt({
-    hash: staingCallTxHash,
+    hash: stakingCallTxHash,
   })
 
   const stake = (delegatorAddress: string, weiToStake: bigint) => {
@@ -176,7 +176,7 @@ const useStakingOperations = () => {
     unstake,
     claim,
     isStakingInProgress,
-    staingCallTxHash,
+    stakingCallTxHash,
     stakeContractCallError,
     isUnstakingInProgress,
     unstakeContractCallError,

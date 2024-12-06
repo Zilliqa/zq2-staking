@@ -16,7 +16,7 @@ const StakingCalculator: React.FC = () => {
   const {
     stake,
     isStakingInProgress,
-    staingCallTxHash,
+    stakingCallTxHash,
     stakeContractCallError,
   } = StakingOperations.useContainer();
 
@@ -112,10 +112,10 @@ const StakingCalculator: React.FC = () => {
         </div>
 
         {
-          staingCallTxHash !== undefined && (
+          stakingCallTxHash !== undefined && (
             <div className="text-center gradient-bg-1 py-2">
-              <Link rel="noopener noreferrer" target="_blank" href={getTxExplorerUrl(staingCallTxHash)} passHref={true}>
-                Last staking transaction: {formatAddress(staingCallTxHash)}
+              <Link rel="noopener noreferrer" target="_blank" href={getTxExplorerUrl(stakingCallTxHash)} passHref={true}>
+                Last staking transaction: {formatAddress(stakingCallTxHash)}
               </Link>
             </div>
           )
