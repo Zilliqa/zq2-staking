@@ -5,8 +5,8 @@ import { createContainer } from "./context";
 import { WalletConnector } from "./walletConnector";
 import { DateTime } from "luxon";
 import { StakingPool, stakingPoolsConfigForChainId } from "@/misc/stakingPoolsConfig";
-import { MOCK_CHAIN } from "@/misc/chainConfig";
 import { getWalletStakingData, getWalletUnstakingData, UserStakingPoolData, UserUnstakingPoolData } from "@/misc/walletsConfig";
+import { getChainId } from "@/misc/appConfig";
 
 const useStakingPoolsStorage = () => {
   const {
@@ -23,22 +23,26 @@ const useStakingPoolsStorage = () => {
   const [stakingPoolForStaking, setStakingPoolForStaking] = useState<StakingPool | null>(null);
   const [stakingPoolForUnstaking, setStakingPoolForUnstaking] = useState<StakingPool | null>(null);
 
+  const reloadUserStakingPoolsData = () => {
+    if (!walletAddress) {
+      setUserStakingPoolsData([]);
+      return
+    }
+
+    getWalletStakingData(walletAddress).then(setUserStakingPoolsData).catch(console.error);
+    getWalletUnstakingData(walletAddress).then(setUserUnstakesData).catch(console.error);
+  }
+
   useEffect(
     function triggerUserDataLoadingOnWalletConnect() {
-      if (!walletAddress) {
-        setUserStakingPoolsData([]);
-        return
-      }
-
-      getWalletStakingData(walletAddress).then(setUserStakingPoolsData).catch(console.error);
-      getWalletUnstakingData(walletAddress).then(setUserUnstakesData).catch(console.error);
+      reloadUserStakingPoolsData();
     },
     [walletAddress]
   );
 
   useEffect(
     function populateStakingPoolsDefinitionsAndTriggerDataLoading () {
-      const stakingPoolsConfig = stakingPoolsConfigForChainId[MOCK_CHAIN.id];
+      const stakingPoolsConfig = stakingPoolsConfigForChainId[getChainId()];
 
       setAvailableStakingPoolsData(stakingPoolsConfig.map((configEntry) => ({
         definition: configEntry.definition,
@@ -46,7 +50,7 @@ const useStakingPoolsStorage = () => {
       })));
 
       Promise.all(stakingPoolsConfig.map(async (config) => {
-        const data = await config.delegatorDataProvider();
+        const data = await config.delegatorDataProvider(config.definition);
 
         setAvailableStakingPoolsData((prev) => {
           const updated = prev.map((entry) => {
@@ -132,7 +136,15 @@ const useStakingPoolsStorage = () => {
       userData: userStakingPoolData,
     }
   }).toSorted(
-    (a, b) => (b.userData?.stakedZil) || 0 - (a.userData?.stakedZil || 0)
+    (a, b) => {
+      const diff = (b.userData?.stakingTokenAmount || 0n) - (a.userData?.stakingTokenAmount || 0n);
+
+      if (diff === 0n) {
+        return a.stakingPool.definition.name.localeCompare(b.stakingPool.definition.name);
+      }
+
+      return diff > 0 ? 1 : -1;
+    }
   );
 
   const combinedSelectedStakingPoolForViewData = stakingPoolForView ? {
@@ -175,6 +187,7 @@ const useStakingPoolsStorage = () => {
     userUnstakesData,
     availableForUnstaking,
     pendingUnstaking,
+    reloadUserStakingPoolsData,
   };
 };
 

@@ -1,4 +1,4 @@
-import { formatPercentage } from '@/misc/formatting';
+import { formatPercentage, formatUnitsToHumanReadable } from '@/misc/formatting';
 import { StakingPool } from '@/misc/stakingPoolsConfig';
 import { UserStakingPoolData } from '@/misc/walletsConfig';
 import Image from 'next/image';
@@ -51,10 +51,13 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
             </div>
             <div className="base2 lg:block hidden">
               {userStakingPoolData &&
-              userStakingPoolData.stakedZil ? (
+              userStakingPoolData.stakingTokenAmount ? (
                 <> 
                   {userStakingPoolData &&
-                    `${userStakingPoolData.stakedZil} stZIL`}
+                    `${formatUnitsToHumanReadable(
+                      userStakingPoolData.stakingTokenAmount,
+                      stakingPoolData.definition.tokenDecimals
+                    )} ${stakingPoolData.definition.tokenSymbol}`}
                 </>
               ) : (
                 <span className="text-gray2">-</span>
@@ -119,13 +122,16 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               </div>
             </div>
             <div className="base2 block lg:hidden">
-            {userStakingPoolData && userStakingPoolData.stakedZil ? (
+            {userStakingPoolData && userStakingPoolData.stakingTokenAmount > 0 ? (
               <>
                 {userStakingPoolData &&
-                  `${userStakingPoolData.stakedZil} stZIL`}
+                  `${formatUnitsToHumanReadable(
+                    userStakingPoolData.stakingTokenAmount,
+                    stakingPoolData.definition.tokenDecimals
+                  )}`}
               </>
             ) : (
-              <span className="text-gray2">- stZIL</span>
+              <span className="text-gray2">- {stakingPoolData.definition.tokenSymbol}</span>
             )}
           </div>
           </div>

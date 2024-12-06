@@ -11,7 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { chainsConfig } from "@/misc/chainConfig";
 import { WagmiProvider } from "wagmi";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-
+import { StakingOperations } from "@/contexts/stakingOperations";
 
 
 const customTheme: ThemeConfig = {
@@ -30,8 +30,10 @@ export default function App({ Component, pageProps }: AppProps) {
           <RainbowKitProvider>
             <WalletConnector.Provider>
               <StakingPoolsStorage.Provider>
-                <Component {...pageProps} />
-                <DummyWalletSelector />
+                <StakingOperations.Provider>
+                  <Component {...pageProps} />
+                  <DummyWalletSelector />
+                </StakingOperations.Provider>
               </StakingPoolsStorage.Provider>
             </WalletConnector.Provider>
           </RainbowKitProvider>

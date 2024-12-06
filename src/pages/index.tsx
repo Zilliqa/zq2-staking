@@ -2,6 +2,7 @@ import LoginView from '@/components/loginView';
 import StakingPoolDetailsView from '@/components/stakingPoolDetailsView';
 import StakingPoolsList from '@/components/stakingPoolsList';
 import WithdrawZilView from '@/components/withdrawZilView';
+import { StakingOperations } from '@/contexts/stakingOperations';
 import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
 import { ConnectedWalletType, WalletConnector } from '@/contexts/walletConnector';
 import { MOCK_CHAIN } from '@/misc/chainConfig';
@@ -17,14 +18,16 @@ const HomePage = () => {
     connectDummyWallet,
     isWalletConnected,
     isDummyWalletConnecting,
-    zilAvailable,
     walletAddress,
     disconnectDummyWallet,
+    connectedWalletType,
+  } = WalletConnector.useContainer();
+
+  const {
     dummyWalletPopupContent,
     isDummyWalletPopupOpen,
     setIsDummyWalletPopupOpen,
-    connectedWalletType,
-  } = WalletConnector.useContainer();
+  } = StakingOperations.useContainer();
 
   const {
     stakingPoolForView,
@@ -185,16 +188,6 @@ const HomePage = () => {
                             Disconnect
                           </span>
                         </div>
-
-                        {
-                          zilAvailable === null ? (
-                            <div className="animated-gradient h-[2.5em] w-[4em]"></div>
-                          ) : (
-                            <span className="btn-primary-cyan rounded-lg h-[2.5em]">
-                              <span>{zilAvailable} ZIL</span>
-                            </span>
-                          )
-                        }
                       </div>
                     ) : (
                       <ConnectButton />
