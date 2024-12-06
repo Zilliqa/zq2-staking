@@ -77,7 +77,7 @@ const StakingPoolsList: React.FC = () => {
         {sortedStakingPoolsData.map(({ stakingPool, userData }) => (
           <>
           <StakingPoolCard
-            key={stakingPool.definition.name}
+            key={stakingPool.definition.id}
             stakingPoolData={stakingPool}
             userStakingPoolData={userData}
             isStakingPoolSelected={

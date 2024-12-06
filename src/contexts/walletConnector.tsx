@@ -5,8 +5,8 @@ import { createContainer } from "./context";
 import { DummyWallet } from "@/misc/walletsConfig";
 import { useWalletClient } from "wagmi";
 import { getBalance } from "viem/actions";
-import { viemClient } from "@/misc/appConfig";
 import { Address } from "viem";
+import { getViemClient } from "@/misc/chainConfig";
 
 export enum ConnectedWalletType {
   None,
@@ -74,7 +74,7 @@ const useWalletConnector = () => {
       return;
     }
 
-    getBalance(viemClient, {
+    getBalance(getViemClient(), {
       address: walletAddress as Address,
     }).then(
       (balanceInWei) => {

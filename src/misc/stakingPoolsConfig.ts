@@ -1,7 +1,6 @@
 import { Address, erc20Abi } from "viem";
-import { CHAIN_ZQ2_DOCKERCOMPOSE, MOCK_CHAIN } from "./chainConfig";
+import { CHAIN_ZQ2_DEVNET, CHAIN_ZQ2_DOCKERCOMPOSE, getViemClient, MOCK_CHAIN } from "./chainConfig";
 import { readContract } from "viem/actions";
-import { viemClient } from "./appConfig";
 
 export interface StakingPoolDefinition {
   id: string;
@@ -11,6 +10,7 @@ export interface StakingPoolDefinition {
   tokenDecimals: number;
   tokenSymbol: string;
   iconUrl: string;
+  minimumStake: bigint;
 }
 
 export interface StakingPoolData {
@@ -41,7 +41,7 @@ async function mockDelegatorDataProvider(mockData: StakingPoolData, loadingMilis
 
 async function fetchDelegatorDataFromNetwork(mockData: StakingPoolData, definition: StakingPoolDefinition): Promise<StakingPoolData> {
   try {
-    const totalSupply = await readContract(viemClient, {
+    const totalSupply = await readContract(getViemClient(), {
       address: definition.tokenAddress as Address,
       abi: erc20Abi,
       functionName: "totalSupply",
@@ -52,7 +52,7 @@ async function fetchDelegatorDataFromNetwork(mockData: StakingPoolData, definiti
       tvl: totalSupply,
     }
   } catch (error) {
-    console.error("Error fetching LST address:", error);
+    console.error("Error fetching total supply:", error);
     throw error;
   }
 }
@@ -68,6 +68,7 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         tokenDecimals: 18,
         tokenSymbol: "avZIL",
         iconUrl: "/static/logo2.webp",
+        minimumStake: 100000000000000000000n,
       },
       delegatorDataProvider: mockDelegatorDataProvider.bind(
         null, {
@@ -89,6 +90,7 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         tokenDecimals: 18,
         tokenSymbol: "plZIL",
         iconUrl: "/static/logo1.webp",
+        minimumStake: 100000000000000000000n,
       },
       delegatorDataProvider: mockDelegatorDataProvider.bind(
         null, {
@@ -110,6 +112,7 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         tokenDecimals: 18,
         tokenSymbol: "igZIL",
         iconUrl: "/static/logo3.webp",
+        minimumStake: 100000000000000000000n,
       },
       delegatorDataProvider: mockDelegatorDataProvider.bind(
         null, {
@@ -131,6 +134,7 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         tokenDecimals: 18,
         tokenSymbol: "adaZIL",
         iconUrl: "/static/logo5.webp",
+        minimumStake: 100000000000000000000n,
       },
       delegatorDataProvider: mockDelegatorDataProvider.bind(
         null, {
@@ -144,6 +148,50 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
       ),
     }
   ],
+  [CHAIN_ZQ2_DEVNET.id]: [
+    {
+      definition: {
+        id: 'MHg3YTBi',
+        address: '0x7a0b7e6d24ede78260c9ddbd98e828b0e11a8ea2',
+        tokenAddress: '0x9e5c257D1c6dF74EaA54e58CdccaCb924669dc83',
+        iconUrl: '/static/logo2.webp',
+        name: 'devnet staking',
+        tokenDecimals: 18,
+        tokenSymbol: 'MTK',
+        minimumStake: 100000000000000000000n,
+      },
+      delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(
+        null, {
+          tvl: 3621786n,
+          apr: 0.135,
+          commission: 0.1,
+          votingPower: 0.3,
+          zilToTokenRate: 1.2,
+        },
+      )
+    },
+    {
+      definition: {
+        id: 'MHg1YmMz',
+        address: '0x5bc3FcC25638725aaA2ED801b7BA21516f718655',
+        tokenAddress: '0x3261f96C307BAd745578fAa470C8dC2841Dd36E0',
+        iconUrl: '/static/logo1.webp',
+        name: 'devnet staking 2',
+        tokenDecimals: 18,
+        tokenSymbol: 'MTK',
+        minimumStake: 100000000000000000000n,
+      },
+      delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(
+        null, {
+          tvl: 3621786n,
+          apr: 0.135,
+          commission: 0.1,
+          votingPower: 0.3,
+          zilToTokenRate: 1.2,
+        },
+      )
+    }
+  ],
   [CHAIN_ZQ2_DOCKERCOMPOSE.id]: [
     {
       definition: {
@@ -154,6 +202,7 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         tokenDecimals: 18,
         tokenSymbol: "ldZIL",
         iconUrl: "/static/logo2.webp",
+        minimumStake: 100000000000000000000n,
       },
       delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(
         null, {

@@ -2,9 +2,10 @@ import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import { useEffect, useState } from "react";
 import { Button, Input } from "antd";
 import { WalletConnector } from "@/contexts/walletConnector";
-import { formatPercentage, convertZilValueInToken } from "@/misc/formatting";
+import { formatPercentage, convertZilValueInToken, getTxExplorerUrl, formatAddress } from "@/misc/formatting";
 import { formatUnits, parseEther } from "viem";
 import { StakingOperations } from "@/contexts/stakingOperations";
+import Link from "next/link";
 
 
 const StakingCalculator: React.FC = () => {
@@ -15,13 +16,15 @@ const StakingCalculator: React.FC = () => {
   const {
     stake,
     isStakingInProgress,
+    staingCallTxHash,
+    stakeContractCallError,
   } = StakingOperations.useContainer();
 
   const {
     stakingPoolForView
   } = StakingPoolsStorage.useContainer();
 
-  const [zilToStake, setZilToStake] = useState<string>("");
+  const [zilToStake, setZilToStake] = useState<string>(formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18));
 
   useEffect(() => {
     setZilToStake("0");
@@ -47,6 +50,10 @@ const StakingCalculator: React.FC = () => {
   const zilInWei = parseEther(zilToStake);
   const zilToStakeOk =  !isNaN(zilToStakeNumber) && zilToStakeNumber <= (zilAvailable || 0n);
   const canStake = stakingPoolForView?.stakingPool.data && zilToStakeNumber > 0 && zilToStakeNumber <= (zilAvailable || 0n);
+
+  const onMinClick = () => {
+    setZilToStake(`${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18) }`)
+  }
 
   const onMaxClick = () => {
     setZilToStake(`${formatUnits(zilAvailable || 0n, 18) }`)
@@ -76,7 +83,7 @@ const StakingCalculator: React.FC = () => {
           </div>
           <div className='grid'>
             <Button className='mb-3 btn-primary-white' onClick={onMaxClick} >MAX</Button>
-            <Button className="btn-primary-white" onClick={() => setZilToStake("0")}>MIN</Button>
+            <Button className="btn-primary-white" onClick={onMinClick}>MIN</Button>
           </div>
         </div>
 
@@ -103,6 +110,22 @@ const StakingCalculator: React.FC = () => {
             }
           </p>
         </div>
+
+        {
+          staingCallTxHash !== undefined && (
+            <div className="text-center gradient-bg-1 py-2">
+              <Link rel="noopener noreferrer" target="_blank" href={getTxExplorerUrl(staingCallTxHash)} passHref={true}>
+                Last staking transaction: {formatAddress(staingCallTxHash)}
+              </Link>
+            </div>
+          )
+        }
+
+        {stakeContractCallError && (
+          <div className="text-red-500 text-center">
+            {stakeContractCallError.message}
+          </div>
+        )}
 
         <div className='flex my-5'>
           <Button

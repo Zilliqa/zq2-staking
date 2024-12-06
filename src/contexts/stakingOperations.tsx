@@ -1,10 +1,13 @@
 import { notification } from "antd";
 import { useEffect, useState } from "react";
-import { useWriteContract } from "wagmi";
+import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { createContainer } from "./context";
 import { WalletConnector } from "./walletConnector";
 import { StakingPoolsStorage } from "./stakingPoolsStorage";
 import { Address } from "viem";
+import { delegatorAbi } from "@/misc/stakingAbis";
+import { writeContract } from "wagmi/actions";
+import { useConfig } from 'wagmi'
 
 const useStakingOperations = () => {
 
@@ -15,148 +18,133 @@ const useStakingOperations = () => {
 
   const {
     reloadUserStakingPoolsData,
+    stakingPoolForView,
   } = StakingPoolsStorage.useContainer();
 
-  const { 
-    data: staingCallTxHash, 
-    isPending: isStakingInProgress,
-    writeContract: stakeContractCall,
-    status: stakeContractCallStatus,
-  } = useWriteContract()
-
-  const { 
-    data: unstakingCallTxHash, 
-    isPending: isUnstakingInProgress,
-    writeContract: unstakeContractCall,
-    status: unstakeContractCallStatus,
-    error: unstakeContractCallError,
-  } = useWriteContract()
+  const wagmiConfig = useConfig()
 
   const [isDummyWalletPopupOpen, setIsDummyWalletPopupOpen] = useState(false);
   const [dummyWalletPopupContent, setDummyWalletPopupContent] = useState<string | null>(null);
 
-  const delegatorAbi = [
-    {
-      "inputs": [],
-      "name": "stake",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "shares",
-          "type": "uint256"
-        }
-      ],
-      "name": "unstake",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ]
+  const stakingPoolId = stakingPoolForView?.stakingPool.definition.id;
 
   /**
    * STAKING
    */
+
+  const [staingCallTxHash, setStakingCallTxHash] = useState<Address | undefined>(undefined);
+
+  const {
+    isLoading: isStakingInProgress,
+    error: stakeContractCallError,
+    status: stakingCallReceiptStatus,
+  } = useWaitForTransactionReceipt({
+    hash: staingCallTxHash,
+  })
 
   const stake = (delegatorAddress: string, weiToStake: bigint) => {
     if (isDummyWalletConnected) {
       setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for staking ZIL`);
       setIsDummyWalletPopupOpen(true);
     } else {
-      stakeContractCall({
-        address: delegatorAddress as Address,
-        abi: delegatorAbi,
-        functionName: 'stake',
-        args: [],
-        value: weiToStake
-      });
+      writeContract(
+        wagmiConfig,
+        {
+          address: delegatorAddress as Address,
+          abi: delegatorAbi,
+          functionName: 'stake',
+          args: [],
+          value: weiToStake
+        }
+      ).then(
+        (txHash) => {
+          setStakingCallTxHash(txHash);
+        }
+      ).catch(
+        (error) => {
+          notification.error({
+            message: "Staking failed",
+            description: error?.message || "There was an error while staking ZIL",
+            placement: "topRight"
+          });
+        }
+      )
     }
   }
 
   useEffect(
-    function communicateStakingStatus() {
-      if (stakeContractCallStatus === "pending") {
-        notification.info({
-          message: "Staking in progress",
-          description: `You have started staking ZIL`,
-          placement: "topRight"
-        });
-      } else if (stakeContractCallStatus === "success") {
+    () => {
+      if (stakingCallReceiptStatus === "success") {
         notification.success({
           message: "Staking successful",
           description: `You have successfully staked ZIL`,
           placement: "topRight"
         });
-        setTimeout(
-          () => {
-            reloadUserStakingPoolsData();
-            updateWalletBalance();
-          },
-          2000 // arbitrary time to make sure API serves new data
-        );
-      } else if (stakeContractCallStatus === "error") {
+        reloadUserStakingPoolsData();
+        updateWalletBalance();
+      } else if (stakingCallReceiptStatus === "error") {
         notification.error({
           message: "Staking failed",
           description: `There was an error while staking ZIL`,
           placement: "topRight"
         });
       }
-    },
-    [stakeContractCallStatus]
+    }, [stakingCallReceiptStatus]
   )
 
   /**
    * UNSTAKING
    */
 
+  const [unstakingCallTxHash, setUnstakingCallTxHash] = useState<Address | undefined>(undefined);
+
+  const {
+    isLoading: isUnstakingInProgress,
+    error: unstakeContractCallError,
+    status: unstakeCallReceiptStatus,
+  } = useWaitForTransactionReceipt({
+    hash: unstakingCallTxHash,
+  })
+
   const unstake = (delegatorAddress: string, tokensToUnstake: bigint) => {
     if (isDummyWalletConnected) {
       setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for unstaking ${tokensToUnstake} staked tokens`);
       setIsDummyWalletPopupOpen(true);
     } else {
-      unstakeContractCall({
-        address: delegatorAddress as Address,
-        abi: delegatorAbi,
-        functionName: 'unstake',
-        args: [tokensToUnstake]
-      });
+      writeContract(
+        wagmiConfig,
+        {
+          address: delegatorAddress as Address,
+          abi: delegatorAbi,
+          functionName: 'unstake',
+          args: [tokensToUnstake]
+        }
+      ).then(
+        (txHash) => {
+          setUnstakingCallTxHash(txHash);
+        }
+      )
     }
   }
 
   useEffect(
-    function communicateUnstakingStatus() {
-      if (unstakeContractCallStatus === "pending") {
-        notification.info({
-          message: "Unstaking in progress",
-          description: `You have started unstaking ZIL`,
-          placement: "topRight"
-        });
-      } else if (unstakeContractCallStatus === "success") {
+    () => {
+      if (unstakeCallReceiptStatus === "success") {
         notification.success({
           message: "Unstaking successful",
           description: `You have successfully unstaked ZIL`,
           placement: "topRight"
         });
-        setTimeout(
-          () => {
-            reloadUserStakingPoolsData();
-            updateWalletBalance();
-          },
-          2000 // arbitrary time to make sure API serves new data
-        );
-      } else if (unstakeContractCallStatus === "error") {
+        reloadUserStakingPoolsData();
+        updateWalletBalance();
+      } else if (unstakeCallReceiptStatus === "error") {
         notification.error({
           message: "Unstaking failed",
           description: `There was an error while unstaking ZIL`,
           placement: "topRight"
         });
       }
-    },
-    [unstakeContractCallStatus]
+    }, [unstakeCallReceiptStatus]
   )
 
   /**
@@ -168,6 +156,18 @@ const useStakingOperations = () => {
     setIsDummyWalletPopupOpen(true);
   }
 
+  /**
+   * OTHER
+   */
+
+  useEffect(
+    function clearStateOnDelegatorChange() {
+      setStakingCallTxHash(undefined);
+      setUnstakingCallTxHash(undefined);
+    },
+    [stakingPoolId]
+  )
+
   return {
     isDummyWalletPopupOpen,
     dummyWalletPopupContent,
@@ -176,6 +176,8 @@ const useStakingOperations = () => {
     unstake,
     claim,
     isStakingInProgress,
+    staingCallTxHash,
+    stakeContractCallError,
     isUnstakingInProgress,
     unstakeContractCallError,
   }

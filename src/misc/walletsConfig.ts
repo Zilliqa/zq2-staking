@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
-import { MOCK_CHAIN } from "./chainConfig";
-import { getChainId, viemClient } from "./appConfig";
+import { getViemClient, MOCK_CHAIN } from "./chainConfig";
+import { getChainId } from "./appConfig";
 import { stakingPoolsConfigForChainId } from "./stakingPoolsConfig";
 import { readContract } from "viem/actions";
 import { Address, erc20Abi, parseUnits } from "viem";
@@ -153,7 +153,7 @@ export async function getWalletStakingData(wallet: string): Promise<UserStakingP
         async (pool) => {
           return {
             address: pool.definition.address,
-            stakingTokenAmount: await readContract(viemClient, {
+            stakingTokenAmount: await readContract(getViemClient(), {
               address: pool.definition.tokenAddress as Address,
               abi: erc20Abi,
               functionName: "balanceOf",
