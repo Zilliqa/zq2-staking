@@ -3,7 +3,7 @@ import { MOCK_CHAIN } from '@/misc/chainConfig';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Button } from 'antd';
 import Image from 'next/image';
-import ArrowRight from '../assets/svgs/arrow-right.svg'
+import ArrowRight from '../assets/svgs/arrow-right-black.svg'
 
 const CustomConnectButton = () => {
   return (

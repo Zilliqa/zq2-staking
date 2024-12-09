@@ -81,6 +81,22 @@ body {
     }
   }
 
+  .btn-secondary {
+    @apply !gap-0 !whitespace-normal py-2.5 w-full rounded gradient-bg-dark !text-white2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border-white cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply !opacity-80 !bg-darkbg;
+    }
+
+    &:disabled {
+      @apply !bg-gradientbg !text-gray2 lg:!text-gray4 cursor-not-allowed;
+    }
+  }
+
+  .btn-primary-gradient-aqua-lg {
+    @apply btn-primary-gradient-aqua py-4 max-lg:text-17;
+  }
+
   .btn-primary-white2 {
     @apply py-1 lg:py-4.5 w-full rounded !bg-white !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
 
@@ -291,6 +307,13 @@ body {
     129.93deg,
     rgba(175, 175, 175, 0.12) 16.6%,
     rgba(17, 243, 179, 0.12) 90.65%
+  );
+}
+.gradient-bg-dark {
+  background: linear-gradient(
+    314.92deg,
+    rgba(17, 39, 49, 0.4) 28.08%,
+    rgba(9, 9, 9, 0.4) 97.04%
   );
 }
 

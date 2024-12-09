@@ -11,6 +11,8 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Button, Modal } from 'antd';
 import Image from 'next/image';
 import { useState } from 'react';
+import ArrowBack from '../assets/svgs/arrow-back-white.svg'
+
 
 const HomePage = () => {
   const {
@@ -85,7 +87,7 @@ const HomePage = () => {
         type="primary"
         onClick={connectDummyWallet}
         loading={isDummyWalletConnecting}
-        className="btn-primary-cyan rounded-lg"
+        className="btn-primary-gradient-aqua-lg "
       >
         CONNECT WALLET
     </Button>
@@ -94,49 +96,68 @@ const HomePage = () => {
   )
 
   const mobileBottomNavition = (
-    <div className='fixed bottom-0 left-0 flex lg:hidden justify-between w-full gap-1'>
+    <div className='fixed bottom-0 left-0 lg:hidden w-full mt-7.5'>
+      <div className='flex justify-between gap-1  mx-2.5'>
       {
         isWalletConnected ? (
           <>
             {
               mobileShowClaims && (
+                <div className='min-w-[200px] xs:min-w-[320px] mx-auto'>
                   <Button
                     type="default"
                     size="large"
-                    className='btn-primary-white text-3xl w-full'
+                    className='btn-secondary group'
                     onClick={() => {
                       setMobileShowClaims(false);
                     }}
                   >
-                    <LeftOutlined /> { stakingPoolForView ? stakingPoolForView?.stakingPool.definition.name : "Validators" }
-                  </Button>
+                    <Image
+                        className="mr-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                        src={ArrowBack}
+                        alt={`arrow icon`}
+                        width={24}
+                        height={24}
+                      />
+                     { stakingPoolForView ? stakingPoolForView?.stakingPool.definition.name : "Back" }  
+                  </Button></div>
                 )
             }
             {
               !mobileShowClaims && stakingPoolForView && (
+                <div className='w-1/2'>
                 <Button
                   type="default"
                   size="large"
-                  className='btn-primary-white text-3xl w-full'
+                  className='btn-secondary group'
                   onClick={() => {
                     selectStakingPoolForView(null);
                   }}
-                >
-                  <LeftOutlined /> Validators
-                </Button>
+                > <Image
+                    className="mr-1 xs:mr-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                    src={ArrowBack}
+                    alt={`arrow icon`}
+                    width={24}
+                    height={24}
+                  /> 
+                  change validator
+                </Button></div>
               )
             }
 
             {
               !mobileShowClaims && (
+                <div className={`h-inherit ${stakingPoolForView ? "w-1/2" : "w-full"}`}>
+
                 <Button
                   type="default"
                   size="large"
-                  className='btn-primary-cyan text-3xl w-full'
+                  className='btn-primary-gradient-aqua-lg'
                   onClick={() => setMobileShowClaims(true)}
                 >
-                  Claims ({availableForUnstaking.length + pendingUnstaking.length})
+                 {availableForUnstaking.length + pendingUnstaking.length} Claims
                 </Button>
+                </div>
               )
             }
           </>
@@ -144,7 +165,7 @@ const HomePage = () => {
           connectWallet
         )
       }
-    </div>
+    </div></div>
   )
 
   return (
