@@ -1,0 +1,11 @@
+if [[ "$SHELL" == *"zsh"* ]] ; then
+   echo "Running on $SHELL ..."
+   BASEDIR=`realpath $(dirname "$0")`/..
+else
+   BASEDIR=`realpath $(dirname "$BASH_SOURCE")`/..
+fi
+
+export Z_ENV=${BASEDIR}/zenv
+export Z_CONFIG=${BASEDIR}/etc/testnet
+
+source ${BASEDIR}/../devops/setenv
