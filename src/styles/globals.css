@@ -57,6 +57,42 @@ body {
     }
   }
 
+  .btn-primary-aqua {
+    @apply py-6 px-14 rounded-none !bg-aqua1 !text-black1 font-int-extrabold text-20 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply opacity-80;
+    }
+
+    &:disabled {
+      @apply !bg-[#202025] !text-[#686A6C] cursor-not-allowed;
+    }
+  }
+
+  .btn-primary-gradient-aqua {
+    @apply py-1 lg:py-4.5 w-full rounded !bg-primary-gradient !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply opacity-80;
+    }
+
+    &:disabled {
+      @apply !bg-gradientbg !text-gray2 lg:!text-gray4 cursor-not-allowed;
+    }
+  }
+
+  .btn-primary-white2 {
+    @apply py-1 lg:py-4.5 w-full rounded !bg-white !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply !opacity-80;
+    }
+
+    &:disabled {
+      @apply !bg-[#202025] !text-[#686A6C] cursor-not-allowed;
+    }
+  }
+
   .btn-custom-white-text {
     @apply py-2 px-5 !bg-transparent !text-white rounded-lg border-0 cursor-pointer;
 
@@ -69,7 +105,7 @@ body {
     }
   }
 
-  .btn-secondary-gray{
+  .btn-secondary-gray {
     @apply flex w-fit py-1 lg:py-2 px-2.5 lg:px-3.5 rounded border border-gray2 items-center bg-transparent cursor-pointer  duration-700 ease-in-out;
 
     &:hover {
@@ -94,35 +130,43 @@ body {
   }
 
   .body2-bold {
-    @apply font-int-bold text-20 leading-8  text-gray2;
+    @apply font-int-bold text-20 leading-8 text-gray2;
   }
 
   .body2 {
-    @apply font-int-medium text-20 leading-8  text-gray2;
+    @apply font-int-regular lg:font-int-medium text-16 lg:text-20 leading-5 lg:leading-8 text-white2;
   }
 
   .body1 {
-    @apply font-int-bold text-24 leading-8  text-gray2;
+    @apply font-int-bold text-16 lg:text-24 leading-6 lg:leading-8 text-gray2;
+  }
+
+  .body1-s {
+    @apply font-int-extrabold lg:font-int-bold text-12 lg:text-16 leading-6 text-gray1;
   }
 
   .h4 {
-    @apply font-int-extrabold text-20 xs:text-24 lg:text-32 leading-8 lg:leading-10  text-black1;
+    @apply font-int-extrabold text-20 xs:text-24 lg:text-32 leading-8 lg:leading-10 text-black1;
   }
 
   .h3 {
-    @apply font-int-extrabold text-32 lg:text-48 leading-10 lg:leading-12  text-black1;
+    @apply font-int-extrabold text-32 lg:text-48 leading-10 lg:leading-12 text-black1;
+  }
+
+  .h3-s {
+    @apply font-int-extrabold text-12 lg:text-27 2xl:text-32 leading-6 lg:leading-10 text-gray4;
   }
 
   .h2 {
-    @apply font-int-extrabold text-64 leading-16  text-black2;
+    @apply font-int-extrabold text-64 leading-16 text-black2;
   }
 
   .h1 {
-    @apply font-int-extrabold text-80 leading-20  text-black2;
+    @apply font-int-extrabold text-80 leading-20 text-black2;
   }
 
   .hero {
-    @apply font-int-extrabold text-104 leading-26 text-black2;
+    @apply font-int-extrabold text-40 lg:text-64 leading-12 lg:leading-16 text-white2;
   }
 
   .opacity-hover {
@@ -131,7 +175,13 @@ body {
 }
 
 .animated-gradient {
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(
+    -45deg,
+    #ee7752,
+    #e73c7e,
+    #23a6d5,
+    #23d5ab
+  );
   background-size: 400% 400%;
   animation: gradientAnimation 2s ease infinite;
   border-radius: 10px;
@@ -214,7 +264,7 @@ body {
     z-index: 0;
   }
 
-  .gradient-bottom-border-hover:hover .content-hover { 
+  .gradient-bottom-border-hover:hover .content-hover {
     position: relative;
     z-index: 1;
   }

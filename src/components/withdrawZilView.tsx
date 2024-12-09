@@ -27,41 +27,42 @@ const WithdrawZilView: React.FC = () => {
 
   return (
     <div className="relative">
-      <div className="text-end text-white mb-10">
-        <h1 className="text-5xl font-bold">Liquid Staking <br/>with Zilliqa</h1>
-        <p className="mt-1 text-sm">
-          Below are withdrawal claims waiting for you
+      <div className=" text-center lg:text-end p-4">
+        <h1 className="hero text-white">
+          <span className="hidden lg:block">Staking Portal</span>
+          <span className="block lg:hidden">Claims</span>
+        </h1>
+        <p className="w-2/3 sm:w-1/2 md:w-1/4 lg:w-full max-lg:mx-auto lg:mt-5 body2">
+          Below are withdrawal claims waiting for you       
         </p>
       </div>
 
       {
         unstakingItems.length > 0 ? (
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 gap-4 lg:gap-5 overflow-x-hidden overflow-y-auto max-h-[calc(100vh-38vh)] xs:max-h-[calc(100vh-42vh)] lg:max-h-[calc(100vh-27vh)]
+          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2 ">
             {
               unstakingItems.map((claim, claimIdx) => (
                 <div
-                  className="bg-[#20202580] bg-opacity-50 p-4 rounded-lg flex justify-between items-center"
+                  className="flex gap-2.5 lg:w-full max-lg:flex-col"
                   key={claimIdx}
                 >
-                  <div>
-                    <div className="flex items-center">
+                  <div className="flex lg:flex-col bg-gradientbg content-center px-3 py-4 lg:px-4 rounded-lg justify-between max-lg:items-center lg:w-2/3">
+                   <div className="flex items-center">
                       <Image
-                          className="mr-4 rounded-lg"
+                          className="mr-2 lg:mr-2.5"
                           src={claim.stakingPool.definition.iconUrl}
                           alt={`${claim.stakingPool.definition.name} icon`}
-                          width={32}
-                          height={32}
+                          width={31}
+                          height={31}
                         />
-                      <div>
+                      <div className="body1">
                         {claim.stakingPool.definition.name}
                       </div>
                     </div>
-                    <div className="flex mt-2 ml-1 items-end">
-                      <div className="text-xl font-bold">
-                        {claim.unstakeInfo.unstakedZil} {claim.stakingPool.definition.tokenSymbol}
-                      </div>
-                      <div className="text-sm text-gray-400 ml-3">
-                        {
+                   <div className="flex lg:mt-3 items-center">
+                       <div className="h3-s max-lg:order-2">
+                         {
                           claim.stakingPool.data ? <>
                             {formattedTokenValueInZil(claim.unstakeInfo.unstakedZil, claim.stakingPool.data!.zilToTokenRate)} ZIL
                           </> :
@@ -70,17 +71,27 @@ const WithdrawZilView: React.FC = () => {
                           </>
                         }
                         
-                      </div>
+                      </div> 
+                      <div className="body1-s max-lg:mr-2.5 lg:ml-2.5 max-lg:order-1">{claim.unstakeInfo.unstakedZil} {claim.stakingPool.definition.tokenSymbol}</div>
                     </div>
                   </div>
-
-                  <Button
-                    className="btn-primary-white"
-                    disabled={!claim.available}
-                    onClick={() => onClaim(claim.unstakeInfo.unstakedZil)}
-                  >
-                    {claim.available ? 'Claim' : claim.unstakeInfo.availableAt.diffNow("days").days.toFixed(0) + ' days left'}
-                  </Button>
+                  <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px]">
+                  <div className="max-lg:w-1/2">
+                    <Button
+                      className="btn-primary-gradient-aqua"
+                      disabled={!claim.available}
+                      onClick={() => onClaim(claim.unstakeInfo.unstakedZil)}
+                    >
+                      {claim.available ? 'Claim' : claim.unstakeInfo.availableAt.diffNow("days").days.toFixed(0) + ' days left'}
+                    </Button>
+                    </div>
+                    <div className="max-lg:w-1/2 lg:mt-2.5">
+                    <Button
+                      className="btn-primary-white2"
+                     >
+                      View
+                    </Button></div>
+                  </div>
                 </div>
               ))
             }

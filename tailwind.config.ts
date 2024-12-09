@@ -11,9 +11,11 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'primary-gradient' : 'radial-gradient(120.62% 683.52% at 110.84% 156.15%, #C5FFFD 6.84%, rgba(111, 255, 194, 0.760784) 48.36%, #00DABA 100%)',
+        'gradientbg': 'linear-gradient(129.93deg, rgba(175, 175, 175, 0.12) 16.6%, rgba(17, 243, 179, 0.12) 90.65%)',
       },
-      colors: {
+       colors: {
         black1: '#010101',
         black2: '#202025',
         gray1: '#555555',
@@ -41,12 +43,14 @@ const config: Config = {
         '18': '18px',
         '20': '20px',
         '24': '24px',
+        '27': '27px',
+        '30': '30px',
         '32': '32px',
+        '40': '40px',
         '48': '48px',
         '64': '64px',
         '80': '80px',
-        '104': '104px'
-      },
+       },
       fontFamily: {
         "int-light": "interLight",
         "int-regular": "interRegular",
@@ -64,10 +68,11 @@ const config: Config = {
         '12': '48px',
         '16': '64px',
         '20': '80px',
-        '26': '104px'
-      },
+       },
       padding:{
-        '7.5': '30px'
+        '7.5': '30px',
+        '4.5': '18px',
+        '21': '84px'
       },
       screens:{
         xs: '450px'
