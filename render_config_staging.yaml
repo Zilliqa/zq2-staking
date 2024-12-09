@@ -1,0 +1,40 @@
+project_id: prj-d-staging-6zj2hygf
+bastion_instance_name: vm-d-staging-bastion-ase1
+bastion_instance_zone: asia-southeast1-a
+region: asia-southeast1
+
+k8s_clusters:
+  staging:
+    project_id: "prj-d-staging-6zj2hygf"
+    name: gke-d-staging-01-ase1
+
+registry: asia-docker.pkg.dev/prj-d-devops-services-4dgwlsse/zilliqa-private
+
+dbs_to_instances: []
+
+apps_to_clusters:
+  - name_re: main/zq2-staking/zq2-staking-frontend
+    cluster: staging
+    dns_name: zq2-staking.zilstg.dev
+    healthcheck:
+      request_path: /health
+    image_name: zq2-staking-frontend
+    namespace: zq2-staking-stg
+    pipeline:
+      dockerfile_path: images/frontend/Dockerfile
+      context: .
+    replicas: 1
+    env_vars:
+      - name: ZQ2_STAKING_CHAIN_ID
+        value: 33469
+    pod_limits:
+      cpu: 200m
+      memory: 200Mi
+    pod_requests:
+      cpu: 100m
+      memory: 100Mi
+
+secrets:
+  zq2_staking:
+    wallet_connect_api_key:
+      _op: "op://prj-d-staging/zq2-staking/WALLET_CONNECT_API_KEY"
