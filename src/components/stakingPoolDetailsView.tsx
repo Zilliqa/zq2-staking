@@ -7,6 +7,7 @@ import { StakingPool } from "@/misc/stakingPoolsConfig";
 import { UserStakingPoolData, UserUnstakingPoolData } from "@/misc/walletsConfig";
 import { DateTime } from "luxon";
 import { useState } from "react";
+import { Button } from "antd";
 
 interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool;
@@ -31,28 +32,28 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const [selectedPane, setSelectedPane] = useState<string>('Stake');
 
   const colorInfoEntry = (title: string, value: string | null) => (
-    <div className="pl-3 lg:pl-0">
-      <div className='text-xl text-[#6DD3C2]'>
+    <div>
+      <div className='body2-bold text-aqua2'>
         { value }
       </div>
-      <div className='text-[#6DD3C2] text-sm'>
+      <div className='text-aqua3 info-label'>
         { title }
       </div>
     </div>
   )
 
   const greyInfoEntry = (title: string, value: string | null) => (
-    <div className="pl-3 lg:pl-0">
+    <div>
       {
         value ? (
-          <div className='text-xl text-gray-500 whitespace-nowrap'>
+          <div className='body2-bold text-gray1 lg:whitespace-nowrap'>
             { value }
           </div>
         ) : (
           <div className="animated-gradient h-[1.5em] w-[4em]"></div>
         )
       }
-      <div className='text-gray-500 text-sm whitespace-nowrap'>
+      <div className='text-gray2 info-label lg:whitespace-nowrap'>
         { title }
       </div>
     </div>
@@ -76,32 +77,42 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   return (
     <div className="relative">
-      <span className='text-5xl'>
-        {stakingPoolData.definition.name}
-      </span>
-      <span className='text-xl text-gray-500 ml-2'>
-        {stakingPoolData.definition.tokenSymbol}
-      </span>
-
-      <div className="gradient-bg-2 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:-mx-5 lg:px-10 mt-10 py-3">
-
-        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to stake", `${zilAvailable} ZIL`) }
-        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Staked", `${userStakingPoolData?.stakedZil || 0} ${stakingPoolData.definition.tokenSymbol}`) }
-        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${pendingUnstakesValue} ${stakingPoolData.definition.tokenSymbol}`: "-" ) }
-        { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to claim", availableToClaim ? `${availableToClaim} ${stakingPoolData.definition.tokenSymbol}` : "-") }
-
-        { greyInfoEntry("Voting power", stakingPoolData.data && formatPercentage(stakingPoolData.data.votingPower)) }
-        { greyInfoEntry("Total supply", stakingPoolData.data && `${stakingPoolData.data.tvl}`) }
-        { greyInfoEntry("Commission", stakingPoolData.data && formatPercentage(stakingPoolData.data.commission)) }
-        { greyInfoEntry("Rate", stakingPoolData.data && `ZIL = ${stakingPoolData.data.zilToTokenRate} ${stakingPoolData.definition.tokenSymbol}`) }
+      <div className="items-center flex justify-between py-1 lg:py-7.5">
+        <div className="max-lg:ms-1 items-center flex">
+          <span className='hero lg:h2 text-white2'>
+            {stakingPoolData.definition.name}
+          </span>
+          <span className='body1 lg:h4 text-black2 ml-2.5'>
+            {stakingPoolData.definition.tokenSymbol}
+          </span>
+        </div>
+        <div className="max-w-[210px] hidden sm:block">
+          <Button className="btn-primary-gradient-aqua">
+              Custom CTA 
+          </Button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-3 lg:-mx-5 my-5">
+      <div className="bg-darkbg py-7.5 lg:py-5 flex flex-col gap-4">
+        <div className="grid grid-cols-4 gap-4 pb-4 border-b border-black2/50">
+          { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to stake", `${zilAvailable} ZIL`) }
+          { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Staked", `${userStakingPoolData?.stakedZil || 0} ${stakingPoolData.definition.tokenSymbol}`) }
+          { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${pendingUnstakesValue} ${stakingPoolData.definition.tokenSymbol}`: "-" ) }
+          { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to claim", availableToClaim ? `${availableToClaim} ${stakingPoolData.definition.tokenSymbol}` : "-") }
+        </div>
+        <div className="grid grid-cols-4 gap-4">
+          { greyInfoEntry("Voting power", stakingPoolData.data && formatPercentage(stakingPoolData.data.votingPower)) }
+          { greyInfoEntry("Total supply", stakingPoolData.data && `${stakingPoolData.data.tvl}`) }
+          { greyInfoEntry("Commission", stakingPoolData.data && formatPercentage(stakingPoolData.data.commission)) }
+          { greyInfoEntry("Rate", stakingPoolData.data && `ZIL = ${stakingPoolData.data.zilToTokenRate} ${stakingPoolData.definition.tokenSymbol}`) }
+        </div>
+      </div>
+      <div className="grid grid-cols-3">
         {
           ['Stake', 'Unstake', 'Claim'].map((pane) => (
             <div
               key={pane}
-              className={`text-2xl text-center py-2 cursor-pointer border-solid border-b-4 ${selectedPane === pane ? "text-white-100 border-gradient-1" : "text-gray-600 border-black"} `}
+              className={`body1 lg:base text-center py-7 cursor-pointer border-solid border-b ${selectedPane === pane ? "text-white2 border-gradient-1" : "text-gray2 border-black2"} `}
               onClick={() => setSelectedPane(pane)}
             >
               {pane}

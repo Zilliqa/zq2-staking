@@ -129,8 +129,12 @@ body {
     @apply font-int-bold text-18 leading-9  text-black1;
   }
 
+  .info-label {
+    @apply font-int-regular text-10 lg:text-12 leading-3 lg:leading-4 text-gray2;
+  }
+
   .body2-bold {
-    @apply font-int-bold text-20 leading-8 text-gray2;
+    @apply font-int-bold text-10 lg:text-20 leading-3 lg:leading-8 text-gray2;
   }
 
   .body2 {

@@ -48,7 +48,7 @@ const HomePage = () => {
         !isWalletConnected ? (
           <LoginView />
         ) : stakingPoolForView ? (
-          <div className="bg-black xs:p-6 rounded-lg">
+          <div className="bg-black xs:pt-5 lg:pt-7.5 xs:px-5 lg:px-7.5 rounded-lg">
             <StakingPoolDetailsView
               selectStakingPoolForStaking={(stakingPoolId) => {
                 selectStakingPoolForView(null);
