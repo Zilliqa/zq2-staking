@@ -43,9 +43,9 @@ const argv = yargs(hideBin(process.argv))
     console.log(`Network RPC URL: ${argv.network_id}`);
     console.log(`Contract Address: ${argv.contract_address}`);
 
-    process.env.NEXT_PUBLIC_ENV_CHAIN_ID = argv.network_id;
+    const chainid = parseInt(argv.network_id);
 
-    const tokenAddress = await readContract(getViemClient(), {
+    const tokenAddress = await readContract(getViemClient(chainid), {
       address: argv.contract_address as Address,
       abi: delegatorAbi,
       functionName: "getLST",
@@ -56,17 +56,17 @@ const argv = yargs(hideBin(process.argv))
       tokenSymbol,
       minimumStake,
     ] = await Promise.all([
-      readContract(getViemClient(), {
+      readContract(getViemClient(chainid), {
         address: tokenAddress as Address,
         abi: erc20Abi,
         functionName: "decimals",
       }),
-      readContract(getViemClient(), {
+      readContract(getViemClient(chainid), {
         address: tokenAddress as Address,
         abi: erc20Abi,
         functionName: "symbol",
       }),
-      readContract(getViemClient(), {
+      readContract(getViemClient(chainid), {
         address: argv.contract_address as Address,
         abi: delegatorAbi,
         functionName: "MIN_DELEGATION",

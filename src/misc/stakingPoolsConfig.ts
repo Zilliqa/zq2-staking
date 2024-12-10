@@ -1,5 +1,5 @@
 import { Address, erc20Abi } from "viem";
-import { CHAIN_ZQ2_DEVNET, CHAIN_ZQ2_DOCKERCOMPOSE, getViemClient, MOCK_CHAIN } from "./chainConfig";
+import { CHAIN_ZQ2_PROTOTESTNET, CHAIN_ZQ2_DOCKERCOMPOSE, getViemClient, MOCK_CHAIN } from "./chainConfig";
 import { readContract } from "viem/actions";
 
 export interface StakingPoolDefinition {
@@ -28,10 +28,10 @@ export interface StakingPool {
 
 export interface StakingPoolConfig {
   definition: StakingPoolDefinition;
-  delegatorDataProvider: (definition: StakingPoolDefinition) => Promise<StakingPoolData>;
+  delegatorDataProvider: (definition: StakingPoolDefinition, chainId: number) => Promise<StakingPoolData>;
 }
 
-async function mockDelegatorDataProvider(mockData: StakingPoolData, loadingMiliseconds: number, definition: StakingPoolDefinition): Promise<StakingPoolData> {
+async function mockDelegatorDataProvider(mockData: StakingPoolData, loadingMiliseconds: number, definition: StakingPoolDefinition, chainId: number): Promise<StakingPoolData> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mockData);
@@ -39,9 +39,9 @@ async function mockDelegatorDataProvider(mockData: StakingPoolData, loadingMilis
   });
 }
 
-async function fetchDelegatorDataFromNetwork(mockData: StakingPoolData, definition: StakingPoolDefinition): Promise<StakingPoolData> {
+async function fetchDelegatorDataFromNetwork(mockData: StakingPoolData, definition: StakingPoolDefinition, chainId: number): Promise<StakingPoolData> {
   try {
-    const totalSupply = await readContract(getViemClient(), {
+    const totalSupply = await readContract(getViemClient(chainId), {
       address: definition.tokenAddress as Address,
       abi: erc20Abi,
       functionName: "totalSupply",
@@ -148,17 +148,17 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
       ),
     }
   ],
-  [CHAIN_ZQ2_DEVNET.id]: [
+  [CHAIN_ZQ2_PROTOTESTNET.id]: [
     {
       definition: {
-        id: 'MHg3YTBi',
-        address: '0x7a0b7e6d24ede78260c9ddbd98e828b0e11a8ea2',
-        tokenAddress: '0x9e5c257D1c6dF74EaA54e58CdccaCb924669dc83',
+        id: 'MHg3QTI4',
+        address: '0x7A28eda6899d816e574f7dFB62Cc8A84A4fF92a6',
+        tokenAddress: '0x3fE49722fC4F9F119AB18fE0CF7D340A23C8388b',
         iconUrl: '/static/logo2.webp',
-        name: 'devnet staking',
+        name: 'delegator 1',
         tokenDecimals: 18,
-        tokenSymbol: 'MTK',
-        minimumStake: 100000000000000000000n,
+        tokenSymbol: 'LST1',
+        minimumStake: 100000000000000000000n
       },
       delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(
         null, {
@@ -172,14 +172,14 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
     },
     {
       definition: {
-        id: 'MHg1YmMz',
-        address: '0x5bc3FcC25638725aaA2ED801b7BA21516f718655',
-        tokenAddress: '0x3261f96C307BAd745578fAa470C8dC2841Dd36E0',
+        id: 'MHg2MmYz',
+        address: '0x62f3FC68ba2Ff62b23E73c48010262aD64054032',
+        tokenAddress: '0x7854BFB32CC7a377165Ee3B5C8103a80A07913B2',
         iconUrl: '/static/logo1.webp',
-        name: 'devnet staking 2',
+        name: 'delegator 2',
         tokenDecimals: 18,
-        tokenSymbol: 'MTK',
-        minimumStake: 100000000000000000000n,
+        tokenSymbol: 'LST2',
+        minimumStake: 100000000000000000000n
       },
       delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(
         null, {

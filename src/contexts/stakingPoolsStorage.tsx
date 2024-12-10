@@ -6,12 +6,16 @@ import { WalletConnector } from "./walletConnector";
 import { DateTime } from "luxon";
 import { StakingPool, stakingPoolsConfigForChainId } from "@/misc/stakingPoolsConfig";
 import { getWalletStakingData, getWalletUnstakingData, UserStakingPoolData, UserUnstakingPoolData } from "@/misc/walletsConfig";
-import { getChainId } from "@/misc/appConfig";
+import { AppConfigStorage } from "./appConfigStorage";
 
 const useStakingPoolsStorage = () => {
   const {
     walletAddress,
   } = WalletConnector.useContainer();
+
+  const {
+    appConfig
+  } = AppConfigStorage.useContainer();
 
   const [availableStakingPoolsData, setAvailableStakingPoolsData] = useState<StakingPool[]>([]);
 
@@ -29,7 +33,7 @@ const useStakingPoolsStorage = () => {
       return
     }
 
-    getWalletStakingData(walletAddress).then(setUserStakingPoolsData).catch(console.error);
+    getWalletStakingData(walletAddress, appConfig!.chainId).then(setUserStakingPoolsData).catch(console.error);
     getWalletUnstakingData(walletAddress).then(setUserUnstakesData).catch(console.error);
   }
 
@@ -42,7 +46,7 @@ const useStakingPoolsStorage = () => {
 
   useEffect(
     function populateStakingPoolsDefinitionsAndTriggerDataLoading () {
-      const stakingPoolsConfig = stakingPoolsConfigForChainId[getChainId()];
+      const stakingPoolsConfig = stakingPoolsConfigForChainId[appConfig.chainId];
 
       setAvailableStakingPoolsData(stakingPoolsConfig.map((configEntry) => ({
         definition: configEntry.definition,
@@ -50,7 +54,7 @@ const useStakingPoolsStorage = () => {
       })));
 
       Promise.all(stakingPoolsConfig.map(async (config) => {
-        const data = await config.delegatorDataProvider(config.definition);
+        const data = await config.delegatorDataProvider(config.definition, appConfig.chainId);
 
         setAvailableStakingPoolsData((prev) => {
           const updated = prev.map((entry) => {

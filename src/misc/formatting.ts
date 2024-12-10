@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { formatUnits } from "viem";
-import { getActiveChain } from "./chainConfig";
+import { getChain } from "./chainConfig";
 
 export function formatPercentage(value: number) {
   return `${parseFloat((value * 100).toFixed(2))}%`;
@@ -52,6 +52,6 @@ export function formatUnitsToHumanReadable(value: bigint, decimals: number): str
   return formatter.format(raw);
 }
 
-export function getTxExplorerUrl(txHash: string) {
-  return `${getActiveChain().blockExplorers.default.url}/tx/${txHash}`;
+export function getTxExplorerUrl(txHash: string, chainId: number) {
+  return `${getChain(chainId).blockExplorers.default.url}/tx/${txHash}`;
 }

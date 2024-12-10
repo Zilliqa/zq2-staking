@@ -6,9 +6,15 @@ import { formatPercentage, convertZilValueInToken, getTxExplorerUrl, formatAddre
 import { formatUnits, parseEther } from "viem";
 import { StakingOperations } from "@/contexts/stakingOperations";
 import Link from "next/link";
+import { AppConfigStorage } from "@/contexts/appConfigStorage";
 
 
 const StakingCalculator: React.FC = () => {
+
+  const {
+    appConfig
+  } = AppConfigStorage.useContainer();
+
   const {
     zilAvailable,
   } = WalletConnector.useContainer();
@@ -114,7 +120,7 @@ const StakingCalculator: React.FC = () => {
         {
           stakingCallTxHash !== undefined && (
             <div className="text-center gradient-bg-1 py-2">
-              <Link rel="noopener noreferrer" target="_blank" href={getTxExplorerUrl(stakingCallTxHash)} passHref={true}>
+              <Link rel="noopener noreferrer" target="_blank" href={getTxExplorerUrl(stakingCallTxHash, appConfig.chainId)} passHref={true}>
                 Last staking transaction: {formatAddress(stakingCallTxHash)}
               </Link>
             </div>

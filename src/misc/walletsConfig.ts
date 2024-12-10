@@ -1,6 +1,5 @@
 import { DateTime } from "luxon";
 import { getViemClient, MOCK_CHAIN } from "./chainConfig";
-import { getChainId } from "./appConfig";
 import { stakingPoolsConfigForChainId } from "./stakingPoolsConfig";
 import { readContract } from "viem/actions";
 import { Address, erc20Abi, parseUnits } from "viem";
@@ -140,8 +139,8 @@ export const dummyWallets: Array<DummyWallet> = [
   },
 ]
 
-export async function getWalletStakingData(wallet: string): Promise<UserStakingPoolData[]> {
-  if (getChainId() === MOCK_CHAIN.id) {
+export async function getWalletStakingData(wallet: string, chainId: number): Promise<UserStakingPoolData[]> {
+  if (chainId === MOCK_CHAIN.id) {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(dummyWallets.find((dw) => dw.address === wallet)?.stakingTokenAmount || []);
@@ -149,11 +148,11 @@ export async function getWalletStakingData(wallet: string): Promise<UserStakingP
     });
   } else {
     const stakingData: UserStakingPoolData[] = await Promise.all(
-      stakingPoolsConfigForChainId[getChainId()].map(
+      stakingPoolsConfigForChainId[chainId].map(
         async (pool) => {
           return {
             address: pool.definition.address,
-            stakingTokenAmount: await readContract(getViemClient(), {
+            stakingTokenAmount: await readContract(getViemClient(chainId), {
               address: pool.definition.tokenAddress as Address,
               abi: erc20Abi,
               functionName: "balanceOf",
