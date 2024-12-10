@@ -46,14 +46,14 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     <div>
       {
         value ? (
-          <div className='body2-bold text-gray1 lg:whitespace-nowrap'>
+          <div className='body2-bold text-gray1 xl:whitespace-nowrap'>
             { value }
           </div>
         ) : (
           <div className="animated-gradient h-[1.5em] w-[4em]"></div>
         )
       }
-      <div className='text-gray2 info-label lg:whitespace-nowrap'>
+      <div className='text-gray2 info-label xl:whitespace-nowrap'>
         { title }
       </div>
     </div>
@@ -94,17 +94,19 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       </div>
 
       <div className="bg-darkbg py-7.5 lg:py-5 flex flex-col gap-4">
+        {doesUserHoldAnyFundsInThisPool && 
         <div className="grid grid-cols-4 gap-4 pb-4 border-b border-black2/50">
-          { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to stake", `${zilAvailable} ZIL`) }
-          { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Staked", `${userStakingPoolData?.stakedZil || 0} ${stakingPoolData.definition.tokenSymbol}`) }
-          { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${pendingUnstakesValue} ${stakingPoolData.definition.tokenSymbol}`: "-" ) }
-          { doesUserHoldAnyFundsInThisPool && colorInfoEntry("Available to claim", availableToClaim ? `${availableToClaim} ${stakingPoolData.definition.tokenSymbol}` : "-") }
+          { colorInfoEntry("Available to stake", `${zilAvailable} ZIL`) }
+          { colorInfoEntry("Staked", `${userStakingPoolData?.stakedZil || 0} ${stakingPoolData.definition.tokenSymbol}`) }
+          { colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${pendingUnstakesValue} ${stakingPoolData.definition.tokenSymbol}`: "-" ) }
+          { colorInfoEntry("Available to claim", availableToClaim ? `${availableToClaim} ${stakingPoolData.definition.tokenSymbol}` : "-") }
         </div>
+        }
         <div className="grid grid-cols-4 gap-4">
           { greyInfoEntry("Voting power", stakingPoolData.data && formatPercentage(stakingPoolData.data.votingPower)) }
           { greyInfoEntry("Total supply", stakingPoolData.data && `${stakingPoolData.data.tvl}`) }
           { greyInfoEntry("Commission", stakingPoolData.data && formatPercentage(stakingPoolData.data.commission)) }
-          { greyInfoEntry("Rate", stakingPoolData.data && `ZIL = ${stakingPoolData.data.zilToTokenRate} ${stakingPoolData.definition.tokenSymbol}`) }
+          { greyInfoEntry("", stakingPoolData.data && `1 ZIL = ${stakingPoolData.data.zilToTokenRate} ${stakingPoolData.definition.tokenSymbol}`) }
         </div>
       </div>
       <div className="grid grid-cols-3">

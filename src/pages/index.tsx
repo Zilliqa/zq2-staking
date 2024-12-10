@@ -12,6 +12,7 @@ import { Button, Modal } from 'antd';
 import Image from 'next/image';
 import { useState } from 'react';
 import ArrowBack from '../assets/svgs/arrow-back-white.svg'
+import ArrowNext from '../assets/svgs/arrow-next-black.svg'
 
 
 const HomePage = () => {
@@ -97,7 +98,7 @@ const HomePage = () => {
 
   const mobileBottomNavition = (
     <div className='fixed bottom-0 left-0 lg:hidden w-full mt-7.5'>
-      <div className='flex justify-between gap-1  mx-2.5'>
+      <div className='flex justify-between gap-1 mb-4 mx-2.5'>
       {
         isWalletConnected ? (
           <>
@@ -107,7 +108,7 @@ const HomePage = () => {
                   <Button
                     type="default"
                     size="large"
-                    className='btn-secondary group'
+                    className='btn-secondary-lg group'
                     onClick={() => {
                       setMobileShowClaims(false);
                     }}
@@ -129,7 +130,7 @@ const HomePage = () => {
                 <Button
                   type="default"
                   size="large"
-                  className='btn-secondary group'
+                  className='btn-secondary-lg group'
                   onClick={() => {
                     selectStakingPoolForView(null);
                   }}
@@ -140,22 +141,28 @@ const HomePage = () => {
                     width={24}
                     height={24}
                   /> 
-                  change validator
+                  Back
                 </Button></div>
               )
             }
 
             {
-              !mobileShowClaims && (
+              !mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0  && (
                 <div className={`h-inherit ${stakingPoolForView ? "w-1/2" : "w-full"}`}>
-
                 <Button
                   type="default"
                   size="large"
-                  className='btn-primary-gradient-aqua-lg'
+                  className='btn-primary-gradient-aqua-lg group'
                   onClick={() => setMobileShowClaims(true)}
                 >
                  {availableForUnstaking.length + pendingUnstaking.length} Claims
+                 <Image
+                className="ml-1 xs:ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                src={ArrowNext}
+                alt={`arrow icon`}
+                width={24}
+                height={24}
+              />
                 </Button>
                 </div>
               )

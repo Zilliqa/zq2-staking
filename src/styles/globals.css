@@ -80,9 +80,16 @@ body {
       @apply !bg-gradientbg !text-gray2 lg:!text-gray4 cursor-not-allowed;
     }
   }
+  .btn-secondary-lg {
+    @apply btn-secondary py-4 max-lg:text-17;
+  }
+
+  .btn-primary-gradient-aqua-lg {
+    @apply btn-primary-gradient-aqua py-4 max-lg:text-17;
+  }
 
   .btn-secondary {
-    @apply !gap-0 !whitespace-normal py-2.5 w-full rounded gradient-bg-dark !text-white2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border-white cursor-pointer duration-500 ease-in-out;
+    @apply !gap-0 !whitespace-normal py-2.5 w-full rounded gradient-bg-dark !text-white2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border border-white cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply !opacity-80 !bg-darkbg;
@@ -93,8 +100,16 @@ body {
     }
   }
 
-  .btn-primary-gradient-aqua-lg {
-    @apply btn-primary-gradient-aqua py-4 max-lg:text-17;
+  .btn-secondary-colored {
+    @apply !gap-0 !bg-transparent !whitespace-normal py-3 px-8 w-full rounded font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border-2 cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply !opacity-80;
+    }
+
+    &:disabled {
+      @apply !bg-gradientbg !text-gray2 lg:!text-gray4 cursor-not-allowed;
+    }
   }
 
   .btn-primary-white2 {
@@ -358,6 +373,14 @@ body {
   );
 }
 
+:where(.css-dev-only-do-not-override-1wwf28x).ant-input-affix-wrapper
+  .ant-input-prefix {
+  margin-right: 0.5rem;
+
+  @media (min-width: 1024px) {
+    margin-right: 1rem;
+  }
+}
 @font-face {
   font-family: 'interLight';
   src: url(../assets/fonts/inter-light-webfont.eot);
