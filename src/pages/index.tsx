@@ -2,6 +2,7 @@ import LoginView from '@/components/loginView';
 import StakingPoolDetailsView from '@/components/stakingPoolDetailsView';
 import StakingPoolsList from '@/components/stakingPoolsList';
 import WithdrawZilView from '@/components/withdrawZilView';
+import { AppConfigStorage } from '@/contexts/appConfigStorage';
 import { StakingOperations } from '@/contexts/stakingOperations';
 import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
 import { ConnectedWalletType, WalletConnector } from '@/contexts/walletConnector';
@@ -14,6 +15,10 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 const HomePage = () => {
+  const {
+    appConfig
+  } = AppConfigStorage.useContainer();
+
   const {
     connectDummyWallet,
     isWalletConnected,
@@ -83,7 +88,7 @@ const HomePage = () => {
       />
     )
 
-  const connectWallet = process.env.NEXT_PUBLIC_ENV_CHAIN_ID === MOCK_CHAIN.id.toString() ? (
+  const connectWallet = appConfig.chainId === MOCK_CHAIN.id ? (
     <Button
         type="primary"
         onClick={connectDummyWallet}

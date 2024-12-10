@@ -7,6 +7,7 @@ import { useWalletClient } from "wagmi";
 import { getBalance } from "viem/actions";
 import { Address } from "viem";
 import { getViemClient } from "@/misc/chainConfig";
+import { AppConfigStorage } from "./appConfigStorage";
 
 export enum ConnectedWalletType {
   None,
@@ -16,6 +17,10 @@ export enum ConnectedWalletType {
 
 const useWalletConnector = () => {
   const [zilAvailable, setZilAvailable] = useState<bigint | null>(null);
+
+  const {
+    appConfig
+  } = AppConfigStorage.useContainer();
 
   /**
    * Dummy Wallet section
@@ -74,7 +79,7 @@ const useWalletConnector = () => {
       return;
     }
 
-    getBalance(getViemClient(), {
+    getBalance(getViemClient(appConfig.chainId), {
       address: walletAddress as Address,
     }).then(
       (balanceInWei) => {

@@ -26,7 +26,7 @@ apps_to_clusters:
     replicas: 1
     env_vars:
       - name: ZQ2_STAKING_CHAIN_ID
-        value: 33469
+        value: 33103
     pod_limits:
       cpu: 200m
       memory: 200Mi

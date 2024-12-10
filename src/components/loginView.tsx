@@ -1,3 +1,4 @@
+import { AppConfigStorage } from "@/contexts/appConfigStorage";
 import { WalletConnector } from "@/contexts/walletConnector";
 import { MOCK_CHAIN } from "@/misc/chainConfig";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -6,11 +7,15 @@ import { Button } from "antd";
 const LoginView: React.FC = () => {
 
   const {
+    appConfig
+  } = AppConfigStorage.useContainer();
+
+  const {
     connectDummyWallet,
     isDummyWalletConnecting,
   } = WalletConnector.useContainer();
 
-  const connectWallet = process.env.NEXT_PUBLIC_ENV_CHAIN_ID === MOCK_CHAIN.id.toString() ? (
+  const connectWallet = appConfig.chainId === MOCK_CHAIN.id ? (
     <Button
         type="primary"
         onClick={connectDummyWallet}

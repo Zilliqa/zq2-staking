@@ -20,7 +20,7 @@ clusters:
             is_entrypoint: true
             env_vars:
               - name: ZQ2_STAKING_CHAIN_ID
-                value: 33469
+                value: 33103
             secrets:
               - name: ZQ2_STAKING_WALLET_CONNECT_API_KEY
                 from: zq2_staking.wallet_connect_api_key
