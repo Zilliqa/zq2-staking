@@ -20,7 +20,7 @@ const CustomConnectButton = () => {
           return (
             <button
               onClick={openConnectModal}
-              className="btn-primary-aqua group flex items-center"
+              className="btn-primary-gradient-aqua !w-fit px-14 group flex items-center"
             >
               Sign In / Connect Wallet
               <Image
@@ -78,9 +78,16 @@ const LoginView: React.FC = () => {
         type="primary"
         onClick={connectDummyWallet}
         loading={isDummyWalletConnecting}
-        className="btn-primary-aqua"
+        className="btn-primary-gradient-aqua-lg !w-fit px-14 group"
       >
-        CONNECT WALLET
+        Sign In / Connect Wallet
+        <Image
+                className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                src={ArrowRight}
+                alt={`arrow icon`}
+                width={24}
+                height={24}
+              />
       </Button>
     ) : (
       <CustomConnectButton />

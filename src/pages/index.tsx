@@ -108,13 +108,13 @@ const HomePage = () => {
                   <Button
                     type="default"
                     size="large"
-                    className='btn-secondary-lg group'
+                    className='btn-secondary-lg group justify-end'
                     onClick={() => {
                       setMobileShowClaims(false);
                     }}
                   >
                     <Image
-                        className="mr-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                        className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
                         src={ArrowBack}
                         alt={`arrow icon`}
                         width={24}
@@ -130,12 +130,12 @@ const HomePage = () => {
                 <Button
                   type="default"
                   size="large"
-                  className='btn-secondary-lg group'
+                  className='btn-secondary-lg group justify-start'
                   onClick={() => {
                     selectStakingPoolForView(null);
                   }}
                 > <Image
-                    className="mr-1 xs:mr-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                    className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
                     src={ArrowBack}
                     alt={`arrow icon`}
                     width={24}
@@ -152,12 +152,12 @@ const HomePage = () => {
                 <Button
                   type="default"
                   size="large"
-                  className='btn-primary-gradient-aqua-lg group'
+                  className='btn-primary-gradient-aqua-lg group justify-end'
                   onClick={() => setMobileShowClaims(true)}
                 >
                  {availableForUnstaking.length + pendingUnstaking.length} Claims
                  <Image
-                className="ml-1 xs:ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={ArrowNext}
                 alt={`arrow icon`}
                 width={24}

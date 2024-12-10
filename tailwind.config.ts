@@ -80,6 +80,12 @@ const config: Config = {
         '4.5': '18px',
         '21': '84px'
       },
+      margin:{
+        '7.5': '30px',
+        '4.5': '18px',
+        '12.5': '50px',
+        '21': '84px',
+      },
       screens:{
         xs: '450px'
       }

@@ -1,118 +1,180 @@
-import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
-import { useEffect, useState } from "react";
-import { Button, Input } from "antd";
-import { WalletConnector } from "@/contexts/walletConnector";
-import { formatPercentage, formattedZilValueInToken } from "@/misc/formatting";
+import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
+import { useEffect, useState } from 'react';
+import { Button, Input } from 'antd';
+import { WalletConnector } from '@/contexts/walletConnector';
+import {
+  formatPercentage,
+  formattedZilValueInToken,
+} from '@/misc/formatting';
+import StakingPoolDetailsView from './stakingPoolDetailsView';
 
 interface StakingCalculatorProps {
   onStakeClick: (zilToStake: number) => void;
 }
 
 const StakingCalculator: React.FC<StakingCalculatorProps> = ({
-  onStakeClick
+  onStakeClick,
 }) => {
-  const {
-    zilAvailable
-  } = WalletConnector.useContainer();
+  const { zilAvailable } = WalletConnector.useContainer();
 
-  const {
-    stakingPoolForView
-  } = StakingPoolsStorage.useContainer();
+  const { stakingPoolForView } = StakingPoolsStorage.useContainer();
 
-  const [zilToStake, setZilToStake] = useState<string>("");
+  const [zilToStake, setZilToStake] = useState<string>('');
 
   useEffect(() => {
-    setZilToStake("0.00");
-  }, [stakingPoolForView])
+    setZilToStake('0.00');
+  }, [stakingPoolForView]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
     const reg = /^-?\d*(\.\d*)?$/;
-    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+    if (
+      reg.test(inputValue) ||
+      inputValue === '' ||
+      inputValue === '-'
+    ) {
       setZilToStake(inputValue);
     }
   };
 
   const handleBlur = () => {
     let valueTemp = zilToStake;
-    if (zilToStake.charAt(zilToStake.length - 1) === '.' || zilToStake === '-') {
+    if (
+      zilToStake.charAt(zilToStake.length - 1) === '.' ||
+      zilToStake === '-'
+    ) {
       valueTemp = zilToStake.slice(0, -1);
     }
     setZilToStake(valueTemp.replace(/0*(\d+)/, '$1'));
   };
 
   const zilToStakeNumber = parseFloat(zilToStake);
-  const zilToStakeOk =  !isNaN(zilToStakeNumber) && zilToStakeNumber <= (zilAvailable || 0n);
-  const canStake = stakingPoolForView?.stakingPool.data && zilToStakeNumber > 0 && zilToStakeNumber <= (zilAvailable || 0n);
+  const zilToStakeOk =
+    !isNaN(zilToStakeNumber) &&
+    zilToStakeNumber <= (zilAvailable || 0n);
+  const canStake =
+    stakingPoolForView?.stakingPool.data &&
+    zilToStakeNumber > 0 &&
+    zilToStakeNumber <= (zilAvailable || 0n);
 
-  return stakingPoolForView && (
-    <>
-      <div>
-        <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7.5 bg-darkbg rounded-3xl">
-          <div className='h-fit self-center'>
-            <Input
-              className={`h3 flex items-baseline !bg-transparent !border-transparent ${zilToStakeOk ? "!text-gray4" : "!text-red1"}`}
-              value={zilToStake}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              prefix="ZIL"
-              status={ !zilToStakeOk ? "error" : undefined }
-            />
-            <span className='flex items-center text-xs ml-2 mt-3'>
-              {
-                stakingPoolForView!.stakingPool.data ? <>
-                  <span className="body1">~{formattedZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)} {stakingPoolForView.stakingPool.definition.tokenSymbol} </span>
-                  <span className="body1 ml-2 text-aqua1">~{formatPercentage(stakingPoolForView!.stakingPool.data.apr)}</span>
-                </> : <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
-              }
-              <span className="body1 text-aqua1"> APR</span>
-            </span>
+  return (
+    stakingPoolForView && (
+      <>
+        <div>
+          <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7.5 bg-darkbg rounded-3xl">
+            <div className="h-fit self-center">
+              <Input
+                className={`h3 flex items-baseline !bg-transparent !border-transparent ${
+                  zilToStakeOk ? '!text-gray4' : '!text-red1'
+                }`}
+                value={zilToStake}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                prefix="ZIL"
+                status={!zilToStakeOk ? 'error' : undefined}
+              />
+              <span className="flex items-center text-xs ml-2 mt-3">
+                {stakingPoolForView!.stakingPool.data ? (
+                  <>
+                    <span className="body1">
+                      ~
+                      {formattedZilValueInToken(
+                        zilToStakeNumber,
+                        stakingPoolForView.stakingPool.data
+                          .zilToTokenRate
+                      )}{' '}
+                      {
+                        stakingPoolForView.stakingPool.definition
+                          .tokenSymbol
+                      }{' '}
+                    </span>
+                    <span className="body1 ml-2 text-aqua1">
+                      ~
+                      {formatPercentage(
+                        stakingPoolForView!.stakingPool.data.apr
+                      )}
+                    </span>
+                  </>
+                ) : (
+                  <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
+                )}
+                <span className="body1 text-aqua1"> APR</span>
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-3 max-w-[100px]">
+              <Button
+                className="btn-secondary-colored text-aqua2 hover:!text-aqua2 hover:!border-aqua2 border-aqua2"
+                onClick={() => setZilToStake(`${zilAvailable}`)}
+              >
+                MAX
+              </Button>
+              <Button
+                className="btn-secondary-colored text-purple1 hover:!text-purple1 hover:!border-purple1 border-purple1"
+                onClick={() => setZilToStake('0')}
+              >
+                MIN
+              </Button>
+            </div>
           </div>
 
-          <div className='flex flex-col gap-3 max-w-[100px]'>
-            <Button className='btn-secondary-colored text-aqua2 hover:!text-aqua2 hover:!border-aqua2 border-aqua2' onClick={() => setZilToStake(`${zilAvailable}`)} >MAX</Button>
-            <Button className="btn-secondary-colored text-purple1 hover:!text-purple1 hover:!border-purple1 border-purple1" onClick={() => setZilToStake("0")}>MIN</Button>
+          <div className="flex justify-between pt-2.5 lg:pt-5 border-t border-black2">
+            <div className="flex flex-col gap-3.5 regular-base">
+              <div className=" ">
+                Commission Fee:{' '}
+                {stakingPoolForView!.stakingPool.data ? (
+                  <>
+                    {' '}
+                    {formatPercentage(
+                      stakingPoolForView!.stakingPool.data.commission
+                    )}{' '}
+                  </>
+                ) : (
+                  <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
+                )}
+              </div>
+              <div className="">
+                Max transaction cost: {zilToStake ? '0.01' : '0'}$
+              </div>
+              <div className="">
+                Unbonding Period: {zilToStake ? '0.01' : '0'}$
+              </div>
+            </div>
+            <div className="flex flex-col max-xl:justify-between xl:items-end">
+              <div className="base flex flex-col xl:flex-row xl:gap-5">
+                <div>Rate</div>
+                <div>{`1 ZIL = zilToTokenRate ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
+              </div>
+              <div className=" regular-base text-aqua1 flex flex-col xl:flex-row xl:gap-5">
+                <div>APR:</div>
+                {stakingPoolForView!.stakingPool.data ? (
+                  <>
+                    ~{formatPercentage(
+                      stakingPoolForView!.stakingPool.data.apr
+                    )}
+                  </>
+                ) : (
+                  <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex mt-10 l:mt-12.5 mb-5">
+            <Button
+              type="default"
+              size="large"
+              className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua"
+              disabled={!canStake}
+              onClick={() => onStakeClick(zilToStakeNumber)}
+            >
+              STAKE
+            </Button>
           </div>
         </div>
-
-        <div className="flex justify-between my-3">
-          <p className="text-lg font-bold">You will receive</p>
-          <p className="flex items-center">
-            Reward fee 
-            {
-              stakingPoolForView!.stakingPool.data ? <>
-                {formatPercentage(stakingPoolForView!.stakingPool.data.commission)}
-              </> : <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
-            }
-          </p>
-        </div>
-        
-        <div className="flex justify-between my-3">
-          <p className="text-gray-500">Max transaction cost {zilToStake ? '0.01' : '0' }$</p>
-          <p className="flex items-center text-gray-500">
-            Annual % rate:
-            {
-              stakingPoolForView!.stakingPool.data ? <>
-                {formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
-              </> : <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
-            }
-          </p>
-        </div>
-
-        <div className='flex my-5'>
-          <Button
-            type="default"
-            size="large"
-            className='w-full text-3xl btn-primary-white'
-            disabled={!canStake}
-            onClick={() => onStakeClick(zilToStakeNumber)}
-          >
-            STAKE
-          </Button>
-      </div>
-      </div>
-    </>
-  )
-}
+      </>
+    )
+  );
+};
 
 export default StakingCalculator;

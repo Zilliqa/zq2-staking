@@ -70,7 +70,7 @@ body {
   }
 
   .btn-primary-gradient-aqua {
-    @apply py-1 lg:py-4.5 w-full rounded !bg-primary-gradient !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
+    @apply py-1 lg:py-4 w-full rounded !bg-primary-gradient !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
@@ -113,7 +113,7 @@ body {
   }
 
   .btn-primary-white2 {
-    @apply py-1 lg:py-4.5 w-full rounded !bg-white !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
+    @apply py-1 lg:py-4 w-full rounded !bg-white !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply !opacity-80;
@@ -150,6 +150,10 @@ body {
 
   .base {
     @apply font-int-semibold  text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray2;
+  }
+
+  .regular-base {
+    @apply font-int-regular text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray2;
   }
 
   .base2 {
@@ -189,7 +193,7 @@ body {
   }
 
   .h3-s {
-    @apply font-int-extrabold text-12 lg:text-27 2xl:text-32 leading-6 lg:leading-10 text-gray4;
+    @apply font-int-extrabold text-12 lg:text-27  leading-6 lg:leading-10 text-gray4;
   }
 
   .h2 {

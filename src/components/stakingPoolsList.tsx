@@ -88,6 +88,18 @@ const StakingPoolsList: React.FC = () => {
               selectStakingPoolForView(stakingPool.definition.id)
             }
           /> 
+          <StakingPoolCard
+            key={stakingPool.definition.name}
+            stakingPoolData={stakingPool}
+            userStakingPoolData={userData}
+            isStakingPoolSelected={
+              stakingPoolForView?.stakingPool.definition.id ===
+              stakingPool.definition.id
+            }
+            onClick={() =>
+              selectStakingPoolForView(stakingPool.definition.id)
+            }
+          /> 
           </>
         ))}
       </div>
