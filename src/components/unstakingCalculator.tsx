@@ -5,9 +5,11 @@ import {
   formatPercentage,
   convertTokenToZil,
   formatUnitsToHumanReadable,
+  getHumanFormDuration,
 } from '@/misc/formatting';
 import { formatUnits, parseEther } from 'viem';
 import { StakingOperations } from '@/contexts/stakingOperations';
+import { DateTime } from 'luxon';
 
 const UnstakingCalculator: React.FC = () => {
   const { stakingPoolForView } = StakingPoolsStorage.useContainer();
@@ -72,6 +74,10 @@ const UnstakingCalculator: React.FC = () => {
     );
   };
 
+  const unboudingPeriod = getHumanFormDuration((
+    DateTime.now().plus({ minutes: stakingPoolForView?.stakingPool.definition.withdrawPeriodInMinutes || 0 })
+  ));
+
   return (
     stakingPoolForView && (
       <div className="bg-black">
@@ -111,7 +117,7 @@ const UnstakingCalculator: React.FC = () => {
                   )}
                   ZIL
                 </span>
-                <span className="body1 ml-2 text-aqua1">~5 days</span>
+                <span className="body1 ml-2 text-aqua1">{ unboudingPeriod }</span>
               </div>
             </div>
             <div className="flex flex-col gap-3 max-w-[100px]">
@@ -149,7 +155,7 @@ const UnstakingCalculator: React.FC = () => {
                 Max transaction cost: {zilToUnstake ? '0.01' : '0'}$
               </div>
               <div className="text-aqua1 ">
-                Unbonding Period: {zilToUnstake ? '0.01' : '0'}$
+                Unbonding Period: { unboudingPeriod }
               </div>
             </div>
             <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">

@@ -1,14 +1,12 @@
 import StakingCalculator from "@/components/stakingCalculator";
 import UnstakingCalculator from "@/components/unstakingCalculator";
 import WithdrawZilPanel from "@/components/withdrawUnstakedZilPanel";
-import { StakingOperations } from "@/contexts/stakingOperations";
 import { WalletConnector } from "@/contexts/walletConnector";
 import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting";
 import { StakingPool } from "@/misc/stakingPoolsConfig";
 import { UserStakingPoolData, UserUnstakingPoolData } from "@/misc/walletsConfig";
 import { DateTime } from "luxon";
 import { useState } from "react";
-import { Button } from "antd";
 
 interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool;
@@ -26,10 +24,6 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const {
     zilAvailable,
   } = WalletConnector.useContainer();
-
-  const {
-    unstake,
-  } = StakingOperations.useContainer();
 
   const [selectedPane, setSelectedPane] = useState<string>('Stake');
 
@@ -81,7 +75,8 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   return (
     <div className="relative overflow-y-auto max-h-[calc(100vh-38vh)] xs:max-h-[calc(100vh-30vh)] lg:max-h-[calc(100vh-20vh)]
-       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2">
+      scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2"
+    >
       <div className="items-center flex justify-between py-1 lg:py-7.5">
         <div className="max-lg:ms-1 items-center flex">
           <span className='hero lg:h2 text-white2'>
@@ -91,26 +86,26 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             {stakingPoolData.definition.tokenSymbol}
           </span>
         </div>
-         
       </div>
+
       <div className="bg-darkbg py-7.5 lg:py-5 flex flex-col gap-4">
         {doesUserHoldAnyFundsInThisPool && 
-        <div className="grid grid-cols-4 gap-4 pb-4 border-b border-black2/50">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pb-4 border-b border-black2/50">
           { colorInfoEntry("Available to stake", `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`) }
           { colorInfoEntry("Staked", `${humanReadableStakingToken(userStakingPoolData?.stakingTokenAmount || 0n)} ${stakingPoolData.definition.tokenSymbol}`) }
           { colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${humanReadableStakingToken(pendingUnstakesValue)} ${stakingPoolData.definition.tokenSymbol}`: "-" ) }
           { colorInfoEntry("Available to claim", availableToClaim ? `${humanReadableStakingToken(availableToClaim)} ${stakingPoolData.definition.tokenSymbol}` : "-") }
         </div>
         }
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           { greyInfoEntry("Voting power", stakingPoolData.data && formatPercentage(stakingPoolData.data.votingPower)) }
           { greyInfoEntry("Total supply", stakingPoolData.data && `${humanReadableStakingToken(stakingPoolData.data.tvl)} ${stakingPoolData.definition.tokenSymbol}`) }
           { greyInfoEntry("Commission", stakingPoolData.data && formatPercentage(stakingPoolData.data.commission)) }
           { greyInfoEntry("", stakingPoolData.data &&
              (
               <>
-                1 ZIL = <br />
-                {stakingPoolData.data.zilToTokenRate} {stakingPoolData.definition.tokenSymbol}
+                1 ZIL ~ <br />
+                {stakingPoolData.data.zilToTokenRate.toPrecision(3)} {stakingPoolData.definition.tokenSymbol}
               </>
             )) }
         </div>

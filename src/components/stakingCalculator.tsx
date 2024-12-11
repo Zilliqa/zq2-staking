@@ -10,7 +10,6 @@ import Link from "next/link";
 
 
 const StakingCalculator: React.FC = () => {
-  
   const {
     appConfig
   } = AppConfigStorage.useContainer();
@@ -160,9 +159,6 @@ const StakingCalculator: React.FC = () => {
               <div className="">
                 Max transaction cost: {zilToStake ? '0.01' : '0'}$
               </div>
-              <div className="">
-                Unbonding Period: {zilToStake ? '0.01' : '0'}$
-              </div>
             </div>
             <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
               <div className="base flex flex-col xl:flex-row xl:gap-5">
@@ -198,8 +194,7 @@ const StakingCalculator: React.FC = () => {
             </Button>
           </div>
         </div>
-     
-  
+
         {
           stakingCallTxHash !== undefined && (
             <div className="text-center gradient-bg-1 py-2">
@@ -215,9 +210,6 @@ const StakingCalculator: React.FC = () => {
             {stakeContractCallError.message}
           </div>
         )}
-
-    
-  
     </>
     )
   );

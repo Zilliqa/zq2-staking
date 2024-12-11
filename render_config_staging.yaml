@@ -17,7 +17,7 @@ apps_to_clusters:
     cluster: staging
     dns_name: zq2-staking.zilstg.dev
     healthcheck:
-      request_path: /health
+      request_path: /api/health
     image_name: zq2-staking-frontend
     namespace: zq2-staking-stg
     pipeline:
