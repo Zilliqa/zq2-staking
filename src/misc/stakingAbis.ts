@@ -64,7 +64,7 @@ export const delegatorAbi = [
     "name": "getPendingClaims",
     "outputs": [
       {
-        "internalType": "uint256[][]",
+        "internalType": "uint256[][]", // pairs of (blockNumber, amount)
         "name": "",
         "type": "uint256[][]"
       }
