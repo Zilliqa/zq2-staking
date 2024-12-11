@@ -6,7 +6,7 @@ import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
 import { ConnectedWalletType, WalletConnector } from '@/contexts/walletConnector';
 import { MOCK_CHAIN } from '@/misc/chainConfig';
 import { formatAddress } from '@/misc/formatting';
-import { LeftOutlined, WalletOutlined } from '@ant-design/icons';
+import { WalletOutlined } from '@ant-design/icons';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Button, Modal } from 'antd';
 import Image from 'next/image';
@@ -235,7 +235,8 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="relative max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-2 h-screen gap-5 px-4 pt-[5em]">
+      <div className="relative max-w-screen-2xl mx-auto h-screen overflow-y-hidden">
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 px-4 pt-[5em]'>
         {/* Left column */}
         <div className="bg-black xs:p-6 rounded-2.5xl">
           <StakingPoolsList />
@@ -245,6 +246,7 @@ const HomePage = () => {
 
         { mobileOverlayContent }
         { mobileBottomNavition }
+        </div>
       </div>
 
       <Modal

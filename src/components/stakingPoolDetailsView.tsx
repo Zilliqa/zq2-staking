@@ -42,7 +42,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     </div>
   )
 
-  const greyInfoEntry = (title: string, value: string | null) => (
+  const greyInfoEntry = (title: string, value: string | JSX.Element  | null) => (
     <div>
       {
         value ? (
@@ -76,7 +76,8 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const doesUserHoldAnyFundsInThisPool = !!(userStakingPoolData?.stakedZil || pendingUnstakesValue || availableToClaim);
 
   return (
-    <div className="relative">
+    <div className="relative overflow-y-auto max-h-[calc(100vh-38vh)] xs:max-h-[calc(100vh-30vh)] lg:max-h-[calc(100vh-20vh)]
+       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2">
       <div className="items-center flex justify-between py-1 lg:py-7.5">
         <div className="max-lg:ms-1 items-center flex">
           <span className='hero lg:h2 text-white2'>
@@ -106,7 +107,13 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
           { greyInfoEntry("Voting power", stakingPoolData.data && formatPercentage(stakingPoolData.data.votingPower)) }
           { greyInfoEntry("Total supply", stakingPoolData.data && `${stakingPoolData.data.tvl}`) }
           { greyInfoEntry("Commission", stakingPoolData.data && formatPercentage(stakingPoolData.data.commission)) }
-          { greyInfoEntry("", stakingPoolData.data && `1 ZIL = ${stakingPoolData.data.zilToTokenRate} ${stakingPoolData.definition.tokenSymbol}`) }
+          { greyInfoEntry("", stakingPoolData.data &&
+             (
+              <>
+                1 ZIL = <br />
+                {stakingPoolData.data.zilToTokenRate} {stakingPoolData.definition.tokenSymbol}
+              </>
+            )) }
         </div>
       </div>
       <div className="grid grid-cols-3">
