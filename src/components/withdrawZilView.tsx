@@ -77,7 +77,7 @@ const WithdrawZilView: React.FC = () => {
                         }
                         
                       </div> 
-                      <div className="body1-s max-lg:mr-2.5 lg:ml-2.5 max-lg:order-1">{item.unstakeInfo.unstakedZil} {item.stakingPool.definition.tokenSymbol}</div>
+                      <div className="body1-s max-lg:mr-2.5 lg:ml-2.5 max-lg:order-1">{item.unstakeInfo.unstakingTokenAmount} {item.stakingPool.definition.tokenSymbol}</div>
                     </div>
                   </div>
                   <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px]">

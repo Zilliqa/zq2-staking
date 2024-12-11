@@ -2,19 +2,13 @@ import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import { useEffect, useState } from "react";
 import { Button, Input } from "antd";
 import { WalletConnector } from "@/contexts/walletConnector";
-import { formatPercentage, convertZilValueInToken, getTxExplorerUrl, formatAddress, formattedZilValueInToken } from "@/misc/formatting";
+import { formatPercentage, convertZilValueInToken, getTxExplorerUrl, formatAddress } from "@/misc/formatting";
 import { formatUnits, parseEther } from "viem";
 import { StakingOperations } from "@/contexts/stakingOperations";
-import Link from "next/link";
-import { AppConfigStorage } from "@/contexts/appConfigStorage";
+ import { AppConfigStorage } from "@/contexts/appConfigStorage";
 
-interface StakingCalculatorProps {
-  onStakeClick: (zilToStake: number) => void;
-}
 
-const StakingCalculator: React.FC<StakingCalculatorProps> = ({
-  onStakeClick,
-}) => {
+const StakingCalculator: React.FC = () => {
   
   const {
     appConfig
@@ -84,14 +78,7 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
   const onMaxClick = () => {
     setZilToStake(`${formatUnits(zilAvailable || 0n, 18) }`)
   }
-    
-  const zilToStakeOk =
-    !isNaN(zilToStakeNumber) &&
-    zilToStakeNumber <= (zilAvailable || 0n);
-  const canStake =
-    stakingPoolForView?.stakingPool.data &&
-    zilToStakeNumber > 0 &&
-    zilToStakeNumber <= (zilAvailable || 0n);
+  
 
   return (
     stakingPoolForView && (
@@ -115,7 +102,7 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
                   <>
                     <span className="body1">
                       ~
-                      {formattedZilValueInToken(
+                      {convertZilValueInToken(
                         zilToStakeNumber,
                         stakingPoolForView.stakingPool.data
                           .zilToTokenRate
@@ -179,8 +166,8 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
             <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
               <div className="base flex flex-col xl:flex-row xl:gap-5">
                 <div>Rate</div>
-                   {stakingPoolForView!.stakingPool.data ? (
-                <div>{`1 ZIL = ~{convertZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)} {stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
+                   {stakingPoolForView!.stakingPool.data && (
+                <div>{`1 ZIL = ~${convertZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
                   )}
               </div>
               <div className=" regular-base text-aqua1 flex flex-row xl:gap-5">
@@ -204,16 +191,16 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
               size="large"
               className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua"
               disabled={!canStake}
-              onClick={() => onStakeClick(zilToStakeNumber)}
-            >
+              onClick={() => stake(stakingPoolForView.stakingPool.definition.address, zilInWei)}
+              loading={isStakingInProgress}            >
               STAKE
             </Button>
           </div>
         </div>
-      </>
-    )
-  );
-};
+     
+ 
+        {/*
+        can't find this in design
         {
           stakingCallTxHash !== undefined && (
             <div className="text-center gradient-bg-1 py-2">
@@ -222,7 +209,7 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
               </Link>
             </div>
           )
-        }
+        } */}
 
         {stakeContractCallError && (
           <div className="text-red-500 text-center">
@@ -230,21 +217,11 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
           </div>
         )}
 
-        <div className='flex my-5'>
-          <Button
-            type="default"
-            size="large"
-            className='w-full text-3xl btn-primary-white'
-            disabled={!canStake}
-            onClick={() => stake(stakingPoolForView.stakingPool.definition.address, zilInWei)}
-            loading={isStakingInProgress}
-          >
-            STAKE
-          </Button>
-      </div>
-      </div>
+    
+  
     </>
-  )
-}
+    )
+  );
+};
 
 export default StakingCalculator; 

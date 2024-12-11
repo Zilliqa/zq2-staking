@@ -68,10 +68,7 @@ const CustomConnectButton = () => {
 };
 
 const LoginView: React.FC = () => {
-  const { connectDummyWallet, isDummyWalletConnecting } =
-    WalletConnector.useContainer();
-
-
+ 
   const {
     appConfig
   } = AppConfigStorage.useContainer();
