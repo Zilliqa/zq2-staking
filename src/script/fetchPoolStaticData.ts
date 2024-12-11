@@ -43,51 +43,55 @@ const argv = yargs(hideBin(process.argv))
     console.log(`Network RPC URL: ${argv.network_id}`);
     console.log(`Contract Address: ${argv.contract_address}`);
 
+
     const chainid = parseInt(argv.network_id);
 
-    const tokenAddress = await readContract(getViemClient(chainid), {
-      address: argv.contract_address as Address,
-      abi: delegatorAbi,
-      functionName: "getLST",
-    }) as string;
+    const readDelegatorContract = async <T>(functionName: string): Promise<T> => {
+      return (await readContract(getViemClient(chainid), {
+        address: argv.contract_address as Address,
+        abi: delegatorAbi,
+        functionName,
+      })) as T
+    }
+
+    const [tokenAddress] = await Promise.all([
+      readDelegatorContract<Address>("getLST"),
+    ]);
+
+    const readTokenContract = async <T>(functionName: string): Promise<T> => {
+      return await (readContract(getViemClient(chainid), {
+        address: tokenAddress,
+        abi: erc20Abi,
+        functionName: "decimals",
+      })) as T
+    }
 
     const [
       tokenDecimals,
       tokenSymbol,
       minimumStake,
     ] = await Promise.all([
-      readContract(getViemClient(chainid), {
-        address: tokenAddress as Address,
-        abi: erc20Abi,
-        functionName: "decimals",
-      }),
-      readContract(getViemClient(chainid), {
-        address: tokenAddress as Address,
-        abi: erc20Abi,
-        functionName: "symbol",
-      }),
-      readContract(getViemClient(chainid), {
-        address: argv.contract_address as Address,
-        abi: delegatorAbi,
-        functionName: "MIN_DELEGATION",
-      }),
+      readTokenContract<number>("decimals"),
+      readTokenContract<string>("symbol"),
+      readTokenContract<bigint>("MIN_DELEGATION")
     ]);
 
     const hash = Buffer.from(argv.contract_address + tokenAddress).toString('base64').slice(0, 8);
+    const twoWeeksInMinutes = 60 * 24 * 14;
 
     const definition: StakingPoolDefinition = {
       id: hash,
-        address: argv.contract_address,
-        tokenAddress,
-        iconUrl: argv.icon_url,
-        name: argv.name,
-        tokenDecimals,
-        tokenSymbol,
-        minimumStake: minimumStake as bigint,
+      address: argv.contract_address,
+      tokenAddress,
+      iconUrl: argv.icon_url,
+      name: argv.name,
+      tokenDecimals,
+      tokenSymbol,
+      minimumStake: minimumStake as bigint,
+      withdrawPeriodInMinutes: twoWeeksInMinutes,
     }
 
     console.log("Add following definition to stakingPoolsConfig.ts");
-    // console.log(JSON.stringify({ definition }, null, 2));
     console.log({ definition,  });
   }
 )();

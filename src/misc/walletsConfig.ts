@@ -64,12 +64,12 @@ export const dummyWallets: Array<DummyWallet> = [
     stakingTokenAmount: [
       {
         address: "0x1234567890234567890234567890234567890",
-        stakingTokenAmount: 1000n,
+        stakingTokenAmount: parseUnits("1000.50", 18),
         rewardAcumulated: 10
       },
       {
         address: "0x96525678902345678902345678918278372212",
-        stakingTokenAmount: 60n,
+        stakingTokenAmount: parseUnits("60.50", 18),
         rewardAcumulated: 50
       },
     ],
@@ -82,12 +82,12 @@ export const dummyWallets: Array<DummyWallet> = [
     stakingTokenAmount: [
       {
         address: "0x1234567890234567890234567890234567890",
-        stakingTokenAmount: 1000n,
+        stakingTokenAmount: parseUnits("1000", 18),
         rewardAcumulated: 10
       },
       {
         address: "0x96525678902345678902345678918278372212",
-        stakingTokenAmount: 60n,
+        stakingTokenAmount: parseUnits("9991119", 18),
         rewardAcumulated: 50
       },
     ],
@@ -126,12 +126,12 @@ export const dummyWallets: Array<DummyWallet> = [
     stakingTokenAmount: [
       {
         address: "0x96525678902345678902345678918278372212",
-        stakingTokenAmount: 123n,
+        stakingTokenAmount: parseUnits("123.522039320", 18),
         rewardAcumulated: 40
       },
       {
         address: "0x82245678902345678902345678918278372382",
-        stakingTokenAmount: 999n,
+        stakingTokenAmount: parseUnits("99999", 18),
         rewardAcumulated: 0
       },
     ],

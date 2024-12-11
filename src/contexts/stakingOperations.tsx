@@ -46,6 +46,7 @@ const useStakingOperations = () => {
     if (isDummyWalletConnected) {
       setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for staking ZIL`);
       setIsDummyWalletPopupOpen(true);
+      setStakingCallTxHash("0x1234567890234567890234567890234567890" as Address);
     } else {
       writeContract(
         wagmiConfig,
@@ -110,6 +111,7 @@ const useStakingOperations = () => {
     if (isDummyWalletConnected) {
       setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for unstaking ${tokensToUnstake} staked tokens`);
       setIsDummyWalletPopupOpen(true);
+      setUnstakingCallTxHash("0x1234567890234567890234567890234567890" as Address);
     } else {
       writeContract(
         wagmiConfig,
