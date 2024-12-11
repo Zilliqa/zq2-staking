@@ -1,22 +1,26 @@
 import { DateTime } from "luxon";
+import { getViemClient, MOCK_CHAIN } from "./chainConfig";
+import { stakingPoolsConfigForChainId } from "./stakingPoolsConfig";
+import { readContract } from "viem/actions";
+import { Address, erc20Abi, parseUnits } from "viem";
 
 export interface UserStakingPoolData {
   address: string;
-  stakedZil: number;
+  stakingTokenAmount: bigint;
   rewardAcumulated: number;
 }
 
 export interface UserUnstakingPoolData {
   address: string;
-  unstakedZil: number;
+  unstakingTokenAmount: bigint;
   availableAt: DateTime;
 }
 
 export interface DummyWallet {
   name: string;
   address: string;
-  stakedZil: Array<UserStakingPoolData>;
-  unstakedZil: Array<UserUnstakingPoolData>;
+  stakingTokenAmount: Array<UserStakingPoolData>;
+  unstakingTokenAmount: Array<UserUnstakingPoolData>;
   currentZil: bigint;
 }
 
@@ -25,23 +29,23 @@ export const dummyWallets: Array<DummyWallet> = [
     name: "No Zil, no ZIL staked, no ZIL unstaked",
     address: "0xCF671756a8238cBeB19BCB4D77FC9091E2fCe1A3",
     currentZil: 0n,
-    stakedZil: [],
-    unstakedZil: [],
+    stakingTokenAmount: [],
+    unstakingTokenAmount: [],
   },
   {
     name: "No Zil, No ZIL staked, Some ZIL unstaked",
     address: "0xCF671756a8238cBeB19BCB4D77FC9091E2fCeYYY",
     currentZil: 0n,
-    stakedZil: [],
-    unstakedZil: [
+    stakingTokenAmount: [],
+    unstakingTokenAmount: [
       {
         address: "0x1234567890234567890234567890234567890",
-        unstakedZil: 1500,
+        unstakingTokenAmount: parseUnits("62712.323", 18),
         availableAt: DateTime.now().minus({ days: 1 }),
       },
       {
         address: "0x96525678902345678902345678918278372212",
-        unstakedZil: 1000,
+        unstakingTokenAmount: parseUnits("1000", 18),
         availableAt: DateTime.now().plus({ days: 1 }),
       },
     ],
@@ -49,68 +53,68 @@ export const dummyWallets: Array<DummyWallet> = [
   {
     name: "Some Zil, No ZIL staked, No ZIL unstaked",
     address: "0xf0a9953B539f9E7c4953279859F924d9212B2111",
-    currentZil: 1000n,
-    stakedZil: [],
-    unstakedZil: [],
+    currentZil: 1000000000000000000n,
+    stakingTokenAmount: [],
+    unstakingTokenAmount: [],
   },
   {
     name: "Some Zil, Some ZIL staked, No ZIL unstaked",
     address: "0xf0a9953B539f9E7c4953279859F924d9212B9383",
-    currentZil: 1000n,
-    stakedZil: [
+    currentZil: 1000000000000000000n,
+    stakingTokenAmount: [
       {
         address: "0x1234567890234567890234567890234567890",
-        stakedZil: 1000,
+        stakingTokenAmount: 1000n,
         rewardAcumulated: 10
       },
       {
         address: "0x96525678902345678902345678918278372212",
-        stakedZil: 60,
+        stakingTokenAmount: 60n,
         rewardAcumulated: 50
       },
     ],
-    unstakedZil: [],
+    unstakingTokenAmount: [],
   },
   {
     name: "Some Zil, Some ZIL staked, Some ZIL unstaked",
     address: "0xf0a9953B539f9E7c4953279859F924d9212B21A9",
-    currentZil: 1000n,
-    stakedZil: [
+    currentZil: 1000000000000000000000n,
+    stakingTokenAmount: [
       {
         address: "0x1234567890234567890234567890234567890",
-        stakedZil: 1000,
+        stakingTokenAmount: 1000n,
         rewardAcumulated: 10
       },
       {
         address: "0x96525678902345678902345678918278372212",
-        stakedZil: 60,
+        stakingTokenAmount: 60n,
         rewardAcumulated: 50
       },
     ],
-    unstakedZil: [
+    unstakingTokenAmount: [
       {
         address: "0x1234567890234567890234567890234567890",
-        unstakedZil: 9000,
+        unstakingTokenAmount: parseUnits("9000", 18),
         availableAt: DateTime.now().minus({ days: 1 }),
       },
       {
         address: "0x82245678902345678902345678918278372382",
-        unstakedZil: 1044,
+        unstakingTokenAmount: parseUnits("1044", 18),
         availableAt: DateTime.now().minus({ days: 5 }),
       },
       {
         address: "0x82245678902345678902345678918278372382",
-        unstakedZil: 100,
+        unstakingTokenAmount: parseUnits("1000000", 18),
         availableAt: DateTime.now().plus({ days: 1 }),
       },
       {
         address: "0x96525678902345678902345678918278372212",
-        unstakedZil: 500,
+        unstakingTokenAmount: parseUnits("500", 18),
         availableAt: DateTime.now().plus({ days: 5 }),
       },
       {
         address: "0x96525678902345678902345678918278372212",
-        unstakedZil: 1000,
+        unstakingTokenAmount: parseUnits("10000", 18),
         availableAt: DateTime.now().plus({ days: 13 }),
       },
     ],
@@ -119,34 +123,55 @@ export const dummyWallets: Array<DummyWallet> = [
     name: "No Zil, Some ZIL staked, No ZIL unstaked",
     address: "0xf0a9953B539f9E7c4953279859F924d9212BBBBBB",
     currentZil: 0n,
-    stakedZil: [
+    stakingTokenAmount: [
       {
         address: "0x96525678902345678902345678918278372212",
-        stakedZil: 123,
+        stakingTokenAmount: 123n,
         rewardAcumulated: 40
       },
       {
         address: "0x82245678902345678902345678918278372382",
-        stakedZil: 999,
+        stakingTokenAmount: 999n,
         rewardAcumulated: 0
       },
     ],
-    unstakedZil: [],
+    unstakingTokenAmount: [],
   },
 ]
 
-export function getWalletStakingData(wallet: string): Promise<UserStakingPoolData[]> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(dummyWallets.find((dw) => dw.address === wallet)?.stakedZil || []);
-    }, 1000);
-  });
+export async function getWalletStakingData(wallet: string, chainId: number): Promise<UserStakingPoolData[]> {
+  if (chainId === MOCK_CHAIN.id) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(dummyWallets.find((dw) => dw.address === wallet)?.stakingTokenAmount || []);
+      }, 1000);
+    });
+  } else {
+    const stakingData: UserStakingPoolData[] = await Promise.all(
+      stakingPoolsConfigForChainId[chainId].map(
+        async (pool) => {
+          return {
+            address: pool.definition.address,
+            stakingTokenAmount: await readContract(getViemClient(chainId), {
+              address: pool.definition.tokenAddress as Address,
+              abi: erc20Abi,
+              functionName: "balanceOf",
+              args: [wallet as Address],
+            }),
+            rewardAcumulated: 0,
+          }
+        }
+      )
+    )
+
+    return stakingData;
+  }
 }
 
 export function getWalletUnstakingData(wallet: string): Promise<UserUnstakingPoolData[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(dummyWallets.find((dw) => dw.address === wallet)?.unstakedZil || []);
+      resolve(dummyWallets.find((dw) => dw.address === wallet)?.unstakingTokenAmount || []);
     }, 1000);
   });
 }

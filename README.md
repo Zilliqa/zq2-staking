@@ -23,3 +23,7 @@ This enables easy UX/UI workflow where you can modify the wallet states in the c
 ### .env.local_zq2
 
 This one makes the app connected to locally run docker-compose ZQ2 network. 
+
+## Adding new Delegator
+
+1. Fetch delegator static data using `npx tsx src/script/fetchPoolStaticData.ts`

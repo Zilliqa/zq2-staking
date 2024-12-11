@@ -1,9 +1,29 @@
-import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { defineChain } from 'viem';
+import { connectorsForWallets } from '@rainbow-me/rainbowkit';
+import { rainbowWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
+import { createClient, createPublicClient, defineChain, http } from 'viem';
+import { createConfig } from 'wagmi';
+import { rabbyWallet } from '@rainbow-me/rainbowkit/wallets';
+
+export const CHAIN_ZQ2_DEVNET = defineChain({
+  id: 33469,
+  name: 'Zq2 Devnet',
+  nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ['https://api.zq2-devnet.zilliqa.com'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Otterscan',
+      url: 'https://explorer.zq2-devnet.zilliqa.com',
+    },
+  },
+})
 
 export const CHAIN_ZQ2_PROTOTESTNET = defineChain({
-  id: 1,
-  name: 'Zq2 Prototesnet',
+  id: 33103,
+  name: 'Zq2 ProtoTestnet',
   nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
   rpcUrls: {
     default: {
@@ -13,13 +33,13 @@ export const CHAIN_ZQ2_PROTOTESTNET = defineChain({
   blockExplorers: {
     default: {
       name: 'Otterscan',
-      url: 'https://explorer.zq2-prototestnet.zilliqa.com/',
+      url: 'https://explorer.zq2-prototestnet.zilliqa.com',
     },
   },
 })
 
 export const CHAIN_ZQ2_DOCKERCOMPOSE = defineChain({
-  id: 32769,
+  id: 87362,
   name: 'Zq2 Dockercompose',
   nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
   rpcUrls: {
@@ -46,15 +66,56 @@ export const MOCK_CHAIN = defineChain({
   },
   blockExplorers: {
     default: {
-      name: 'Otterscan',
+      name: 'NOT_USED',
       url: 'NOT_USED',
     },
   },
 })
 
-export const chainsConfig = getDefaultConfig({
-  appName: 'ZQ2 Staking',
-  projectId: '40db54b1a888b3fdc54ac79e2925e762',
-  chains: [CHAIN_ZQ2_DOCKERCOMPOSE],
-  ssr: false, // If your dApp uses server side rendering (SSR)
-});
+function getConnectorsForWallets(walletConnectApiKey: string) {
+  return connectorsForWallets(
+    [
+      {
+        groupName: 'Recommended',
+        wallets: [rainbowWallet, walletConnectWallet, rabbyWallet],
+      },
+    ],
+    {
+      appName: 'ZQ2 Staking',
+      projectId: walletConnectApiKey
+    }
+  )
+}
+
+export function getChain(chainId: number) {
+  const chain = [
+    CHAIN_ZQ2_PROTOTESTNET,
+    CHAIN_ZQ2_DOCKERCOMPOSE,
+    MOCK_CHAIN,
+  ].find(
+    (chain) => chain.id === chainId
+  );
+
+  if (!chain) {
+    throw new Error(`Active chain [${chainId}] is not defined`);
+  }
+
+  return chain;
+}
+
+export function getWagmiConfig(chainId: number, walletConnectApiKey: string) {
+  return createConfig({
+    chains: [getChain(chainId)] as any, // for some reason there is a type mismatch
+    client({ chain }) {
+      return createClient({ chain, transport: http() })
+    },
+    connectors: getConnectorsForWallets(walletConnectApiKey),
+  });
+}
+
+export function getViemClient(chainId: number) {
+  return createPublicClient({
+    chain: getChain(chainId),
+    transport: http(),
+  });
+}

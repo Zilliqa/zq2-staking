@@ -1,9 +1,10 @@
-import { WalletConnector } from '@/contexts/walletConnector';
-import { MOCK_CHAIN } from '@/misc/chainConfig';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Button } from 'antd';
 import Image from 'next/image';
 import ArrowRight from '../assets/svgs/arrow-right-black.svg'
+import { AppConfigStorage } from "@/contexts/appConfigStorage";
+import { WalletConnector } from "@/contexts/walletConnector";
+import { MOCK_CHAIN } from "@/misc/chainConfig";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Button } from "antd";
 
 const CustomConnectButton = () => {
   return (
@@ -52,7 +53,6 @@ const CustomConnectButton = () => {
             </button>
           );
         }
-
         // Connected and correct network
         return (
           <button
@@ -71,10 +71,18 @@ const LoginView: React.FC = () => {
   const { connectDummyWallet, isDummyWalletConnecting } =
     WalletConnector.useContainer();
 
-  const connectWallet =
-    process.env.NEXT_PUBLIC_ENV_CHAIN_ID ===
-    MOCK_CHAIN.id.toString() ? (
-      <Button
+
+  const {
+    appConfig
+  } = AppConfigStorage.useContainer();
+
+  const {
+    connectDummyWallet,
+    isDummyWalletConnecting,
+  } = WalletConnector.useContainer();
+
+  const connectWallet = appConfig.chainId === MOCK_CHAIN.id ? (
+    <Button
         type="primary"
         onClick={connectDummyWallet}
         loading={isDummyWalletConnecting}

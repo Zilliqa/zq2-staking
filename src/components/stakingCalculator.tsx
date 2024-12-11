@@ -1,12 +1,13 @@
-import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
-import { useEffect, useState } from 'react';
-import { Button, Input } from 'antd';
-import { WalletConnector } from '@/contexts/walletConnector';
-import {
-  formatPercentage,
-  formattedZilValueInToken,
-} from '@/misc/formatting';
- 
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
+import { useEffect, useState } from "react";
+import { Button, Input } from "antd";
+import { WalletConnector } from "@/contexts/walletConnector";
+import { formatPercentage, convertZilValueInToken, getTxExplorerUrl, formatAddress, formattedZilValueInToken } from "@/misc/formatting";
+import { formatUnits, parseEther } from "viem";
+import { StakingOperations } from "@/contexts/stakingOperations";
+import Link from "next/link";
+import { AppConfigStorage } from "@/contexts/appConfigStorage";
+
 interface StakingCalculatorProps {
   onStakeClick: (zilToStake: number) => void;
 }
@@ -14,14 +15,30 @@ interface StakingCalculatorProps {
 const StakingCalculator: React.FC<StakingCalculatorProps> = ({
   onStakeClick,
 }) => {
-  const { zilAvailable } = WalletConnector.useContainer();
+  
+  const {
+    appConfig
+  } = AppConfigStorage.useContainer();
 
-  const { stakingPoolForView } = StakingPoolsStorage.useContainer();
+  const {
+    zilAvailable,
+  } = WalletConnector.useContainer();
 
-  const [zilToStake, setZilToStake] = useState<string>('');
+  const {
+    stake,
+    isStakingInProgress,
+    stakingCallTxHash,
+    stakeContractCallError,
+  } = StakingOperations.useContainer();
+
+  const {
+    stakingPoolForView
+  } = StakingPoolsStorage.useContainer();
+
+  const [zilToStake, setZilToStake] = useState<string>(formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18));
 
   useEffect(() => {
-    setZilToStake('0.00');
+    setZilToStake("0.00");
   }, [stakingPoolForView]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +72,19 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
   };
 
   const zilToStakeNumber = parseFloat(zilToStake);
+        
+  const zilInWei = parseEther(zilToStake);
+  const zilToStakeOk =  !isNaN(zilToStakeNumber) && zilToStakeNumber <= (zilAvailable || 0n);
+  const canStake = stakingPoolForView?.stakingPool.data && zilToStakeNumber > 0 && zilToStakeNumber <= (zilAvailable || 0n);
+
+  const onMinClick = () => {
+    setZilToStake(`${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18) }`)
+  }
+
+  const onMaxClick = () => {
+    setZilToStake(`${formatUnits(zilAvailable || 0n, 18) }`)
+  }
+    
   const zilToStakeOk =
     !isNaN(zilToStakeNumber) &&
     zilToStakeNumber <= (zilAvailable || 0n);
@@ -112,13 +142,13 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
             <div className="flex flex-col gap-3 max-w-[100px]">
               <Button
                 className="btn-secondary-colored text-aqua2 hover:!text-aqua2 hover:!border-aqua2 border-aqua2"
-                onClick={() => setZilToStake(`${zilAvailable}`)}
+                onClick={onMaxClick}
               >
                 MAX
               </Button>
               <Button
                 className="btn-secondary-colored text-purple1 hover:!text-purple1 hover:!border-purple1 border-purple1"
-                onClick={() => setZilToStake('0')}
+                onClick={onMinClick}
               >
                 MIN
               </Button>
@@ -131,10 +161,9 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
                 Commission Fee:{' '}
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
-                    {' '}
                     {formatPercentage(
                       stakingPoolForView!.stakingPool.data.commission
-                    )}{' '}
+                    )}
                   </>
                 ) : (
                   <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
@@ -150,10 +179,12 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
             <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
               <div className="base flex flex-col xl:flex-row xl:gap-5">
                 <div>Rate</div>
-                <div>{`1 ZIL = zilToTokenRate ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
+                   {stakingPoolForView!.stakingPool.data ? (
+                <div>{`1 ZIL = ~{convertZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)} {stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
+                  )}
               </div>
               <div className=" regular-base text-aqua1 flex flex-row xl:gap-5">
-                <div>APR:</div>
+               <div>APR:</div>
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     ~{formatPercentage(
@@ -183,5 +214,37 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
     )
   );
 };
+        {
+          stakingCallTxHash !== undefined && (
+            <div className="text-center gradient-bg-1 py-2">
+              <Link rel="noopener noreferrer" target="_blank" href={getTxExplorerUrl(stakingCallTxHash, appConfig.chainId)} passHref={true}>
+                Last staking transaction: {formatAddress(stakingCallTxHash)}
+              </Link>
+            </div>
+          )
+        }
 
-export default StakingCalculator;
+        {stakeContractCallError && (
+          <div className="text-red-500 text-center">
+            {stakeContractCallError.message}
+          </div>
+        )}
+
+        <div className='flex my-5'>
+          <Button
+            type="default"
+            size="large"
+            className='w-full text-3xl btn-primary-white'
+            disabled={!canStake}
+            onClick={() => stake(stakingPoolForView.stakingPool.definition.address, zilInWei)}
+            loading={isStakingInProgress}
+          >
+            STAKE
+          </Button>
+      </div>
+      </div>
+    </>
+  )
+}
+
+export default StakingCalculator; 

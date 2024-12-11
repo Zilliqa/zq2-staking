@@ -1,0 +1,26 @@
+backend: kind
+kind: zq2staking
+clusters:
+  main:
+    aws_name: dev
+    aws_region: eu-west-2
+    container_registry: foo
+    # Manifests are add-ons, deployed to your cluster to add functionality.
+    manifests: {}
+    # applications: these will be pulled from your git repository.
+    apps:
+      zq2-staking:
+        path: z/zq2-staking
+        track: development
+        type: kustomize
+        dev:
+          - path: .
+            name: zq2-staking-frontend
+            command: npm run local_z
+            is_entrypoint: true
+            env_vars:
+              - name: ZQ2_STAKING_CHAIN_ID
+                value: 33103
+            secrets:
+              - name: ZQ2_STAKING_WALLET_CONNECT_API_KEY
+                from: zq2_staking.wallet_connect_api_key

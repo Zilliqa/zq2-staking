@@ -1,8 +1,9 @@
 import StakingCalculator from "@/components/stakingCalculator";
 import UnstakingCalculator from "@/components/unstakingCalculator";
 import WithdrawZilPanel from "@/components/withdrawUnstakedZilPanel";
+import { StakingOperations } from "@/contexts/stakingOperations";
 import { WalletConnector } from "@/contexts/walletConnector";
-import { formatPercentage } from "@/misc/formatting";
+import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting";
 import { StakingPool } from "@/misc/stakingPoolsConfig";
 import { UserStakingPoolData, UserUnstakingPoolData } from "@/misc/walletsConfig";
 import { DateTime } from "luxon";
@@ -23,11 +24,12 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 }) => {
 
   const {
-    stake,
-    unstake,
-    claim,
     zilAvailable,
   } = WalletConnector.useContainer();
+
+  const {
+    unstake,
+  } = StakingOperations.useContainer();
 
   const [selectedPane, setSelectedPane] = useState<string>('Stake');
 
@@ -62,18 +64,20 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const pendingUnstakesValue = userUnstakingPoolData?.filter(
     (item) => item.availableAt > DateTime.now()
   ).reduce(
-    (acc, item) => acc + item.unstakedZil,
-    0
+    (acc, item) => acc + item.unstakingTokenAmount,
+    0n
   );
 
   const availableToClaim = userUnstakingPoolData?.filter(
     (item) => item.availableAt <= DateTime.now()
   ).reduce(
-    (acc, item) => acc + item.unstakedZil,
-    0
+    (acc, item) => acc + item.unstakingTokenAmount,
+    0n
   );
 
-  const doesUserHoldAnyFundsInThisPool = !!(userStakingPoolData?.stakedZil || pendingUnstakesValue || availableToClaim);
+  const doesUserHoldAnyFundsInThisPool = !!(userStakingPoolData?.stakingTokenAmount || pendingUnstakesValue || availableToClaim);
+
+  const humanReadableStakingToken = (value: bigint) => formatUnitsToHumanReadable(value, stakingPoolData.definition.tokenDecimals);
 
   return (
     <div className="relative overflow-y-auto max-h-[calc(100vh-38vh)] xs:max-h-[calc(100vh-30vh)] lg:max-h-[calc(100vh-20vh)]
@@ -93,19 +97,18 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
           </Button>
         </div>
       </div>
-
       <div className="bg-darkbg py-7.5 lg:py-5 flex flex-col gap-4">
         {doesUserHoldAnyFundsInThisPool && 
         <div className="grid grid-cols-4 gap-4 pb-4 border-b border-black2/50">
-          { colorInfoEntry("Available to stake", `${zilAvailable} ZIL`) }
-          { colorInfoEntry("Staked", `${userStakingPoolData?.stakedZil || 0} ${stakingPoolData.definition.tokenSymbol}`) }
-          { colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${pendingUnstakesValue} ${stakingPoolData.definition.tokenSymbol}`: "-" ) }
-          { colorInfoEntry("Available to claim", availableToClaim ? `${availableToClaim} ${stakingPoolData.definition.tokenSymbol}` : "-") }
+          { colorInfoEntry("Available to stake", `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`) }
+          { colorInfoEntry("Staked", `${humanReadableStakingToken(userStakingPoolData?.stakingTokenAmount || 0n)} ${stakingPoolData.definition.tokenSymbol}`) }
+          { colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${humanReadableStakingToken(pendingUnstakesValue)} ${stakingPoolData.definition.tokenSymbol}`: "-" ) }
+          { colorInfoEntry("Available to claim", availableToClaim ? `${humanReadableStakingToken(availableToClaim)} ${stakingPoolData.definition.tokenSymbol}` : "-") }
         </div>
         }
         <div className="grid grid-cols-4 gap-4">
           { greyInfoEntry("Voting power", stakingPoolData.data && formatPercentage(stakingPoolData.data.votingPower)) }
-          { greyInfoEntry("Total supply", stakingPoolData.data && `${stakingPoolData.data.tvl}`) }
+          { greyInfoEntry("Total supply", stakingPoolData.data && `${humanReadableStakingToken(stakingPoolData.data.tvl)} ${stakingPoolData.definition.tokenSymbol}`) }
           { greyInfoEntry("Commission", stakingPoolData.data && formatPercentage(stakingPoolData.data.commission)) }
           { greyInfoEntry("", stakingPoolData.data &&
              (
@@ -132,12 +135,11 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
       {
         selectedPane === 'Stake' ? (
-          <StakingCalculator onStakeClick={stake} />
+          <StakingCalculator />
         ) : selectedPane === 'Unstake' ? (
-          <UnstakingCalculator onUnstakeClick={unstake} />
+          <UnstakingCalculator />
         ) : (
           <WithdrawZilPanel
-            onClaimClick={claim}
             userUnstakingPoolData={userUnstakingPoolData}
             stakingPoolData={stakingPoolData}
           />

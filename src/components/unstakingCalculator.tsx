@@ -1,19 +1,21 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import { useEffect, useState } from "react";
 import { Button, Input } from "antd";
-import { WalletConnector } from "@/contexts/walletConnector";
-import { formatPercentage, formattedTokenValueInZil } from "@/misc/formatting";
+import { formatPercentage, convertTokenToZil, formatUnitsToHumanReadable } from "@/misc/formatting";
+import { formatUnits, parseEther } from "viem";
+import { StakingOperations } from "@/contexts/stakingOperations";
 
-interface UnstakingCalculatorProps {
-  onUnstakeClick: (zilToStake: number) => void;
-}
 
-const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
-  onUnstakeClick
-}) => {
+const UnstakingCalculator: React.FC = () => {
   const {
     stakingPoolForView
   } = StakingPoolsStorage.useContainer();
+
+  const {
+    unstake,
+    isUnstakingInProgress,
+    unstakeContractCallError,
+  } = StakingOperations.useContainer();
 
   const [zilToUnstake, setZilToUnstake] = useState<string>("0");
 
@@ -43,11 +45,19 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
     setZilToUnstake("0.00");
   }, [stakingPoolForView])
 
-  const stakedTokenAvailable = stakingPoolForView?.userData?.staked?.stakedZil || 0;
+  const stakedTokenAvailable = stakingPoolForView?.userData?.staked?.stakingTokenAmount || 0;
 
   const zilToUnstakeNumber = parseFloat(zilToUnstake);
+  const zilInWei = parseEther(zilToUnstake);
   const zilToUnstakeOk =  !isNaN(zilToUnstakeNumber) && zilToUnstakeNumber <= stakedTokenAvailable;
   const canUnstake = stakingPoolForView?.stakingPool.data && zilToUnstakeNumber > 0 && zilToUnstakeNumber <= stakedTokenAvailable;
+
+  const onMaxClick = () => {
+    setZilToUnstake(`${formatUnits(
+      stakingPoolForView?.userData?.staked?.stakingTokenAmount || 0n,
+      stakingPoolForView?.stakingPool.definition.tokenDecimals || 18)
+    }`)
+  }
 
   return stakingPoolForView && (
     <div className="bg-black">
@@ -70,7 +80,10 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
 
                 {
                   stakingPoolForView!.stakingPool.data ? <>
-                    ~{formattedTokenValueInZil(zilToUnstakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)}
+                    ~{formatUnitsToHumanReadable(
+                      convertTokenToZil(zilInWei, stakingPoolForView.stakingPool.data.zilToTokenRate),
+                      18
+                    )}
                   </> : <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                 }
                 ZIL
@@ -83,11 +96,9 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
           </div>
           <div className="flex flex-col gap-3 max-w-[100px]">
           <Button                 
-          className="btn-secondary-colored text-aqua2 hover:!text-aqua2 hover:!border-aqua2 border-aqua2"
- onClick={() => setZilToUnstake(stakingPoolForView.userData?.staked?.stakedZil.toString() || "0")} >MAX</Button>
+          className="btn-secondary-colored text-aqua2 hover:!text-aqua2 hover:!border-aqua2 border-aqua2"  onClick={onMaxClick}>MAX</Button>
             <Button                
-            className="btn-secondary-colored text-purple1 hover:!text-purple1 hover:!border-purple1 border-purple1"
- onClick={() => setZilToUnstake("0")}>MIN</Button>
+            className="btn-secondary-colored text-purple1 hover:!text-purple1 hover:!border-purple1 border-purple1" onClick={() => setZilToUnstake("0")}>MIN</Button>
           </div>
         </div>
 
@@ -132,19 +143,24 @@ const UnstakingCalculator: React.FC<UnstakingCalculatorProps> = ({
               </div>
             </div>
           </div>
-        
+ 
+        {unstakeContractCallError && (
+          <div className="text-red-500 text-center">
+            {unstakeContractCallError.message}
+          </div>
+        )}
           <div className="flex mt-10 l:mt-12.5 mb-5">
             <Button
               type="default"
               size="large"
               className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua"
               disabled={!canUnstake}
-              onClick={() => onUnstakeClick(zilToUnstakeNumber)}
+              onClick={() => unstake(stakingPoolForView.stakingPool.definition.address, zilInWei)}
+              loading={isUnstakingInProgress}
             >
               UNSTAKE
             </Button>
           </div>
- 
       </div>
     </div>
   )

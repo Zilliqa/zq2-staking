@@ -2,6 +2,8 @@ import LoginView from '@/components/loginView';
 import StakingPoolDetailsView from '@/components/stakingPoolDetailsView';
 import StakingPoolsList from '@/components/stakingPoolsList';
 import WithdrawZilView from '@/components/withdrawZilView';
+import { AppConfigStorage } from '@/contexts/appConfigStorage';
+import { StakingOperations } from '@/contexts/stakingOperations';
 import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
 import { ConnectedWalletType, WalletConnector } from '@/contexts/walletConnector';
 import { MOCK_CHAIN } from '@/misc/chainConfig';
@@ -17,17 +19,23 @@ import ArrowNext from '../assets/svgs/arrow-next-black.svg'
 
 const HomePage = () => {
   const {
+    appConfig
+  } = AppConfigStorage.useContainer();
+
+  const {
     connectDummyWallet,
     isWalletConnected,
     isDummyWalletConnecting,
-    zilAvailable,
     walletAddress,
     disconnectDummyWallet,
+    connectedWalletType,
+  } = WalletConnector.useContainer();
+
+  const {
     dummyWalletPopupContent,
     isDummyWalletPopupOpen,
     setIsDummyWalletPopupOpen,
-    connectedWalletType,
-  } = WalletConnector.useContainer();
+  } = StakingOperations.useContainer();
 
   const {
     stakingPoolForView,
@@ -83,7 +91,7 @@ const HomePage = () => {
       />
     )
 
-  const connectWallet = process.env.NEXT_PUBLIC_ENV_CHAIN_ID === MOCK_CHAIN.id.toString() ? (
+  const connectWallet = appConfig.chainId === MOCK_CHAIN.id ? (
     <Button
         type="primary"
         onClick={connectDummyWallet}
@@ -213,16 +221,6 @@ const HomePage = () => {
                             Disconnect
                           </span>
                         </div>
-
-                        {
-                          zilAvailable === null ? (
-                            <div className="animated-gradient h-[2.5em] w-[4em]"></div>
-                          ) : (
-                            <span className="btn-primary-cyan rounded-lg h-[2.5em]">
-                              <span>{zilAvailable} ZIL</span>
-                            </span>
-                          )
-                        }
                       </div>
                     ) : (
                       <ConnectButton />

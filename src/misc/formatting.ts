@@ -1,4 +1,6 @@
 import { DateTime } from "luxon";
+import { formatUnits } from "viem";
+import { getChain } from "./chainConfig";
 
 export function formatPercentage(value: number) {
   return `${parseFloat((value * 100).toFixed(2))}%`;
@@ -29,10 +31,27 @@ export function getHumanFormDuration(availableAt: DateTime) {
   return `~${mostSignificantUnit}`
 }
 
-export function formattedTokenValueInZil(tokenAmount: number, zilToTokenRate: number) {
-  return `${(tokenAmount / zilToTokenRate).toFixed(2)}`
+export function convertTokenToZil(tokenAmount: bigint, zilToTokenRate: number): bigint {
+  const rate = BigInt(Math.round((1 / zilToTokenRate) * 100));
+  const amount = (tokenAmount * rate) / 100n;
+  return amount;
 }
 
-export function formattedZilValueInToken(zilAmount: number, zilToTokenRate: number) {
+export function convertZilValueInToken(zilAmount: number, zilToTokenRate: number) {
   return `${(zilAmount * zilToTokenRate).toFixed(2)}`
+}
+
+export function formatUnitsToHumanReadable(value: bigint, decimals: number): string {
+  const raw = parseFloat(formatUnits(value, decimals));
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    compactDisplay: 'short',
+  });
+
+  return formatter.format(raw);
+}
+
+export function getTxExplorerUrl(txHash: string, chainId: number) {
+  return `${getChain(chainId).blockExplorers.default.url}/tx/${txHash}`;
 }
