@@ -50,7 +50,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             )
           )
         ) : !!pendingUnstake?.length ? (
-          <div className="rounded-lg gradient-bg-1 p-4">
+          <div className="rounded-lg bg-gradientbg-1 p-4">
             <div className="text-2xl text-gray-500">
               Next available Claim
             </div>

@@ -8,11 +8,14 @@ import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
 import { ConnectedWalletType, WalletConnector } from '@/contexts/walletConnector';
 import { MOCK_CHAIN } from '@/misc/chainConfig';
 import { formatAddress } from '@/misc/formatting';
-import { LeftOutlined, WalletOutlined } from '@ant-design/icons';
+import { WalletOutlined } from '@ant-design/icons';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Button, Modal } from 'antd';
 import Image from 'next/image';
 import { useState } from 'react';
+import ArrowBack from '../assets/svgs/arrow-back-white.svg'
+import ArrowNext from '../assets/svgs/arrow-next-black.svg'
+
 
 const HomePage = () => {
   const {
@@ -56,7 +59,7 @@ const HomePage = () => {
         !isWalletConnected ? (
           <LoginView />
         ) : stakingPoolForView ? (
-          <div className="bg-black xs:p-6 rounded-lg">
+          <div className="bg-black xs:pt-5 lg:pt-7.5 xs:px-5 lg:px-7.5 rounded-2.5xl">
             <StakingPoolDetailsView
               selectStakingPoolForStaking={(stakingPoolId) => {
                 selectStakingPoolForView(null);
@@ -93,7 +96,7 @@ const HomePage = () => {
         type="primary"
         onClick={connectDummyWallet}
         loading={isDummyWalletConnecting}
-        className="btn-primary-cyan rounded-lg"
+        className="btn-primary-gradient-aqua-lg "
       >
         CONNECT WALLET
     </Button>
@@ -102,49 +105,74 @@ const HomePage = () => {
   )
 
   const mobileBottomNavition = (
-    <div className='fixed bottom-0 left-0 flex lg:hidden justify-between w-full gap-1'>
+    <div className='fixed bottom-0 left-0 lg:hidden w-full mt-7.5'>
+      <div className='flex justify-between gap-1 mb-4 mx-2.5'>
       {
         isWalletConnected ? (
           <>
             {
               mobileShowClaims && (
+                <div className='min-w-[200px] xs:min-w-[320px] mx-auto'>
                   <Button
                     type="default"
                     size="large"
-                    className='btn-primary-white text-3xl w-full'
+                    className='btn-secondary-lg group justify-start'
                     onClick={() => {
                       setMobileShowClaims(false);
                     }}
                   >
-                    <LeftOutlined /> { stakingPoolForView ? stakingPoolForView?.stakingPool.definition.name : "Validators" }
-                  </Button>
+                    <Image
+                        className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                        src={ArrowBack}
+                        alt={`arrow icon`}
+                        width={24}
+                        height={24}
+                      />
+                     { stakingPoolForView ? stakingPoolForView?.stakingPool.definition.name : "Back" }  
+                  </Button></div>
                 )
             }
             {
               !mobileShowClaims && stakingPoolForView && (
+                <div className='w-1/2'>
                 <Button
                   type="default"
                   size="large"
-                  className='btn-primary-white text-3xl w-full'
+                  className='btn-secondary-lg group justify-start'
                   onClick={() => {
                     selectStakingPoolForView(null);
                   }}
-                >
-                  <LeftOutlined /> Validators
-                </Button>
+                > <Image
+                    className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                    src={ArrowBack}
+                    alt={`arrow icon`}
+                    width={24}
+                    height={24}
+                  /> 
+                  Back
+                </Button></div>
               )
             }
 
             {
-              !mobileShowClaims && (
+              !mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0  && (
+                <div className={`h-inherit ${stakingPoolForView ? "w-1/2" : "w-full"}`}>
                 <Button
                   type="default"
                   size="large"
-                  className='btn-primary-cyan text-3xl w-full'
+                  className='btn-primary-gradient-aqua-lg group justify-end'
                   onClick={() => setMobileShowClaims(true)}
                 >
-                  Claims ({availableForUnstaking.length + pendingUnstaking.length})
+                 {availableForUnstaking.length + pendingUnstaking.length} Claims
+                 <Image
+                className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                src={ArrowNext}
+                alt={`arrow icon`}
+                width={24}
+                height={24}
+              />
                 </Button>
+                </div>
               )
             }
           </>
@@ -152,11 +180,11 @@ const HomePage = () => {
           connectWallet
         )
       }
-    </div>
+    </div></div>
   )
 
   return (
-    <div className="h-screen w-screen relative bg-[url('https://s3-alpha-sig.figma.com/img/2094/27b4/0031fd7fbc83ae7020637ddc7c563ea4?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Kqd3RVzZ5qHkIJoS4q45mvtbfLBVz3iJA879jwkqn3PydxJUjtSd9LX-FGW~Zkey9mCDOO-ZiX4fSGl2O-Ur9Ck3qL-jNorGoxxzhvN8MrBCdMBis2gyc11glVLh4dUR7sohttYIffOETquCISkigUJjPZStuvI2qP806mwwtQTKnqmf4Of5Dw07bjERivJEvMiI34LdDyEeUjo97qeqWaZBhZA2E1YFdBJcsZ3UpaZm63Lo93lU5T7MSz6tPfcIJIi7tov8E~X6iuxE-pZV~jrslzcq1tYURdMYif~36n-Jomo3POBd2Ln0HPWIl-K~8s6tp2xkV7l7Otr2w4a2xQ__')] bg-center bg-no-repeat bg-cover bg-origin-content">
+    <div className="h-screen w-screen relative">
 
       {/* Header */}
       <div className="absolute z-50 top-0 left-0 h-[4em] w-full flex items-center justify-center text-white border-b-2 border-white">
@@ -205,7 +233,8 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="relative max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-2 h-screen gap-5 px-4 pt-[5em]">
+      <div className="relative max-w-screen-2xl mx-auto h-screen overflow-y-hidden">
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 px-4 pt-[5em]'>
         {/* Left column */}
         <div className="bg-black xs:p-6 rounded-2.5xl">
           <StakingPoolsList />
@@ -215,6 +244,7 @@ const HomePage = () => {
 
         { mobileOverlayContent }
         { mobileBottomNavition }
+        </div>
       </div>
 
       <Modal

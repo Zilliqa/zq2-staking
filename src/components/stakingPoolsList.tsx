@@ -73,7 +73,7 @@ const StakingPoolsList: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-2.5 lg:gap-4 overflow-y-auto max-h-[calc(100vh-38vh)] xs:max-h-[calc(100vh-30vh)] lg:max-h-[calc(100vh-27vh)]
-       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2">
+       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2 lg:pb-10">
         {sortedStakingPoolsData.map(({ stakingPool, userData }) => (
           <StakingPoolCard
             key={stakingPool.definition.id}

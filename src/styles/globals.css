@@ -57,6 +57,73 @@ body {
     }
   }
 
+  .btn-primary-aqua {
+    @apply py-6 px-14 rounded-none !bg-aqua1 !text-black1 font-int-extrabold text-20 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply opacity-80;
+    }
+
+    &:disabled {
+      @apply !bg-[#202025] !text-[#686A6C] cursor-not-allowed;
+    }
+  }
+
+  .btn-primary-gradient-aqua {
+    @apply py-1 lg:py-4 w-full rounded !bg-primary-gradient !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply opacity-80;
+    }
+
+    &:disabled {
+      @apply !bg-gradientbg !text-gray2 cursor-not-allowed;
+    }
+  }
+  .btn-secondary-lg {
+    @apply btn-secondary py-4 max-lg:text-17;
+  }
+
+  .btn-primary-gradient-aqua-lg {
+    @apply btn-primary-gradient-aqua py-4 max-lg:text-17;
+  }
+
+  .btn-secondary {
+    @apply !gap-0 !whitespace-normal py-2.5 w-full rounded gradient-bg-dark !text-white2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border border-white cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply !opacity-80 !bg-darkbg;
+    }
+
+    &:disabled {
+      @apply !bg-gradientbg !text-gray2 cursor-not-allowed;
+    }
+  }
+
+  .btn-secondary-colored {
+    @apply !gap-0 !bg-transparent !whitespace-normal py-3 px-8 w-full rounded font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border-2 cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply !opacity-80;
+    }
+
+    &:disabled {
+      @apply !bg-gradientbg !text-gray2 cursor-not-allowed;
+    }
+  }
+
+  .btn-primary-white2 {
+    @apply py-1 lg:py-4 w-full rounded !bg-white !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply !opacity-80;
+    }
+
+    &:disabled {
+      @apply !bg-[#202025] !text-[#686A6C] cursor-not-allowed;
+    }
+  }
+
   .btn-custom-white-text {
     @apply py-2 px-5 !bg-transparent !text-white rounded-lg border-0 cursor-pointer;
 
@@ -69,7 +136,7 @@ body {
     }
   }
 
-  .btn-secondary-gray{
+  .btn-secondary-gray {
     @apply flex w-fit py-1 lg:py-2 px-2.5 lg:px-3.5 rounded border border-gray2 items-center bg-transparent cursor-pointer  duration-700 ease-in-out;
 
     &:hover {
@@ -85,6 +152,10 @@ body {
     @apply font-int-semibold  text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray2;
   }
 
+  .regular-base {
+    @apply font-int-regular text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray2;
+  }
+
   .base2 {
     @apply font-int-semibold text-12 xs:text-14 lg:text-15 leading-8 lg:leading-11  text-gray1;
   }
@@ -93,36 +164,48 @@ body {
     @apply font-int-bold text-18 leading-9  text-black1;
   }
 
+  .info-label {
+    @apply font-int-regular text-10 lg:text-12 leading-3 lg:leading-4 text-gray2;
+  }
+
   .body2-bold {
-    @apply font-int-bold text-20 leading-8  text-gray2;
+    @apply font-int-bold text-10 lg:text-20 leading-3 lg:leading-8 text-gray2;
   }
 
   .body2 {
-    @apply font-int-medium text-20 leading-8  text-gray2;
+    @apply font-int-regular lg:font-int-medium text-16 lg:text-20 leading-5 lg:leading-8 text-white2;
   }
 
   .body1 {
-    @apply font-int-bold text-24 leading-8  text-gray2;
+    @apply font-int-bold text-16 lg:text-24 leading-6 lg:leading-8 text-gray2;
+  }
+
+  .body1-s {
+    @apply font-int-extrabold lg:font-int-bold text-12 lg:text-16 leading-6 text-gray1;
   }
 
   .h4 {
-    @apply font-int-extrabold text-20 xs:text-24 lg:text-32 leading-8 lg:leading-10  text-black1;
+    @apply font-int-extrabold text-20 xs:text-24 lg:text-32 leading-8 lg:leading-10 text-black1;
   }
 
   .h3 {
-    @apply font-int-extrabold text-32 lg:text-48 leading-10 lg:leading-12  text-black1;
+    @apply font-int-extrabold text-32 lg:text-48 leading-10 lg:leading-12 text-black1;
+  }
+
+  .h3-s {
+    @apply font-int-extrabold text-12 lg:text-27  leading-6 lg:leading-10 text-gray4;
   }
 
   .h2 {
-    @apply font-int-extrabold text-64 leading-16  text-black2;
+    @apply font-int-extrabold text-64 leading-16 text-black2;
   }
 
   .h1 {
-    @apply font-int-extrabold text-80 leading-20  text-black2;
+    @apply font-int-extrabold text-80 leading-20 text-black2;
   }
 
   .hero {
-    @apply font-int-extrabold text-104 leading-26 text-black2;
+    @apply font-int-extrabold text-40 lg:text-64 leading-12 lg:leading-16 text-white2;
   }
 
   .opacity-hover {
@@ -131,7 +214,13 @@ body {
 }
 
 .animated-gradient {
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(
+    -45deg,
+    #ee7752,
+    #e73c7e,
+    #23a6d5,
+    #23d5ab
+  );
   background-size: 400% 400%;
   animation: gradientAnimation 2s ease infinite;
   border-radius: 10px;
@@ -214,7 +303,7 @@ body {
     z-index: 0;
   }
 
-  .gradient-bottom-border-hover:hover .content-hover { 
+  .gradient-bottom-border-hover:hover .content-hover {
     position: relative;
     z-index: 1;
   }
@@ -237,6 +326,13 @@ body {
     129.93deg,
     rgba(175, 175, 175, 0.12) 16.6%,
     rgba(17, 243, 179, 0.12) 90.65%
+  );
+}
+.gradient-bg-dark {
+  background: linear-gradient(
+    314.92deg,
+    rgba(17, 39, 49, 0.4) 28.08%,
+    rgba(9, 9, 9, 0.4) 97.04%
   );
 }
 
@@ -281,6 +377,14 @@ body {
   );
 }
 
+:where(.css-dev-only-do-not-override-1wwf28x).ant-input-affix-wrapper
+  .ant-input-prefix {
+  margin-right: 0.5rem;
+
+  @media (min-width: 1024px) {
+    margin-right: 1rem;
+  }
+}
 @font-face {
   font-family: 'interLight';
   src: url(../assets/fonts/inter-light-webfont.eot);
