@@ -6,6 +6,7 @@ import { formatPercentage, convertZilValueInToken, getTxExplorerUrl, formatAddre
 import { formatUnits, parseEther } from "viem";
 import { StakingOperations } from "@/contexts/stakingOperations";
  import { AppConfigStorage } from "@/contexts/appConfigStorage";
+import Link from "next/link";
 
 
 const StakingCalculator: React.FC = () => {
@@ -198,9 +199,7 @@ const StakingCalculator: React.FC = () => {
           </div>
         </div>
      
- 
-        {/*
-        can't find this in design
+  
         {
           stakingCallTxHash !== undefined && (
             <div className="text-center gradient-bg-1 py-2">
@@ -209,7 +208,7 @@ const StakingCalculator: React.FC = () => {
               </Link>
             </div>
           )
-        } */}
+        } 
 
         {stakeContractCallError && (
           <div className="text-red-500 text-center">

@@ -91,11 +91,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             {stakingPoolData.definition.tokenSymbol}
           </span>
         </div>
-        <div className="max-w-[210px] hidden sm:block">
-          <Button className="btn-primary-gradient-aqua">
-              Custom CTA 
-          </Button>
-        </div>
+         
       </div>
       <div className="bg-darkbg py-7.5 lg:py-5 flex flex-col gap-4">
         {doesUserHoldAnyFundsInThisPool && 

@@ -56,10 +56,6 @@ const WithdrawZilView: React.FC = () => {
                       </div>
                     </div>
                    <div className="flex lg:mt-3 items-center">
-                     {/*  <div className="text-xl font-bold">
-                        {item.unstakeInfo.unstakingTokenAmount} {item.stakingPool.definition.tokenSymbol}
-                      </div>
-                      */}
                        <div className="h3-s max-lg:order-2">
                          {
                           item.stakingPool.data ? <>
