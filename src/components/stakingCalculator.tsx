@@ -6,8 +6,7 @@ import {
   formatPercentage,
   formattedZilValueInToken,
 } from '@/misc/formatting';
-import StakingPoolDetailsView from './stakingPoolDetailsView';
-
+ 
 interface StakingCalculatorProps {
   onStakeClick: (zilToStake: number) => void;
 }
@@ -37,8 +36,13 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
     }
   };
 
+  const handleFocus = () => {
+     if (zilToStake === '0.00') setZilToStake('');
+  };
+
   const handleBlur = () => {
     let valueTemp = zilToStake;
+    
     if (
       zilToStake.charAt(zilToStake.length - 1) === '.' ||
       zilToStake === '-'
@@ -46,6 +50,8 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
       valueTemp = zilToStake.slice(0, -1);
     }
     setZilToStake(valueTemp.replace(/0*(\d+)/, '$1'));
+
+    if (zilToStake === '') setZilToStake('0.00');
   };
 
   const zilToStakeNumber = parseFloat(zilToStake);
@@ -69,11 +75,12 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
                 }`}
                 value={zilToStake}
                 onChange={handleChange}
+                onFocus={handleFocus}
                 onBlur={handleBlur}
                 prefix="ZIL"
                 status={!zilToStakeOk ? 'error' : undefined}
               />
-              <span className="flex items-center text-xs ml-2 mt-3">
+              <span className="flex items-center ">
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     <span className="body1">
@@ -140,12 +147,12 @@ const StakingCalculator: React.FC<StakingCalculatorProps> = ({
                 Unbonding Period: {zilToStake ? '0.01' : '0'}$
               </div>
             </div>
-            <div className="flex flex-col max-xl:justify-between xl:items-end">
+            <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
               <div className="base flex flex-col xl:flex-row xl:gap-5">
                 <div>Rate</div>
                 <div>{`1 ZIL = zilToTokenRate ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
               </div>
-              <div className=" regular-base text-aqua1 flex flex-col xl:flex-row xl:gap-5">
+              <div className=" regular-base text-aqua1 flex flex-row xl:gap-5">
                 <div>APR:</div>
                 {stakingPoolForView!.stakingPool.data ? (
                   <>

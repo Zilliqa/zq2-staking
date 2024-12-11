@@ -77,7 +77,7 @@ body {
     }
 
     &:disabled {
-      @apply !bg-gradientbg !text-gray2 lg:!text-gray4 cursor-not-allowed;
+      @apply !bg-gradientbg !text-gray2 cursor-not-allowed;
     }
   }
   .btn-secondary-lg {
@@ -96,7 +96,7 @@ body {
     }
 
     &:disabled {
-      @apply !bg-gradientbg !text-gray2 lg:!text-gray4 cursor-not-allowed;
+      @apply !bg-gradientbg !text-gray2 cursor-not-allowed;
     }
   }
 
@@ -108,7 +108,7 @@ body {
     }
 
     &:disabled {
-      @apply !bg-gradientbg !text-gray2 lg:!text-gray4 cursor-not-allowed;
+      @apply !bg-gradientbg !text-gray2 cursor-not-allowed;
     }
   }
 

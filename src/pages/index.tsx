@@ -51,7 +51,7 @@ const HomePage = () => {
         !isWalletConnected ? (
           <LoginView />
         ) : stakingPoolForView ? (
-          <div className="bg-black xs:pt-5 lg:pt-7.5 xs:px-5 lg:px-7.5 rounded-lg">
+          <div className="bg-black xs:pt-5 lg:pt-7.5 xs:px-5 lg:px-7.5 rounded-2.5xl">
             <StakingPoolDetailsView
               selectStakingPoolForStaking={(stakingPoolId) => {
                 selectStakingPoolForView(null);
@@ -108,7 +108,7 @@ const HomePage = () => {
                   <Button
                     type="default"
                     size="large"
-                    className='btn-secondary-lg group justify-end'
+                    className='btn-secondary-lg group justify-start'
                     onClick={() => {
                       setMobileShowClaims(false);
                     }}
