@@ -77,37 +77,27 @@ async function fetchDelegatorDataFromNetwork(definition: StakingPoolDefinition, 
   try {
     const [
       totalSupply,
-      commissionNumerator,
       zilToTokenRateWei,
       delegatorStake,
       depositTotalStake,
+      [commissionNumerator, commissionDenominator]
     ] = await Promise.all([
       readTokenContract<bigint>("totalSupply"),
-      readDelegatorContract<bigint>("getCommissionNumerator"),
       readDelegatorContract<bigint>("getPrice"),
       readDelegatorContract<bigint>("getStake"),
       readDepositContract<bigint>("getFutureTotalStake"),
+      readDelegatorContract<[bigint, bigint]>("getCommission"),
     ]);
 
-    const commissionDenominator = 10000;
     const zilToTokenRate = 1 / parseFloat(formatUnits(zilToTokenRateWei, 18));
 
-    const commission = (parseInt(commissionNumerator.toString()) / commissionDenominator); // percent
-    const votingPower = parseFloat(((delegatorStake * 100n) / depositTotalStake).toString()) / 100; // percent
+    const commission = Number((commissionNumerator * 100n) / commissionDenominator) / 100;
+    const votingPower = Number(((delegatorStake * 100n) / depositTotalStake)) / 100;
     const rewardsPerYearInZil = 51000 * 24 * 365;
 
     const delegatorYearReward = votingPower * rewardsPerYearInZil;
     const delegatorRewardForShare = delegatorYearReward * (1 - commission);
     const apr = delegatorRewardForShare / parseFloat(formatUnits(delegatorStake, 18));
-
-    console.log({
-      commission,
-      votingPower,
-      rewardsPerYearInZil,
-      delegatorYearReward,
-      delegatorRewardForShare,
-      apr
-    })
 
     return {
       tvl: totalSupply,

@@ -58,14 +58,14 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const pendingUnstakesValue = userUnstakingPoolData?.filter(
     (item) => item.availableAt > DateTime.now()
   ).reduce(
-    (acc, item) => acc + item.unstakingTokenAmount,
+    (acc, item) => acc + item.zilAmount,
     0n
   );
 
   const availableToClaim = userUnstakingPoolData?.filter(
     (item) => item.availableAt <= DateTime.now()
   ).reduce(
-    (acc, item) => acc + item.unstakingTokenAmount,
+    (acc, item) => acc + item.zilAmount,
     0n
   );
 

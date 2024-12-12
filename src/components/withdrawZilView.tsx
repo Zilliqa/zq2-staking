@@ -1,6 +1,6 @@
 import { StakingOperations } from "@/contexts/stakingOperations";
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
-import { convertTokenToZil, formatUnitsToHumanReadable } from "@/misc/formatting";
+import { convertTokenToZil, formatUnitsToHumanReadable, getHumanFormDuration } from "@/misc/formatting";
 import { Button } from "antd";
 import Image from 'next/image';
 
@@ -8,6 +8,8 @@ const WithdrawZilView: React.FC = () => {
   const {
     availableForUnstaking,
     pendingUnstaking,
+    selectStakingPoolForView,
+    isUnstakingDataLoading
   } = StakingPoolsStorage.useContainer();
 
   const {
@@ -61,7 +63,7 @@ const WithdrawZilView: React.FC = () => {
                           item.stakingPool.data ? <>
                             {
                               formatUnitsToHumanReadable(
-                                convertTokenToZil(item.unstakeInfo.unstakingTokenAmount, item.stakingPool.data!.zilToTokenRate),
+                                convertTokenToZil(item.unstakeInfo.zilAmount, item.stakingPool.data!.zilToTokenRate),
                                 18
                               )
                             }  ZIL
@@ -73,7 +75,7 @@ const WithdrawZilView: React.FC = () => {
                         }
                         
                       </div> 
-                      <div className="body1-s max-lg:mr-2.5 lg:ml-2.5 max-lg:order-1">{item.unstakeInfo.unstakingTokenAmount} {item.stakingPool.definition.tokenSymbol}</div>
+                      <div className="body1-s max-lg:mr-2.5 lg:ml-2.5 max-lg:order-1">{item.unstakeInfo.zilAmount} {item.stakingPool.definition.tokenSymbol}</div>
                     </div>
                   </div>
                   <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px]">
@@ -81,17 +83,19 @@ const WithdrawZilView: React.FC = () => {
                     <Button
                       className="btn-primary-gradient-aqua"
                       disabled={!item.available}
-                      onClick={() => claim(item.unstakeInfo.unstakingTokenAmount)}
+                      onClick={() => claim(item.unstakeInfo.address)}
                     >
-                      {item.available ? 'Claim' : item.unstakeInfo.availableAt.diffNow("days").days.toFixed(0) + ' days left'}
+                      {item.available ? 'Claim' : getHumanFormDuration(item.unstakeInfo.availableAt) + ' left'}
                     </Button>
                     </div>
                     <div className="max-lg:w-1/2 lg:mt-2.5">
-                    <Button
-                      className="btn-primary-white2"
-                     >
-                      View
-                    </Button></div>
+                      <Button
+                        className="btn-primary-white2"
+                        onClick={() => selectStakingPoolForView(item.stakingPool.definition.id)}
+                      >
+                        View
+                      </Button>
+                    </div>
                   </div>
 
                 </div>
@@ -99,8 +103,14 @@ const WithdrawZilView: React.FC = () => {
             }
           </div>
         ) : (
-          <div className="text-center">
-            WoW such empty
+          <div className="text-center w-full">
+            {
+              isUnstakingDataLoading ? (
+                <div className="animated-gradient h-[2em] w-full"></div>
+              ) : (
+                <span>WoW such empty</span>
+              )
+            }
           </div>
         )
       }

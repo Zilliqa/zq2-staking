@@ -73,7 +73,7 @@ const argv = yargs(hideBin(process.argv))
     ] = await Promise.all([
       readTokenContract<number>("decimals"),
       readTokenContract<string>("symbol"),
-      readTokenContract<bigint>("MIN_DELEGATION")
+      readDelegatorContract<bigint>("getMinDelegation")
     ]);
 
     const hash = Buffer.from(argv.contract_address + tokenAddress).toString('base64').slice(0, 8);
