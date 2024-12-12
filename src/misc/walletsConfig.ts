@@ -191,7 +191,7 @@ export async function getWalletUnstakingData(wallet: string, chainId: number): P
               functionName: "getPendingClaims",
               account: wallet as Address,
             })) as bigint[][],
-            caimableNow: await readContract(getViemClient(chainId), {
+            claimableNow: await readContract(getViemClient(chainId), {
               address: pool.definition.address as Address,
               abi: delegatorAbi,
               functionName: "getClaimable",
@@ -204,15 +204,15 @@ export async function getWalletUnstakingData(wallet: string, chainId: number): P
 
     // convert contracts raw data into application data
     const result: UserUnstakingPoolData[] = unstakingWalletData.filter(
-      (uwd) => uwd.blockNumberAndAmount.length > 0 || uwd.caimableNow > 0
+      (uwd) => uwd.blockNumberAndAmount.length > 0 || uwd.claimableNow > 0
     ).map(
       (uwd) => {
 
         const claims: UserUnstakingPoolData[] = [];
 
-        if (uwd.caimableNow > 0) {
+        if (uwd.claimableNow > 0) {
           claims.push({
-            zilAmount: uwd.caimableNow,
+            zilAmount: uwd.claimableNow,
             availableAt: DateTime.now().minus({ days: 1 }), // just to make sure it displays
             address: uwd.address,
           });
