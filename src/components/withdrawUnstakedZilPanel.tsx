@@ -1,9 +1,12 @@
+import { AppConfigStorage } from "@/contexts/appConfigStorage";
 import { StakingOperations } from "@/contexts/stakingOperations";
-import { convertTokenToZil, getHumanFormDuration } from "@/misc/formatting";
+import { formatAddress, getHumanFormDuration, getTxExplorerUrl } from "@/misc/formatting";
 import { StakingPool } from "@/misc/stakingPoolsConfig";
 import { UserUnstakingPoolData } from "@/misc/walletsConfig";
 import { Button } from "antd";
 import { DateTime } from "luxon";
+import Link from "next/link";
+import { formatUnits } from "viem";
 
 interface WithdrawZilPanelProps {
   stakingPoolData: StakingPool;
@@ -15,8 +18,14 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
   stakingPoolData,
 }) => {
   const {
-    claim
+    claim,
+    isClaimingInProgress,
+    claimCallTxHash,
   } = StakingOperations.useContainer();
+
+  const {
+    appConfig
+  } = AppConfigStorage.useContainer();
 
   const pendingUnstake = userUnstakingPoolData?.filter(
     (claim) => claim.availableAt > DateTime.now()
@@ -28,6 +37,17 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
 
   return (
     <div>
+
+      {
+        claimCallTxHash !== undefined && (
+          <div className="text-center gradient-bg-1 py-2">
+            <Link rel="noopener noreferrer" target="_blank" href={getTxExplorerUrl(claimCallTxHash, appConfig.chainId)} passHref={true}>
+              Last staking transaction: {formatAddress(claimCallTxHash)}
+            </Link>
+          </div>
+        )
+      }
+
       {
         !!availableUnstake?.length ? (
           availableUnstake.map(
@@ -36,12 +56,13 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                 <div className="flex justify-between items-center">
                   {
                     stakingPoolData.data ? <div>
-                      ~{convertTokenToZil(item.unstakingTokenAmount, stakingPoolData.data.zilToTokenRate)} ZIL
+                      {parseFloat(formatUnits(item.zilAmount, 18)).toFixed(3)} ZIL
                     </div> : <div className="w-[4em] h-[1em] animated-gradient" />
                   }
                   <Button
                     className='btn-primary-cyan text-2xl'
-                    onClick={() => claim(item.unstakingTokenAmount)}
+                    onClick={() => claim(item.address)}
+                    loading={isClaimingInProgress}
                   >
                     Claim
                   </Button>
@@ -60,7 +81,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               </div>
               {
                 stakingPoolData.data ? <div>
-                  ~{convertTokenToZil(pendingUnstake[0].unstakingTokenAmount, stakingPoolData.data.zilToTokenRate)} ZIL
+                  {parseFloat(formatUnits(pendingUnstake[0].zilAmount, 18)).toFixed(3)} ZIL
                 </div> : <div className="w-[4em] h-[1em] animated-gradient" />
               }
             </div>
@@ -76,7 +97,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         !!pendingUnstake?.length && (
           <div className="mt-4">
             <div className="font-bold text-gray-500">
-              Pending requests
+              All pending requests
             </div>
 
             {
@@ -85,7 +106,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
 
                   {
                     stakingPoolData.data ? <div>
-                      {claim.unstakingTokenAmount} {stakingPoolData.definition.tokenSymbol} ~= {convertTokenToZil(claim.unstakingTokenAmount, stakingPoolData.data.zilToTokenRate)} ZILs
+                      {parseFloat(formatUnits(claim.zilAmount, 18)).toFixed(3)} ZIL
                     </div> : <div className="w-[4em] h-[1em] animated-gradient" />
                   }
                   <div>

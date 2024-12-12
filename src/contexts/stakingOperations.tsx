@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import { useEffect, useState } from "react";
-import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useWaitForTransactionReceipt } from "wagmi";
 import { createContainer } from "./context";
 import { WalletConnector } from "./walletConnector";
 import { StakingPoolsStorage } from "./stakingPoolsStorage";
@@ -125,6 +125,14 @@ const useStakingOperations = () => {
         (txHash) => {
           setUnstakingCallTxHash(txHash);
         }
+      ).catch(
+        (error) => {
+          notification.error({
+            message: "Unstaking failed",
+            description: error?.message || "There was an error while unstaking ZIL",
+            placement: "topRight"
+          });
+        }
       )
     }
   }
@@ -153,10 +161,65 @@ const useStakingOperations = () => {
    * CLAIMING
    */
 
-  const claim = (zilToStake: bigint) => {
-    setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for withdrawing/claiming ${zilToStake} ZIL`);
-    setIsDummyWalletPopupOpen(true);
+  const [claimCallTxHash, setClaimCallTxHash] = useState<Address | undefined>(undefined);
+
+  const {
+    isLoading: isClaimingInProgress,
+    error: claimContractCallError,
+    status: claimCallReceiptStatus,
+  } = useWaitForTransactionReceipt({
+    hash: claimCallTxHash,
+  })
+
+  const claim = (delegatorAddress: string) => {
+    if (isDummyWalletConnected) {
+      setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for withdrawing/claiming ZIL`);
+      setIsDummyWalletPopupOpen(true);
+      setClaimCallTxHash("0x1234567890234567890234567890234567890" as Address);
+    } else {
+      writeContract(
+        wagmiConfig,
+        {
+          address: delegatorAddress as Address,
+          abi: delegatorAbi,
+          functionName: 'claim',
+          args: []
+        }
+      ).then(
+        (txHash) => {
+          setClaimCallTxHash(txHash);
+        }
+      ).catch(
+        (error) => {
+          notification.error({
+            message: "Claiming failed",
+            description: error?.message || "There was an error while claiming ZIL",
+            placement: "topRight"
+          });
+        }
+      )
+    }
   }
+
+  useEffect(
+    () => {
+      if (claimCallReceiptStatus === "success") {
+        notification.success({
+          message: "Claiming successful",
+          description: `You have successfully claimed ZIL`,
+          placement: "topRight"
+        });
+        reloadUserStakingPoolsData();
+        updateWalletBalance();
+      } else if (claimCallReceiptStatus === "error") {
+        notification.error({
+          message: "Claiming failed",
+          description: `There was an error while claiming ZIL`,
+          placement: "topRight"
+        });
+      }
+    }, [claimCallReceiptStatus]
+  )
 
   /**
    * OTHER
@@ -166,6 +229,7 @@ const useStakingOperations = () => {
     function clearStateOnDelegatorChange() {
       setStakingCallTxHash(undefined);
       setUnstakingCallTxHash(undefined);
+      setClaimCallTxHash(undefined);
     },
     [stakingPoolId]
   )
@@ -174,14 +238,21 @@ const useStakingOperations = () => {
     isDummyWalletPopupOpen,
     dummyWalletPopupContent,
     setIsDummyWalletPopupOpen,
+
     stake,
-    unstake,
-    claim,
     isStakingInProgress,
     stakingCallTxHash,
     stakeContractCallError,
+
+    unstake,
     isUnstakingInProgress,
+    unstakingCallTxHash,
     unstakeContractCallError,
+
+    claim,
+    isClaimingInProgress,
+    claimCallTxHash,
+    claimContractCallError,
   }
 
 };

@@ -27,6 +27,8 @@ const useStakingPoolsStorage = () => {
   const [stakingPoolForStaking, setStakingPoolForStaking] = useState<StakingPool | null>(null);
   const [stakingPoolForUnstaking, setStakingPoolForUnstaking] = useState<StakingPool | null>(null);
 
+  const [isUnstakingDataLoading, setIsUnstakingDataLoading] = useState(false);
+
   const reloadUserStakingPoolsData = () => {
     if (!walletAddress) {
       setUserStakingPoolsData([]);
@@ -34,7 +36,11 @@ const useStakingPoolsStorage = () => {
     }
 
     getWalletStakingData(walletAddress, appConfig!.chainId).then(setUserStakingPoolsData).catch(console.error);
-    getWalletUnstakingData(walletAddress).then(setUserUnstakesData).catch(console.error);
+    setIsUnstakingDataLoading(true);
+    getWalletUnstakingData(walletAddress, appConfig!.chainId)
+      .then(setUserUnstakesData)
+      .catch(console.error)
+      .finally(() => setIsUnstakingDataLoading(false));
   }
 
   useEffect(
@@ -192,6 +198,7 @@ const useStakingPoolsStorage = () => {
     availableForUnstaking,
     pendingUnstaking,
     reloadUserStakingPoolsData,
+    isUnstakingDataLoading,
   };
 };
 

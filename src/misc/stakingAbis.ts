@@ -28,6 +28,9 @@ export const depositAbi = [
 ]
 
 export const delegatorAbi = [
+  /**
+   * from Delegation.sol
+   */
   {
     "inputs": [],
     "name": "stake",
@@ -50,12 +53,19 @@ export const delegatorAbi = [
   },
   {
     "inputs": [],
-    "name": "getLST",
+    "name": "claim",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPendingClaims",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+          "internalType": "uint256[2][]",
+          "name": "claims",
+          "type": "uint256[2][]"
       }
     ],
     "stateMutability": "view",
@@ -63,7 +73,7 @@ export const delegatorAbi = [
   },
   {
     "inputs": [],
-    "name": "MIN_DELEGATION",
+    "name": "getMinDelegation",
     "outputs": [
       {
         "internalType": "uint256",
@@ -76,24 +86,16 @@ export const delegatorAbi = [
   },
   {
     "inputs": [],
-    "name": "getCommissionNumerator",
+    "name": "getCommission",
     "outputs": [
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getPrice",
-    "outputs": [
+      },
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -112,5 +114,47 @@ export const delegatorAbi = [
     ],
     "stateMutability": "view",
     "type": "function"
-  }
+  },
+  {
+    "inputs": [],
+    "name": "getClaimable",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  /**
+   * From ILiquidDelegation.sol
+   */
+  {
+    "inputs": [],
+    "name": "getLST",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
 ]
