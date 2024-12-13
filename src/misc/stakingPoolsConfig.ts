@@ -91,10 +91,10 @@ async function fetchDelegatorDataFromNetwork(definition: StakingPoolDefinition, 
 
     const zilToTokenRate = 1 / parseFloat(formatUnits(zilToTokenRateWei, 18));
 
-    const bigingDivisionPrecision = 1000000n;
+    const bigintDivisionPrecision = 1000000n;
 
-    const commission = Number((commissionNumerator * bigingDivisionPrecision) / commissionDenominator) / Number(bigingDivisionPrecision);
-    const votingPower = Number(((delegatorStake * bigingDivisionPrecision) / depositTotalStake)) / Number(bigingDivisionPrecision);
+    const commission = Number((commissionNumerator * bigintDivisionPrecision) / commissionDenominator) / Number(bigintDivisionPrecision);
+    const votingPower = Number(((delegatorStake * bigintDivisionPrecision) / depositTotalStake)) / Number(bigintDivisionPrecision);
     const rewardsPerYearInZil = 51000 * 24 * 365;
 
     const delegatorYearReward = votingPower * rewardsPerYearInZil;
