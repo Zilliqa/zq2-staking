@@ -86,7 +86,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                           : 'text-gray4'
                       }`}
                     >
-                      VP {stakingPoolData.data.votingPower * 100}%
+                      VP {(stakingPoolData.data.votingPower * 100).toPrecision(3)}%
                     </div>
                   ) : (
                     <>
