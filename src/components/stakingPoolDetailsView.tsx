@@ -93,7 +93,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pb-4 border-b border-black2/50">
           { colorInfoEntry("Available to stake", `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`) }
           { colorInfoEntry("Staked", `${humanReadableStakingToken(userStakingPoolData?.stakingTokenAmount || 0n)} ${stakingPoolData.definition.tokenSymbol}`) }
-          { colorInfoEntry("Unstake requests", pendingUnstakesValue ? `${humanReadableStakingToken(pendingUnstakesValue)} ${stakingPoolData.definition.tokenSymbol}`: "-" ) }
+          { colorInfoEntry("Unstake", pendingUnstakesValue ? `${humanReadableStakingToken(pendingUnstakesValue)} ${stakingPoolData.definition.tokenSymbol}`: "-" ) }
           { colorInfoEntry("Available to claim", availableToClaim ? `${humanReadableStakingToken(availableToClaim)} ${stakingPoolData.definition.tokenSymbol}` : "-") }
         </div>
         }
