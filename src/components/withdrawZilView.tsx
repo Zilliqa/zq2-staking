@@ -103,12 +103,15 @@ const WithdrawZilView: React.FC = () => {
             }
           </div>
         ) : (
-          <div className="text-center w-full">
+          <div className="w-full text-end text-white">
             {
               isUnstakingDataLoading ? (
                 <div className="animated-gradient h-[2em] w-full"></div>
               ) : (
-                <span>WoW such empty</span>
+                <span>
+                  Here is the testing ground for the new Zilliqa portal. 
+                  Explore and give us you feedback.
+                </span>
               )
             }
           </div>
