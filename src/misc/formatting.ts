@@ -14,21 +14,27 @@ export function getHumanFormDuration(availableAt: DateTime) {
   const units = availableAt.diff(DateTime.now()).shiftTo('days', 'hours', 'minutes').toHuman({
     unitDisplay: 'long',
     listStyle: 'narrow',
+    maximumFractionDigits: 0,
   })
 
-  const mostSignificantUnit = units.split(',').reduce((acc, unit) => {
-    if (acc !== '') {
+  const mostSignificantUnit = units
+    .split(',')
+    .map(units => units.trim())
+    .reduce((acc, unit) => {
+      if (acc !== '') {
+        return acc
+      }
+
+      // check if unit starts with smh different that 0
+      // e.g., 0 days 2 hours 5 minutes should return "2 hours"
+      if (unit[0] !== '0') {
+        return unit
+      }
+
       return acc
-    }
+    }, '')
 
-    if (unit[0] !== '0') {
-      return unit.trim()
-    }
-
-    return acc
-  }, '')
-
-  return `~${mostSignificantUnit}`
+  return `~${mostSignificantUnit || '< 1 minute'}`
 }
 
 export function convertTokenToZil(tokenAmount: bigint, zilToTokenRate: number): bigint {

@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <ConfigProvider>
         <WagmiProvider config={getWagmiConfig(appConfig.chainId, appConfig.walletConnectPrivateKey)}>
           <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider>
+            <RainbowKitProvider showRecentTransactions={true}>
               <WalletConnector.Provider>
                 <StakingPoolsStorage.Provider>
                   <StakingOperations.Provider>
