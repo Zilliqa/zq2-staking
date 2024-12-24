@@ -1,5 +1,5 @@
 import { Address, erc20Abi, formatUnits, parseUnits } from "viem";
-import { CHAIN_ZQ2_PROTOTESTNET, CHAIN_ZQ2_DOCKERCOMPOSE, getViemClient, MOCK_CHAIN } from "./chainConfig";
+import { CHAIN_ZQ2_PROTOTESTNET, CHAIN_ZQ2_DOCKERCOMPOSE, getViemClient, MOCK_CHAIN, CHAIN_ZQ2_DEVNET } from "./chainConfig";
 import { readContract } from "viem/actions";
 import { delegatorAbi, depositAbi } from "./stakingAbis";
 
@@ -116,6 +116,7 @@ async function fetchDelegatorDataFromNetwork(definition: StakingPoolDefinition, 
 }
 
 const twoWeeksInMinutes = 60 * 24 * 14;
+const fiveMinutesInMinutes = 5;
 
 export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfig>> = {
   [MOCK_CHAIN.id]: [
@@ -225,7 +226,7 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         minimumStake: parseUnits("100", 18),
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(null)
+      delegatorDataProvider: fetchDelegatorDataFromNetwork
     },
     {
       definition: {
@@ -239,7 +240,37 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         minimumStake: parseUnits("100", 18),
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(null)
+      delegatorDataProvider: fetchDelegatorDataFromNetwork
+    }
+  ],
+  [CHAIN_ZQ2_DEVNET.id]: [
+    {
+      definition: {
+        id: 'MHg3YTBi',
+        address: '0x7a0b7e6d24ede78260c9ddbd98e828b0e11a8ea2',
+        tokenAddress: '0x9e5c257D1c6dF74EaA54e58CdccaCb924669dc83',
+        iconUrl: '/static/logo1.webp',
+        name: 'Dev Validator 1',
+        tokenDecimals: 18,
+        tokenSymbol: "devLST1",
+        minimumStake: 100000000000000000000n,
+        withdrawPeriodInMinutes: fiveMinutesInMinutes
+      },
+      delegatorDataProvider: fetchDelegatorDataFromNetwork
+    },
+    {
+      definition: {
+        id: 'MHg1YmMz',
+        address: '0x5bc3FcC25638725aaA2ED801b7BA21516f718655',
+        tokenAddress: '0x3261f96C307BAd745578fAa470C8dC2841Dd36E0',
+        iconUrl: '/static/logo2.webp',
+        name: 'Dev Validator 2',
+        tokenDecimals: 18,
+        tokenSymbol: "devLST2",
+        minimumStake: 100000000000000000000n,
+        withdrawPeriodInMinutes: fiveMinutesInMinutes
+      },
+      delegatorDataProvider: fetchDelegatorDataFromNetwork
     }
   ],
   [CHAIN_ZQ2_DOCKERCOMPOSE.id]: [
