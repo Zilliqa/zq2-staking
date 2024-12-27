@@ -1,6 +1,6 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import { useEffect, useState } from "react";
-import { Button, Input } from "antd";
+import { Button, Input, Tooltip } from "antd";
 import { WalletConnector } from "@/contexts/walletConnector";
 import { formatPercentage, convertZilValueInToken, getTxExplorerUrl, formatAddress } from "@/misc/formatting";
 import { formatUnits, parseEther } from "viem";
@@ -168,7 +168,9 @@ const StakingCalculator: React.FC = () => {
                   )}
               </div>
               <div className=" regular-base text-aqua1 flex flex-row xl:gap-5">
-               <div>APR:</div>
+              <Tooltip placement='top' arrow={true} color='#686A6C' className=' mr-1' title="Annual Percentage Rate">
+                <span>APR </span>
+              </Tooltip>
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     ~{formatPercentage(

@@ -1,6 +1,6 @@
 import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
 import { useEffect, useState } from 'react';
-import { Button, Input } from 'antd';
+import { Button, Input, Tooltip } from 'antd';
 import {
   formatPercentage,
   convertTokenToZil,
@@ -186,7 +186,9 @@ const UnstakingCalculator: React.FC = () => {
                 </div>
               </div>
               <div className=" regular-base flex flex-row xl:gap-5">
-                <div>APR:</div>
+              <Tooltip placement='top' arrow={true} color='#686A6C' className=' mr-1' title="Annual Percentage Rate">
+                <span>APR </span>
+              </Tooltip>
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     ~

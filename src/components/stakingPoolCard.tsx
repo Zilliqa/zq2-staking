@@ -1,6 +1,7 @@
 import { formatPercentage, formatUnitsToHumanReadable } from '@/misc/formatting';
 import { StakingPool } from '@/misc/stakingPoolsConfig';
 import { UserStakingPoolData } from '@/misc/walletsConfig';
+import { Tooltip } from 'antd';
 import Image from 'next/image';
 
 interface StakingPoolCardProps {
@@ -108,8 +109,13 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   }
                 </div>
               </div>
-              <div className="flex base text-gray2 max-md:order-1 ">
-                APR{' '}
+          
+            
+              <div className="flex base text-gray2 max-md:order-1 ">  
+              <Tooltip placement='top' arrow={true} color='#686A6C' className=' mr-1' title="Annual Percentage Rate">
+                <span>APR </span>
+              </Tooltip>
+                
                 {
                   stakingPoolData.data ? (
                     <>
