@@ -74,17 +74,15 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               ) : (
                 <div className="w-[4em] h-[1em] animated-gradient" />
               )}
-
-<div className='lg:w-1/3 lg:max-w-[218px]'>
-              <Button
-                className="btn-primary-gradient-aqua"
-                onClick={() => claim(item.address)}
-                loading={isClaimingInProgress}
-                >
-                Claim 
-              </Button>
-</div>
-              
+              <div className='lg:w-1/3 lg:max-w-[218px]'>
+                <Button
+                  className="btn-primary-gradient-aqua"
+                  onClick={() => claim(item.address)}
+                  loading={isClaimingInProgress}
+                  >
+                  Claim 
+                </Button>
+              </div>  
             </div>
           </div>
         ))
@@ -126,15 +124,11 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               {stakingPoolData.data ? (
                 <div className='flex gap-2.5'>
                  <div className='body1 text-gray4'>
-                 200.00 avZIL 
-               </div>
-
-                <div className='regular-base text-gray4 mt-1'>
-                  ={' '}{parseFloat(
+                 {parseFloat(
                     formatUnits(claim.zilAmount, 18)
                   ).toFixed(3)}{' '}
                   ZIL
-                </div>
+               </div>
                 </div>
               ) : (
                 <div className="w-[4em] h-[1em] animated-gradient" />

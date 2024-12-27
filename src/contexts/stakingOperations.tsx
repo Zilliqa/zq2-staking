@@ -33,9 +33,10 @@ const useStakingOperations = () => {
    */
 
   const [stakingCallTxHash, setStakingCallTxHash] = useState<Address | undefined>(undefined);
+  const [preparingStakingTx, setPreparingStakingTx] = useState(false);
 
   const {
-    isLoading: isStakingInProgress,
+    isLoading: submittingStakingTx,
     error: stakeContractCallError,
     status: stakingCallReceiptStatus,
   } = useWaitForTransactionReceipt({
@@ -43,10 +44,13 @@ const useStakingOperations = () => {
   })
 
   const stake = (delegatorAddress: string, weiToStake: bigint) => {
+    setPreparingStakingTx(true);
+
     if (isDummyWalletConnected) {
       setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for staking ZIL`);
       setIsDummyWalletPopupOpen(true);
       setStakingCallTxHash("0x1234567890234567890234567890234567890" as Address);
+      setPreparingStakingTx(false);
     } else {
       writeContract(
         wagmiConfig,
@@ -69,6 +73,8 @@ const useStakingOperations = () => {
             placement: "topRight"
           });
         }
+      ).finally(
+        () => setPreparingStakingTx(false)
       )
     }
   }
@@ -98,9 +104,10 @@ const useStakingOperations = () => {
    */
 
   const [unstakingCallTxHash, setUnstakingCallTxHash] = useState<Address | undefined>(undefined);
+  const [preparingUnstakingTx, setPreparingUnstakingTx] = useState(false);
 
   const {
-    isLoading: isUnstakingInProgress,
+    isLoading: submittingUnstakingTx,
     error: unstakeContractCallError,
     status: unstakeCallReceiptStatus,
   } = useWaitForTransactionReceipt({
@@ -108,10 +115,12 @@ const useStakingOperations = () => {
   })
 
   const unstake = (delegatorAddress: string, tokensToUnstake: bigint) => {
+    setPreparingUnstakingTx(true);
     if (isDummyWalletConnected) {
       setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for unstaking ${tokensToUnstake} staked tokens`);
       setIsDummyWalletPopupOpen(true);
       setUnstakingCallTxHash("0x1234567890234567890234567890234567890" as Address);
+      setPreparingUnstakingTx(false);
     } else {
       writeContract(
         wagmiConfig,
@@ -133,6 +142,8 @@ const useStakingOperations = () => {
             placement: "topRight"
           });
         }
+      ).finally(
+        () => setPreparingUnstakingTx(false)
       )
     }
   }
@@ -162,9 +173,10 @@ const useStakingOperations = () => {
    */
 
   const [claimCallTxHash, setClaimCallTxHash] = useState<Address | undefined>(undefined);
+  const [preparingClaimTx, setPreparingClaimTx] = useState(false);
 
   const {
-    isLoading: isClaimingInProgress,
+    isLoading: submittingClaimTx,
     error: claimContractCallError,
     status: claimCallReceiptStatus,
   } = useWaitForTransactionReceipt({
@@ -172,10 +184,12 @@ const useStakingOperations = () => {
   })
 
   const claim = (delegatorAddress: string) => {
+    setPreparingClaimTx(true);
     if (isDummyWalletConnected) {
       setDummyWalletPopupContent(`Now User gonna approve the wallet transaction for withdrawing/claiming ZIL`);
       setIsDummyWalletPopupOpen(true);
       setClaimCallTxHash("0x1234567890234567890234567890234567890" as Address);
+      setPreparingClaimTx(false);
     } else {
       writeContract(
         wagmiConfig,
@@ -197,6 +211,8 @@ const useStakingOperations = () => {
             placement: "topRight"
           });
         }
+      ).finally(
+        () => setPreparingClaimTx(false)
       )
     }
   }
@@ -240,17 +256,17 @@ const useStakingOperations = () => {
     setIsDummyWalletPopupOpen,
 
     stake,
-    isStakingInProgress,
+    isStakingInProgress: submittingStakingTx || preparingStakingTx,
     stakingCallTxHash,
     stakeContractCallError,
 
     unstake,
-    isUnstakingInProgress,
+    isUnstakingInProgress: submittingUnstakingTx || preparingUnstakingTx,
     unstakingCallTxHash,
     unstakeContractCallError,
 
     claim,
-    isClaimingInProgress,
+    isClaimingInProgress: submittingClaimTx || preparingClaimTx,
     claimCallTxHash,
     claimContractCallError,
   }

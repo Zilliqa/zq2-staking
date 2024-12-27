@@ -1,8 +1,8 @@
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
-import { rainbowWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
+import { coinbaseWallet, ledgerWallet, metaMaskWallet, phantomWallet, rabbyWallet, rainbowWallet, trustWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
 import { createClient, createPublicClient, defineChain, http } from 'viem';
 import { createConfig } from 'wagmi';
-import { rabbyWallet } from '@rainbow-me/rainbowkit/wallets';
+
 
 export const CHAIN_ZQ2_DEVNET = defineChain({
   id: 33469,
@@ -77,7 +77,16 @@ function getConnectorsForWallets(walletConnectApiKey: string) {
     [
       {
         groupName: 'Recommended',
-        wallets: [rainbowWallet, walletConnectWallet, rabbyWallet],
+        wallets: [
+          metaMaskWallet,
+          walletConnectWallet,
+          coinbaseWallet,
+          rabbyWallet,
+          trustWallet,
+          ledgerWallet,
+          rainbowWallet,
+          phantomWallet
+        ],
       },
     ],
     {
@@ -89,6 +98,7 @@ function getConnectorsForWallets(walletConnectApiKey: string) {
 
 export function getChain(chainId: number) {
   const chain = [
+    CHAIN_ZQ2_DEVNET,
     CHAIN_ZQ2_PROTOTESTNET,
     CHAIN_ZQ2_DOCKERCOMPOSE,
     MOCK_CHAIN,
