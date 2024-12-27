@@ -13,9 +13,8 @@ const config: Config = {
         "gradient-conic":
         "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         'primary-gradient' : 'radial-gradient(120.62% 683.52% at 110.84% 156.15%, #C5FFFD 6.84%, rgba(111, 255, 194, 0.760784) 48.36%, #00DABA 100%)',
-        'gradientbg': 'linear-gradient(129.93deg, rgba(175, 175, 175, 0.12) 16.6%, rgba(17, 243, 179, 0.12) 90.65%)',
-        'darkbg': 'linear-gradient(314.92deg, rgba(17, 39, 49, 0.4) 28.08%, rgba(9, 9, 9, 0.4) 97.04%)',
- 
+         'gradientbg': 'linear-gradient(129.93deg, rgba(175, 175, 175, 0.12) 16.6%, rgba(17, 243, 179, 0.12) 90.65%)',
+         'darkbg': 'linear-gradient(314.92deg, rgba(17, 39, 49, 0.4) 28.08%, rgba(9, 9, 9, 0.4) 97.04%)',
        },
        colors: {
         black1: '#010101',

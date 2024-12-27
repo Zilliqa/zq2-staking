@@ -60,7 +60,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
 
       {!!availableUnstake?.length ? (
         availableUnstake.map((item, claimIdx) => (
-          <div className="flex flex-col justify-between gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-gradientbg rounded-3xl w-full"
+          <div className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-gradientbg rounded-3xl w-full"
             key={claimIdx}
           >
             <div className="items-center h4 w-full flex justify-between text-gray4">
@@ -93,7 +93,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
           </div>
         ))
       ) : !!pendingUnstake?.length ? (
-        <div className="flex flex-col justify-between gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-gradientbg rounded-3xl w-full">
+        <div className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-gradientbg rounded-3xl w-full">
              <div className="body2 text-gray2">
             Next available reward             </div>
             <div className=" h4 mt-2 w-full flex justify-between text-gray4">

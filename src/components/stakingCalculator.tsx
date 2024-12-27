@@ -62,7 +62,7 @@ const StakingCalculator: React.FC = () => {
     }
     setZilToStake(valueTemp.replace(/0*(\d+)/, '$1'));
 
-    if (zilToStake === '') setZilToStake('1');
+    if (zilToStake === '') setZilToStake('0');
   };
 
   const zilToStakeNumber = parseFloat(zilToStake);
@@ -84,7 +84,7 @@ const StakingCalculator: React.FC = () => {
     stakingPoolForView && (
       <>
         <div>
-          <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7.5 bg-darkbg rounded-3xl">
+          <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7 bg-darkbg rounded-3xl items-center">
             <div className="h-fit self-center">
               <Input
                 className={`h3 flex items-baseline !bg-transparent !border-transparent ${
@@ -97,10 +97,10 @@ const StakingCalculator: React.FC = () => {
                 prefix="ZIL"
                 status={!zilToStakeOk ? 'error' : undefined}
               />
-              <span className="flex items-center ">
+              <span className="flex items-center whitespace-nowrap ">
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
-                    <span className="body1">
+                    <span className="body2-bold">
                       ~
                       {
                         !isNaN(zilToStakeNumber) && !isNaN(stakingPoolForView.stakingPool.data
@@ -115,7 +115,7 @@ const StakingCalculator: React.FC = () => {
                           .tokenSymbol
                       }{' '}
                     </span>
-                    <span className="body1 ml-2 text-aqua1">
+                    <span className="body2-bold ml-2 text-aqua1">
                       ~
                       {formatPercentage(
                         stakingPoolForView!.stakingPool.data.apr
@@ -125,7 +125,7 @@ const StakingCalculator: React.FC = () => {
                 ) : (
                   <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                 )}
-                <span className="body1 text-aqua1"> APR</span>
+                <span className="body2-bold text-aqua1"> APR</span>
               </span>
             </div>
 
