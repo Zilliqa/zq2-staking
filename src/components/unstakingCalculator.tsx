@@ -32,7 +32,7 @@ const UnstakingCalculator: React.FC = () => {
   };
 
   const handleFocus = () => {
-    if (zilToUnstake === '0.00') setZilToUnstake('');
+    if (zilToUnstake === '') setZilToUnstake('1');
   };
 
   const handleBlur = () => {
@@ -44,11 +44,11 @@ const UnstakingCalculator: React.FC = () => {
       valueTemp = zilToUnstake.slice(0, -1);
     }
     setZilToUnstake(valueTemp.replace(/0*(\d+)/, '$1'));
-    if (zilToUnstake === '') setZilToUnstake('0.00');
+    if (zilToUnstake === '') setZilToUnstake('1');
   };
 
   useEffect(() => {
-    setZilToUnstake('0.00');
+    setZilToUnstake('1');
   }, [stakingPoolForView]);
 
   const stakedTokenAvailable =
@@ -172,13 +172,14 @@ const UnstakingCalculator: React.FC = () => {
                       = ~
                       {formatUnitsToHumanReadable(
                         convertTokenToZil(
-                          zilInWei,
+                          parseEther('1'),
                           stakingPoolForView.stakingPool.data
                             .zilToTokenRate
                         ),
                         18
                       )}
-                    </>
+
+                     </>
                   ) : (
                     <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                   )}

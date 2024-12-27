@@ -32,7 +32,7 @@ const StakingCalculator: React.FC = () => {
   const [zilToStake, setZilToStake] = useState<string>(formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18));
 
   useEffect(() => {
-    setZilToStake("0.00");
+    setZilToStake("1");
   }, [stakingPoolForView]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +48,7 @@ const StakingCalculator: React.FC = () => {
   };
 
   const handleFocus = () => {
-     if (zilToStake === '0.00') setZilToStake('');
+     if (zilToStake === '') setZilToStake('1');
   };
 
   const handleBlur = () => {
@@ -62,7 +62,7 @@ const StakingCalculator: React.FC = () => {
     }
     setZilToStake(valueTemp.replace(/0*(\d+)/, '$1'));
 
-    if (zilToStake === '') setZilToStake('0.00');
+    if (zilToStake === '') setZilToStake('1');
   };
 
   const zilToStakeNumber = parseFloat(zilToStake);
@@ -102,11 +102,14 @@ const StakingCalculator: React.FC = () => {
                   <>
                     <span className="body1">
                       ~
-                      {convertZilValueInToken(
-                        zilToStakeNumber,
-                        stakingPoolForView.stakingPool.data
-                          .zilToTokenRate
-                      )}{' '}
+                      {
+                        !isNaN(zilToStakeNumber) && !isNaN(stakingPoolForView.stakingPool.data
+                          .zilToTokenRate)
+                          ? convertZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data
+                            .zilToTokenRate)
+                          : ""
+                      }                      
+                      {' '}
                       {
                         stakingPoolForView.stakingPool.definition
                           .tokenSymbol
@@ -164,7 +167,7 @@ const StakingCalculator: React.FC = () => {
               <div className="base flex flex-col xl:flex-row xl:gap-5">
                 <div>Rate</div>
                    {stakingPoolForView!.stakingPool.data && (
-                <div>{`1 ZIL = ~${convertZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
+                <div>{`1 ZIL = ~${ stakingPoolForView.stakingPool.data.zilToTokenRate} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
                   )}
               </div>
               <div className=" regular-base text-aqua1 flex flex-row xl:gap-5">
