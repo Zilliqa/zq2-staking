@@ -22,20 +22,23 @@ const WithdrawZilView: React.FC = () => {
   ]
 
   return (
-    <div className="flex flex-col gap-4" >
-      <div className=" text-center lg:text-end">
+    <div className="relative overflow-y-auto max-h-[calc(90vh-15vh)]   
+    scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2
+     flex flex-col gap-2" >
+      <div className=" text-center lg:text-end max-h-[20vh]">
         <h1 className="hero text-white mt-4">
           <span className="hidden lg:block">Staking Portal</span>
           <span className="block lg:hidden">Claims</span>
         </h1>
-        <p className="w-2/3 sm:w-1/2 md:w-1/4 lg:w-full max-lg:mx-auto mt-2 lg:mt-5 body2">
+        <p className="w-2/3 sm:w-1/2 md:w-1/4 lg:w-full max-lg:mx-auto my-2 lg:my-5 body2">
           Below are withdrawal claims waiting for you       
         </p>
       </div>
 
       {
         unstakingItems.length > 0 ? (
-          <div className="grid grid-cols-1 gap-4 lg:gap-5 overflow-y-auto max-h-[calc(100vh-38vh)] xs:max-h-[calc(100vh-42vh)] lg:max-h-[calc(100vh-27vh)]
+
+          <div className="grid grid-cols-1 gap-4 lg:gap-5 overflow-y-auto  max-h-[calc(90vh-30vh)]
           scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2 lg:pb-10">
             {
               unstakingItems.map((item, claimIdx) => (

@@ -206,7 +206,7 @@ const StakingCalculator: React.FC = () => {
         } 
 
         {stakeContractCallError && (
-          <div className="text-red-500 text-center">
+          <div className="text-red1 text-center">
             {stakeContractCallError.message}
           </div>
         )}

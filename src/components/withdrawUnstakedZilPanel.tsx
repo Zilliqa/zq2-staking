@@ -65,12 +65,16 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
           >
             <div className="items-center h4 w-full flex justify-between text-gray4">
               {stakingPoolData.data ? (
-                <div>
-                  {parseFloat(
-                    formatUnits(item.zilAmount, 18)
-                  ).toFixed(3)}{' '}
-                  ZIL
-                </div>
+                 <div className='flex'>
+                 <div>
+                   {parseFloat(
+                     formatUnits(item.zilAmount, 18)
+                   ).toFixed(3)}{' '}
+                   ZIL
+                 </div>
+                 <div className="body1-s lg:ml-2.5  mt-2">avZIL</div>
+ 
+                 </div>
               ) : (
                 <div className="w-[4em] h-[1em] animated-gradient" />
               )}

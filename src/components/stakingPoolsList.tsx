@@ -50,11 +50,11 @@ const StakingPoolsList: React.FC = () => {
 
   return (
     <>
-      <div className="h3 text-white2 max-lg:w-1/4  mb-4">
+      <div className="h3 text-white2 sm:max-lg:w-1/4 mb-4 max-h-[10vh]">
         Liquid Validators
       </div>
 
-      <div className="flex gap-x-2.5 mt-6 mb-5">
+      <div className="flex gap-x-2.5 mt-6 mb-5 max-h-[5vh]">
         <SortBtn
           variable="APR"
           isClicked={isAscending && sortCriteria == 'APR'}
@@ -72,8 +72,8 @@ const StakingPoolsList: React.FC = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-2.5 lg:gap-4 overflow-y-auto max-h-[calc(100vh-38vh)] xs:max-h-[calc(100vh-30vh)] lg:max-h-[calc(100vh-27vh)]
-       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2 lg:pb-10">
+      <div className="grid grid-cols-1 gap-2.5 lg:gap-4 overflow-y-auto max-h-[calc(90vh-25vh)]
+       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2 pb-20">
         {sortedStakingPoolsData.map(({ stakingPool, userData }) => (
           <StakingPoolCard
             key={stakingPool.definition.id}

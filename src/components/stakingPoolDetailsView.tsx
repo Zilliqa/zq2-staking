@@ -74,8 +74,8 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const humanReadableStakingToken = (value: bigint) => formatUnitsToHumanReadable(value, stakingPoolData.definition.tokenDecimals);
 
   return (
-    <div className="relative overflow-y-auto max-h-[calc(100vh-38vh)] xs:max-h-[calc(100vh-30vh)] lg:max-h-[calc(100vh-20vh)]
-      scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2"
+    <div className="relative overflow-y-auto max-h-[calc(90vh-10vh)] sm:max-h-[calc(90vh-15vh)]
+      scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2 pb-2"
     >
       <div className="items-center flex justify-between py-1 lg:py-7.5">
         <div className="max-lg:ms-1 items-center flex">

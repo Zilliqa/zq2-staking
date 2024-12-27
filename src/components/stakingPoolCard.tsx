@@ -49,7 +49,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                 {stakingPoolData.definition.tokenSymbol}
               </div>
             </div>
-            <div className="base2 lg:block hidden">
+            <div className="base2 lg:block hidden text-aqua1">
               {userStakingPoolData &&
               userStakingPoolData.stakingTokenAmount ? (
                 <> 
@@ -60,7 +60,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     )} ${stakingPoolData.definition.tokenSymbol}`}
                 </>
               ) : (
-                <span className="text-gray2">-</span>
+                <span className="text-aqua1">-</span>
               )}
             </div>
             <Image
@@ -78,7 +78,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                 {
                   stakingPoolData.data ? (
                     <div
-                      className={`base max-xs:ml-2 xs:max-md:ml-6 ${
+                      className={`base max-xs:ml-2 xs:max-lg:ml-6 ${
                         stakingPoolData.data.votingPower * 100 >= 50
                           ? 'text-red1'
                           : stakingPoolData.data.votingPower * 100 >= 30
@@ -90,7 +90,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     </div>
                   ) : (
                     <>
-                      <span className='base max-xs:ml-2 xs:max-md:ml-6'>VP</span>
+                      <span className='base max-xs:ml-2 xs:max-lg:ml-6'>VP</span>
                       <span className="w-[3em] ml-1 animated-gradient" />
                     </>
                   )
@@ -108,7 +108,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   }
                 </div>
               </div>
-              <div className="flex base text-aqua1 max-md:order-1">
+              <div className="flex base text-gray2 max-md:order-1 ">
                 APR{' '}
                 {
                   stakingPoolData.data ? (
