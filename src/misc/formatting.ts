@@ -44,7 +44,7 @@ export function convertTokenToZil(tokenAmount: bigint, zilToTokenRate: number): 
 }
 
 export function convertZilValueInToken(zilAmount: number, zilToTokenRate: number) {
-  return `${(zilAmount * zilToTokenRate).toFixed(2)}`
+   return `${(zilAmount * zilToTokenRate).toFixed(2)}`
 }
 
 export function formatUnitsToHumanReadable(value: bigint, decimals: number): string {

@@ -1,6 +1,6 @@
 import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
 import { useEffect, useState } from 'react';
-import { Button, Input } from 'antd';
+import { Button, Input, Tooltip } from 'antd';
 import {
   formatPercentage,
   convertTokenToZil,
@@ -32,7 +32,7 @@ const UnstakingCalculator: React.FC = () => {
   };
 
   const handleFocus = () => {
-    if (zilToUnstake === '0.00') setZilToUnstake('');
+    if (zilToUnstake === '') onMaxClick();
   };
 
   const handleBlur = () => {
@@ -44,11 +44,11 @@ const UnstakingCalculator: React.FC = () => {
       valueTemp = zilToUnstake.slice(0, -1);
     }
     setZilToUnstake(valueTemp.replace(/0*(\d+)/, '$1'));
-    if (zilToUnstake === '') setZilToUnstake('0.00');
+    if (zilToUnstake === '') onMaxClick();
   };
 
   useEffect(() => {
-    setZilToUnstake('0.00');
+    setZilToUnstake('1');
   }, [stakingPoolForView]);
 
   const stakedTokenAvailable =
@@ -82,7 +82,7 @@ const UnstakingCalculator: React.FC = () => {
     stakingPoolForView && (
       <div className="bg-black">
         <div>
-          <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7.5 bg-darkbg rounded-3xl">
+          <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7 bg-darkbg rounded-3xl items-center">
             <div className="h-fit self-center">
               <Input
                 className={`h3 flex items-baseline !bg-transparent !border-transparent ${
@@ -172,13 +172,14 @@ const UnstakingCalculator: React.FC = () => {
                       = ~
                       {formatUnitsToHumanReadable(
                         convertTokenToZil(
-                          zilInWei,
+                          parseEther('1'),
                           stakingPoolForView.stakingPool.data
                             .zilToTokenRate
                         ),
                         18
                       )}
-                    </>
+
+                     </>
                   ) : (
                     <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                   )}
@@ -186,7 +187,9 @@ const UnstakingCalculator: React.FC = () => {
                 </div>
               </div>
               <div className=" regular-base flex flex-row xl:gap-5">
-                <div>APR:</div>
+              <Tooltip placement='top' arrow={true} color='#686A6C' className=' mr-1' title="Annual Percentage Rate">
+                <span>APR </span>
+              </Tooltip>
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     ~
@@ -202,7 +205,7 @@ const UnstakingCalculator: React.FC = () => {
           </div>
 
           {unstakeContractCallError && (
-            <div className="text-red-500 text-center">
+            <div className="text-red1 text-center">
               {unstakeContractCallError.message}
             </div>
           )}

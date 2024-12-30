@@ -101,7 +101,7 @@ body {
   }
 
   .btn-secondary-colored {
-    @apply !gap-0 !bg-transparent !whitespace-normal py-3 px-8 w-full rounded font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border-2 cursor-pointer duration-500 ease-in-out;
+    @apply !gap-0 !bg-transparent !whitespace-normal py-1.5 px-4 w-full rounded font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border-2 cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply !opacity-80;

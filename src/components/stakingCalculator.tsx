@@ -1,6 +1,6 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import { useEffect, useState } from "react";
-import { Button, Input } from "antd";
+import { Button, Input, Tooltip } from "antd";
 import { WalletConnector } from "@/contexts/walletConnector";
 import { formatPercentage, convertZilValueInToken, getTxExplorerUrl, formatAddress } from "@/misc/formatting";
 import { formatUnits, parseEther } from "viem";
@@ -32,7 +32,7 @@ const StakingCalculator: React.FC = () => {
   const [zilToStake, setZilToStake] = useState<string>(formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18));
 
   useEffect(() => {
-    setZilToStake("0.00");
+    onMinClick();
   }, [stakingPoolForView]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +48,7 @@ const StakingCalculator: React.FC = () => {
   };
 
   const handleFocus = () => {
-     if (zilToStake === '0.00') setZilToStake('');
+     if (zilToStake === '') onMinClick();
   };
 
   const handleBlur = () => {
@@ -62,7 +62,7 @@ const StakingCalculator: React.FC = () => {
     }
     setZilToStake(valueTemp.replace(/0*(\d+)/, '$1'));
 
-    if (zilToStake === '') setZilToStake('0.00');
+    if (zilToStake === '') onMinClick();
   };
 
   const zilToStakeNumber = parseFloat(zilToStake);
@@ -84,7 +84,7 @@ const StakingCalculator: React.FC = () => {
     stakingPoolForView && (
       <>
         <div>
-          <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7.5 bg-darkbg rounded-3xl">
+          <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7 bg-darkbg rounded-3xl items-center">
             <div className="h-fit self-center">
               <Input
                 className={`h3 flex items-baseline !bg-transparent !border-transparent ${
@@ -97,22 +97,25 @@ const StakingCalculator: React.FC = () => {
                 prefix="ZIL"
                 status={!zilToStakeOk ? 'error' : undefined}
               />
-              <span className="flex items-center ">
+              <span className="flex items-center whitespace-nowrap ">
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
-                    <span className="body1">
+                    <span className="body2-bold">
                       ~
-                      {convertZilValueInToken(
-                        zilToStakeNumber,
-                        stakingPoolForView.stakingPool.data
-                          .zilToTokenRate
-                      )}{' '}
+                      {
+                        !isNaN(zilToStakeNumber) && !isNaN(stakingPoolForView.stakingPool.data
+                          .zilToTokenRate)
+                          ? convertZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data
+                            .zilToTokenRate)
+                          : ""
+                      }                      
+                      {' '}
                       {
                         stakingPoolForView.stakingPool.definition
                           .tokenSymbol
                       }{' '}
                     </span>
-                    <span className="body1 ml-2 text-aqua1">
+                    <span className="body2-bold ml-2 text-aqua1">
                       ~
                       {formatPercentage(
                         stakingPoolForView!.stakingPool.data.apr
@@ -122,7 +125,7 @@ const StakingCalculator: React.FC = () => {
                 ) : (
                   <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                 )}
-                <span className="body1 text-aqua1"> APR</span>
+                <span className="body2-bold text-aqua1"> APR</span>
               </span>
             </div>
 
@@ -164,11 +167,13 @@ const StakingCalculator: React.FC = () => {
               <div className="base flex flex-col xl:flex-row xl:gap-5">
                 <div>Rate</div>
                    {stakingPoolForView!.stakingPool.data && (
-                <div>{`1 ZIL = ~${convertZilValueInToken(zilToStakeNumber, stakingPoolForView.stakingPool.data.zilToTokenRate)} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
+                <div>{`1 ZIL = ~${ stakingPoolForView.stakingPool.data.zilToTokenRate} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
                   )}
               </div>
               <div className=" regular-base text-aqua1 flex flex-row xl:gap-5">
-               <div>APR:</div>
+              <Tooltip placement='top' arrow={true} color='#686A6C' className=' mr-1' title="Annual Percentage Rate">
+                <span>APR </span>
+              </Tooltip>
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     ~{formatPercentage(
@@ -206,7 +211,7 @@ const StakingCalculator: React.FC = () => {
         } 
 
         {stakeContractCallError && (
-          <div className="text-red-500 text-center">
+          <div className="text-red1 text-center">
             {stakeContractCallError.message}
           </div>
         )}
