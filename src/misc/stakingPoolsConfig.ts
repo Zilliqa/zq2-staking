@@ -1,5 +1,5 @@
 import { Address, erc20Abi, formatUnits, parseUnits } from "viem";
-import { CHAIN_ZQ2_PROTOTESTNET, CHAIN_ZQ2_DOCKERCOMPOSE, getViemClient, MOCK_CHAIN, CHAIN_ZQ2_DEVNET } from "./chainConfig";
+import { CHAIN_ZQ2_PROTOTESTNET, CHAIN_ZQ2_DOCKERCOMPOSE, getViemClient, MOCK_CHAIN, CHAIN_ZQ2_DEVNET, CHAIN_ZQ2_PROTOMAINNET } from "./chainConfig";
 import { readContract } from "viem/actions";
 import { delegatorAbi, depositAbi } from "./stakingAbis";
 
@@ -288,5 +288,8 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
       },
       delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(null)
     },
+  ],
+  [CHAIN_ZQ2_PROTOMAINNET.id]: [
+
   ]
 }

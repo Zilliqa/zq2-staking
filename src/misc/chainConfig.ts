@@ -38,6 +38,23 @@ export const CHAIN_ZQ2_PROTOTESTNET = defineChain({
   },
 })
 
+export const CHAIN_ZQ2_PROTOMAINNET = defineChain({
+  id: 32770,
+  name: 'Zq2 ProtoMainnet',
+  nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ['https://api.zq2-protomainnet.zilliqa.com'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Otterscan',
+      url: 'https://explorer.zq2-protomainnet.zilliqa.com',
+    },
+  },
+})
+
 export const CHAIN_ZQ2_DOCKERCOMPOSE = defineChain({
   id: 87362,
   name: 'Zq2 Dockercompose',
@@ -100,6 +117,7 @@ export function getChain(chainId: number) {
   const chain = [
     CHAIN_ZQ2_DEVNET,
     CHAIN_ZQ2_PROTOTESTNET,
+    CHAIN_ZQ2_PROTOMAINNET,
     CHAIN_ZQ2_DOCKERCOMPOSE,
     MOCK_CHAIN,
   ].find(
