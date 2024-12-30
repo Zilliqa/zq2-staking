@@ -198,7 +198,7 @@ const HomePage = () => {
                 Back
               </Button></div>
             ) }
-            <div className={`${stakingPoolForView ? "xs:w-1/2" : "w-full"}`}>
+            <div className={`flex items-center justify-center h-[58.79px] bg-[#0e76fd] rounded-lg ${stakingPoolForView ? "w-1/2" : "w-full"}`}>
             {connectWallet}
            </div>
             </>
