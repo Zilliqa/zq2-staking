@@ -32,7 +32,7 @@ const StakingCalculator: React.FC = () => {
   const [zilToStake, setZilToStake] = useState<string>(formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18));
 
   useEffect(() => {
-    setZilToStake("1");
+    onMinClick();
   }, [stakingPoolForView]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +48,7 @@ const StakingCalculator: React.FC = () => {
   };
 
   const handleFocus = () => {
-     if (zilToStake === '') setZilToStake('1');
+     if (zilToStake === '') onMinClick();
   };
 
   const handleBlur = () => {
@@ -62,7 +62,7 @@ const StakingCalculator: React.FC = () => {
     }
     setZilToStake(valueTemp.replace(/0*(\d+)/, '$1'));
 
-    if (zilToStake === '') setZilToStake('0');
+    if (zilToStake === '') onMinClick();
   };
 
   const zilToStakeNumber = parseFloat(zilToStake);

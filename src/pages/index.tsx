@@ -204,7 +204,7 @@ const HomePage = () => {
             </>
   
         )
-      })
+      }
     </div></div>
   )
 

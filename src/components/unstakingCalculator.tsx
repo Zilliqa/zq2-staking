@@ -32,7 +32,7 @@ const UnstakingCalculator: React.FC = () => {
   };
 
   const handleFocus = () => {
-    if (zilToUnstake === '') setZilToUnstake('1');
+    if (zilToUnstake === '') onMaxClick();
   };
 
   const handleBlur = () => {
@@ -44,7 +44,7 @@ const UnstakingCalculator: React.FC = () => {
       valueTemp = zilToUnstake.slice(0, -1);
     }
     setZilToUnstake(valueTemp.replace(/0*(\d+)/, '$1'));
-    if (zilToUnstake === '') setZilToUnstake('1');
+    if (zilToUnstake === '') onMaxClick();
   };
 
   useEffect(() => {
