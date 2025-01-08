@@ -81,45 +81,9 @@ const StakingPoolDetailsView: React.FC<
       stakingPoolData.definition.tokenDecimals
     );
 
-  //method 1
-
-  const { data: walletClient } = useWalletClient();
-
-  const { walletAddress } = WalletConnector.useContainer();
-
-  const handleClick1 = async () => {
-    if (walletAddress && walletClient) {
-      try {
-        console.log(walletClient);
-        const result = await walletClient.watchAsset({
-          type: 'ERC20',
-          options: {
-            address: stakingPoolData.definition.tokenAddress,
-            symbol: stakingPoolData.definition.tokenSymbol,
-            decimals: stakingPoolData.definition.tokenDecimals,
-          },
-        });
-
-        if (result) {
-          console.log('Asset watched successfully!');
-        } 
-        else {
-          console.error('Failed to watch asset.');
-        }
-      } 
-      catch (error) {
-        console.error('Error watching asset:', error);
-      }
-    } 
-    else console.log('not wallet client');
-  };
-
-  //method 1 end
-
-  //method 2
-
   const { watchAsset } = useWatchAsset();
-  const handleClick2 = () =>
+  
+  const handleClickAaddToken = () =>
     watchAsset(
       {
         type: 'ERC20',
@@ -139,10 +103,6 @@ const StakingPoolDetailsView: React.FC<
       }
     );
 
-  //
-  
-  //method 2 end
-
   return (
     <div
       className="relative overflow-y-auto max-h-[calc(90vh-10vh)] sm:max-h-[calc(90vh-15vh)]
@@ -159,18 +119,10 @@ const StakingPoolDetailsView: React.FC<
         </div>
         <div>
           <Button
-            onClick={handleClick1}
+            onClick={handleClickAaddToken}
             className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua"
           >
-            M1
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={handleClick2}
-            className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua"
-          >
-            M2
+            +
           </Button>
         </div>
       </div>
