@@ -10,7 +10,17 @@ k8s_clusters:
 
 registry: asia-docker.pkg.dev/prj-p-devops-services-tvwmrf63/zilliqa-private
 
-dbs_to_instances: []
+dbs_to_instances:
+  - names:
+      - service: main/zq2-staking/zq2-staking-frontend
+        db_user: op://prj-p-prod-apps/zq2-staking-protomainnet/username
+        db_user_password: op://prj-p-prod-apps/zq2-staking-protomainnet/password
+    cluster:
+      name: zq2-staking-protomainnet
+      address: 10.110.2.49
+      admin:
+        username: op://prj-p-prod-apps/zq2-staking-protomainnet/root_username
+        password: op://prj-p-prod-apps/zq2-staking-protomainnet/root_password
 
 apps_to_clusters:
   - name_re: main/zq2-staking/zq2-staking-frontend
@@ -37,4 +47,4 @@ apps_to_clusters:
 secrets:
   zq2_staking:
     wallet_connect_api_key:
-      _op: "op://prj-d-staging/zq2-staking/WALLET_CONNECT_API_KEY"
+      _op: "op://prj-p-prod-apps/zq2-staking-protomainnet/WALLET_CONNECT_API_KEY"
