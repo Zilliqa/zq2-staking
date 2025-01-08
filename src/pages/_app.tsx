@@ -18,6 +18,7 @@ import { AppConfigStorage } from "@/contexts/appConfigStorage";
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
   const [appConfig, setAppConfig] = useState<AppConfig | null>(null);
+  const [loadingPercentage, setLoadingPercentage] = useState(0);
 
   useEffect(() => {
     fetch("/api/config")
@@ -26,10 +27,51 @@ export default function App({ Component, pageProps }: AppProps) {
       .catch(console.error);
   }, []);
 
+  useEffect(() => {
+    const fetchConfig = async () => {
+      try {
+        const res = await fetch("/api/config");
+        const reader = res.body?.getReader();
+        const contentLength = res.headers.get("Content-Length");
   
-  if (!appConfig) {
-    return <div>Loading...</div> // APT-1605
-  }
+        if (reader && contentLength) {
+          const totalLength = parseInt(contentLength, 10);
+          let loaded = 0;
+            while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+  
+            loaded += value?.length || 0;
+            const progress = Math.round((loaded / totalLength) * 100);
+            setLoadingPercentage(progress);
+          }
+        }
+  
+        const data = await res.json();
+        setAppConfig(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchConfig();
+  }, []);
+
+
+ if (!appConfig) {
+    return( 
+    <div className="h-screen bg-black text-white1 ">
+      <div className="h-full flex flex-col justify-between">
+    <div className="w-full h-10 overflow-hidden">
+      <div
+        className="h-full bg-colorful-gradient"
+        style={{ width: `${loadingPercentage}%` }}
+      ></div>
+    </div>
+    <div className="self-end text-80 lg:text-114 font-int-extrabold mr-7">{loadingPercentage}%</div>
+  </div></div>
+  ) 
+}
 
   return (
     <AppConfigStorage.Provider initialState={{ appConfig }}>
