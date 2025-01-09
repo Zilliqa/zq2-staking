@@ -233,20 +233,20 @@ const HomePage = () => {
                 <>
                   {
                     connectedWalletType === ConnectedWalletType.MockWallet ? (
-                      <div>
-                        <div
-                          className='group w-32 relative btn-primary-cyan rounded-lg h-[2.5em]'
+                     
+                        <Button type="primary"
+                          className='group relative btn-primary-gradient-aqua-lg min-w-[214px] lg:min-w-[160px]'
                           onClick={disconnectDummyWallet}
                         >
-                          <div className='absolute inset-0 group-hover:opacity-0 transition-opacity flex items-center justify-center'>
+                          <div className=' group-hover:hidden transition-opacity flex items-center justify-center'>
                             <WalletOutlined className="mr-2 !text-black-100"/>
                             {formatAddress(walletAddress || '')}
                           </div>
-                          <span className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center'>
+                            <span className=' !hidden group-hover:!block transition-opacity  items-center justify-center'>
                             Disconnect
-                          </span>
-                        </div>
-                      </div>
+                          </span>  
+                        </Button>
+                   
                     ) : (
                       <ConnectButton />
                     )
