@@ -12,12 +12,19 @@ import { WalletOutlined } from '@ant-design/icons';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Button, Modal } from 'antd';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ArrowBack from '../assets/svgs/arrow-back-white.svg'
 import ArrowNext from '../assets/svgs/arrow-next-black.svg'
 
 
 const HomePage = () => {
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+       setIsVisible(true);
+   }, []);
+
   const {
     appConfig
   } = AppConfigStorage.useContainer();
@@ -209,7 +216,9 @@ const HomePage = () => {
   )
 
   return (
-    <div className="h-screen w-screen relative">
+    <div  className={`h-screen w-screen relative transition-opacity duration-1000 ${
+      isVisible ? "opacity-100" : "opacity-0"
+      }`}>
 
       {/* Header */}
       <div className="h-[10vh] w-full flex items-center justify-center text-white border-b-2 border-white">
