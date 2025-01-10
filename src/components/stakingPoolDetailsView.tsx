@@ -17,6 +17,8 @@ import { DateTime } from 'luxon';
 import { useState } from 'react';
 import { useWatchAsset } from 'wagmi';
 import { useWalletClient } from 'wagmi';
+import Plus from '../assets/svgs/plus.svg'
+import Image from 'next/image';
 
 interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool;
@@ -120,9 +122,16 @@ const StakingPoolDetailsView: React.FC<
         <div>
           <Button
             onClick={handleClickAaddToken}
-            className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua"
+            className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua group"
           >
-            +
+            <Image
+              className="h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:rotate-180"
+              src={Plus}
+              alt={`arrow icon`}
+              width={24}
+              height={24}
+            /> 
+              <span className='!hidden sm:!block lg:!hidden xl:!block '>Add Token</span> 
           </Button>
         </div>
       </div>

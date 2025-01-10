@@ -79,24 +79,24 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                 {
                   stakingPoolData.data ? (
                     <div
-                      className={`base max-xs:ml-2 xs:max-lg:ml-6 ${
+                      className={`base-medium max-xs:ml-2 xs:max-lg:ml-6 ${
                         stakingPoolData.data.votingPower * 100 >= 50
                           ? 'text-red1'
                           : stakingPoolData.data.votingPower * 100 >= 30
                           ? 'text-orange1'
-                          : 'text-gray4'
+                          : ''
                       }`}
                     >
                       VP {(stakingPoolData.data.votingPower * 100).toPrecision(3)}%
                     </div>
                   ) : (
                     <>
-                      <span className='base max-xs:ml-2 xs:max-lg:ml-6'>VP</span>
+                      <span className='base-medium max-xs:ml-2 xs:max-lg:ml-6'>VP</span>
                       <span className="w-[3em] ml-1 animated-gradient" />
                     </>
                   )
                 }
-                <div className="flex base ml-2 xs:ml-6 text-gray4">
+                <div className="flex base-medium ml-2 xs:ml-6">
                   Commission{' '}
                   {
                     stakingPoolData.data ? (
@@ -111,7 +111,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               </div>
           
             
-              <div className="flex base text-gray2 max-md:order-1 ">  
+              <div className="flex base-medium max-md:order-1 ">  
               <Tooltip placement='top' arrow={true} color='#686A6C' className=' mr-1' title="Annual Percentage Rate">
                 <span>APR </span>
               </Tooltip>
