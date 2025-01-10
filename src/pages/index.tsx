@@ -55,7 +55,7 @@ const HomePage = () => {
   const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false);
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className='absolute lg:hidden top-0 left-0 z-25 h-full w-full bg-black p-4 lg:pt-[10vh]'>
+    <div className='absolute lg:hidden top-0 left-0 z-25 h-full w-full bg-black p-4'>
       {children}
     </div>
   )
@@ -269,7 +269,7 @@ const HomePage = () => {
 
       <div className={` ${(mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0) ? 'lg:h-[90vh] h-[80vh] ' : ' h-[90vh] ' } relative max-w-screen-2xl mx-auto 
       overflow-y-hidden `}>
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 px-4 lg:px-8 xl:px-12 pt-3 lg:pt-[10vh]'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 px-4 lg:px-8 xl:px-12 pt-3 lg:pt-[4vh]'>
         {/* Left column */}
         <div className="bg-black p-2 xs:p-6 rounded-2.5xl">
           <StakingPoolsList />
