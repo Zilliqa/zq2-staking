@@ -189,7 +189,7 @@ body {
   }
 
   .h4 {
-    @apply font-int-extrabold text-20 xs:text-24 lg:text-32 leading-8 lg:leading-10 text-black1;
+    @apply font-int-extrabold text-20 xs:text-22 lg:text-26 leading-8 lg:leading-10 text-black1;
   }
 
   .h3 {
@@ -384,6 +384,7 @@ body {
 :where(.css-dev-only-do-not-override-1wwf28x).ant-input-affix-wrapper
   .ant-input-prefix {
   margin-right: 0.5rem;
+  color: #E1E2E2 !important;
 
   @media (min-width: 1024px) {
     margin-right: 1rem;

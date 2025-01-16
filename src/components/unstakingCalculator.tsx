@@ -85,9 +85,10 @@ const UnstakingCalculator: React.FC = () => {
           <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7 bg-darkbg rounded-3xl items-center">
             <div className="h-fit self-center">
               <Input
-                className={`h3 flex items-baseline !bg-transparent !border-transparent ${
-                  zilToUnstakeOk ? '!text-gray4' : '!text-red1'
-                }`}
+                className='h3 flex items-baseline !bg-transparent !border-transparent !text-gray4'
+                //    ${
+                //   zilToUnstakeOk ? '!text-gray4' : '!text-red1'
+                // }
                 value={zilToUnstake}
                 onChange={handleChange}
                 onBlur={handleBlur}

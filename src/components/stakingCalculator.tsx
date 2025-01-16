@@ -87,9 +87,11 @@ const StakingCalculator: React.FC = () => {
           <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7 bg-darkbg rounded-3xl items-center">
             <div className="h-fit self-center">
               <Input
-                className={`h3 flex items-baseline !bg-transparent !border-transparent ${
-                  zilToStakeOk ? '!text-gray4' : '!text-red1'
-                }`}
+                className='h3 flex items-baseline !bg-transparent !border-transparent !text-gray4'
+                //   ${
+                //   zilToStakeOk ? '!text-gray4' : '!text-red1'
+                // }
+                  
                 value={zilToStake}
                 onChange={handleChange}
                 onFocus={handleFocus}
