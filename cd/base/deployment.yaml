@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zq2-stake-frontend
+  namespace: zq2-stake
+  labels:
+    app.kubernetes.io/name: zq2-stake-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: zq2-stake-frontend
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: zq2-stake-frontend
+    spec:
+      containers:
+        - image: zq2-staking-frontend
+          name: zq2-staking-frontend
+          ports:
+            - containerPort: 3000

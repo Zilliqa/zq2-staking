@@ -1,0 +1,44 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: zq2-stake-prd-protomainnet
+
+resources:
+  - ../../base
+  - certificates.yaml
+  - backend-config.yaml
+  - frontend-config.yaml
+  - secrets.yaml
+
+patches:
+  - target:
+      kind: Ingress
+      name: zq2-stake-frontend
+    patch: |-
+      - op: replace
+        path: "/spec/rules/0/host"
+        value: stake.zq2-protomainnet.zilliqa.com
+      - op: replace
+        path: /metadata/annotations
+        value:
+          kubernetes.io/ingress.class: gce
+          kubernetes.io/ingress.global-static-ip-name: stake-zq2-protomainnet-zilliqa-com
+          networking.gke.io/managed-certificates: zq2-stake-frontend
+          networking.gke.io/v1beta1.FrontendConfig: zq2-stake-frontend
+  - target:
+      kind: Service
+      name: zq2-stake-frontend
+    patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          beta.cloud.google.com/backend-config: '{"default": "zq2-stake-frontend"}'
+  - target:
+      kind: Deployment
+      name: zq2-stake-frontend
+    patch: |-
+      - op: add
+        path: "/spec/template/spec/containers/0/env/-"
+        value:
+          name: ZQ2_STAKING_CHAIN_ID
+          value: 32770
