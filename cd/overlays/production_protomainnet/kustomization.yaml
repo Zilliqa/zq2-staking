@@ -37,8 +37,8 @@ patches:
       kind: Deployment
       name: zq2-stake-frontend
     patch: |-
-      - op: replace
-        path: "/spec/template/spec/containers/0/env/0"
+      - op: add
+        path: "/spec/template/spec/containers/0/env/-"
         value:
           name: ZQ2_STAKING_CHAIN_ID
           value: 32770
