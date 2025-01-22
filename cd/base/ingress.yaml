@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zq2-stake-frontend
+  namespace: zq2-stake
+  labels:
+    app.kubernetes.io/name: zq2-stake
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: zq2-stake-frontend
+                port:
+                  number: 3000

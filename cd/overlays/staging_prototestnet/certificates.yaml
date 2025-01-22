@@ -1,0 +1,10 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: zq2-stake-frontend
+  namespace: zq2-stake-stg-prototestnet
+  labels:
+    app.kubernetes.io/name: zq2-stake-frontend
+spec:
+  domains:
+    - stake.zq2-prototestnet.zilliqa.com

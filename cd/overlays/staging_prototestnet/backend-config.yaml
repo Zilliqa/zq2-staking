@@ -1,0 +1,11 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: zq2-stake-frontend
+  namespace: zq2-stake-stg-prototestnet
+  labels:
+    app.kubernetes.io/name: zq2-stake-frontend
+spec:
+  timeoutSec: 120
+  healthCheck:
+    requestPath: /api/health
