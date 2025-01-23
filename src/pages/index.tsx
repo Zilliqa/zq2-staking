@@ -15,6 +15,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import ArrowBack from '../assets/svgs/arrow-back-white.svg'
 import ArrowNext from '../assets/svgs/arrow-next-black.svg'
+import Logo from '../assets/svgs/logo.svg'
 
 
 const HomePage = () => {
@@ -226,11 +227,12 @@ const HomePage = () => {
 
           <div className="flex items-center">
             <Image
-              src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg"
+              //src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg"
+              src={Logo}
               alt="Zilliqa Logo"
               width={32}
               height={32}
-              className="h-8 w-auto"
+              className="h-10 md:h-12 w-auto"
             />
           </div>
 
