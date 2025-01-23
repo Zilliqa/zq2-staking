@@ -28,11 +28,11 @@ patches:
   - target:
       kind: Service
       name: zq2-stake-frontend
-      patch: |-
-        - op: add
-          path: /metadata/annotations
-          value:
-            beta.cloud.google.com/backend-config: '{"default": "zq2-stake-frontend"}'
+    patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          beta.cloud.google.com/backend-config: '{"default": "zq2-stake-frontend"}'
   - target:
       kind: Deployment
       name: zq2-stake-frontend
@@ -41,4 +41,4 @@ patches:
         path: "/spec/template/spec/containers/0/env/-"
         value:
           name: ZQ2_STAKING_CHAIN_ID
-          value: 33469
+          value: "33469"
