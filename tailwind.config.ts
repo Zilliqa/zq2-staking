@@ -20,20 +20,17 @@ const config: Config = {
        colors: {
         black1: '#010101',
         black2: '#202025',
-        black3: '#0A0A0C',
-
+ 
         gray1: '#555555',
-        gray2: '#686A6C',
-        gray3: '#A6AEAD',
-        gray4: '#E1E2E2',
-
+  
         white1: '#F1F4F4',
-        white2: '#F7FBFA', 
-
+ 
         blue1: '#1966F7',
+
         aqua1: '#00D0C6',
         aqua2: '#6DD3C2',
         aqua3:'#BCE6EC',
+        
         purple1:'#7839FF',
         purple2:'#B9A9FB',
 
@@ -49,7 +46,9 @@ const config: Config = {
         '17': '17px',
         '18': '18px',
         '20': '20px',
+        '22': '22px',
         '24': '24px',
+        '26': '26px',
         '27': '27px',
         '30': '30px',
         '32': '32px',

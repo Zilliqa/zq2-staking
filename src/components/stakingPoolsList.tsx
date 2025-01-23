@@ -50,7 +50,7 @@ const StakingPoolsList: React.FC = () => {
 
   return (
     <>
-      <div className="h3 text-white2 sm:max-lg:w-1/4 mb-4 max-h-[10vh]">
+      <div className="h3 text-white1 sm:max-lg:w-1/4 mb-4 max-h-[10vh]">
         Liquid Validators
       </div>
 
@@ -73,7 +73,7 @@ const StakingPoolsList: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-2.5 lg:gap-4 overflow-y-auto max-h-[calc(90vh-25vh)]
-       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2 pb-20 md:px-7 lg:px-2 xl:px-8">
+       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-20 pr-4">
         {sortedStakingPoolsData.map(({ stakingPool, userData }) => (
           <StakingPoolCard
             key={stakingPool.definition.id}

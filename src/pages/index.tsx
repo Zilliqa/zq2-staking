@@ -15,6 +15,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import ArrowBack from '../assets/svgs/arrow-back-white.svg'
 import ArrowNext from '../assets/svgs/arrow-next-black.svg'
+import Logo from '../assets/svgs/logo.svg'
 
 
 const HomePage = () => {
@@ -63,11 +64,11 @@ const HomePage = () => {
   const desktopColumnContent = (
     <div className="hidden lg:grid h-full">
       {
-        !isWalletConnected ? (
+        !isWalletConnected && !stakingPoolForView ? (
           <LoginView />
-        ) : stakingPoolForView ? (
-          <div className="bg-black xs:pt-5 lg:pt-7.5 xs:px-5 lg:px-7.5 rounded-2.5xl overflow-y-auto  max-h-[80vh]
-          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2">
+        ) : stakingPoolForView  ? (
+          <div className="bg-black xs:pt-5 lg:pt-7.5 xs:px-5 lg:px-7.5 rounded-2.5xl max-h-[80vh]
+         ">
             <StakingPoolDetailsView
               selectStakingPoolForStaking={(stakingPoolId) => {
                 selectStakingPoolForView(null);
@@ -221,16 +222,17 @@ const HomePage = () => {
       }`}>
 
       {/* Header */}
-      <div className="h-[10vh] w-full flex items-center justify-center text-white border-b-2 border-white">
+      <div className="h-[10vh] w-full flex items-center justify-center text-white border-b border-white1">
         <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 ">
 
           <div className="flex items-center">
             <Image
-              src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg"
+              //src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg"
+              src={Logo}
               alt="Zilliqa Logo"
               width={32}
               height={32}
-              className="h-8 w-auto"
+              className="h-10 md:h-12 w-auto"
             />
           </div>
 
@@ -271,7 +273,7 @@ const HomePage = () => {
       overflow-y-hidden `}>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 px-4 lg:px-8 xl:px-12 pt-3 lg:pt-[4vh]'>
         {/* Left column */}
-        <div className="bg-black p-2 xs:p-6 rounded-2.5xl">
+        <div className="bg-black p-4 xs:p-6 rounded-2.5xl">
           <StakingPoolsList />
         </div>
 

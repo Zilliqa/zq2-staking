@@ -19,7 +19,7 @@ const SortBtn: React.FC<SortBtnProps> = ({ variable, isClicked, onClick }) => {
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`duration-700 stroke-gray-600 group-hover:stroke-white ease-in-out ${isClicked ? 'scale-y-[-1]' : ''}`}
+        className={`duration-700 stroke-gray1 group-hover:stroke-white ease-in-out ${isClicked ? 'scale-y-[-1]' : ''}`}
       >
         <path
           d="M16 3V21"

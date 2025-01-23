@@ -22,7 +22,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
       className={`${
         isStakingPoolSelected
           ? 'gradient-bottom-border '
-          : 'border-b-[1.5px] border-black2 rounded-10 gradient-bottom-border-hover bg-black3'
+          : 'border-b-[1.5px] border-black2 rounded-10 gradient-bottom-border-hover bg-black1'
       } ${isStakingPoolSelected && 'bg-black'} hover:cursor-pointer`}
       onClick={onClick}
     >
@@ -43,7 +43,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         <div className="grid w-full">
           <div className="flex justify-between items-center lg:mb-2">
             <div className="flex ">
-              <h3 className="h4 text-white2">
+              <h3 className="h4 text-white1">
                 {stakingPoolData.definition.name}
               </h3>
               <div className="base2 ml-2.5">
@@ -112,7 +112,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
           
             
               <div className="flex base-medium max-md:order-1 ">  
-              <Tooltip placement='top' arrow={true} color='#686A6C' className=' mr-1' title="Annual Percentage Rate">
+              <Tooltip placement='top' arrow={true} color='#555555' className=' mr-1' title="Annual Percentage Rate">
                 <span>APR </span>
               </Tooltip>
                 
@@ -137,7 +137,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   )}`}
               </>
             ) : (
-              <span className="text-gray2">- {stakingPoolData.definition.tokenSymbol}</span>
+              <span className="text-gray1">- {stakingPoolData.definition.tokenSymbol}</span>
             )}
           </div>
           </div>

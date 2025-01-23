@@ -87,9 +87,11 @@ const StakingCalculator: React.FC = () => {
           <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7 bg-darkbg rounded-3xl items-center">
             <div className="h-fit self-center">
               <Input
-                className={`h3 flex items-baseline !bg-transparent !border-transparent ${
-                  zilToStakeOk ? '!text-gray4' : '!text-red1'
-                }`}
+                className='h3 flex items-baseline !bg-transparent !border-transparent !text-white1'
+                //   ${
+                //   zilToStakeOk ? '!text-white1' : '!text-red1'
+                // }
+                  
                 value={zilToStake}
                 onChange={handleChange}
                 onFocus={handleFocus}
@@ -171,7 +173,7 @@ const StakingCalculator: React.FC = () => {
                   )}
               </div>
               <div className=" regular-base text-aqua1 flex flex-row xl:gap-5">
-              <Tooltip placement='top' arrow={true} color='#686A6C' className=' mr-1' title="Annual Percentage Rate">
+              <Tooltip placement='top' arrow={true} color='#555555' className=' mr-1' title="Annual Percentage Rate">
                 <span>APR </span>
               </Tooltip>
                 {stakingPoolForView!.stakingPool.data ? (

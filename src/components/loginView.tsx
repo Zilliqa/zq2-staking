@@ -19,11 +19,11 @@ const CustomConnectButton = () => {
         // Not connected
         if (!account || !chain) {
           return (
-            <button
+            <Button
               onClick={openConnectModal}
               className="btn-primary-gradient-aqua !w-fit px-14 group flex items-center"
             >
-              Sign In / Connect Wallet
+                Connect Wallet
               <Image
                 className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={ArrowRight}
@@ -31,7 +31,7 @@ const CustomConnectButton = () => {
                 width={24}
                 height={24}
               />
-            </button>
+            </Button>
           );
         }
 
@@ -85,7 +85,7 @@ const LoginView: React.FC = () => {
         loading={isDummyWalletConnecting}
         className="btn-primary-gradient-aqua-lg !w-fit px-14 group"
       >
-        Sign In / Connect Wallet
+          Connect Wallet
         <Image
                 className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={ArrowRight}
