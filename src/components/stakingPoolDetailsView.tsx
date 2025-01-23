@@ -57,7 +57,7 @@ const StakingPoolDetailsView: React.FC<
       ) : (
         <div className="animated-gradient h-[1.5em] w-[4em]"></div>
       )}
-      <div className="text-gray2 info-label xl:whitespace-nowrap">
+      <div className="text-gray1 info-label xl:whitespace-nowrap">
         {title}
       </div>
     </div>
@@ -108,11 +108,11 @@ const StakingPoolDetailsView: React.FC<
   return (
     <div
       className="relative overflow-y-auto max-h-[calc(90vh-10vh)] sm:max-h-[calc(90vh-15vh)]
-      scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2 pb-2"
+      scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-2"
     >
       <div className="items-center flex justify-between py-1 lg:py-7.5">
         <div className="max-lg:ms-1 items-center flex">
-          <span className="hero lg:h2 text-white2">
+          <span className="hero lg:h2 text-white1">
             {stakingPoolData.definition.name}
           </span>
           <span className="body1 lg:h4 text-black2 ml-2.5">
@@ -208,8 +208,8 @@ const StakingPoolDetailsView: React.FC<
             key={pane}
             className={`body1 lg:base text-center py-7 cursor-pointer border-solid border-b ${
               selectedPane === pane
-                ? 'text-white2 border-gradient-1'
-                : 'text-gray2 border-black2'
+                ? 'text-white1 border-gradient-1'
+                : 'text-gray1 border-black2'
             } `}
             onClick={() => setSelectedPane(pane)}
           >

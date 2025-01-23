@@ -68,7 +68,7 @@ const HomePage = () => {
           <LoginView />
         ) : stakingPoolForView ? (
           <div className="bg-black xs:pt-5 lg:pt-7.5 xs:px-5 lg:px-7.5 rounded-2.5xl overflow-y-auto  max-h-[80vh]
-          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2">
+          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1">
             <StakingPoolDetailsView
               selectStakingPoolForStaking={(stakingPoolId) => {
                 selectStakingPoolForView(null);
@@ -222,7 +222,7 @@ const HomePage = () => {
       }`}>
 
       {/* Header */}
-      <div className="h-[10vh] w-full flex items-center justify-center text-white border-b border-gray4">
+      <div className="h-[10vh] w-full flex items-center justify-center text-white border-b border-white1">
         <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 ">
 
           <div className="flex items-center">

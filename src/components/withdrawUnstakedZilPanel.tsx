@@ -63,7 +63,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
           <div className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-gradientbg rounded-3xl w-full"
             key={claimIdx}
           >
-            <div className="items-center h4 w-full flex justify-between text-gray4">
+            <div className="items-center h4 w-full flex justify-between text-white1">
               {stakingPoolData.data ? (
                  <div className='flex'>
                  <div>
@@ -92,9 +92,9 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         ))
       ) : !!pendingUnstake?.length ? (
         <div className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-gradientbg rounded-3xl w-full">
-             <div className="body2 text-gray2">
+             <div className="body2 text-gray1">
             Next available reward             </div>
-            <div className=" h4 mt-2 w-full flex justify-between text-gray4">
+            <div className=" h4 mt-2 w-full flex justify-between text-white1">
               
               {stakingPoolData.data ? (
                 <div>
@@ -112,7 +112,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             </div>
          </div>
       ) : (
-        <div className="flex justify-center items-center my-32 body2 text-gray2 ">
+        <div className="flex justify-center items-center my-32 body2 text-gray1 ">
           No available Claims
         </div>
       )}
@@ -127,7 +127,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             <div className="flex justify-between mb-3 items-center" key={claimIdx}>
               {stakingPoolData.data ? (
                 <div className='flex gap-2.5'>
-                 <div className='body1 text-gray4'>
+                 <div className='body1 text-white1'>
                  {parseFloat(
                     formatUnits(claim.zilAmount, 18)
                   ).toFixed(3)}{' '}
@@ -137,7 +137,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               ) : (
                 <div className="w-[4em] h-[1em] animated-gradient" />
               )}
-              <div className='regular-base text-gray4'>{getHumanFormDuration(claim.availableAt)}</div>
+              <div className='regular-base text-white1'>{getHumanFormDuration(claim.availableAt)}</div>
             </div>
           ))}
         </div>

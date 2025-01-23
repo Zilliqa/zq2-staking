@@ -23,7 +23,7 @@ const WithdrawZilView: React.FC = () => {
 
   return (
     <div className="relative overflow-y-auto max-h-[calc(90vh-15vh)]   
-    scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2
+    scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1
      flex flex-col gap-2" >
       <div className=" text-center lg:text-end max-h-[20vh]">
         <h1 className="hero text-white mt-4">
@@ -39,7 +39,7 @@ const WithdrawZilView: React.FC = () => {
         unstakingItems.length > 0 ? (
 
           <div className="grid grid-cols-1 gap-4 lg:gap-5 overflow-y-auto  max-h-[calc(90vh-30vh)]
-          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray3 hover:scrollbar-thumb-gray2 lg:pb-10">
+          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 lg:pb-10">
             {
               unstakingItems.map((item, claimIdx) => (
                 <div
@@ -93,7 +93,7 @@ const WithdrawZilView: React.FC = () => {
                     </div>
                     <div className="max-lg:w-1/2 lg:mt-2.5">
                       <Button
-                        className="btn-primary-white2"
+                        className="btn-primary-white1"
                         onClick={() => selectStakingPoolForView(item.stakingPool.definition.id)}
                       >
                         View
