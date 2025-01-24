@@ -22,4 +22,14 @@ spec:
           name: zq2-staking-frontend
           ports:
             - containerPort: 3000
-          env: []
+          env:
+            - name: ZQ2_STAKING_CHAIN_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: zq2-stake-frontend
+                  key: ZQ2_STAKING_CHAIN_ID
+            - name: ZQ2_STAKING_WALLET_CONNECT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: zq2-stake-frontend
+                  key: ZQ2_STAKING_WALLET_CONNECT_API_KEY
