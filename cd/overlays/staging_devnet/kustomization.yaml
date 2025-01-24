@@ -8,7 +8,6 @@ resources:
   - certificates.yaml
   - backend-config.yaml
   - frontend-config.yaml
-  - secrets.yaml
   - configmap.yaml
 
 patches:
