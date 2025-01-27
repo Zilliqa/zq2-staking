@@ -8,8 +8,6 @@ resources:
   - certificates.yaml
   - backend-config.yaml
   - frontend-config.yaml
-  - secrets.yaml
-  - configmap.yaml
 
 patches:
   - target:
@@ -34,3 +32,11 @@ patches:
         path: /metadata/annotations
         value:
           beta.cloud.google.com/backend-config: '{"default": "zq2-stake-frontend"}'
+  - target:
+      kind: ConfigMap
+      name: zq2-stake-frontend
+    path: configmap.yaml
+  - target:
+      kind: Secret
+      name: zq2-stake-frontend
+    path: secrets.yaml

@@ -2,5 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: zq2-stake-frontend
+  namespace: zq2-stake-prd-protomainnet
+  labels:
+    app.kubernetes.io/name: zq2-stake-frontend
 data:
   ZQ2_STAKING_CHAIN_ID: "32770"
