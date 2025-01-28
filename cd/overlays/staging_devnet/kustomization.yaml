@@ -8,7 +8,6 @@ resources:
   - certificates.yaml
   - backend-config.yaml
   - frontend-config.yaml
-  - secrets.yaml
 
 patches:
   - target:
@@ -34,11 +33,10 @@ patches:
         value:
           beta.cloud.google.com/backend-config: '{"default": "zq2-stake-frontend"}'
   - target:
-      kind: Deployment
+      kind: ConfigMap
       name: zq2-stake-frontend
-    patch: |-
-      - op: add
-        path: "/spec/template/spec/containers/0/env/-"
-        value:
-          name: ZQ2_STAKING_CHAIN_ID
-          value: "33469"
+    path: configmap.yaml
+  - target:
+      kind: Secret
+      name: zq2-stake-frontend
+    path: secrets.yaml

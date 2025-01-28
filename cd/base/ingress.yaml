@@ -4,7 +4,7 @@ metadata:
   name: zq2-stake-frontend
   namespace: zq2-stake
   labels:
-    app.kubernetes.io/name: zq2-stake
+    app.kubernetes.io/name: zq2-stake-frontend
 spec:
   rules:
     - host: localhost
