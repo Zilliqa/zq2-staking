@@ -222,7 +222,7 @@ const HomePage = () => {
       }`}>
 
       {/* Header */}
-      <div className="h-[10vh] w-full flex items-center justify-center text-white border-b border-white1">
+      <div className="h-[10vh] w-full flex items-center justify-center text-white border-b-[0.5px] border-gray2">
         <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 ">
 
           <div className="flex items-center">

@@ -48,12 +48,47 @@ const StakingPoolsList: React.FC = () => {
     }
   };
 
+  const tabs = [
+    {
+      name: 'Liquid staking',
+    },
+    {
+      name: 'Normal Staking ',
+    }, 
+  ];
+
+  const [activeTab, setActiveTab] = useState(0);
+
   return (
     <>
-      <div className="h3 text-white1 sm:max-lg:w-1/4 mb-4 max-h-[10vh]">
+      {/* <div className="h3 text-white1 sm:max-lg:w-1/4 mb-4 max-h-[10vh]">
         Liquid Validators
-      </div>
-
+      </div> */}
+<nav 
+            aria-label="Tabs"
+            className="border-b-[0.5px] border-b-gray2 w-full flex ">
+              {tabs.map((tab, index) => (
+                <button
+                  key={index}
+                  className={`w-1/2 whitespace-nowrap border-b-[0.5px] py-3 
+                    h3${
+                    activeTab === index
+                      ? '' :'-inactive' }  
+                     ${
+                    activeTab === index
+                      ? 'border-aqua1'
+                      : 'border-transparent'
+                  }`}
+                  onClick={() => {
+                    setActiveTab(index) ;
+                  }}
+                >
+                  {tab.name}
+                </button>
+              ))} 
+          </nav>
+          {activeTab === 0 && (
+<>
       <div className="flex gap-x-2.5 mt-6 mb-5 max-h-[5vh]">
         <SortBtn
           variable="APR"
@@ -88,7 +123,7 @@ const StakingPoolsList: React.FC = () => {
             }
           />
         ))}
-      </div>
+      </div></>)}
     </>
   );
 };

@@ -6,6 +6,9 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [ 
+    'h3-inactive',
+  ],
   theme: {
     extend: {
       backgroundImage: {
@@ -22,8 +25,11 @@ const config: Config = {
         black2: '#202025',
  
         gray1: '#555555',
-  
+        gray2: '#454545',
+        gray3: '#706F6F',
+
         white1: '#F1F4F4',
+        white2: '#F7FBFA',
  
         blue1: '#1966F7',
 
@@ -41,6 +47,7 @@ const config: Config = {
         '10': '10px',
         '12': '12px',
         '14': '14px',
+        '13': '13px',
         '15': '15px',
         '16': '16px',
         '17': '17px',
@@ -52,20 +59,13 @@ const config: Config = {
         '27': '27px',
         '30': '30px',
         '32': '32px',
+        '38': '38px',
         '40': '40px',
         '48': '48px',
         '64': '64px',
         '80': '80px',
         '114': '114px'
        },
-      fontFamily: {
-        "int-light": "interLight",
-        "int-regular": "interRegular",
-        "int-medium": "interMedium",
-        "int-semibold": "interSemiBold",
-        "int-bold": "interBold",
-        "int-extrabold": "interExtraBold",
-      },
       borderRadius: {
         '10': "10px",
         '2.5xl' : '1.25rem'
