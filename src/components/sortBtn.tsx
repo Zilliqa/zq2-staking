@@ -53,7 +53,7 @@ const SortBtn: React.FC<SortBtnProps> = ({
         />
       </svg>
 
-      <div className="small-base ml-2 duration-700 group-hover:text-white ease-in-out">
+      <div className="small-base ml-1 duration-700 group-hover:text-white ease-in-out">
         {variable}
       </div>
     </div>
