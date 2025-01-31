@@ -43,9 +43,9 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
           width={61}
           height={61}
         />
-        <div className="grid w-full">
+        <div className="flex flex-col  w-full">
           <div className="flex justify-between items-center">
-            <h3 className="h4">{stakingPoolData.definition.name}</h3>
+            <h3 className="text-22-bold">{stakingPoolData.definition.name}</h3>
 
             <Image
               className=" rounded-10 h[30px] w-[30px] xs:h-[40px] xs:w-[40px] md:hidden block"

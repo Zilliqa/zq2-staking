@@ -227,6 +227,15 @@ body {
 
 
   
+  .text-22-bold {
+    @apply font-bold text-18 lg:text-22 leading-4 lg:leading-6 text-white2;
+  }
+
+  
+  .text-12-regular  {
+    @apply font-medium text-11 lg:text-12 lg:leading-4  text-white3 ;
+  }
+
 }
 
 .animated-gradient {
