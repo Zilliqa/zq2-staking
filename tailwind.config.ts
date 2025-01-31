@@ -34,12 +34,14 @@ const config: Config = {
         white1: '#F1F4F4',
         white2: '#F7FBFA',
         white3: '#E1E2E2',
+        white4: '#D7D8D8',
  
         blue1: '#1966F7',
 
         aqua1: '#00D0C6',
         aqua2: '#6DD3C2',
         aqua3:'#BCE6EC',
+        aqua4:'#00D0C633',
         
         purple1:'#7839FF',
         purple2:'#B9A9FB',
@@ -68,23 +70,27 @@ const config: Config = {
         '38': '38px',
         '40': '40px',
         '48': '48px',
+        '58': '58px',
         '64': '64px',
         '80': '80px',
         '114': '114px'
        },
       borderRadius: {
         '10': "10px",
+        '160': "160px",
         '2.5xl' : '1.25rem'
       }, 
       lineHeight:{
         '11': '44px',
         '12': '48px',
+        '14.5': '58px',
         '16': '64px',
         '20': '80px',
        },
       padding:{
         '7.5': '30px',
         '4.5': '18px',
+        '17.5': '70px',
         '21': '84px'
       },
       margin:{

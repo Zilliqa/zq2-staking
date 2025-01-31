@@ -71,7 +71,7 @@ body {
   }
 
   .btn-primary-gradient-aqua {
-    @apply py-1 lg:py-4 w-full rounded !bg-primary-gradient !text-black2 font-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
+    @apply py-1 lg:py-4 w-full rounded-160 !bg-aqua4 border-aqua1 !text-white font-extrabold text-20 leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
@@ -185,6 +185,10 @@ body {
     @apply font-normal lg:font-medium text-16 lg:text-20 leading-5 lg:leading-8 text-white1;
   }
 
+  .body2-v2 {
+    @apply font-normal lg:font-semibold text-16 lg:text-32 leading-5 lg:leading-11 text-white1 px-17.5;
+  }
+  
   .body1 {
     @apply font-bold text-16 lg:text-24 leading-6 lg:leading-8 text-gray1;
   }
@@ -219,6 +223,10 @@ body {
 
   .hero {
     @apply font-extrabold text-40 lg:text-64 leading-12 lg:leading-16 text-white1;
+  }
+
+  .hero-v2 {
+    @apply font-bold text-40 lg:text-58 leading-12 lg:leading-14.5 text-white1;
   }
 
   .opacity-hover {

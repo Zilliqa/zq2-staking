@@ -62,7 +62,7 @@ const HomePage = () => {
   )
 
   const desktopColumnContent = (
-    <div className="hidden lg:grid h-full">
+    <div className="hidden lg:grid h-full items-center">
       {
         !isWalletConnected && !stakingPoolForView ? (
           <LoginView />
