@@ -26,12 +26,11 @@ jobs:
       - name: Format Check
         id: format_check
         run: |
-          # Check if any files were changed by prettier
           npm run format
           if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
-            echo "::set-output name=changed::true"
+            echo "changed=true" >> $GITHUB_OUTPUT  # Use environment file
             echo "::error file=:: Files were formatted. Please commit the changes."
-            exit 1 # Fail the action
+            exit 1
           else
-            echo "::set-output name=changed::false"
+            echo "changed=false" >> $GITHUB_OUTPUT # Use environment file
           fi
