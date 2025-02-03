@@ -6,6 +6,9 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [ 
+    'h3-inactive',
+  ],
   theme: {
     extend: {
       backgroundImage: {
@@ -16,14 +19,21 @@ const config: Config = {
         'gradientbg': 'linear-gradient(129.93deg, rgba(175, 175, 175, 0.12) 16.6%, rgba(17, 243, 179, 0.12) 90.65%)',
         'darkbg': 'linear-gradient(314.92deg, rgba(17, 39, 49, 0.4) 28.08%, rgba(9, 9, 9, 0.4) 97.04%)',
         'colorful-gradient':'linear-gradient(270deg, #00DABA 8%, #4AA1A3 23%, #8A7191 36%, #B15485 46%, #C14981 51%, #A73993 62%, #8726AA 78%, #741BB7 91%, #6D17BD 100%)',
+ 
        },
        colors: {
         black1: '#010101',
         black2: '#202025',
  
         gray1: '#555555',
-  
+        gray2: '#454545',
+        gray3: '#706F6F',
+        gray4: '#4B4B4B',
+        gray5: '#AEAEAE',
+
         white1: '#F1F4F4',
+        white2: '#F7FBFA',
+        white3: '#E1E2E2',
  
         blue1: '#1966F7',
 
@@ -34,13 +44,16 @@ const config: Config = {
         purple1:'#7839FF',
         purple2:'#B9A9FB',
 
-        orange1:'#DC6803',
-        red1:'#D92D20'
+        orange1:'#FE9950',
+
+        red1:'#D92D20',
+        red2: '#FF4A4A'
       },
       fontSize:{
         '10': '10px',
         '12': '12px',
         '14': '14px',
+        '13': '13px',
         '15': '15px',
         '16': '16px',
         '17': '17px',
@@ -52,20 +65,13 @@ const config: Config = {
         '27': '27px',
         '30': '30px',
         '32': '32px',
+        '38': '38px',
         '40': '40px',
         '48': '48px',
         '64': '64px',
         '80': '80px',
         '114': '114px'
        },
-      fontFamily: {
-        "int-light": "interLight",
-        "int-regular": "interRegular",
-        "int-medium": "interMedium",
-        "int-semibold": "interSemiBold",
-        "int-bold": "interBold",
-        "int-extrabold": "interExtraBold",
-      },
       borderRadius: {
         '10': "10px",
         '2.5xl' : '1.25rem'

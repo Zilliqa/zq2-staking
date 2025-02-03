@@ -40,7 +40,7 @@ const WithdrawZilView: React.FC = () => {
 
           <div className="grid grid-cols-1 gap-4 lg:gap-5 overflow-y-auto  max-h-[calc(90vh-30vh)]
           scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 lg:pb-10
-          pr-4
+           pr-2 lg:pr-4
           ">
             {
               unstakingItems.map((item, claimIdx) => (

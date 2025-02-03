@@ -48,13 +48,48 @@ const StakingPoolsList: React.FC = () => {
     }
   };
 
+  const tabs = [
+    {
+      name: 'Liquid staking',
+    },
+    {
+      name: 'Normal Staking ',
+    }, 
+  ];
+
+  const [activeTab, setActiveTab] = useState(0);
+
   return (
     <>
-      <div className="h3 text-white1 sm:max-lg:w-1/4 mb-4 max-h-[10vh]">
+      {/* <div className="h3 text-white1 sm:max-lg:w-1/4 mb-4 max-h-[10vh]">
         Liquid Validators
-      </div>
-
-      <div className="flex gap-x-2.5 mt-6 mb-5 max-h-[5vh]">
+      </div> */}
+<nav 
+            aria-label="Tabs"
+            className="border-b-[0.5px] border-b-gray2 w-full flex ">
+              {tabs.map((tab, index) => (
+                <button
+                  key={index}
+                  className={`w-1/2 whitespace-nowrap border-b-[0.5px] py-3 
+                    h3${
+                    activeTab === index
+                      ? '' :'-inactive' }  
+                     ${
+                    activeTab === index
+                      ? 'border-aqua1'
+                      : 'border-transparent'
+                  }`}
+                  onClick={() => {
+                    setActiveTab(index) ;
+                  }}
+                >
+                  {tab.name}
+                </button>
+              ))} 
+          </nav>
+          {activeTab === 0 && (
+<>
+      <div className="flex gap-x-2.5 mt-6 mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5">
         <SortBtn
           variable="APR"
           isClicked={isAscending && sortCriteria == 'APR'}
@@ -73,7 +108,7 @@ const StakingPoolsList: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-2.5 lg:gap-4 overflow-y-auto max-h-[calc(90vh-25vh)]
-       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-20 pr-4">
+       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-20 pr-2 lg:pr-4">
         {sortedStakingPoolsData.map(({ stakingPool, userData }) => (
           <StakingPoolCard
             key={stakingPool.definition.id}
@@ -88,7 +123,7 @@ const StakingPoolsList: React.FC = () => {
             }
           />
         ))}
-      </div>
+      </div></>)}
     </>
   );
 };

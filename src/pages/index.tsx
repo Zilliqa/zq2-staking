@@ -222,7 +222,7 @@ const HomePage = () => {
       }`}>
 
       {/* Header */}
-      <div className="h-[10vh] w-full flex items-center justify-center text-white border-b border-white1">
+      <div className="h-[10vh] w-full flex items-center justify-center text-white border-b-[0.5px] border-gray2">
         <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 ">
 
           <div className="flex items-center">
@@ -273,7 +273,7 @@ const HomePage = () => {
       overflow-y-hidden `}>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 px-4 lg:px-8 xl:px-12 pt-3 lg:pt-[4vh]'>
         {/* Left column */}
-        <div className="bg-black p-4 xs:p-6 rounded-2.5xl">
+        <div className="bg-white/[9%] p-4 xs:p-6 rounded-2.5xl">
           <StakingPoolsList />
         </div>
 

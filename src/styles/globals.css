@@ -24,6 +24,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+    font-family: "Montserrat", sans-serif;
 }
 
 @layer utilities {
@@ -58,7 +59,7 @@ body {
   }
 
   .btn-primary-aqua {
-    @apply py-6 px-14 rounded-none !bg-aqua1 !text-black1 font-int-extrabold text-20 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
+    @apply py-6 px-14 rounded-none !bg-aqua1 !text-black1 font-extrabold text-20 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
@@ -70,7 +71,7 @@ body {
   }
 
   .btn-primary-gradient-aqua {
-    @apply py-1 lg:py-4 w-full rounded !bg-primary-gradient !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
+    @apply py-1 lg:py-4 w-full rounded !bg-primary-gradient !text-black2 font-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
@@ -89,7 +90,7 @@ body {
   }
 
   .btn-secondary {
-    @apply !gap-0 !whitespace-normal py-2.5 w-full rounded gradient-bg-dark !text-white1 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border border-white cursor-pointer duration-500 ease-in-out;
+    @apply !gap-0 !whitespace-normal py-2.5 w-full rounded gradient-bg-dark !text-white1 font-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border border-white cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply !opacity-80 !bg-darkbg;
@@ -101,7 +102,7 @@ body {
   }
 
   .btn-secondary-colored {
-    @apply !gap-0 !bg-transparent !whitespace-normal py-1.5 px-4 w-full rounded font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border-2 cursor-pointer duration-500 ease-in-out;
+    @apply !gap-0 !bg-transparent !whitespace-normal py-1.5 px-4 w-full rounded font-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border-2 cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply !opacity-80;
@@ -113,7 +114,7 @@ body {
   }
 
   .btn-primary-white1 {
-    @apply py-1 lg:py-4 w-full rounded !bg-white !text-black2 font-int-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
+    @apply py-1 lg:py-4 w-full rounded !bg-white !text-black2 font-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply !opacity-80;
@@ -137,84 +138,104 @@ body {
   }
 
   .btn-secondary-gray {
-    @apply flex w-fit py-1 lg:py-2 px-2.5 lg:px-3.5 rounded border border-gray1 items-center bg-transparent cursor-pointer  duration-700 ease-in-out;
+    @apply flex w-fit py-1.5 lg:py-2 px-1.5 lg:px-2 rounded-[9px] border border-gray4 items-center bg-gray4 cursor-pointer  duration-700 ease-in-out;
 
     &:hover {
-      @apply bg-gray1;
+      @apply bg-transparent;
     }
   }
 
   .caption {
-    @apply font-int-medium text-14 leading-5  text-gray1;
+    @apply font-medium text-14 leading-5  text-gray1;
+  }
+
+  .small-base {
+    @apply font-semibold text-12 lg:text-13 leading-5 lg:leading-6  text-white;
   }
 
   .base {
-    @apply font-int-semibold  text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray1;
+    @apply font-semibold text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray1;
   }
 
   .base-medium {
-    @apply font-int-medium  text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray1 ;
+    @apply font-medium text-12 lg:text-13 leading-5 lg:leading-6  text-white3 ;
   }
 
   .regular-base {
-    @apply font-int-regular text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray1;
+    @apply font-normal text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray1;
   }
 
   .base2 {
-    @apply font-int-semibold text-12 xs:text-14 lg:text-15 leading-8 lg:leading-11  text-gray1;
+    @apply font-medium text-12 xs:text-14 lg:text-18 leading-5 lg:leading-8  text-gray5;
   }
 
   .titles {
-    @apply font-int-bold text-18 leading-9  text-black1;
+    @apply font-bold text-18 leading-9  text-black1;
   }
 
   .info-label {
-    @apply font-int-regular text-10 lg:text-12 leading-3 lg:leading-4 text-gray1;
+    @apply font-normal text-10 lg:text-12 leading-3 lg:leading-4 text-gray1;
   }
 
   .body2-bold {
-    @apply font-int-bold text-10 lg:text-20 leading-3 lg:leading-8 text-gray1;
+    @apply font-bold text-10 lg:text-20 leading-3 lg:leading-8 text-gray1;
   }
 
   .body2 {
-    @apply font-int-regular lg:font-int-medium text-16 lg:text-20 leading-5 lg:leading-8 text-white1;
+    @apply font-normal lg:font-medium text-16 lg:text-20 leading-5 lg:leading-8 text-white1;
   }
 
   .body1 {
-    @apply font-int-bold text-16 lg:text-24 leading-6 lg:leading-8 text-gray1;
+    @apply font-bold text-16 lg:text-24 leading-6 lg:leading-8 text-gray1;
   }
 
   .body1-s {
-    @apply font-int-extrabold lg:font-int-bold text-12 lg:text-16 leading-6 text-gray1;
+    @apply font-extrabold lg:font-bold text-12 lg:text-16 leading-6 text-gray1;
   }
 
   .h4 {
-    @apply font-int-extrabold text-20 xs:text-22 lg:text-26 leading-8 lg:leading-10 text-black1;
+    @apply font-bold text-20 xs:text-22 lg:text-26 leading-8 lg:leading-10 text-white2;
   }
 
   .h3 {
-    @apply font-int-extrabold text-32 lg:text-48 leading-10 lg:leading-12 text-black1;
+    @apply font-bold text-27 lg:text-30 xl:text-38 leading-10 lg:leading-12 text-white2;
+  }
+  .h3-inactive {
+    @apply h3 text-18 lg:text-20 xl:text-26 leading-8 lg:leading-10 text-gray3;
   }
 
+
   .h3-s {
-    @apply font-int-extrabold text-12 lg:text-27  leading-6 lg:leading-10 text-white1;
+    @apply font-extrabold text-12 lg:text-27  leading-6 lg:leading-10 text-white1;
   }
 
   .h2 {
-    @apply font-int-extrabold text-64 leading-16 text-black2;
+    @apply font-extrabold text-64 leading-16 text-black2;
   }
 
   .h1 {
-    @apply font-int-extrabold text-80 leading-20 text-black2;
+    @apply font-extrabold text-80 leading-20 text-black2;
   }
 
   .hero {
-    @apply font-int-extrabold text-40 lg:text-64 leading-12 lg:leading-16 text-white1;
+    @apply font-extrabold text-40 lg:text-64 leading-12 lg:leading-16 text-white1;
   }
 
   .opacity-hover {
     @apply hover:opacity-70 duration-300 ease-in-out;
   }
+
+
+  
+  .text-22-bold {
+    @apply font-bold text-18 lg:text-22 leading-4 lg:leading-6 text-white2;
+  }
+
+  
+  .text-12-regular  {
+    @apply font-medium text-11 lg:text-12 lg:leading-4  text-white3 ;
+  }
+
 }
 
 .animated-gradient {
@@ -389,71 +410,4 @@ body {
   @media (min-width: 1024px) {
     margin-right: 1rem;
   }
-}
-@font-face {
-  font-family: 'interLight';
-  src: url(../assets/fonts/inter-light-webfont.eot);
-  src: url(../assets/fonts/inter-light-webfont.eot?#iefix)
-      format('embedded-opentype'),
-    url(../assets/fonts/inter-light-webfont.woff2) format('woff2'),
-    url(../assets/fonts/inter-light-webfont.woff) format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'interRegular';
-  src: url(../assets/fonts/inter-variablefont_slntwght-webfont.eot);
-  src: url(../assets/fonts/inter-variablefont_slntwght-webfont.eot?#iefix)
-      format('embedded-opentype'),
-    url(../assets/fonts/inter-variablefont_slntwght-webfont.woff2)
-      format('woff2'),
-    url(../assets/fonts/inter-variablefont_slntwght-webfont.woff)
-      format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'interMedium';
-  src: url(../assets/fonts/inter-medium-webfont.eot);
-  src: url(../assets/fonts/inter-medium-webfont.eot?#iefix)
-      format('embedded-opentype'),
-    url(../assets/fonts/inter-medium-webfont.woff2) format('woff2'),
-    url(../assets/fonts/inter-medium-webfont.woff) format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'interSemiBold';
-  src: url(../assets/fonts/inter-semibold-webfont.eot);
-  src: url(../assets/fonts/inter-semibold-webfont.eot?#iefix)
-      format('embedded-opentype'),
-    url(../assets/fonts/inter-semibold-webfont.woff2) format('woff2'),
-    url(../assets/fonts/inter-semibold-webfont.woff) format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'interBold';
-  src: url(../assets/fonts/inter-bold-webfont.eot);
-  src: url(../assets/fonts/inter-bold-webfont.eot?#iefix)
-      format('embedded-opentype'),
-    url(../assets/fonts/inter-bold-webfont.woff2) format('woff2'),
-    url(../assets/fonts/inter-bold-webfont.woff) format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'interExtraBold';
-  src: url(../assets/fonts/inter18pt-ExtraBold.eot);
-  src: url(../assets/fonts/inter18pt-ExtraBold.eot?#iefix)
-      format('embedded-opentype'),
-    url(../assets/fonts/inter18pt-ExtraBold.woff2) format('woff2'),
-    url(../assets/fonts/inter18pt-ExtraBold.woff) format('woff');
-  font-weight: normal;
-  font-style: normal;
 }

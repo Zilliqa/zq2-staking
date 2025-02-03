@@ -101,7 +101,7 @@ export default function App({ Component, pageProps }: AppProps) {
               }}
             ></div>
           </div>
-          <div className="self-end text-80 lg:text-114 font-int-extrabold mr-7">
+          <div className="self-end text-80 lg:text-114 font-extrabold mr-7">
             {Math.round(displayedPercentage)}%
           </div>
         </div>
