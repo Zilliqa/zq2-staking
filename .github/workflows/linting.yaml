@@ -1,0 +1,37 @@
+name: Lint and Format Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint:check
+        continue-on-error: false
+
+      - name: Format Check
+        id: format_check
+        run: |
+          # Check if any files were changed by prettier
+          npm run format
+          if [[ $(git status --porcelain | wc -l) -gt 0 ]]; then
+            echo "::set-output name=changed::true"
+            echo "::error file=:: Files were formatted. Please commit the changes."
+            exit 1 # Fail the action
+          else
+            echo "::set-output name=changed::false"
+          fi
