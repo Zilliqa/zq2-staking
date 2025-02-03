@@ -1,40 +1,41 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next"
 
 export type AppConfig = {
-  chainId: number;
-  walletConnectPrivateKey: string;
-};
+  chainId: number
+  walletConnectPrivateKey: string
+}
 
 function getStringFromEnv(name: string): string {
-  const value = process.env[name];
+  const value = process.env[name]
 
   if (!value) {
-    throw new Error(`${name} is not defined`);
+    throw new Error(`${name} is not defined`)
   }
 
-  return value;
+  return value
 }
 
 function getNumberFromEnv(name: string): number {
-  const value = getStringFromEnv(name);
-  const number = parseInt(value);
+  const value = getStringFromEnv(name)
+  const number = parseInt(value)
 
   if (isNaN(number)) {
-    throw new Error(`${name} is not a number`);
+    throw new Error(`${name} is not a number`)
   }
 
-  return number;
+  return number
 }
 
 const config: AppConfig = {
   chainId: getNumberFromEnv("ZQ2_STAKING_CHAIN_ID"),
-  walletConnectPrivateKey: getStringFromEnv("ZQ2_STAKING_WALLET_CONNECT_API_KEY"),
-
+  walletConnectPrivateKey: getStringFromEnv(
+    "ZQ2_STAKING_WALLET_CONNECT_API_KEY"
+  ),
 }
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<AppConfig>,
+  res: NextApiResponse<AppConfig>
 ) {
-  res.status(200).json(config);
+  res.status(200).json(config)
 }

@@ -1,54 +1,46 @@
-import StakingCalculator from '@/components/stakingCalculator';
-import UnstakingCalculator from '@/components/unstakingCalculator';
-import WithdrawZilPanel from '@/components/withdrawUnstakedZilPanel';
-import { WalletConnector } from '@/contexts/walletConnector';
-import { getViemClient } from '@/misc/chainConfig';
-import {
-  formatPercentage,
-  formatUnitsToHumanReadable,
-} from '@/misc/formatting';
-import { StakingPool } from '@/misc/stakingPoolsConfig';
+import StakingCalculator from "@/components/stakingCalculator"
+import UnstakingCalculator from "@/components/unstakingCalculator"
+import WithdrawZilPanel from "@/components/withdrawUnstakedZilPanel"
+import { WalletConnector } from "@/contexts/walletConnector"
+import { getViemClient } from "@/misc/chainConfig"
+import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting"
+import { StakingPool } from "@/misc/stakingPoolsConfig"
 import {
   UserStakingPoolData,
   UserUnstakingPoolData,
-} from '@/misc/walletsConfig';
-import { Button } from 'antd';
-import { DateTime } from 'luxon';
-import { useState } from 'react';
-import { useWatchAsset } from 'wagmi';
-import { useWalletClient } from 'wagmi';
-import Plus from '../assets/svgs/plus.svg'
-import Image from 'next/image';
+} from "@/misc/walletsConfig"
+import { Button } from "antd"
+import { DateTime } from "luxon"
+import { useState } from "react"
+import { useWatchAsset } from "wagmi"
+import { useWalletClient } from "wagmi"
+import Plus from "../assets/svgs/plus.svg"
+import Image from "next/image"
 
 interface StakingPoolDetailsViewProps {
-  stakingPoolData: StakingPool;
-  userStakingPoolData?: UserStakingPoolData;
-  userUnstakingPoolData?: Array<UserUnstakingPoolData>;
-  selectStakingPoolForStaking: (stakingPoolId: string) => void;
+  stakingPoolData: StakingPool
+  userStakingPoolData?: UserStakingPoolData
+  userUnstakingPoolData?: Array<UserUnstakingPoolData>
+  selectStakingPoolForStaking: (stakingPoolId: string) => void
 }
 
-const StakingPoolDetailsView: React.FC<
-  StakingPoolDetailsViewProps
-> = ({
+const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   stakingPoolData,
   userStakingPoolData,
   userUnstakingPoolData,
 }) => {
-  const { zilAvailable } = WalletConnector.useContainer();
+  const { zilAvailable } = WalletConnector.useContainer()
 
-  const [selectedPane, setSelectedPane] = useState<string>('Stake');
+  const [selectedPane, setSelectedPane] = useState<string>("Stake")
 
   const colorInfoEntry = (title: string, value: string | null) => (
     <div>
       <div className="body2-bold text-aqua2">{value}</div>
       <div className="text-aqua3 info-label">{title}</div>
     </div>
-  );
+  )
 
-  const greyInfoEntry = (
-    title: string,
-    value: string | JSX.Element | null
-  ) => (
+  const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
     <div>
       {value ? (
         <div className="body2-bold text-gray1 xl:whitespace-nowrap">
@@ -57,38 +49,33 @@ const StakingPoolDetailsView: React.FC<
       ) : (
         <div className="animated-gradient h-[1.5em] w-[4em]"></div>
       )}
-      <div className="text-gray1 info-label xl:whitespace-nowrap">
-        {title}
-      </div>
+      <div className="text-gray1 info-label xl:whitespace-nowrap">{title}</div>
     </div>
-  );
+  )
 
   const pendingUnstakesValue = userUnstakingPoolData
     ?.filter((item) => item.availableAt > DateTime.now())
-    .reduce((acc, item) => acc + item.zilAmount, 0n);
+    .reduce((acc, item) => acc + item.zilAmount, 0n)
 
   const availableToClaim = userUnstakingPoolData
     ?.filter((item) => item.availableAt <= DateTime.now())
-    .reduce((acc, item) => acc + item.zilAmount, 0n);
+    .reduce((acc, item) => acc + item.zilAmount, 0n)
 
   const doesUserHoldAnyFundsInThisPool = !!(
     userStakingPoolData?.stakingTokenAmount ||
     pendingUnstakesValue ||
     availableToClaim
-  );
+  )
 
   const humanReadableStakingToken = (value: bigint) =>
-    formatUnitsToHumanReadable(
-      value,
-      stakingPoolData.definition.tokenDecimals
-    );
+    formatUnitsToHumanReadable(value, stakingPoolData.definition.tokenDecimals)
 
-  const { watchAsset } = useWatchAsset();
-  
+  const { watchAsset } = useWatchAsset()
+
   const handleClickAaddToken = () =>
     watchAsset(
       {
-        type: 'ERC20',
+        type: "ERC20",
         options: {
           address: stakingPoolData.definition.tokenAddress,
           symbol: stakingPoolData.definition.tokenSymbol,
@@ -97,13 +84,13 @@ const StakingPoolDetailsView: React.FC<
       },
       {
         onSuccess: (data) => {
-          console.log('Asset watched successfully:', data);
+          console.log("Asset watched successfully:", data)
         },
         onError: (error) => {
-          console.error('Failed to watch the asset:', error);
+          console.error("Failed to watch the asset:", error)
         },
       }
-    );
+    )
 
   return (
     <div
@@ -128,11 +115,13 @@ const StakingPoolDetailsView: React.FC<
             <Image
               className="h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:rotate-180"
               src={Plus}
-              alt={`arrow icon`}
+              alt={"arrow icon"}
               width={24}
               height={24}
-            /> 
-              <span className='!hidden sm:!block lg:!hidden xl:!block '>Add Token</span> 
+            />
+            <span className="!hidden sm:!block lg:!hidden xl:!block ">
+              Add Token
+            </span>
           </Button>
         </div>
       </div>
@@ -141,62 +130,57 @@ const StakingPoolDetailsView: React.FC<
         {doesUserHoldAnyFundsInThisPool && (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pb-4 border-b border-black2/50">
             {colorInfoEntry(
-              'Available to stake',
-              `${formatUnitsToHumanReadable(
-                zilAvailable || 0n,
-                18
-              )} ZIL`
+              "Available to stake",
+              `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`
             )}
             {colorInfoEntry(
-              'Staked',
+              "Staked",
               `${humanReadableStakingToken(
                 userStakingPoolData?.stakingTokenAmount || 0n
               )} ${stakingPoolData.definition.tokenSymbol}`
             )}
             {colorInfoEntry(
-              'Unstake',
+              "Unstake",
               pendingUnstakesValue
                 ? `${humanReadableStakingToken(
                     pendingUnstakesValue
                   )} ${stakingPoolData.definition.tokenSymbol}`
-                : '-'
+                : "-"
             )}
             {colorInfoEntry(
-              'Available to claim',
+              "Available to claim",
               availableToClaim
                 ? `${humanReadableStakingToken(availableToClaim)} ${
                     stakingPoolData.definition.tokenSymbol
                   }`
-                : '-'
+                : "-"
             )}
           </div>
         )}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {greyInfoEntry(
-            'Voting power',
+            "Voting power",
             stakingPoolData.data &&
               formatPercentage(stakingPoolData.data.votingPower)
           )}
           {greyInfoEntry(
-            'Total supply',
+            "Total supply",
             stakingPoolData.data &&
               `${humanReadableStakingToken(
                 stakingPoolData.data.tvl
               )} ${stakingPoolData.definition.tokenSymbol}`
           )}
           {greyInfoEntry(
-            'Commission',
+            "Commission",
             stakingPoolData.data &&
               formatPercentage(stakingPoolData.data.commission)
           )}
           {greyInfoEntry(
-            '',
+            "",
             stakingPoolData.data && (
               <>
                 1 ZIL ~ <br />
-                {stakingPoolData.data.zilToTokenRate.toPrecision(
-                  3
-                )}{' '}
+                {stakingPoolData.data.zilToTokenRate.toPrecision(3)}{" "}
                 {stakingPoolData.definition.tokenSymbol}
               </>
             )
@@ -204,13 +188,13 @@ const StakingPoolDetailsView: React.FC<
         </div>
       </div>
       <div className="grid grid-cols-3">
-        {['Stake', 'Unstake', 'Claim'].map((pane) => (
+        {["Stake", "Unstake", "Claim"].map((pane) => (
           <div
             key={pane}
             className={`body1 lg:base text-center py-7 cursor-pointer border-solid border-b ${
               selectedPane === pane
-                ? 'text-white1 border-gradient-1'
-                : 'text-gray1 border-black2'
+                ? "text-white1 border-gradient-1"
+                : "text-gray1 border-black2"
             } `}
             onClick={() => setSelectedPane(pane)}
           >
@@ -219,9 +203,9 @@ const StakingPoolDetailsView: React.FC<
         ))}
       </div>
 
-      {selectedPane === 'Stake' ? (
+      {selectedPane === "Stake" ? (
         <StakingCalculator />
-      ) : selectedPane === 'Unstake' ? (
+      ) : selectedPane === "Unstake" ? (
         <UnstakingCalculator />
       ) : (
         <WithdrawZilPanel
@@ -230,7 +214,7 @@ const StakingPoolDetailsView: React.FC<
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default StakingPoolDetailsView;
+export default StakingPoolDetailsView

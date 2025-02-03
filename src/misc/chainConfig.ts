@@ -1,90 +1,98 @@
-import { connectorsForWallets } from '@rainbow-me/rainbowkit';
-import { coinbaseWallet, ledgerWallet, metaMaskWallet, phantomWallet, rabbyWallet, rainbowWallet, trustWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
-import { createClient, createPublicClient, defineChain, http } from 'viem';
-import { createConfig } from 'wagmi';
-
+import { connectorsForWallets } from "@rainbow-me/rainbowkit"
+import {
+  coinbaseWallet,
+  ledgerWallet,
+  metaMaskWallet,
+  phantomWallet,
+  rabbyWallet,
+  rainbowWallet,
+  trustWallet,
+  walletConnectWallet,
+} from "@rainbow-me/rainbowkit/wallets"
+import { createClient, createPublicClient, defineChain, http } from "viem"
+import { createConfig } from "wagmi"
 
 export const CHAIN_ZQ2_DEVNET = defineChain({
   id: 33469,
-  name: 'Zq2 Devnet',
-  nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
+  name: "Zq2 Devnet",
+  nativeCurrency: { name: "ZIL", symbol: "ZIL", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ['https://api.zq2-devnet.zilliqa.com'],
+      http: ["https://api.zq2-devnet.zilliqa.com"],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Otterscan',
-      url: 'https://explorer.zq2-devnet.zilliqa.com',
+      name: "Otterscan",
+      url: "https://explorer.zq2-devnet.zilliqa.com",
     },
   },
 })
 
 export const CHAIN_ZQ2_PROTOTESTNET = defineChain({
   id: 33103,
-  name: 'Zq2 ProtoTestnet',
-  nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
+  name: "Zq2 ProtoTestnet",
+  nativeCurrency: { name: "ZIL", symbol: "ZIL", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ['https://api.zq2-prototestnet.zilliqa.com'],
+      http: ["https://api.zq2-prototestnet.zilliqa.com"],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Otterscan',
-      url: 'https://explorer.zq2-prototestnet.zilliqa.com',
+      name: "Otterscan",
+      url: "https://explorer.zq2-prototestnet.zilliqa.com",
     },
   },
 })
 
 export const CHAIN_ZQ2_PROTOMAINNET = defineChain({
   id: 32770,
-  name: 'Zq2 ProtoMainnet',
-  nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
+  name: "Zq2 ProtoMainnet",
+  nativeCurrency: { name: "ZIL", symbol: "ZIL", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ['https://api.zq2-protomainnet.zilliqa.com'],
+      http: ["https://api.zq2-protomainnet.zilliqa.com"],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Otterscan',
-      url: 'https://explorer.zq2-protomainnet.zilliqa.com',
+      name: "Otterscan",
+      url: "https://explorer.zq2-protomainnet.zilliqa.com",
     },
   },
 })
 
 export const CHAIN_ZQ2_DOCKERCOMPOSE = defineChain({
   id: 87362,
-  name: 'Zq2 Dockercompose',
-  nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
+  name: "Zq2 Dockercompose",
+  nativeCurrency: { name: "ZIL", symbol: "ZIL", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ['http://localhost:4201'],
+      http: ["http://localhost:4201"],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Otterscan',
-      url: 'http://localhost:5100/',
+      name: "Otterscan",
+      url: "http://localhost:5100/",
     },
   },
 })
 
 export const MOCK_CHAIN = defineChain({
   id: 9999999,
-  name: 'Mock Chain',
-  nativeCurrency: { name: 'ZIL', symbol: 'ZIL', decimals: 18 },
+  name: "Mock Chain",
+  nativeCurrency: { name: "ZIL", symbol: "ZIL", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ['NOT_USED'],
+      http: ["NOT_USED"],
     },
   },
   blockExplorers: {
     default: {
-      name: 'NOT_USED',
-      url: 'NOT_USED',
+      name: "NOT_USED",
+      url: "NOT_USED",
     },
   },
 })
@@ -93,7 +101,7 @@ function getConnectorsForWallets(walletConnectApiKey: string) {
   return connectorsForWallets(
     [
       {
-        groupName: 'Recommended',
+        groupName: "Recommended",
         wallets: [
           metaMaskWallet,
           walletConnectWallet,
@@ -102,13 +110,13 @@ function getConnectorsForWallets(walletConnectApiKey: string) {
           trustWallet,
           ledgerWallet,
           rainbowWallet,
-          phantomWallet
+          phantomWallet,
         ],
       },
     ],
     {
-      appName: 'ZQ2 Staking',
-      projectId: walletConnectApiKey
+      appName: "ZQ2 Staking",
+      projectId: walletConnectApiKey,
     }
   )
 }
@@ -120,15 +128,13 @@ export function getChain(chainId: number) {
     CHAIN_ZQ2_PROTOMAINNET,
     CHAIN_ZQ2_DOCKERCOMPOSE,
     MOCK_CHAIN,
-  ].find(
-    (chain) => chain.id === chainId
-  );
+  ].find((chain) => chain.id === chainId)
 
   if (!chain) {
-    throw new Error(`Active chain [${chainId}] is not defined`);
+    throw new Error(`Active chain [${chainId}] is not defined`)
   }
 
-  return chain;
+  return chain
 }
 
 export function getWagmiConfig(chainId: number, walletConnectApiKey: string) {
@@ -138,12 +144,12 @@ export function getWagmiConfig(chainId: number, walletConnectApiKey: string) {
       return createClient({ chain, transport: http() })
     },
     connectors: getConnectorsForWallets(walletConnectApiKey),
-  });
+  })
 }
 
 export function getViemClient(chainId: number) {
   return createPublicClient({
     chain: getChain(chainId),
     transport: http(),
-  });
+  })
 }

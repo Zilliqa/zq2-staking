@@ -1,103 +1,103 @@
-import "@/styles/globals.css";
-import 'tailwindcss/tailwind.css';
-import '@rainbow-me/rainbowkit/styles.css';
-import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
-import type { AppProps } from "next/app";
-import { WalletConnector } from "@/contexts/walletConnector";
-import DummyWalletSelector from "@/components/dummyWalletSelector";
-import { ConfigProvider } from 'antd';
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { WagmiProvider } from "wagmi";
-import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { StakingOperations } from "@/contexts/stakingOperations";
-import { getWagmiConfig } from "@/misc/chainConfig";
-import { useEffect, useState } from "react";
-import { AppConfig } from "./api/config";
-import { AppConfigStorage } from "@/contexts/appConfigStorage";
+import "@/styles/globals.css"
+import "tailwindcss/tailwind.css"
+import "@rainbow-me/rainbowkit/styles.css"
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
+import type { AppProps } from "next/app"
+import { WalletConnector } from "@/contexts/walletConnector"
+import DummyWalletSelector from "@/components/dummyWalletSelector"
+import { ConfigProvider } from "antd"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { WagmiProvider } from "wagmi"
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit"
+import { StakingOperations } from "@/contexts/stakingOperations"
+import { getWagmiConfig } from "@/misc/chainConfig"
+import { useEffect, useState } from "react"
+import { AppConfig } from "./api/config"
+import { AppConfigStorage } from "@/contexts/appConfigStorage"
 
 export default function App({ Component, pageProps }: AppProps) {
-  const queryClient = new QueryClient();
-  const [appConfig, setAppConfig] = useState<AppConfig | null>(null);
-  const [loadingPercentage, setLoadingPercentage] = useState(0);
-  const [displayedPercentage, setDisplayedPercentage] = useState(0);
-  const [fadeOut, setFadeOut] = useState(false); 
+  const queryClient = new QueryClient()
+  const [appConfig, setAppConfig] = useState<AppConfig | null>(null)
+  const [loadingPercentage, setLoadingPercentage] = useState(0)
+  const [displayedPercentage, setDisplayedPercentage] = useState(0)
+  const [fadeOut, setFadeOut] = useState(false)
 
   useEffect(() => {
     const fetchConfig = async () => {
-      const startTime = Date.now();  
-      let progress = 0;
+      const startTime = Date.now()
+      let progress = 0
 
-       const interval = setInterval(() => {
-        progress += 10;
-        setLoadingPercentage(progress);
+      const interval = setInterval(() => {
+        progress += 10
+        setLoadingPercentage(progress)
         if (progress >= 100) {
-          clearInterval(interval);
+          clearInterval(interval)
         }
-      }, 50); 
+      }, 50)
 
       try {
-        const res = await fetch("/api/config");
-        const data = await res.json();
-        const elapsedTime = Date.now() - startTime;
+        const res = await fetch("/api/config")
+        const data = await res.json()
+        const elapsedTime = Date.now() - startTime
 
-        const remainingTime = Math.max(1000 - elapsedTime, 0);  
+        const remainingTime = Math.max(1000 - elapsedTime, 0)
         setTimeout(() => {
-          clearInterval(interval);
-          setLoadingPercentage(100);  
+          clearInterval(interval)
+          setLoadingPercentage(100)
           setTimeout(() => {
-          setAppConfig(data);  
-        }, 500);
-          setFadeOut(true);
-        }, remainingTime);
+            setAppConfig(data)
+          }, 500)
+          setFadeOut(true)
+        }, remainingTime)
       } catch (error) {
-        console.error("Error loading config:", error);
+        console.error("Error loading config:", error)
       }
-    };
+    }
 
-    fetchConfig();
-  }, []);
+    fetchConfig()
+  }, [])
 
   useEffect(() => {
-    const duration = 500; 
-    const frameRate = 16; 
-    const totalFrames = duration / frameRate;
-    const increment = (loadingPercentage - displayedPercentage) / totalFrames;
+    const duration = 500
+    const frameRate = 16
+    const totalFrames = duration / frameRate
+    const increment = (loadingPercentage - displayedPercentage) / totalFrames
 
     if (increment !== 0) {
-      let currentFrame = 0;
+      let currentFrame = 0
       const easingInterval = setInterval(() => {
         setDisplayedPercentage((prev) => {
-          currentFrame += 1;
-          const next = prev + increment;
+          currentFrame += 1
+          const next = prev + increment
           if (
             currentFrame >= totalFrames ||
             (increment > 0 && next >= loadingPercentage) ||
             (increment < 0 && next <= loadingPercentage)
           ) {
-            clearInterval(easingInterval);
-            return loadingPercentage;
+            clearInterval(easingInterval)
+            return loadingPercentage
           }
-          return next;
-        });
-      }, frameRate);
+          return next
+        })
+      }, frameRate)
 
-      return () => clearInterval(easingInterval);
+      return () => clearInterval(easingInterval)
     }
-  }, [loadingPercentage]);
+  }, [loadingPercentage])
 
   if (!appConfig) {
     return (
       <div
-      className={`h-screen bg-black text-white transition-opacity duration-500 ${
-        fadeOut ? "opacity-0" : "opacity-100"
-      }`}
-     >
-         <div className="h-full flex flex-col justify-between">
+        className={`h-screen bg-black text-white transition-opacity duration-500 ${
+          fadeOut ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        <div className="h-full flex flex-col justify-between">
           <div className="w-full h-10 overflow-hidden">
             <div
               className="h-full bg-colorful-gradient"
               style={{
-                width: `${displayedPercentage}%`, 
+                width: `${displayedPercentage}%`,
               }}
             ></div>
           </div>
@@ -106,13 +106,18 @@ export default function App({ Component, pageProps }: AppProps) {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
     <AppConfigStorage.Provider initialState={{ appConfig }}>
       <ConfigProvider>
-        <WagmiProvider config={getWagmiConfig(appConfig.chainId, appConfig.walletConnectPrivateKey)}>
+        <WagmiProvider
+          config={getWagmiConfig(
+            appConfig.chainId,
+            appConfig.walletConnectPrivateKey
+          )}
+        >
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider showRecentTransactions={true}>
               <WalletConnector.Provider>
@@ -128,5 +133,5 @@ export default function App({ Component, pageProps }: AppProps) {
         </WagmiProvider>
       </ConfigProvider>
     </AppConfigStorage.Provider>
-  );
+  )
 }

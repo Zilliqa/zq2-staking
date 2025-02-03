@@ -1,54 +1,71 @@
-import { Address, erc20Abi, formatUnits, parseUnits } from "viem";
-import { CHAIN_ZQ2_PROTOTESTNET, CHAIN_ZQ2_DOCKERCOMPOSE, getViemClient, MOCK_CHAIN, CHAIN_ZQ2_DEVNET, CHAIN_ZQ2_PROTOMAINNET } from "./chainConfig";
-import { readContract } from "viem/actions";
-import { delegatorAbi, depositAbi } from "./stakingAbis";
+import { Address, erc20Abi, formatUnits, parseUnits } from "viem"
+import {
+  CHAIN_ZQ2_PROTOTESTNET,
+  CHAIN_ZQ2_DOCKERCOMPOSE,
+  getViemClient,
+  MOCK_CHAIN,
+  CHAIN_ZQ2_DEVNET,
+  CHAIN_ZQ2_PROTOMAINNET,
+} from "./chainConfig"
+import { readContract } from "viem/actions"
+import { delegatorAbi, depositAbi } from "./stakingAbis"
 
 /**
  * Deposit address is always the same
  */
-const DEPOSIT_ADDRESS = "0x00000000005a494c4445504f53495450524f5859" as Address;
+const DEPOSIT_ADDRESS = "0x00000000005a494c4445504f53495450524f5859" as Address
 
 export interface StakingPoolDefinition {
-  id: string;
-  name: string;
-  address: string;
-  tokenAddress: string;
-  tokenDecimals: number;
-  tokenSymbol: string;
-  iconUrl: string;
-  minimumStake: bigint;
-  withdrawPeriodInMinutes: number;
+  id: string
+  name: string
+  address: string
+  tokenAddress: string
+  tokenDecimals: number
+  tokenSymbol: string
+  iconUrl: string
+  minimumStake: bigint
+  withdrawPeriodInMinutes: number
 }
 
 export interface StakingPoolData {
-  tvl: bigint;
-  apr: number;
-  commission: number;
-  votingPower: number;
-  zilToTokenRate: number;
+  tvl: bigint
+  apr: number
+  commission: number
+  votingPower: number
+  zilToTokenRate: number
 }
 
 export interface StakingPool {
-  definition: StakingPoolDefinition;
-  data: StakingPoolData | null;
+  definition: StakingPoolDefinition
+  data: StakingPoolData | null
 }
 
 export interface StakingPoolConfig {
-  definition: StakingPoolDefinition;
-  delegatorDataProvider: (definition: StakingPoolDefinition, chainId: number) => Promise<StakingPoolData>;
+  definition: StakingPoolDefinition
+  delegatorDataProvider: (
+    definition: StakingPoolDefinition,
+    chainId: number
+  ) => Promise<StakingPoolData>
 }
 
-async function mockDelegatorDataProvider(mockData: StakingPoolData, loadingMiliseconds: number, definition: StakingPoolDefinition, chainId: number): Promise<StakingPoolData> {
+async function mockDelegatorDataProvider(
+  mockData: StakingPoolData,
+  loadingMiliseconds: number,
+  definition: StakingPoolDefinition,
+  chainId: number
+): Promise<StakingPoolData> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(mockData);
-    }, loadingMiliseconds);
-  });
+      resolve(mockData)
+    }, loadingMiliseconds)
+  })
 }
 
-async function fetchDelegatorDataFromNetwork(definition: StakingPoolDefinition, chainId: number): Promise<StakingPoolData> {
-
-  const viemClient = getViemClient(chainId);
+async function fetchDelegatorDataFromNetwork(
+  definition: StakingPoolDefinition,
+  chainId: number
+): Promise<StakingPoolData> {
+  const viemClient = getViemClient(chainId)
 
   const readDelegatorContract = async <T>(functionName: string): Promise<T> => {
     return (await readContract(viemClient, {
@@ -58,8 +75,16 @@ async function fetchDelegatorDataFromNetwork(definition: StakingPoolDefinition, 
     })) as T
   }
 
-  const readTokenContract = async <T>(functionName: "symbol" | "name" | "totalSupply" | "allowance" | "balanceOf" | "decimals"): Promise<T> => {
-    return await (readContract(viemClient, {
+  const readTokenContract = async <T>(
+    functionName:
+      | "symbol"
+      | "name"
+      | "totalSupply"
+      | "allowance"
+      | "balanceOf"
+      | "decimals"
+  ): Promise<T> => {
+    return (await readContract(viemClient, {
       address: definition.tokenAddress as Address,
       abi: erc20Abi,
       functionName,
@@ -67,7 +92,7 @@ async function fetchDelegatorDataFromNetwork(definition: StakingPoolDefinition, 
   }
 
   const readDepositContract = async <T>(functionName: string): Promise<T> => {
-    return await (readContract(viemClient, {
+    return (await readContract(viemClient, {
       address: DEPOSIT_ADDRESS,
       abi: depositAbi,
       functionName,
@@ -80,45 +105,53 @@ async function fetchDelegatorDataFromNetwork(definition: StakingPoolDefinition, 
       zilToTokenRateWei,
       delegatorStake,
       depositTotalStake,
-      [commissionNumerator, commissionDenominator]
+      [commissionNumerator, commissionDenominator],
     ] = await Promise.all([
       readTokenContract<bigint>("totalSupply"),
       readDelegatorContract<bigint>("getPrice"),
       readDelegatorContract<bigint>("getStake"),
       readDepositContract<bigint>("getFutureTotalStake"),
       readDelegatorContract<[bigint, bigint]>("getCommission"),
-    ]);
+    ])
 
-    const zilToTokenRate = 1 / parseFloat(formatUnits(zilToTokenRateWei, 18));
+    const zilToTokenRate = 1 / parseFloat(formatUnits(zilToTokenRateWei, 18))
 
-    const bigintDivisionPrecision = 1000000n;
+    const bigintDivisionPrecision = 1000000n
 
-    const commission = Number((commissionNumerator * bigintDivisionPrecision) / commissionDenominator) / Number(bigintDivisionPrecision);
-    const votingPower = Number(((delegatorStake * bigintDivisionPrecision) / depositTotalStake)) / Number(bigintDivisionPrecision);
-    const rewardsPerYearInZil = 51000 * 24 * 365;
+    const commission =
+      Number(
+        (commissionNumerator * bigintDivisionPrecision) / commissionDenominator
+      ) / Number(bigintDivisionPrecision)
+    const votingPower =
+      Number((delegatorStake * bigintDivisionPrecision) / depositTotalStake) /
+      Number(bigintDivisionPrecision)
+    const rewardsPerYearInZil = 51000 * 24 * 365
 
-    const delegatorYearReward = votingPower * rewardsPerYearInZil;
-    const delegatorRewardForShare = delegatorYearReward * (1 - commission);
-    const apr = delegatorRewardForShare / parseFloat(formatUnits(delegatorStake, 18));
+    const delegatorYearReward = votingPower * rewardsPerYearInZil
+    const delegatorRewardForShare = delegatorYearReward * (1 - commission)
+    const apr =
+      delegatorRewardForShare / parseFloat(formatUnits(delegatorStake, 18))
 
     return {
       tvl: totalSupply,
       commission,
       zilToTokenRate,
       votingPower,
-      apr: apr
-
+      apr: apr,
     }
   } catch (error) {
-    console.error("Error fetching total supply:", error);
-    throw error;
+    console.error("Error fetching total supply:", error)
+    throw error
   }
 }
 
-const twoWeeksInMinutes = 60 * 24 * 14;
-const fiveMinutesInMinutes = 5;
+const twoWeeksInMinutes = 60 * 24 * 14
+const fiveMinutesInMinutes = 5
 
-export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfig>> = {
+export const stakingPoolsConfigForChainId: Record<
+  string,
+  Array<StakingPoolConfig>
+> = {
   [MOCK_CHAIN.id]: [
     {
       definition: {
@@ -133,7 +166,8 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
       delegatorDataProvider: mockDelegatorDataProvider.bind(
-        null, {
+        null,
+        {
           tvl: parseUnits("3621786", 18),
           apr: 0.135,
           commission: 0.1,
@@ -141,7 +175,7 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
           zilToTokenRate: 1.2,
         },
         2000
-      )
+      ),
     },
     {
       definition: {
@@ -156,15 +190,16 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
       delegatorDataProvider: mockDelegatorDataProvider.bind(
-        null, {
+        null,
+        {
           tvl: parseUnits("0", 18),
           apr: 0.21,
           commission: 0.011,
           votingPower: 0.5,
           zilToTokenRate: 1.1,
         },
-        1000,
-      )
+        1000
+      ),
     },
     {
       definition: {
@@ -179,15 +214,16 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
       delegatorDataProvider: mockDelegatorDataProvider.bind(
-        null, {
+        null,
+        {
           tvl: parseUnits("98173829", 18),
           apr: 1.1,
           commission: 0.05,
           votingPower: 0.2,
           zilToTokenRate: 1.3,
         },
-        5000,
-      )
+        5000
+      ),
     },
     {
       definition: {
@@ -202,7 +238,8 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
       delegatorDataProvider: mockDelegatorDataProvider.bind(
-        null, {
+        null,
+        {
           tvl: parseUnits("100", 18),
           apr: 0.13,
           commission: 0.01,
@@ -211,67 +248,67 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         },
         500
       ),
-    }
+    },
   ],
   [CHAIN_ZQ2_PROTOTESTNET.id]: [
     {
       definition: {
-        id: 'MHg3QTI4',
-        address: '0x7A28eda6899d816e574f7dFB62Cc8A84A4fF92a6',
-        tokenAddress: '0x3fE49722fC4F9F119AB18fE0CF7D340A23C8388b',
-        iconUrl: '/static/logo2.webp',
-        name: 'Validator 1',
+        id: "MHg3QTI4",
+        address: "0x7A28eda6899d816e574f7dFB62Cc8A84A4fF92a6",
+        tokenAddress: "0x3fE49722fC4F9F119AB18fE0CF7D340A23C8388b",
+        iconUrl: "/static/logo2.webp",
+        name: "Validator 1",
         tokenDecimals: 18,
-        tokenSymbol: 'LST1',
+        tokenSymbol: "LST1",
         minimumStake: parseUnits("100", 18),
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork
+      delegatorDataProvider: fetchDelegatorDataFromNetwork,
     },
     {
       definition: {
-        id: 'MHg2MmYz',
-        address: '0x62f3FC68ba2Ff62b23E73c48010262aD64054032',
-        tokenAddress: '0x7854BFB32CC7a377165Ee3B5C8103a80A07913B2',
-        iconUrl: '/static/logo1.webp',
-        name: 'Validator 2',
+        id: "MHg2MmYz",
+        address: "0x62f3FC68ba2Ff62b23E73c48010262aD64054032",
+        tokenAddress: "0x7854BFB32CC7a377165Ee3B5C8103a80A07913B2",
+        iconUrl: "/static/logo1.webp",
+        name: "Validator 2",
         tokenDecimals: 18,
-        tokenSymbol: 'LST2',
+        tokenSymbol: "LST2",
         minimumStake: parseUnits("100", 18),
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork
-    }
+      delegatorDataProvider: fetchDelegatorDataFromNetwork,
+    },
   ],
   [CHAIN_ZQ2_DEVNET.id]: [
     {
       definition: {
-        id: 'MHg3YTBi',
-        address: '0x7a0b7e6d24ede78260c9ddbd98e828b0e11a8ea2',
-        tokenAddress: '0x9e5c257D1c6dF74EaA54e58CdccaCb924669dc83',
-        iconUrl: '/static/logo1.webp',
-        name: 'Dev Validator 1',
+        id: "MHg3YTBi",
+        address: "0x7a0b7e6d24ede78260c9ddbd98e828b0e11a8ea2",
+        tokenAddress: "0x9e5c257D1c6dF74EaA54e58CdccaCb924669dc83",
+        iconUrl: "/static/logo1.webp",
+        name: "Dev Validator 1",
         tokenDecimals: 18,
         tokenSymbol: "devLST1",
         minimumStake: 100000000000000000000n,
-        withdrawPeriodInMinutes: fiveMinutesInMinutes
+        withdrawPeriodInMinutes: fiveMinutesInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork
+      delegatorDataProvider: fetchDelegatorDataFromNetwork,
     },
     {
       definition: {
-        id: 'MHg1YmMz',
-        address: '0x5bc3FcC25638725aaA2ED801b7BA21516f718655',
-        tokenAddress: '0x3261f96C307BAd745578fAa470C8dC2841Dd36E0',
-        iconUrl: '/static/logo2.webp',
-        name: 'Dev Validator 2',
+        id: "MHg1YmMz",
+        address: "0x5bc3FcC25638725aaA2ED801b7BA21516f718655",
+        tokenAddress: "0x3261f96C307BAd745578fAa470C8dC2841Dd36E0",
+        iconUrl: "/static/logo2.webp",
+        name: "Dev Validator 2",
         tokenDecimals: 18,
         tokenSymbol: "devLST2",
         minimumStake: 100000000000000000000n,
-        withdrawPeriodInMinutes: fiveMinutesInMinutes
+        withdrawPeriodInMinutes: fiveMinutesInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork
-    }
+      delegatorDataProvider: fetchDelegatorDataFromNetwork,
+    },
   ],
   [CHAIN_ZQ2_DOCKERCOMPOSE.id]: [
     {
@@ -286,10 +323,8 @@ export const stakingPoolsConfigForChainId: Record<string, Array<StakingPoolConfi
         minimumStake: 100000000000000000000n,
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(null)
+      delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(null),
     },
   ],
-  [CHAIN_ZQ2_PROTOMAINNET.id]: [
-
-  ]
+  [CHAIN_ZQ2_PROTOMAINNET.id]: [],
 }

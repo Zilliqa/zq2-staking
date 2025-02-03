@@ -24,7 +24,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-    font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 @layer utilities {
@@ -158,7 +158,7 @@ body {
   }
 
   .base-medium {
-    @apply font-medium text-12 lg:text-13 leading-5 lg:leading-6  text-white3 ;
+    @apply font-medium text-12 lg:text-13 leading-5 lg:leading-6  text-white3;
   }
 
   .regular-base {
@@ -204,7 +204,6 @@ body {
     @apply h3 text-18 lg:text-20 xl:text-26 leading-8 lg:leading-10 text-gray3;
   }
 
-
   .h3-s {
     @apply font-extrabold text-12 lg:text-27  leading-6 lg:leading-10 text-white1;
   }
@@ -225,27 +224,17 @@ body {
     @apply hover:opacity-70 duration-300 ease-in-out;
   }
 
-
-  
   .text-22-bold {
     @apply font-bold text-18 lg:text-22 leading-4 lg:leading-6 text-white2;
   }
 
-  
-  .text-12-regular  {
-    @apply font-medium text-11 lg:text-12 lg:leading-4  text-white3 ;
+  .text-12-regular {
+    @apply font-medium text-11 lg:text-12 lg:leading-4  text-white3;
   }
-
 }
 
 .animated-gradient {
-  background: linear-gradient(
-    -45deg,
-    #ee7752,
-    #e73c7e,
-    #23a6d5,
-    #23d5ab
-  );
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradientAnimation 2s ease infinite;
   border-radius: 10px;
@@ -282,7 +271,7 @@ body {
   }
 
   .gradient-bottom-border::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0px;
     left: 0px;
@@ -316,7 +305,7 @@ body {
     position: relative;
   }
   .gradient-bottom-border-hover:hover::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0px;
     left: 0px;
@@ -405,7 +394,7 @@ body {
 :where(.css-dev-only-do-not-override-1wwf28x).ant-input-affix-wrapper
   .ant-input-prefix {
   margin-right: 0.5rem;
-  color: #F1F4F4 !important;
+  color: #f1f4f4 !important;
 
   @media (min-width: 1024px) {
     margin-right: 1rem;

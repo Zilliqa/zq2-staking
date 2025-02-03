@@ -24,10 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        application:
-          [
-            zq2-staking/zq2-staking-frontend,
-          ]
+        application: [zq2-staking/zq2-staking-frontend]
         include:
           - application: zq2-staking/zq2-staking-frontend
             image_name: zq2-staking-frontend
@@ -68,10 +65,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        application:
-          [
-            zq2-staking/zq2-staking-frontend,
-          ]
+        application: [zq2-staking/zq2-staking-frontend]
         include:
           - application: zq2-staking/zq2-staking-frontend
             image_name: zq2-staking-frontend
