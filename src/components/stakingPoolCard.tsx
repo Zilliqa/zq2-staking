@@ -1,17 +1,14 @@
-import {
-  formatPercentage,
-  formatUnitsToHumanReadable,
-} from '@/misc/formatting';
-import { StakingPool } from '@/misc/stakingPoolsConfig';
-import { UserStakingPoolData } from '@/misc/walletsConfig';
-import { Tooltip } from 'antd';
-import Image from 'next/image';
+import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting"
+import { StakingPool } from "@/misc/stakingPoolsConfig"
+import { UserStakingPoolData } from "@/misc/walletsConfig"
+import { Tooltip } from "antd"
+import Image from "next/image"
 
 interface StakingPoolCardProps {
-  stakingPoolData: StakingPool;
-  userStakingPoolData?: UserStakingPoolData;
-  isStakingPoolSelected?: boolean;
-  onClick: () => void;
+  stakingPoolData: StakingPool
+  userStakingPoolData?: UserStakingPoolData
+  isStakingPoolSelected?: boolean
+  onClick: () => void
 }
 
 const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
@@ -24,16 +21,14 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
     <div
       className={`${
         isStakingPoolSelected
-          ? 'gradient-bottom-border '
-          : 'border-b-[1.5px] border-black2 rounded-10 gradient-bottom-border-hover bg-white/[9%]'
-      } ${isStakingPoolSelected && 'bg-black'} hover:cursor-pointer`}
+          ? "gradient-bottom-border "
+          : "border-b-[1.5px] border-black2 rounded-10 gradient-bottom-border-hover bg-white/[9%]"
+      } ${isStakingPoolSelected && "bg-black"} hover:cursor-pointer`}
       onClick={onClick}
     >
       <div
         className={`${
-          isStakingPoolSelected
-            ? 'content'
-            : 'content-hover p-2.5 lg:p-5'
+          isStakingPoolSelected ? "content" : "content-hover p-2.5 lg:p-5"
         } flex justify-between`}
       >
         <Image
@@ -63,16 +58,13 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   <div
                     className={`base-medium max-xs:ml-2 xs:max-lg:ml-6 ${
                       stakingPoolData.data.votingPower * 100 >= 50
-                        ? 'text-red2'
+                        ? "text-red2"
                         : stakingPoolData.data.votingPower * 100 >= 30
-                        ? 'text-orange1'
-                        : ''
+                          ? "text-orange1"
+                          : ""
                     }`}
                   >
-                    VP{' '}
-                    {(
-                      stakingPoolData.data.votingPower * 100
-                    ).toPrecision(3)}
+                    VP {(stakingPoolData.data.votingPower * 100).toPrecision(3)}
                     %
                   </div>
                 ) : (
@@ -84,14 +76,9 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   </>
                 )}
                 <div className="flex base-medium ml-2 xs:ml-6">
-                  Commission{' '}
+                  Commission{" "}
                   {stakingPoolData.data ? (
-                    <>
-                      {Math.floor(
-                        stakingPoolData.data.commission * 100
-                      )}
-                      %
-                    </>
+                    <>{Math.floor(stakingPoolData.data.commission * 100)}%</>
                   ) : (
                     <span className="w-[3em] ml-1 animated-gradient" />
                   )}
@@ -115,7 +102,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   )}
                 </div>
               </div>
-              <div className='flex items-center base2'>
+              <div className="flex items-center base2">
                 <div className=" lg:block hidden ">
                   {userStakingPoolData &&
                   userStakingPoolData.stakingTokenAmount ? (
@@ -130,9 +117,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     <span className="">-</span>
                   )}
                 </div>
-                <div >
-                  {stakingPoolData.definition.tokenSymbol}
-                </div>
+                <div>{stakingPoolData.definition.tokenSymbol}</div>
               </div>
             </div>
             <div className="base2 block lg:hidden">
@@ -155,7 +140,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default StakingPoolCard;
+export default StakingPoolCard

@@ -8,7 +8,6 @@ const config = {
   semi: false,
   singleQuote: false,
   arrowParens: "always",
-  
-};
+}
 
-module.exports = config;
+module.exports = config

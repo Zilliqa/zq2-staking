@@ -1,82 +1,79 @@
-import { StakingPoolsStorage } from '@/contexts/stakingPoolsStorage';
-import { useEffect, useState } from 'react';
-import { Button, Input, Tooltip } from 'antd';
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
+import { useEffect, useState } from "react"
+import { Button, Input, Tooltip } from "antd"
 import {
   formatPercentage,
   convertTokenToZil,
   formatUnitsToHumanReadable,
   getHumanFormDuration,
-} from '@/misc/formatting';
-import { formatUnits, parseEther } from 'viem';
-import { StakingOperations } from '@/contexts/stakingOperations';
-import { DateTime } from 'luxon';
+} from "@/misc/formatting"
+import { formatUnits, parseEther } from "viem"
+import { StakingOperations } from "@/contexts/stakingOperations"
+import { DateTime } from "luxon"
 
 const UnstakingCalculator: React.FC = () => {
-  const { stakingPoolForView } = StakingPoolsStorage.useContainer();
+  const { stakingPoolForView } = StakingPoolsStorage.useContainer()
 
   const { unstake, isUnstakingInProgress, unstakeContractCallError } =
-    StakingOperations.useContainer();
+    StakingOperations.useContainer()
 
-  const [zilToUnstake, setZilToUnstake] = useState<string>('0');
+  const [zilToUnstake, setZilToUnstake] = useState<string>("0")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: inputValue } = e.target;
-    const reg = /^-?\d*(\.\d*)?$/;
-    if (
-      reg.test(inputValue) ||
-      inputValue === '' ||
-      inputValue === '-'
-    ) {
-      setZilToUnstake(inputValue);
+    const { value: inputValue } = e.target
+    const reg = /^-?\d*(\.\d*)?$/
+    if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
+      setZilToUnstake(inputValue)
     }
-  };
+  }
 
   const handleFocus = () => {
-    if (zilToUnstake === '') onMaxClick();
-  };
+    if (zilToUnstake === "") onMaxClick()
+  }
 
   const handleBlur = () => {
-    let valueTemp = zilToUnstake;
+    let valueTemp = zilToUnstake
     if (
-      zilToUnstake.charAt(zilToUnstake.length - 1) === '.' ||
-      zilToUnstake === '-'
+      zilToUnstake.charAt(zilToUnstake.length - 1) === "." ||
+      zilToUnstake === "-"
     ) {
-      valueTemp = zilToUnstake.slice(0, -1);
+      valueTemp = zilToUnstake.slice(0, -1)
     }
-    setZilToUnstake(valueTemp.replace(/0*(\d+)/, '$1'));
-    if (zilToUnstake === '') onMaxClick();
-  };
+    setZilToUnstake(valueTemp.replace(/0*(\d+)/, "$1"))
+    if (zilToUnstake === "") onMaxClick()
+  }
 
   useEffect(() => {
-    setZilToUnstake('1');
-  }, [stakingPoolForView]);
+    setZilToUnstake("1")
+  }, [stakingPoolForView])
 
   const stakedTokenAvailable =
-    stakingPoolForView?.userData?.staked?.stakingTokenAmount || 0;
+    stakingPoolForView?.userData?.staked?.stakingTokenAmount || 0
 
-  const zilToUnstakeNumber = parseFloat(zilToUnstake);
-  const zilInWei = parseEther(zilToUnstake);
+  const zilToUnstakeNumber = parseFloat(zilToUnstake)
+  const zilInWei = parseEther(zilToUnstake)
   const zilToUnstakeOk =
-    !isNaN(zilToUnstakeNumber) &&
-    zilToUnstakeNumber <= stakedTokenAvailable;
+    !isNaN(zilToUnstakeNumber) && zilToUnstakeNumber <= stakedTokenAvailable
   const canUnstake =
     stakingPoolForView?.stakingPool.data &&
     zilToUnstakeNumber > 0 &&
-    zilToUnstakeNumber <= stakedTokenAvailable;
+    zilToUnstakeNumber <= stakedTokenAvailable
 
   const onMaxClick = () => {
     setZilToUnstake(
       `${formatUnits(
-        stakingPoolForView?.userData?.staked?.stakingTokenAmount ||
-          0n,
+        stakingPoolForView?.userData?.staked?.stakingTokenAmount || 0n,
         stakingPoolForView?.stakingPool.definition.tokenDecimals || 18
       )}`
-    );
-  };
+    )
+  }
 
-  const unboudingPeriod = getHumanFormDuration((
-    DateTime.now().plus({ minutes: stakingPoolForView?.stakingPool.definition.withdrawPeriodInMinutes || 0 })
-  ));
+  const unboudingPeriod = getHumanFormDuration(
+    DateTime.now().plus({
+      minutes:
+        stakingPoolForView?.stakingPool.definition.withdrawPeriodInMinutes || 0,
+    })
+  )
 
   return (
     stakingPoolForView && (
@@ -85,7 +82,7 @@ const UnstakingCalculator: React.FC = () => {
           <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7 bg-darkbg rounded-3xl items-center">
             <div className="h-fit self-center">
               <Input
-                className='h3 flex items-baseline !bg-transparent !border-transparent !text-white1'
+                className="h3 flex items-baseline !bg-transparent !border-transparent !text-white1"
                 //    ${
                 //   zilToUnstakeOk ? '!text-white1' : '!text-red1'
                 // }
@@ -93,11 +90,8 @@ const UnstakingCalculator: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 onFocus={handleFocus}
-                prefix={
-                  stakingPoolForView.stakingPool.definition
-                    .tokenSymbol
-                }
-                status={!zilToUnstakeOk ? 'error' : undefined}
+                prefix={stakingPoolForView.stakingPool.definition.tokenSymbol}
+                status={!zilToUnstakeOk ? "error" : undefined}
               />
               <div className="flex items-center ">
                 <span className="body1">
@@ -107,8 +101,7 @@ const UnstakingCalculator: React.FC = () => {
                       {formatUnitsToHumanReadable(
                         convertTokenToZil(
                           zilInWei,
-                          stakingPoolForView.stakingPool.data
-                            .zilToTokenRate
+                          stakingPoolForView.stakingPool.data.zilToTokenRate
                         ),
                         18
                       )}
@@ -118,7 +111,7 @@ const UnstakingCalculator: React.FC = () => {
                   )}
                   ZIL
                 </span>
-                <span className="body1 ml-2 text-aqua1">{ unboudingPeriod }</span>
+                <span className="body1 ml-2 text-aqua1">{unboudingPeriod}</span>
               </div>
             </div>
             <div className="flex flex-col gap-3 max-w-[100px]">
@@ -130,7 +123,7 @@ const UnstakingCalculator: React.FC = () => {
               </Button>
               <Button
                 className="btn-secondary-colored text-purple1 hover:!text-purple1 hover:!border-purple1 border-purple1"
-                onClick={() => setZilToUnstake('0')}
+                onClick={() => setZilToUnstake("0")}
               >
                 MIN
               </Button>
@@ -140,23 +133,23 @@ const UnstakingCalculator: React.FC = () => {
           <div className="flex justify-between pt-2.5 lg:pt-5 border-t border-black2">
             <div className="flex flex-col gap-3.5 regular-base">
               <div className=" ">
-                Commission Fee:{' '}
+                Commission Fee:{" "}
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
-                    {' '}
+                    {" "}
                     {formatPercentage(
                       stakingPoolForView!.stakingPool.data.commission
-                    )}{' '}
+                    )}{" "}
                   </>
                 ) : (
                   <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
                 )}
               </div>
               <div className="">
-                Max transaction cost: {zilToUnstake ? '0.01' : '0'}$
+                Max transaction cost: {zilToUnstake ? "0.01" : "0"}$
               </div>
               <div className="text-aqua1 ">
-                Unbonding Period: { unboudingPeriod }
+                Unbonding Period: {unboudingPeriod}
               </div>
             </div>
             <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
@@ -165,22 +158,16 @@ const UnstakingCalculator: React.FC = () => {
                 <div>
                   {stakingPoolForView!.stakingPool.data ? (
                     <>
-                      1{' '}
-                      {
-                        stakingPoolForView.stakingPool.definition
-                          .tokenSymbol
-                      }{' '}
+                      1 {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
                       = ~
                       {formatUnitsToHumanReadable(
                         convertTokenToZil(
-                          parseEther('1'),
-                          stakingPoolForView.stakingPool.data
-                            .zilToTokenRate
+                          parseEther("1"),
+                          stakingPoolForView.stakingPool.data.zilToTokenRate
                         ),
                         18
                       )}
-
-                     </>
+                    </>
                   ) : (
                     <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                   )}
@@ -188,15 +175,19 @@ const UnstakingCalculator: React.FC = () => {
                 </div>
               </div>
               <div className=" regular-base flex flex-row xl:gap-5">
-              <Tooltip placement='top' arrow={true} color='#555555' className=' mr-1' title="Annual Percentage Rate">
-                <span>APR </span>
-              </Tooltip>
+                <Tooltip
+                  placement="top"
+                  arrow={true}
+                  color="#555555"
+                  className=" mr-1"
+                  title="Annual Percentage Rate"
+                >
+                  <span>APR </span>
+                </Tooltip>
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     ~
-                    {formatPercentage(
-                      stakingPoolForView!.stakingPool.data.apr
-                    )}
+                    {formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
                   </>
                 ) : (
                   <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
@@ -230,7 +221,7 @@ const UnstakingCalculator: React.FC = () => {
         </div>
       </div>
     )
-  );
-};
+  )
+}
 
-export default UnstakingCalculator;
+export default UnstakingCalculator

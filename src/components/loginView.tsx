@@ -1,10 +1,10 @@
-import Image from 'next/image';
-import ArrowRight from '../assets/svgs/arrow-right-black.svg'
-import { AppConfigStorage } from "@/contexts/appConfigStorage";
-import { WalletConnector } from "@/contexts/walletConnector";
-import { MOCK_CHAIN } from "@/misc/chainConfig";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Button } from "antd";
+import Image from "next/image"
+import ArrowRight from "../assets/svgs/arrow-right-black.svg"
+import { AppConfigStorage } from "@/contexts/appConfigStorage"
+import { WalletConnector } from "@/contexts/walletConnector"
+import { MOCK_CHAIN } from "@/misc/chainConfig"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { Button } from "antd"
 
 const CustomConnectButton = () => {
   return (
@@ -23,16 +23,16 @@ const CustomConnectButton = () => {
               onClick={openConnectModal}
               className="btn-primary-gradient-aqua !w-fit px-14 group flex items-center"
             >
-                Connect Wallet
+              Connect Wallet
               <Image
                 className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={ArrowRight}
-                alt={`arrow icon`}
+                alt={"arrow icon"}
                 width={24}
                 height={24}
               />
             </Button>
-          );
+          )
         }
 
         // Wrong network
@@ -41,77 +41,68 @@ const CustomConnectButton = () => {
             <button
               onClick={openChainModal}
               style={{
-                padding: '10px 20px',
-                background: '#ff5252',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
+                padding: "10px 20px",
+                background: "#ff5252",
+                color: "#fff",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
               }}
             >
               Wrong Network
             </button>
-          );
+          )
         }
         // Connected and correct network
         return (
-          <button
-            onClick={openAccountModal}
-            className="btn-primary-aqua"
-          >
+          <button onClick={openAccountModal} className="btn-primary-aqua">
             {account.displayName}
           </button>
-        );
+        )
       }}
     </ConnectButton.Custom>
-  );
-};
+  )
+}
 
 const LoginView: React.FC = () => {
- 
-  const {
-    appConfig
-  } = AppConfigStorage.useContainer();
+  const { appConfig } = AppConfigStorage.useContainer()
 
-  const {
-    connectDummyWallet,
-    isDummyWalletConnecting,
-  } = WalletConnector.useContainer();
+  const { connectDummyWallet, isDummyWalletConnecting } =
+    WalletConnector.useContainer()
 
-  const connectWallet = appConfig.chainId === MOCK_CHAIN.id ? (
-    <Button
+  const connectWallet =
+    appConfig.chainId === MOCK_CHAIN.id ? (
+      <Button
         type="primary"
         onClick={connectDummyWallet}
         loading={isDummyWalletConnecting}
         className="btn-primary-gradient-aqua-lg !w-fit px-14 group"
       >
-          Connect Wallet
+        Connect Wallet
         <Image
-                className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-                src={ArrowRight}
-                alt={`arrow icon`}
-                width={24}
-                height={24}
-              />
+          className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+          src={ArrowRight}
+          alt={"arrow icon"}
+          width={24}
+          height={24}
+        />
       </Button>
     ) : (
       <CustomConnectButton />
-    );
+    )
 
   return (
     <div className="relative">
       <div className="text-end p-4">
         <h1 className="hero text-white">Staking Portal</h1>
         <p className="mt-5 body2">
-          Help us Empower and secure the Zilliqa Chain{' '}
+          Help us Empower and secure the Zilliqa Chain{" "}
         </p>
       </div>
 
-      <div className="flex flex-col items-end mt-16 ">
-        {connectWallet}
-      </div>
+      <div className="flex flex-col items-end mt-16 ">{connectWallet}</div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginView;
+export default LoginView

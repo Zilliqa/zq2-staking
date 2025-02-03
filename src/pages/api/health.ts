@@ -1,12 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next"
 
 type Response = {
-  name: string;
-};
+  name: string
+}
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Response>,
+  res: NextApiResponse<Response>
 ) {
-  res.status(200).json({ name: "ok" });
+  res.status(200).json({ name: "ok" })
 }
