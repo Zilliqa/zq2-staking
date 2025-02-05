@@ -67,7 +67,7 @@ const HomePage = () => {
         !isWalletConnected && !stakingPoolForView ? (
           <LoginView />
         ) : stakingPoolForView  ? (
-          <div className="bg-black xs:pt-5 lg:pt-7.5 xs:px-5 lg:px-7.5 rounded-2.5xl max-h-[80vh]
+          <div className="bg-black4/[68%] rounded-2.5xl xs:px-5 lg:px-7.5 rounded-2.5xl h-full 
          ">
             <StakingPoolDetailsView
               selectStakingPoolForStaking={(stakingPoolId) => {
@@ -269,11 +269,11 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className={` ${(mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0) ? 'lg:h-[90vh] h-[80vh] ' : ' h-[90vh] ' } relative max-w-screen-2xl mx-auto 
+      <div className={` ${(mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0) ? 'h-[90vh]' : ' h-[100vh] ' } relative mx-auto 
       overflow-y-hidden `}>
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 px-4 lg:px-8 xl:px-12 pt-3 lg:pt-[4vh]'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh]'>
         {/* Left column */}
-        <div className="bg-white/[9%] p-4 xs:p-6 rounded-2.5xl">
+        <div className="bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl">
           <StakingPoolsList />
         </div>
 
