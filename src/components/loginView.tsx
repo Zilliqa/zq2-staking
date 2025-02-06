@@ -28,7 +28,7 @@ const CustomConnectButton = () => {
               <Image
                 className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={ArrowRightWhite}
-                alt={`arrow icon`}
+                alt="arrow icon"
                 width={24}
                 height={24}
               />
@@ -83,7 +83,7 @@ const LoginView: React.FC = () => {
         <Image
           className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
           src={ArrowRightWhite}
-          alt={`arrow icon`}
+          alt="arrow icon"
           width={24}
           height={24}
         />

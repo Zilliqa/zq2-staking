@@ -125,21 +125,21 @@ const WithdrawZilView: React.FC = () => {
                 <Image
                   className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                   src={FeedbackIcon}
-                  alt={`arrow icon`}
+                  alt="arrow icon"
                   width={56}
                   height={56}
                 />
                 <Image
                   className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                   src={FeedbackIcon}
-                  alt={`arrow icon`}
+                  alt="arrow icon"
                   width={56}
                   height={56}
                 />
                 <Image
                   className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                   src={FeedbackIcon}
-                  alt={`arrow icon`}
+                  alt="arrow icon"
                   width={56}
                   height={56}
                 />

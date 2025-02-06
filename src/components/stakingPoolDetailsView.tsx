@@ -112,7 +112,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             onClick={handleClickAaddToken}
             className="h-[28px] w-[28px] ml-4 cursor-pointer"
             src={PlusIcon}
-            alt={`arrow icon`}
+            alt="arrow icon"
             width={28}
             height={28}
           />
