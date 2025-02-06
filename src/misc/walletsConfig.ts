@@ -8,7 +8,11 @@ import { delegatorAbi } from "./stakingAbis"
 export interface UserStakingPoolData {
   address: string
   stakingTokenAmount: bigint
-  rewardAcumulated: number
+}
+
+export interface UserNonLiquidStakingPoolRewardData {
+  address: string
+  zilRewardAmount: bigint
 }
 
 export interface UserUnstakingPoolData {
@@ -21,7 +25,8 @@ export interface DummyWallet {
   name: string
   address: string
   stakingTokenAmount: Array<UserStakingPoolData>
-  zilAmount: Array<UserUnstakingPoolData>
+  unstakingEntries: Array<UserUnstakingPoolData>
+  nonLiquidRewards: Array<UserNonLiquidStakingPoolRewardData>
   currentZil: bigint
 }
 
@@ -31,14 +36,15 @@ export const dummyWallets: Array<DummyWallet> = [
     address: "0xCF671756a8238cBeB19BCB4D77FC9091E2fCe1A3",
     currentZil: 0n,
     stakingTokenAmount: [],
-    zilAmount: [],
+    unstakingEntries: [],
+    nonLiquidRewards: [],
   },
   {
     name: "No Zil, No ZIL staked, Some ZIL unstaked",
     address: "0xCF671756a8238cBeB19BCB4D77FC9091E2fCeYYY",
     currentZil: 0n,
     stakingTokenAmount: [],
-    zilAmount: [
+    unstakingEntries: [
       {
         address: "0x1234567890234567890234567890234567890",
         zilAmount: parseUnits("62712.323", 18),
@@ -50,13 +56,15 @@ export const dummyWallets: Array<DummyWallet> = [
         availableAt: DateTime.now().plus({ days: 1 }),
       },
     ],
+    nonLiquidRewards: [],
   },
   {
     name: "Some Zil, No ZIL staked, No ZIL unstaked",
     address: "0xf0a9953B539f9E7c4953279859F924d9212B2111",
     currentZil: 1000000000000000000n,
     stakingTokenAmount: [],
-    zilAmount: [],
+    unstakingEntries: [],
+    nonLiquidRewards: [],
   },
   {
     name: "Some Zil, Some ZIL staked, No ZIL unstaked",
@@ -66,15 +74,14 @@ export const dummyWallets: Array<DummyWallet> = [
       {
         address: "0x1234567890234567890234567890234567890",
         stakingTokenAmount: parseUnits("1000.50", 18),
-        rewardAcumulated: 10,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         stakingTokenAmount: parseUnits("60.50", 18),
-        rewardAcumulated: 50,
       },
     ],
-    zilAmount: [],
+    unstakingEntries: [],
+    nonLiquidRewards: [],
   },
   {
     name: "Some Zil, Some ZIL staked, Some ZIL unstaked",
@@ -84,15 +91,13 @@ export const dummyWallets: Array<DummyWallet> = [
       {
         address: "0x1234567890234567890234567890234567890",
         stakingTokenAmount: parseUnits("1000", 18),
-        rewardAcumulated: 10,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         stakingTokenAmount: parseUnits("9991119", 18),
-        rewardAcumulated: 50,
       },
     ],
-    zilAmount: [
+    unstakingEntries: [
       {
         address: "0x1234567890234567890234567890234567890",
         zilAmount: parseUnits("9000", 18),
@@ -119,6 +124,31 @@ export const dummyWallets: Array<DummyWallet> = [
         availableAt: DateTime.now().plus({ days: 13 }),
       },
     ],
+    nonLiquidRewards: [],
+  },
+  {
+    name: "Some ZIL, some ZIL staked on non-liquid",
+    address: "0xee00953B539f9E7c4953279859F924d9212B2000",
+    currentZil: parseUnits("822", 18),
+    stakingTokenAmount: [
+      {
+        address: "0xe863906941de820bde06701a0d804dd0b8575d67",
+        stakingTokenAmount: parseUnits("150.2", 18),
+      },
+    ],
+    unstakingEntries: [
+      {
+        address: "0x96525678902345678902345678918278372212",
+        zilAmount: parseUnits("100", 18),
+        availableAt: DateTime.now().plus({ days: 5 }),
+      },
+    ],
+    nonLiquidRewards: [
+      {
+        address: "0xe863906941de820bde06701a0d804dd0b8575d67",
+        zilRewardAmount: parseUnits("10.2", 18),
+      },
+    ],
   },
   {
     name: "No Zil, Some ZIL staked, No ZIL unstaked",
@@ -128,15 +158,14 @@ export const dummyWallets: Array<DummyWallet> = [
       {
         address: "0x96525678902345678902345678918278372212",
         stakingTokenAmount: parseUnits("123.522039320", 18),
-        rewardAcumulated: 40,
       },
       {
         address: "0x82245678902345678902345678918278372382",
         stakingTokenAmount: parseUnits("99999", 18),
-        rewardAcumulated: 0,
       },
     ],
-    zilAmount: [],
+    unstakingEntries: [],
+    nonLiquidRewards: [],
   },
 ]
 
@@ -164,7 +193,6 @@ export async function getWalletStakingData(
             functionName: "balanceOf",
             args: [wallet as Address],
           }),
-          rewardAcumulated: 0,
         }
       })
     )
@@ -181,7 +209,8 @@ export async function getWalletUnstakingData(
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(
-          dummyWallets.find((dw) => dw.address === wallet)?.zilAmount || []
+          dummyWallets.find((dw) => dw.address === wallet)?.unstakingEntries ||
+            []
         )
       }, 1000)
     })
@@ -244,5 +273,23 @@ export async function getWalletUnstakingData(
       .flat()
 
     return result
+  }
+}
+
+export function getWalletNonLiquidStakingPoolRewardData(
+  wallet: string,
+  chainId: number
+): Promise<UserNonLiquidStakingPoolRewardData[]> {
+  if (chainId === MOCK_CHAIN.id) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(
+          dummyWallets.find((dw) => dw.address === wallet)?.nonLiquidRewards ||
+            []
+        )
+      }, 1000)
+    })
+  } else {
+    return Promise.resolve(new Array<UserNonLiquidStakingPoolRewardData>())
   }
 }

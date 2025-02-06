@@ -15,9 +15,15 @@ import { delegatorAbi, depositAbi } from "./stakingAbis"
  */
 const DEPOSIT_ADDRESS = "0x00000000005a494c4445504f53495450524f5859" as Address
 
+export enum StakingPoolType {
+  LIQUID = "LIQUID",
+  NORMAL = "NON_LIQUID",
+}
+
 export interface StakingPoolDefinition {
   id: string
   name: string
+  poolType: StakingPoolType
   address: string
   tokenAddress: string
   tokenDecimals: number
@@ -61,7 +67,7 @@ async function mockDelegatorDataProvider(
   })
 }
 
-async function fetchDelegatorDataFromNetwork(
+async function fetchLiquidDelegatorDataFromNetwork(
   definition: StakingPoolDefinition,
   chainId: number
 ): Promise<StakingPoolData> {
@@ -145,6 +151,68 @@ async function fetchDelegatorDataFromNetwork(
   }
 }
 
+async function fetchNonLiquidDelegatorDataFromNetwork(
+  definition: StakingPoolDefinition,
+  chainId: number
+): Promise<StakingPoolData> {
+  const viemClient = getViemClient(chainId)
+
+  const readDelegatorContract = async <T>(functionName: string): Promise<T> => {
+    return (await readContract(viemClient, {
+      address: definition.address as Address,
+      abi: delegatorAbi,
+      functionName,
+    })) as T
+  }
+
+  const readDepositContract = async <T>(functionName: string): Promise<T> => {
+    return (await readContract(viemClient, {
+      address: DEPOSIT_ADDRESS,
+      abi: depositAbi,
+      functionName,
+    })) as T
+  }
+
+  try {
+    const [
+      delegatorStake,
+      depositTotalStake,
+      [commissionNumerator, commissionDenominator],
+    ] = await Promise.all([
+      readDelegatorContract<bigint>("getStake"),
+      readDepositContract<bigint>("getFutureTotalStake"),
+      readDelegatorContract<[bigint, bigint]>("getCommission"),
+    ])
+
+    const bigintDivisionPrecision = 1000000n
+
+    const commission =
+      Number(
+        (commissionNumerator * bigintDivisionPrecision) / commissionDenominator
+      ) / Number(bigintDivisionPrecision)
+    const votingPower =
+      Number((delegatorStake * bigintDivisionPrecision) / depositTotalStake) /
+      Number(bigintDivisionPrecision)
+    const rewardsPerYearInZil = 51000 * 24 * 365
+
+    const delegatorYearReward = votingPower * rewardsPerYearInZil
+    const delegatorRewardForShare = delegatorYearReward * (1 - commission)
+    const apr =
+      delegatorRewardForShare / parseFloat(formatUnits(delegatorStake, 18))
+
+    return {
+      tvl: parseUnits("10000", 18), // TODO get actual data
+      commission,
+      zilToTokenRate: 1,
+      votingPower,
+      apr: apr,
+    }
+  } catch (error) {
+    console.error("Error fetching total supply:", error)
+    throw error
+  }
+}
+
 const twoWeeksInMinutes = 60 * 24 * 14
 const fiveMinutesInMinutes = 5
 
@@ -157,6 +225,7 @@ export const stakingPoolsConfigForChainId: Record<
       definition: {
         id: "pool1",
         name: "Avely",
+        poolType: StakingPoolType.LIQUID,
         address: "0x1234567890234567890234567890234567890",
         tokenAddress: "0x1234567890234567890234567890234567233",
         tokenDecimals: 18,
@@ -181,6 +250,7 @@ export const stakingPoolsConfigForChainId: Record<
       definition: {
         id: "pool2",
         name: "Plunderswap",
+        poolType: StakingPoolType.LIQUID,
         address: "0x82245678902345678902345678918278372382",
         tokenAddress: "0x1234567890234567890234567890234567231",
         tokenDecimals: 18,
@@ -205,6 +275,7 @@ export const stakingPoolsConfigForChainId: Record<
       definition: {
         id: "pool3",
         name: "IgniteDao",
+        poolType: StakingPoolType.LIQUID,
         address: "0x96525678902345678902345678918278372212",
         tokenAddress: "0x1234567890234567890234567890234567232",
         tokenDecimals: 18,
@@ -229,6 +300,7 @@ export const stakingPoolsConfigForChainId: Record<
       definition: {
         id: "pool4",
         name: "ADAMine",
+        poolType: StakingPoolType.LIQUID,
         address: "0x965256789023456789023456789182783K92Uh",
         tokenAddress: "0x1234567890234567890234567890234567234",
         tokenDecimals: 18,
@@ -249,6 +321,31 @@ export const stakingPoolsConfigForChainId: Record<
         500
       ),
     },
+    {
+      definition: {
+        id: "K23k2322",
+        address: "0xe863906941de820bde06701a0d804dd0b8575d67",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo1.webp",
+        name: "Normal 1",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: parseUnits("100", 18),
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: mockDelegatorDataProvider.bind(
+        null,
+        {
+          tvl: parseUnits("100000", 18),
+          apr: 0.13,
+          commission: 0.01,
+          votingPower: 0.05,
+          zilToTokenRate: 1,
+        },
+        100
+      ),
+    },
   ],
   [CHAIN_ZQ2_PROTOTESTNET.id]: [
     {
@@ -258,12 +355,13 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x3fE49722fC4F9F119AB18fE0CF7D340A23C8388b",
         iconUrl: "/static/logo2.webp",
         name: "Validator 1",
+        poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "LST1",
         minimumStake: parseUnits("100", 18),
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork,
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
     {
       definition: {
@@ -272,12 +370,28 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x7854BFB32CC7a377165Ee3B5C8103a80A07913B2",
         iconUrl: "/static/logo1.webp",
         name: "Validator 2",
+        poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "LST2",
         minimumStake: parseUnits("100", 18),
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork,
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
+    },
+    {
+      definition: {
+        id: "K23k2322",
+        address: "0x62f3FC68ba2Ff62b23E73c48010262aD64054032",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo1.webp",
+        name: "Normal 1",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: parseUnits("100", 18),
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
     },
   ],
   [CHAIN_ZQ2_DEVNET.id]: [
@@ -288,12 +402,13 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x9e5c257D1c6dF74EaA54e58CdccaCb924669dc83",
         iconUrl: "/static/logo1.webp",
         name: "Dev Validator 1",
+        poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "devLST1",
         minimumStake: 100000000000000000000n,
         withdrawPeriodInMinutes: fiveMinutesInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork,
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
     {
       definition: {
@@ -302,28 +417,13 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x3261f96C307BAd745578fAa470C8dC2841Dd36E0",
         iconUrl: "/static/logo2.webp",
         name: "Dev Validator 2",
+        poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "devLST2",
         minimumStake: 100000000000000000000n,
         withdrawPeriodInMinutes: fiveMinutesInMinutes,
       },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork,
-    },
-  ],
-  [CHAIN_ZQ2_DOCKERCOMPOSE.id]: [
-    {
-      definition: {
-        id: "pool1",
-        name: "LocalDelegator",
-        address: "0x0bF52FF2Ee8267b462c21306BA086E076211e927",
-        tokenAddress: "0x874fAf3E1500C37C46dE40aD27Aa30571Ebc14cE",
-        tokenDecimals: 18,
-        tokenSymbol: "ldZIL",
-        iconUrl: "/static/logo2.webp",
-        minimumStake: 100000000000000000000n,
-        withdrawPeriodInMinutes: twoWeeksInMinutes,
-      },
-      delegatorDataProvider: fetchDelegatorDataFromNetwork.bind(null),
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
   ],
   [CHAIN_ZQ2_PROTOMAINNET.id]: [],

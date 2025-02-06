@@ -13,6 +13,7 @@ import { formatUnits, parseEther } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import Link from "next/link"
+import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 
 const StakingCalculator: React.FC = () => {
   const { appConfig } = AppConfigStorage.useContainer()
@@ -83,6 +84,10 @@ const StakingCalculator: React.FC = () => {
     setZilToStake(`${formatUnits(zilAvailable || 0n, 18)}`)
   }
 
+  const isPoolLiquid = () =>
+    stakingPoolForView?.stakingPool.definition.poolType ===
+    StakingPoolType.LIQUID
+
   return (
     stakingPoolForView && (
       <>
@@ -105,17 +110,21 @@ const StakingCalculator: React.FC = () => {
               <span className="flex items-center whitespace-nowrap ">
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
-                    <span className="body2-medium">
-                      ~
-                      {!isNaN(zilToStakeNumber) &&
-                      !isNaN(stakingPoolForView.stakingPool.data.zilToTokenRate)
-                        ? convertZilValueInToken(
-                            zilToStakeNumber,
-                            stakingPoolForView.stakingPool.data.zilToTokenRate
-                          )
-                        : ""}{" "}
-                      {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
-                    </span>
+                    {isPoolLiquid() && (
+                      <span className="body2-medium">
+                        ~
+                        {!isNaN(zilToStakeNumber) &&
+                        !isNaN(
+                          stakingPoolForView.stakingPool.data.zilToTokenRate
+                        )
+                          ? convertZilValueInToken(
+                              zilToStakeNumber,
+                              stakingPoolForView.stakingPool.data.zilToTokenRate
+                            )
+                          : ""}{" "}
+                        {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
+                      </span>
+                    )}
                     <span className="body2-medium ml-2 text-aqua1">
                       ~
                       {formatPercentage(
@@ -165,12 +174,14 @@ const StakingCalculator: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
-              <div className="flex flex-col xl:flex-row xl:gap-5">
-                <div className="gray-base">Rate</div>
-                {stakingPoolForView!.stakingPool.data && (
-                  <div className="text-gray9">{`1 ZIL = ~${stakingPoolForView.stakingPool.data.zilToTokenRate} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
-                )}
-              </div>
+              {isPoolLiquid() && (
+                <div className="flex flex-col xl:flex-row xl:gap-5">
+                  <div className="gray-base">Rate</div>
+                  {stakingPoolForView!.stakingPool.data && (
+                    <div className="text-gray9">{`1 ZIL = ~${stakingPoolForView.stakingPool.data.zilToTokenRate} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
+                  )}
+                </div>
+              )}
               <div className="text-gray9 text-aqua1 flex flex-row xl:gap-5">
                 <Tooltip
                   placement="top"

@@ -4,13 +4,17 @@ import { readContract } from "viem/actions"
 import { delegatorAbi } from "@/misc/stakingAbis"
 import { Address, erc20Abi } from "viem"
 import { getViemClient } from "@/misc/chainConfig"
-import { StakingPoolDefinition } from "@/misc/stakingPoolsConfig"
+import {
+  StakingPoolDefinition,
+  StakingPoolType,
+} from "@/misc/stakingPoolsConfig"
 
 interface Args {
   network_id: string
   contract_address: string
   icon_url: string
   name: string
+  type: StakingPoolType
 }
 
 const argv = yargs(hideBin(process.argv))
@@ -33,6 +37,11 @@ const argv = yargs(hideBin(process.argv))
   .option("name", {
     type: "string",
     description: "The name of the pool",
+    demandOption: true,
+  })
+  .option("type", {
+    type: "string",
+    description: "The type of the pool",
     demandOption: true,
   })
   .help()
@@ -81,6 +90,7 @@ const argv = yargs(hideBin(process.argv))
     tokenAddress,
     iconUrl: argv.icon_url,
     name: argv.name,
+    poolType: argv.type,
     tokenDecimals,
     tokenSymbol,
     minimumStake: minimumStake as bigint,
