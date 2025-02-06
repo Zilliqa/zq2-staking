@@ -60,7 +60,6 @@ const StakingPoolsList: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState(0)
 
-
   return (
     <>
       {/* <div className="h3 text-white1 sm:max-lg:w-1/4 mb-4 max-h-[10vh]">
