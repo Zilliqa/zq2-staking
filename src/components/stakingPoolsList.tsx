@@ -60,16 +60,6 @@ const StakingPoolsList: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState(0)
 
-  const tabs = [
-    {
-      name: "Liquid staking",
-    },
-    {
-      name: "Normal Staking ",
-    },
-  ]
-
-  const [activeTab, setActiveTab] = useState(0)
 
   return (
     <>
