@@ -1,5 +1,7 @@
+
 import { AppConfigStorage } from "@/contexts/appConfigStorage";
 import { StakingOperations } from "@/contexts/stakingOperations";
+
 import {
   formatAddress,
   getHumanFormDuration,
@@ -12,9 +14,10 @@ import { DateTime } from "luxon";
 import Link from "next/link";
 import { formatUnits } from "viem";
 
+
 interface WithdrawZilPanelProps {
-  stakingPoolData: StakingPool;
-  userUnstakingPoolData?: Array<UserUnstakingPoolData>;
+  stakingPoolData: StakingPool
+  userUnstakingPoolData?: Array<UserUnstakingPoolData>
 }
 
 const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
@@ -22,9 +25,9 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
   stakingPoolData,
 }) => {
   const { claim, isClaimingInProgress, claimCallTxHash } =
-    StakingOperations.useContainer();
+    StakingOperations.useContainer()
 
-  const { appConfig } = AppConfigStorage.useContainer();
+  const { appConfig } = AppConfigStorage.useContainer()
 
   const pendingUnstake = userUnstakingPoolData
     ?.filter((claim) => claim.availableAt > DateTime.now())
@@ -32,6 +35,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
       (claimA, claimB) =>
         claimA.availableAt.diff(claimB.availableAt).milliseconds,
     );
+
 
   const availableUnstake = userUnstakingPoolData
     ?.filter((claim) => claim.availableAt <= DateTime.now())
@@ -59,6 +63,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         availableUnstake.map((item, claimIdx) => (
           <div
             className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-grey-gradient rounded-3xl w-full"
+
             key={claimIdx}
           >
             <div className="items-center h4 w-full flex justify-between text-white1">
@@ -134,7 +139,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default WithdrawZilPanel;
+export default WithdrawZilPanel

@@ -1,28 +1,28 @@
-import { DateTime } from "luxon";
-import { getViemClient, MOCK_CHAIN } from "./chainConfig";
-import { stakingPoolsConfigForChainId } from "./stakingPoolsConfig";
-import { readContract } from "viem/actions";
-import { Address, erc20Abi, parseUnits } from "viem";
-import { delegatorAbi } from "./stakingAbis";
+import { DateTime } from "luxon"
+import { getViemClient, MOCK_CHAIN } from "./chainConfig"
+import { stakingPoolsConfigForChainId } from "./stakingPoolsConfig"
+import { readContract } from "viem/actions"
+import { Address, erc20Abi, parseUnits } from "viem"
+import { delegatorAbi } from "./stakingAbis"
 
 export interface UserStakingPoolData {
-  address: string;
-  stakingTokenAmount: bigint;
-  rewardAcumulated: number;
+  address: string
+  stakingTokenAmount: bigint
+  rewardAcumulated: number
 }
 
 export interface UserUnstakingPoolData {
-  address: string;
-  zilAmount: bigint;
-  availableAt: DateTime;
+  address: string
+  zilAmount: bigint
+  availableAt: DateTime
 }
 
 export interface DummyWallet {
-  name: string;
-  address: string;
-  stakingTokenAmount: Array<UserStakingPoolData>;
-  zilAmount: Array<UserUnstakingPoolData>;
-  currentZil: bigint;
+  name: string
+  address: string
+  stakingTokenAmount: Array<UserStakingPoolData>
+  zilAmount: Array<UserUnstakingPoolData>
+  currentZil: bigint
 }
 
 export const dummyWallets: Array<DummyWallet> = [
@@ -66,12 +66,12 @@ export const dummyWallets: Array<DummyWallet> = [
       {
         address: "0x1234567890234567890234567890234567890",
         stakingTokenAmount: parseUnits("1000.50", 18),
-        rewardAcumulated: 10
+        rewardAcumulated: 10,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         stakingTokenAmount: parseUnits("60.50", 18),
-        rewardAcumulated: 50
+        rewardAcumulated: 50,
       },
     ],
     zilAmount: [],
@@ -84,12 +84,12 @@ export const dummyWallets: Array<DummyWallet> = [
       {
         address: "0x1234567890234567890234567890234567890",
         stakingTokenAmount: parseUnits("1000", 18),
-        rewardAcumulated: 10
+        rewardAcumulated: 10,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         stakingTokenAmount: parseUnits("9991119", 18),
-        rewardAcumulated: 50
+        rewardAcumulated: 50,
       },
     ],
     zilAmount: [
@@ -128,116 +128,121 @@ export const dummyWallets: Array<DummyWallet> = [
       {
         address: "0x96525678902345678902345678918278372212",
         stakingTokenAmount: parseUnits("123.522039320", 18),
-        rewardAcumulated: 40
+        rewardAcumulated: 40,
       },
       {
         address: "0x82245678902345678902345678918278372382",
         stakingTokenAmount: parseUnits("99999", 18),
-        rewardAcumulated: 0
+        rewardAcumulated: 0,
       },
     ],
     zilAmount: [],
   },
 ]
 
-export async function getWalletStakingData(wallet: string, chainId: number): Promise<UserStakingPoolData[]> {
+export async function getWalletStakingData(
+  wallet: string,
+  chainId: number
+): Promise<UserStakingPoolData[]> {
   if (chainId === MOCK_CHAIN.id) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(dummyWallets.find((dw) => dw.address === wallet)?.stakingTokenAmount || []);
-      }, 1000);
-    });
+        resolve(
+          dummyWallets.find((dw) => dw.address === wallet)
+            ?.stakingTokenAmount || []
+        )
+      }, 1000)
+    })
   } else {
     const stakingData: UserStakingPoolData[] = await Promise.all(
-      stakingPoolsConfigForChainId[chainId].map(
-        async (pool) => {
-          return {
-            address: pool.definition.address,
-            stakingTokenAmount: await readContract(getViemClient(chainId), {
-              address: pool.definition.tokenAddress as Address,
-              abi: erc20Abi,
-              functionName: "balanceOf",
-              args: [wallet as Address],
-            }),
-            rewardAcumulated: 0,
-          }
+      stakingPoolsConfigForChainId[chainId].map(async (pool) => {
+        return {
+          address: pool.definition.address,
+          stakingTokenAmount: await readContract(getViemClient(chainId), {
+            address: pool.definition.tokenAddress as Address,
+            abi: erc20Abi,
+            functionName: "balanceOf",
+            args: [wallet as Address],
+          }),
+          rewardAcumulated: 0,
         }
-      )
+      })
     )
 
-    return stakingData;
+    return stakingData
   }
 }
 
-export async function getWalletUnstakingData(wallet: string, chainId: number): Promise<UserUnstakingPoolData[]> {
+export async function getWalletUnstakingData(
+  wallet: string,
+  chainId: number
+): Promise<UserUnstakingPoolData[]> {
   if (chainId === MOCK_CHAIN.id) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(dummyWallets.find((dw) => dw.address === wallet)?.zilAmount || []);
-      }, 1000);
-    });
+        resolve(
+          dummyWallets.find((dw) => dw.address === wallet)?.zilAmount || []
+        )
+      }, 1000)
+    })
   } else {
-    const currentBlockNumber = await getViemClient(chainId).getBlockNumber();
+    const currentBlockNumber = await getViemClient(chainId).getBlockNumber()
 
     // get unstaking data from contracts
-    const unstakingWalletData =  await Promise.all(
-      stakingPoolsConfigForChainId[chainId].map(
-        async (pool) => {
-          return {
-            address: pool.definition.address,
-            blockNumberAndAmount: (await readContract(getViemClient(chainId), {
-              address: pool.definition.address as Address,
-              abi: delegatorAbi,
-              functionName: "getPendingClaims",
-              account: wallet as Address,
-            })) as bigint[][],
-            claimableNow: await readContract(getViemClient(chainId), {
-              address: pool.definition.address as Address,
-              abi: delegatorAbi,
-              functionName: "getClaimable",
-              account: wallet as Address,
-            }) as bigint
-          }
+    const unstakingWalletData = await Promise.all(
+      stakingPoolsConfigForChainId[chainId].map(async (pool) => {
+        return {
+          address: pool.definition.address,
+          blockNumberAndAmount: (await readContract(getViemClient(chainId), {
+            address: pool.definition.address as Address,
+            abi: delegatorAbi,
+            functionName: "getPendingClaims",
+            account: wallet as Address,
+          })) as bigint[][],
+          claimableNow: (await readContract(getViemClient(chainId), {
+            address: pool.definition.address as Address,
+            abi: delegatorAbi,
+            functionName: "getClaimable",
+            account: wallet as Address,
+          })) as bigint,
         }
-      )
+      })
     )
 
     // convert contracts raw data into application data
-    const result: UserUnstakingPoolData[] = unstakingWalletData.filter(
-      (uwd) => uwd.blockNumberAndAmount.length > 0 || uwd.claimableNow > 0
-    ).map(
-      (uwd) => {
-
-        const claims: UserUnstakingPoolData[] = [];
+    const result: UserUnstakingPoolData[] = unstakingWalletData
+      .filter(
+        (uwd) => uwd.blockNumberAndAmount.length > 0 || uwd.claimableNow > 0
+      )
+      .map((uwd) => {
+        const claims: UserUnstakingPoolData[] = []
 
         if (uwd.claimableNow > 0) {
           claims.push({
             zilAmount: uwd.claimableNow,
             availableAt: DateTime.now().minus({ days: 1 }), // just to make sure it displays
             address: uwd.address,
-          });
+          })
         }
 
         if (uwd.blockNumberAndAmount.length > 0) {
           claims.push(
-            ...uwd.blockNumberAndAmount.map(
-              (bna) => {
-                const blocksRemaining = Number(bna[0] - currentBlockNumber);
+            ...uwd.blockNumberAndAmount.map((bna) => {
+              const blocksRemaining = Number(bna[0] - currentBlockNumber)
 
-                return {
-                  zilAmount: bna[1],
-                  availableAt: DateTime.now().plus({ seconds: blocksRemaining }), // we assume block takes a second
-                  address: uwd.address,
-                }
+              return {
+                zilAmount: bna[1],
+                availableAt: DateTime.now().plus({ seconds: blocksRemaining }), // we assume block takes a second
+                address: uwd.address,
               }
-            )
-          );
+            })
+          )
         }
 
-        return claims;
-      }
-    ).flat();
+        return claims
+      })
+      .flat()
 
-    return result;
+    return result
   }
 }

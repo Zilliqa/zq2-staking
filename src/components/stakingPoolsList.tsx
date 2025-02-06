@@ -3,18 +3,20 @@ import StakingPoolCard from "./stakingPoolCard";
 import SortBtn from "./sortBtn";
 import { useState } from "react";
 
+
 const StakingPoolsList: React.FC = () => {
   const {
     combinedStakingPoolsData,
     selectStakingPoolForView,
     stakingPoolForView,
-  } = StakingPoolsStorage.useContainer();
+  } = StakingPoolsStorage.useContainer()
 
   const [sortCriteria, setSortCriteria] = useState<
     "APR" | "VP" | "Commission" | null
   >(null);
 
-  const [isAscending, setIsAscending] = useState(true);
+
+  const [isAscending, setIsAscending] = useState(true)
 
   // Function to get the value to sort by based on the criteria
   const getSortValue = (data: any, criteria: string | null) => {
@@ -27,13 +29,15 @@ const StakingPoolsList: React.FC = () => {
         return (data.votingPower || 0) * 100;
       case "Commission":
         return (data.commission || 0) * 100;
+
       default:
-        return 0;
+        return 0
     }
-  };
+  }
 
   // Sort the staking pools based on the selected criteria
   const sortedStakingPoolsData = [...combinedStakingPoolsData].sort((a, b) => {
+
     const aValue = getSortValue(a.stakingPool.data, sortCriteria);
     const bValue = getSortValue(b.stakingPool.data, sortCriteria);
     return isAscending ? aValue - bValue : bValue - aValue;
@@ -46,7 +50,18 @@ const StakingPoolsList: React.FC = () => {
       setSortCriteria(criteria);
       setIsAscending(true);
     }
-  };
+  }
+
+  const tabs = [
+    {
+      name: "Liquid staking",
+    },
+    {
+      name: "Normal Staking ",
+    },
+  ]
+
+  const [activeTab, setActiveTab] = useState(0)
 
   const tabs = [
     {
@@ -128,7 +143,7 @@ const StakingPoolsList: React.FC = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default StakingPoolsList;
+export default StakingPoolsList

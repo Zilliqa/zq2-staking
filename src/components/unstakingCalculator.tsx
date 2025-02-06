@@ -1,6 +1,7 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import { useEffect, useState } from "react";
 import { Button, Input, Tooltip } from "antd";
+
 import {
   formatPercentage,
   convertTokenToZil,
@@ -11,11 +12,12 @@ import { formatUnits, parseEther } from "viem";
 import { StakingOperations } from "@/contexts/stakingOperations";
 import { DateTime } from "luxon";
 
+
 const UnstakingCalculator: React.FC = () => {
-  const { stakingPoolForView } = StakingPoolsStorage.useContainer();
+  const { stakingPoolForView } = StakingPoolsStorage.useContainer()
 
   const { unstake, isUnstakingInProgress, unstakeContractCallError } =
-    StakingOperations.useContainer();
+    StakingOperations.useContainer()
 
   const [zilToUnstake, setZilToUnstake] = useState<string>("0");
 
@@ -24,20 +26,22 @@ const UnstakingCalculator: React.FC = () => {
     const reg = /^-?\d*(\.\d*)?$/;
     if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
       setZilToUnstake(inputValue);
+
     }
-  };
+  }
 
   const handleFocus = () => {
+
     if (zilToUnstake === "") onMaxClick();
   };
 
   const handleBlur = () => {
-    let valueTemp = zilToUnstake;
+    let valueTemp = zilToUnstake
     if (
       zilToUnstake.charAt(zilToUnstake.length - 1) === "." ||
       zilToUnstake === "-"
     ) {
-      valueTemp = zilToUnstake.slice(0, -1);
+      valueTemp = zilToUnstake.slice(0, -1)
     }
     setZilToUnstake(valueTemp.replace(/0*(\d+)/, "$1"));
     if (zilToUnstake === "") onMaxClick();
@@ -48,16 +52,16 @@ const UnstakingCalculator: React.FC = () => {
   }, [stakingPoolForView]);
 
   const stakedTokenAvailable =
-    stakingPoolForView?.userData?.staked?.stakingTokenAmount || 0;
+    stakingPoolForView?.userData?.staked?.stakingTokenAmount || 0
 
-  const zilToUnstakeNumber = parseFloat(zilToUnstake);
-  const zilInWei = parseEther(zilToUnstake);
+  const zilToUnstakeNumber = parseFloat(zilToUnstake)
+  const zilInWei = parseEther(zilToUnstake)
   const zilToUnstakeOk =
     !isNaN(zilToUnstakeNumber) && zilToUnstakeNumber <= stakedTokenAvailable;
   const canUnstake =
     stakingPoolForView?.stakingPool.data &&
     zilToUnstakeNumber > 0 &&
-    zilToUnstakeNumber <= stakedTokenAvailable;
+    zilToUnstakeNumber <= stakedTokenAvailable
 
   const onMaxClick = () => {
     setZilToUnstake(
@@ -67,6 +71,7 @@ const UnstakingCalculator: React.FC = () => {
       )}`,
     );
   };
+
 
   const unboudingPeriod = getHumanFormDuration(
     DateTime.now().plus({
@@ -83,6 +88,7 @@ const UnstakingCalculator: React.FC = () => {
             <div className="h-fit self-center">
               <Input
                 className="flex items-baseline !bg-transparent !border-transparent !text-white1 text-40 font-semibold"
+
                 //    ${
                 //   zilToUnstakeOk ? '!text-white1' : '!text-red1'
                 // }
@@ -223,7 +229,7 @@ const UnstakingCalculator: React.FC = () => {
         </div>
       </div>
     )
-  );
-};
+  )
+}
 
-export default UnstakingCalculator;
+export default UnstakingCalculator

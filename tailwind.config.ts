@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
 const config: Config = {
   content: [
@@ -25,6 +25,7 @@ const config: Config = {
           " linear-gradient(90deg, rgba(78, 78, 78, 0.3) -11.22%, rgba(32, 40, 50, 0.25) 47.4%, rgba(78, 78, 78, 0.3) 98.85%)",
         "aqua-gradient":
           "linear-gradient(90deg, rgba(124, 125, 126, 0.18) -11.22%, rgba(122, 131, 166, 0.15) 47.4%, rgba(124, 125, 126, 0.18) 98.85%)",
+
       },
       colors: {
         black1: "#010101",
@@ -81,13 +82,16 @@ const config: Config = {
         "24": "24px",
         "26": "26px",
         "27": "27px",
+
         "28": "28px",
+
         "30": "30px",
         "32": "32px",
         "38": "38px",
         "40": "40px",
         "48": "48px",
         "58": "58px",
+
         "64": "64px",
         "80": "80px",
         "114": "114px",
@@ -95,12 +99,14 @@ const config: Config = {
       borderRadius: {
         "10": "10px",
         "160": "160px",
+
         "2.5xl": "1.25rem",
       },
       lineHeight: {
         "11": "44px",
         "12": "48px",
         "14.5": "58px",
+
         "16": "64px",
         "20": "80px",
       },
@@ -110,6 +116,7 @@ const config: Config = {
         "9.5": "38px",
         "4.5": "18px",
         "17.5": "70px",
+
         "21": "84px",
       },
       margin: {
@@ -118,6 +125,7 @@ const config: Config = {
         "4.5": "18px",
         "12.5": "50px",
         "15": "60px",
+
         "21": "84px",
       },
       screens: {
@@ -126,5 +134,5 @@ const config: Config = {
     },
   },
   plugins: [],
-};
-export default config;
+}
+export default config

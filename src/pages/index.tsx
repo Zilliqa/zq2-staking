@@ -36,13 +36,13 @@ const HomePage = () => {
     walletAddress,
     disconnectDummyWallet,
     connectedWalletType,
-  } = WalletConnector.useContainer();
+  } = WalletConnector.useContainer()
 
   const {
     dummyWalletPopupContent,
     isDummyWalletPopupOpen,
     setIsDummyWalletPopupOpen,
-  } = StakingOperations.useContainer();
+  } = StakingOperations.useContainer()
 
   const {
     stakingPoolForView,
@@ -50,9 +50,9 @@ const HomePage = () => {
     selectStakingPoolForView,
     availableForUnstaking,
     pendingUnstaking,
-  } = StakingPoolsStorage.useContainer();
+  } = StakingPoolsStorage.useContainer()
 
-  const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false);
+  const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false)
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
     <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full bg-black p-4">
@@ -151,50 +151,26 @@ const HomePage = () => {
                   size="large"
                   className="btn-secondary-lg group justify-start"
                   onClick={() => {
-                    selectStakingPoolForView(null);
+                    setMobileShowClaims(false)
                   }}
                 >
-                  {" "}
                   <Image
                     className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
                     src={ArrowBack}
-                    alt={`arrow icon`}
+                    alt={"arrow icon"}
                     width={24}
                     height={24}
                   />
-                  Back
+                  {stakingPoolForView
+                    ? stakingPoolForView?.stakingPool.definition.name
+                    : "Back"}
                 </Button>
               </div>
             )}
-
-            {!mobileShowClaims &&
-              availableForUnstaking.length + pendingUnstaking.length != 0 && (
-                <div
-                  className={`h-inherit ${stakingPoolForView ? "w-1/2" : "w-full"}`}
-                >
-                  <Button
-                    type="default"
-                    size="large"
-                    className="btn-primary-gradient-aqua-lg group justify-end"
-                    onClick={() => setMobileShowClaims(true)}
-                  >
-                    {availableForUnstaking.length + pendingUnstaking.length}{" "}
-                    Claims
-                    <Image
-                      className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-                      src={ArrowNext}
-                      alt={`arrow icon`}
-                      width={24}
-                      height={24}
-                    />
-                  </Button>
-                </div>
-              )}
-          </>
-        ) : (
-          <>
-            {stakingPoolForView && (
-              <div className="w-1/2">
+            {!mobileShowClaims && stakingPoolForView && (
+              <div
+                className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
+              >
                 <Button
                   type="default"
                   size="large"
@@ -215,6 +191,54 @@ const HomePage = () => {
                 </Button>
               </div>
             )}
+            {!mobileShowClaims &&
+              availableForUnstaking.length + pendingUnstaking.length != 0 && (
+                <div
+                  className={`h-inherit ${stakingPoolForView ? "w-1/2" : "w-full"}`}
+                >
+                  <Button
+                    type="default"
+                    size="large"
+                    className="btn-primary-gradient-aqua-lg group justify-end"
+                    onClick={() => setMobileShowClaims(true)}
+                  >
+                    {availableForUnstaking.length + pendingUnstaking.length}{" "}
+                    Claims
+                    <Image
+                      className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                      src={ArrowNext}
+                      alt={"arrow icon"}
+                      width={24}
+                      height={24}
+                    />
+                  </Button>
+                </div>
+              )}
+          </>
+        ) : (
+          <>
+            {stakingPoolForView && (
+              <div className="w-1/2">
+                <Button
+                  type="default"
+                  size="large"
+                  className="btn-secondary-lg group justify-start"
+                  onClick={() => {
+                    selectStakingPoolForView(null)
+                  }}
+                >
+                  {" "}
+                  <Image
+                    className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                    src={ArrowBack}
+                    alt={"arrow icon"}
+                    width={24}
+                    height={24}
+                  />
+                  Back
+                </Button>
+              </div>
+            )}
             <div
               className={`flex items-center justify-center h-[58.79px] bg-[#0e76fd] rounded-lg ${stakingPoolForView ? "w-1/2" : "w-full"}`}
             >
@@ -224,7 +248,7 @@ const HomePage = () => {
         )}
       </div>
     </div>
-  );
+  )
 
   return (
     <div
@@ -301,7 +325,7 @@ const HomePage = () => {
         <div>{dummyWalletPopupContent}</div>
       </Modal>
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

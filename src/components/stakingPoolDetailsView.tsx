@@ -22,10 +22,10 @@ import PlusIcon from "../assets/svgs/plus-icon.svg";
 import Image from "next/image";
 
 interface StakingPoolDetailsViewProps {
-  stakingPoolData: StakingPool;
-  userStakingPoolData?: UserStakingPoolData;
-  userUnstakingPoolData?: Array<UserUnstakingPoolData>;
-  selectStakingPoolForStaking: (stakingPoolId: string) => void;
+  stakingPoolData: StakingPool
+  userStakingPoolData?: UserStakingPoolData
+  userUnstakingPoolData?: Array<UserUnstakingPoolData>
+  selectStakingPoolForStaking: (stakingPoolId: string) => void
 }
 
 const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
@@ -33,7 +33,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   userStakingPoolData,
   userUnstakingPoolData,
 }) => {
-  const { zilAvailable } = WalletConnector.useContainer();
+  const { zilAvailable } = WalletConnector.useContainer()
 
   const [selectedPane, setSelectedPane] = useState<string>("Stake");
 
@@ -42,7 +42,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       <div className="body2-semibold text-aqua2">{value}</div>
       <div className="text-gray8 info-label">{title}</div>
     </div>
-  );
+  )
 
   const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
     <div>
@@ -55,21 +55,21 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       )}
       <div className="text-gray8 info-label xl:whitespace-nowrap">{title}</div>
     </div>
-  );
+  )
 
   const pendingUnstakesValue = userUnstakingPoolData
     ?.filter((item) => item.availableAt > DateTime.now())
-    .reduce((acc, item) => acc + item.zilAmount, 0n);
+    .reduce((acc, item) => acc + item.zilAmount, 0n)
 
   const availableToClaim = userUnstakingPoolData
     ?.filter((item) => item.availableAt <= DateTime.now())
-    .reduce((acc, item) => acc + item.zilAmount, 0n);
+    .reduce((acc, item) => acc + item.zilAmount, 0n)
 
   const doesUserHoldAnyFundsInThisPool = !!(
     userStakingPoolData?.stakingTokenAmount ||
     pendingUnstakesValue ||
     availableToClaim
-  );
+  )
 
   const humanReadableStakingToken = (value: bigint) =>
     formatUnitsToHumanReadable(value, stakingPoolData.definition.tokenDecimals);
@@ -95,7 +95,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         },
       },
     );
-
+  
   return (
     <div
       className="relative overflow-y-auto max-h-[calc(90vh-10vh)] sm:max-h-[calc(90vh-15vh)]
@@ -128,11 +128,13 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             <Image
               className="h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:rotate-180"
               src={Plus}
-              alt={`arrow icon`}
+              alt={"arrow icon"}
               width={24}
               height={24}
-            /> 
-              <span className='!hidden sm:!block lg:!hidden xl:!block '>Add Token</span> 
+            />
+            <span className="!hidden sm:!block lg:!hidden xl:!block ">
+              Add Token
+            </span>
           </Button>
         </div> */}
       </div>
@@ -143,6 +145,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             {colorInfoEntry(
               "Available to stake",
               `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`,
+
             )}
             {colorInfoEntry(
               "Staked",
@@ -165,6 +168,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                     stakingPoolData.definition.tokenSymbol
                   }`
                 : "-",
+
             )}
           </div>
         )}
@@ -225,7 +229,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default StakingPoolDetailsView;
+export default StakingPoolDetailsView

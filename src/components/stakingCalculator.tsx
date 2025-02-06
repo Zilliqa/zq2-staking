@@ -1,31 +1,32 @@
-import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
-import { useEffect, useState } from "react";
-import { Button, Input, Tooltip } from "antd";
-import { WalletConnector } from "@/contexts/walletConnector";
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
+import { useEffect, useState } from "react"
+import { Button, Input, Tooltip } from "antd"
+import { WalletConnector } from "@/contexts/walletConnector"
+
 import {
   formatPercentage,
   convertZilValueInToken,
   getTxExplorerUrl,
   formatAddress,
-} from "@/misc/formatting";
-import { formatUnits, parseEther } from "viem";
-import { StakingOperations } from "@/contexts/stakingOperations";
-import { AppConfigStorage } from "@/contexts/appConfigStorage";
-import Link from "next/link";
+} from "@/misc/formatting"
+import { formatUnits, parseEther } from "viem"
+import { StakingOperations } from "@/contexts/stakingOperations"
+import { AppConfigStorage } from "@/contexts/appConfigStorage"
+import Link from "next/link"
 
 const StakingCalculator: React.FC = () => {
-  const { appConfig } = AppConfigStorage.useContainer();
+  const { appConfig } = AppConfigStorage.useContainer()
 
-  const { zilAvailable } = WalletConnector.useContainer();
-
+  const { zilAvailable } = WalletConnector.useContainer()
   const {
     stake,
     isStakingInProgress,
     stakingCallTxHash,
     stakeContractCallError,
-  } = StakingOperations.useContainer();
+  } = StakingOperations.useContainer()
 
-  const { stakingPoolForView } = StakingPoolsStorage.useContainer();
+
+  const { stakingPoolForView } = StakingPoolsStorage.useContainer()
 
   const [zilToStake, setZilToStake] = useState<string>(
     formatUnits(
@@ -34,9 +35,10 @@ const StakingCalculator: React.FC = () => {
     ),
   );
 
+
   useEffect(() => {
-    onMinClick();
-  }, [stakingPoolForView]);
+    onMinClick()
+  }, [stakingPoolForView])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target;
@@ -44,7 +46,7 @@ const StakingCalculator: React.FC = () => {
     if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
       setZilToStake(inputValue);
     }
-  };
+  }
 
   const handleFocus = () => {
     if (zilToStake === "") onMinClick();
@@ -52,12 +54,11 @@ const StakingCalculator: React.FC = () => {
 
   const handleBlur = () => {
     let valueTemp = zilToStake;
-
     if (
       zilToStake.charAt(zilToStake.length - 1) === "." ||
       zilToStake === "-"
     ) {
-      valueTemp = zilToStake.slice(0, -1);
+      valueTemp = zilToStake.slice(0, -1)
     }
     setZilToStake(valueTemp.replace(/0*(\d+)/, "$1"));
 
@@ -233,7 +234,8 @@ const StakingCalculator: React.FC = () => {
         )}
       </>
     )
-  );
-};
+  )
+}
 
 export default StakingCalculator;
+

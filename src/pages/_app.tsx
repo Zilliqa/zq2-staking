@@ -31,14 +31,14 @@ export default function App({ Component, pageProps }: AppProps) {
         progress += 10;
         setLoadingPercentage(progress);
         if (progress >= 100) {
-          clearInterval(interval);
+          clearInterval(interval)
         }
       }, 50);
 
       try {
-        const res = await fetch("/api/config");
-        const data = await res.json();
-        const elapsedTime = Date.now() - startTime;
+        const res = await fetch("/api/config")
+        const data = await res.json()
+        const elapsedTime = Date.now() - startTime
 
         const remainingTime = Math.max(1000 - elapsedTime, 0);
         setTimeout(() => {
@@ -50,12 +50,12 @@ export default function App({ Component, pageProps }: AppProps) {
           setFadeOut(true);
         }, remainingTime);
       } catch (error) {
-        console.error("Error loading config:", error);
+        console.error("Error loading config:", error)
       }
-    };
+    }
 
-    fetchConfig();
-  }, []);
+    fetchConfig()
+  }, [])
 
   useEffect(() => {
     const duration = 500;
@@ -64,26 +64,26 @@ export default function App({ Component, pageProps }: AppProps) {
     const increment = (loadingPercentage - displayedPercentage) / totalFrames;
 
     if (increment !== 0) {
-      let currentFrame = 0;
+      let currentFrame = 0
       const easingInterval = setInterval(() => {
         setDisplayedPercentage((prev) => {
-          currentFrame += 1;
-          const next = prev + increment;
+          currentFrame += 1
+          const next = prev + increment
           if (
             currentFrame >= totalFrames ||
             (increment > 0 && next >= loadingPercentage) ||
             (increment < 0 && next <= loadingPercentage)
           ) {
-            clearInterval(easingInterval);
-            return loadingPercentage;
+            clearInterval(easingInterval)
+            return loadingPercentage
           }
-          return next;
-        });
-      }, frameRate);
+          return next
+        })
+      }, frameRate)
 
-      return () => clearInterval(easingInterval);
+      return () => clearInterval(easingInterval)
     }
-  }, [loadingPercentage]);
+  }, [loadingPercentage])
 
   if (!appConfig) {
     return (
@@ -106,7 +106,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -133,5 +133,5 @@ export default function App({ Component, pageProps }: AppProps) {
         </WagmiProvider>
       </ConfigProvider>
     </AppConfigStorage.Provider>
-  );
+  )
 }

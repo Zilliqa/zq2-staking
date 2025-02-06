@@ -7,11 +7,12 @@ import { UserStakingPoolData } from "@/misc/walletsConfig";
 import { Tooltip } from "antd";
 import Image from "next/image";
 
+
 interface StakingPoolCardProps {
-  stakingPoolData: StakingPool;
-  userStakingPoolData?: UserStakingPoolData;
-  isStakingPoolSelected?: boolean;
-  onClick: () => void;
+  stakingPoolData: StakingPool
+  userStakingPoolData?: UserStakingPoolData
+  isStakingPoolSelected?: boolean
+  onClick: () => void
 }
 
 const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
@@ -44,7 +45,6 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         <div className="flex flex-col  w-full">
           <div className="flex justify-between items-center">
             <h3 className="text-26-bold">{stakingPoolData.definition.name}</h3>
-
             <Image
               className=" rounded-10 h[30px] w-[30px] xs:h-[40px] xs:w-[40px] md:hidden block"
               src={stakingPoolData.definition.iconUrl}
@@ -143,7 +143,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default StakingPoolCard;
+export default StakingPoolCard

@@ -7,6 +7,7 @@ import { MOCK_CHAIN } from "@/misc/chainConfig";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Button } from "antd";
 
+
 const CustomConnectButton = () => {
   return (
     <ConnectButton.Custom>
@@ -33,7 +34,7 @@ const CustomConnectButton = () => {
                 height={24}
               />
             </Button>
-          );
+          )
         }
 
         // Wrong network
@@ -52,18 +53,18 @@ const CustomConnectButton = () => {
             >
               Wrong Network
             </button>
-          );
+          )
         }
         // Connected and correct network
         return (
           <button onClick={openAccountModal} className="btn-primary-aqua">
             {account.displayName}
           </button>
-        );
+        )
       }}
     </ConnectButton.Custom>
-  );
-};
+  )
+}
 
 const LoginView: React.FC = () => {
   const { appConfig } = AppConfigStorage.useContainer();
@@ -84,26 +85,29 @@ const LoginView: React.FC = () => {
           className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
           src={ArrowRightWhite}
           alt={`arrow icon`}
+
           width={24}
           height={24}
         />
       </Button>
     ) : (
       <CustomConnectButton />
-    );
+    )
 
   return (
     <div className="relative">
       <div className="text-center p-4">
         <h1 className="hero-v2 text-white">Staking Portal</h1>
         <p className="mt-6 body2-v2 text-white4">
+
           Help us Empower and secure the Zilliqa Chain{" "}
         </p>
       </div>
 
       <div className="flex flex-col items-center mt-12.5 ">{connectWallet}</div>
-    </div>
-  );
-};
 
-export default LoginView;
+    </div>
+  )
+}
+
+export default LoginView

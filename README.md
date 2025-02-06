@@ -3,13 +3,17 @@
 ## Running locally
 
 1. Install dependencies
+
 ```sh
 npm install
 ```
+
 2. Run the development server
+
 ```sh
 npm run dev
 ```
+
 3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Environments
@@ -22,7 +26,7 @@ This enables easy UX/UI workflow where you can modify the wallet states in the c
 
 ### .env.local_zq2
 
-This one makes the app connected to locally run docker-compose ZQ2 network. 
+This one makes the app connected to locally run docker-compose ZQ2 network.
 
 ## Adding new Delegator
 

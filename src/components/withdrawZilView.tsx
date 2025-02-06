@@ -1,5 +1,7 @@
+
 import { StakingOperations } from "@/contexts/stakingOperations";
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
+
 import {
   convertTokenToZil,
   formatUnitsToHumanReadable,
@@ -8,6 +10,7 @@ import {
 import FeedbackIcon from "../assets/svgs/feedback-icon.svg";
 import { Button } from "antd";
 import Image from "next/image";
+
 
 const WithdrawZilView: React.FC = () => {
   const {
@@ -24,6 +27,7 @@ const WithdrawZilView: React.FC = () => {
     ...pendingUnstaking.map((item) => ({ ...item, available: false })),
   ];
 
+
   return (
     <div
       className="relative overflow-y-auto max-h-[calc(90vh-15vh)]   
@@ -31,13 +35,11 @@ const WithdrawZilView: React.FC = () => {
      flex flex-col gap-2"
     >
       <div className=" text-center max-h-[20vh]">
+
         <h1 className="hero text-white mt-4">
           <span className="hidden lg:block">Staking Portal</span>
           <span className="block lg:hidden">Claims</span>
         </h1>
-        {/* <p className="w-2/3 sm:w-1/2 md:w-1/4 lg:w-full max-lg:mx-auto my-2 lg:my-5 body2">
-          Below are withdrawal claims waiting for you       
-        </p> */}
       </div>
 
       {unstakingItems.length > 0 ? (
@@ -91,7 +93,7 @@ const WithdrawZilView: React.FC = () => {
                 </div>
               </div>
               <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px]">
-                <div>
+                <div className="max-lg:w-1/2">
                   <Button
                     className="btn-primary-gradient-grey w-full"
                     disabled={!item.available}
