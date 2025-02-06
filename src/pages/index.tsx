@@ -1,33 +1,33 @@
-import LoginView from "@/components/loginView";
-import StakingPoolDetailsView from "@/components/stakingPoolDetailsView";
-import StakingPoolsList from "@/components/stakingPoolsList";
-import WithdrawZilView from "@/components/withdrawZilView";
-import { AppConfigStorage } from "@/contexts/appConfigStorage";
-import { StakingOperations } from "@/contexts/stakingOperations";
-import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
+import LoginView from "@/components/loginView"
+import StakingPoolDetailsView from "@/components/stakingPoolDetailsView"
+import StakingPoolsList from "@/components/stakingPoolsList"
+import WithdrawZilView from "@/components/withdrawZilView"
+import { AppConfigStorage } from "@/contexts/appConfigStorage"
+import { StakingOperations } from "@/contexts/stakingOperations"
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import {
   ConnectedWalletType,
   WalletConnector,
-} from "@/contexts/walletConnector";
-import { MOCK_CHAIN } from "@/misc/chainConfig";
-import { formatAddress } from "@/misc/formatting";
-import { WalletOutlined } from "@ant-design/icons";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Button, Modal } from "antd";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import ArrowBack from "../assets/svgs/arrow-back-white.svg";
-import ArrowNext from "../assets/svgs/arrow-next-black.svg";
-import Logo from "../assets/svgs/logo.svg";
+} from "@/contexts/walletConnector"
+import { MOCK_CHAIN } from "@/misc/chainConfig"
+import { formatAddress } from "@/misc/formatting"
+import { WalletOutlined } from "@ant-design/icons"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { Button, Modal } from "antd"
+import Image from "next/image"
+import { useEffect, useState } from "react"
+import ArrowBack from "../assets/svgs/arrow-back-white.svg"
+import ArrowNext from "../assets/svgs/arrow-next-black.svg"
+import Logo from "../assets/svgs/logo.svg"
 
 const HomePage = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    setIsVisible(true);
-  }, []);
+    setIsVisible(true)
+  }, [])
 
-  const { appConfig } = AppConfigStorage.useContainer();
+  const { appConfig } = AppConfigStorage.useContainer()
 
   const {
     connectDummyWallet,
@@ -58,7 +58,7 @@ const HomePage = () => {
     <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full bg-black p-4">
       {children}
     </div>
-  );
+  )
 
   const desktopColumnContent = (
     <div className="hidden lg:grid h-full items-center">
@@ -71,8 +71,8 @@ const HomePage = () => {
         >
           <StakingPoolDetailsView
             selectStakingPoolForStaking={(stakingPoolId) => {
-              selectStakingPoolForView(null);
-              selectStakingPoolForStaking(stakingPoolId);
+              selectStakingPoolForView(null)
+              selectStakingPoolForStaking(stakingPoolId)
             }}
             stakingPoolData={stakingPoolForView.stakingPool}
             userStakingPoolData={stakingPoolForView.userData.staked}
@@ -83,7 +83,7 @@ const HomePage = () => {
         <WithdrawZilView />
       )}
     </div>
-  );
+  )
 
   const mobileOverlayContent = mobileShowClaims
     ? mobileOverlayWrapper(<WithdrawZilView />)
@@ -91,14 +91,14 @@ const HomePage = () => {
       mobileOverlayWrapper(
         <StakingPoolDetailsView
           selectStakingPoolForStaking={(stakingPoolId) => {
-            selectStakingPoolForView(null);
-            selectStakingPoolForStaking(stakingPoolId);
+            selectStakingPoolForView(null)
+            selectStakingPoolForStaking(stakingPoolId)
           }}
           stakingPoolData={stakingPoolForView.stakingPool}
           userStakingPoolData={stakingPoolForView.userData.staked}
           userUnstakingPoolData={stakingPoolForView.userData.unstaked}
-        />,
-      );
+        />
+      )
 
   const connectWallet =
     appConfig.chainId === MOCK_CHAIN.id ? (
@@ -112,7 +112,7 @@ const HomePage = () => {
       </Button>
     ) : (
       <ConnectButton />
-    );
+    )
 
   const mobileBottomNavition = (
     <div className="fixed bottom-0 left-0 lg:hidden w-full mt-7.5 bg-black pt-1.5">
@@ -126,7 +126,7 @@ const HomePage = () => {
                   size="large"
                   className="btn-secondary-lg group justify-start"
                   onClick={() => {
-                    setMobileShowClaims(false);
+                    setMobileShowClaims(false)
                   }}
                 >
                   <Image
@@ -176,7 +176,7 @@ const HomePage = () => {
                   size="large"
                   className="btn-secondary-lg group justify-start"
                   onClick={() => {
-                    selectStakingPoolForView(null);
+                    selectStakingPoolForView(null)
                   }}
                 >
                   {" "}

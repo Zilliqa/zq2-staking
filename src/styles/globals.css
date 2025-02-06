@@ -202,7 +202,6 @@ body {
   }
   .body2-semibold {
     @apply font-semibold text-10 lg:text-18 leading-3 lg:leading-8 text-gray1;
-
   }
 
   .body2-bold {
@@ -268,11 +267,10 @@ body {
     @apply font-bold text-18 lg:text-22 leading-4 lg:leading-6 text-white2;
   }
 
-
   .text-26-bold {
     @apply font-bold text-18 lg:text-26 leading-4 lg:leading-6 text-white2;
   }
-  
+
   .text-12-regular {
     @apply font-medium text-11 lg:text-12 lg:leading-4  text-white3;
   }

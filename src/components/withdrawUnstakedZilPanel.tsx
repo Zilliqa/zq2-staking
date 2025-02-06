@@ -1,19 +1,17 @@
-
-import { AppConfigStorage } from "@/contexts/appConfigStorage";
-import { StakingOperations } from "@/contexts/stakingOperations";
+import { AppConfigStorage } from "@/contexts/appConfigStorage"
+import { StakingOperations } from "@/contexts/stakingOperations"
 
 import {
   formatAddress,
   getHumanFormDuration,
   getTxExplorerUrl,
-} from "@/misc/formatting";
-import { StakingPool } from "@/misc/stakingPoolsConfig";
-import { UserUnstakingPoolData } from "@/misc/walletsConfig";
-import { Button } from "antd";
-import { DateTime } from "luxon";
-import Link from "next/link";
-import { formatUnits } from "viem";
-
+} from "@/misc/formatting"
+import { StakingPool } from "@/misc/stakingPoolsConfig"
+import { UserUnstakingPoolData } from "@/misc/walletsConfig"
+import { Button } from "antd"
+import { DateTime } from "luxon"
+import Link from "next/link"
+import { formatUnits } from "viem"
 
 interface WithdrawZilPanelProps {
   stakingPoolData: StakingPool
@@ -33,16 +31,15 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
     ?.filter((claim) => claim.availableAt > DateTime.now())
     .toSorted(
       (claimA, claimB) =>
-        claimA.availableAt.diff(claimB.availableAt).milliseconds,
-    );
-
+        claimA.availableAt.diff(claimB.availableAt).milliseconds
+    )
 
   const availableUnstake = userUnstakingPoolData
     ?.filter((claim) => claim.availableAt <= DateTime.now())
     .toSorted(
       (claimA, claimB) =>
-        claimA.availableAt.diff(claimB.availableAt).milliseconds,
-    );
+        claimA.availableAt.diff(claimB.availableAt).milliseconds
+    )
 
   return (
     <div>
@@ -63,7 +60,6 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         availableUnstake.map((item, claimIdx) => (
           <div
             className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-grey-gradient rounded-3xl w-full"
-
             key={claimIdx}
           >
             <div className="items-center h4 w-full flex justify-between text-white1">
@@ -97,7 +93,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             {stakingPoolData.data ? (
               <div>
                 {parseFloat(
-                  formatUnits(pendingUnstake[0].zilAmount, 18),
+                  formatUnits(pendingUnstake[0].zilAmount, 18)
                 ).toFixed(3)}{" "}
                 ZIL
               </div>

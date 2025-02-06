@@ -1,16 +1,14 @@
-
-import { StakingOperations } from "@/contexts/stakingOperations";
-import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
+import { StakingOperations } from "@/contexts/stakingOperations"
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 
 import {
   convertTokenToZil,
   formatUnitsToHumanReadable,
   getHumanFormDuration,
-} from "@/misc/formatting";
-import FeedbackIcon from "../assets/svgs/feedback-icon.svg";
-import { Button } from "antd";
-import Image from "next/image";
-
+} from "@/misc/formatting"
+import FeedbackIcon from "../assets/svgs/feedback-icon.svg"
+import { Button } from "antd"
+import Image from "next/image"
 
 const WithdrawZilView: React.FC = () => {
   const {
@@ -18,15 +16,14 @@ const WithdrawZilView: React.FC = () => {
     pendingUnstaking,
     selectStakingPoolForView,
     isUnstakingDataLoading,
-  } = StakingPoolsStorage.useContainer();
+  } = StakingPoolsStorage.useContainer()
 
-  const { claim } = StakingOperations.useContainer();
+  const { claim } = StakingOperations.useContainer()
 
   const unstakingItems = [
     ...availableForUnstaking.map((item) => ({ ...item, available: true })),
     ...pendingUnstaking.map((item) => ({ ...item, available: false })),
-  ];
-
+  ]
 
   return (
     <div
@@ -35,7 +32,6 @@ const WithdrawZilView: React.FC = () => {
      flex flex-col gap-2"
     >
       <div className=" text-center max-h-[20vh]">
-
         <h1 className="hero text-white mt-4">
           <span className="hidden lg:block">Staking Portal</span>
           <span className="block lg:hidden">Claims</span>
@@ -74,9 +70,9 @@ const WithdrawZilView: React.FC = () => {
                         {formatUnitsToHumanReadable(
                           convertTokenToZil(
                             item.unstakeInfo.zilAmount,
-                            item.stakingPool.data!.zilToTokenRate,
+                            item.stakingPool.data!.zilToTokenRate
                           ),
-                          18,
+                          18
                         )}{" "}
                         ZIL
                       </>
@@ -162,7 +158,7 @@ const WithdrawZilView: React.FC = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default WithdrawZilView;
+export default WithdrawZilView

@@ -1,8 +1,7 @@
-import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
-import StakingPoolCard from "./stakingPoolCard";
-import SortBtn from "./sortBtn";
-import { useState } from "react";
-
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
+import StakingPoolCard from "./stakingPoolCard"
+import SortBtn from "./sortBtn"
+import { useState } from "react"
 
 const StakingPoolsList: React.FC = () => {
   const {
@@ -13,22 +12,21 @@ const StakingPoolsList: React.FC = () => {
 
   const [sortCriteria, setSortCriteria] = useState<
     "APR" | "VP" | "Commission" | null
-  >(null);
-
+  >(null)
 
   const [isAscending, setIsAscending] = useState(true)
 
   // Function to get the value to sort by based on the criteria
   const getSortValue = (data: any, criteria: string | null) => {
-    if (!data) return 0;
+    if (!data) return 0
 
     switch (criteria) {
       case "APR":
-        return data.apr || 0;
+        return data.apr || 0
       case "VP":
-        return (data.votingPower || 0) * 100;
+        return (data.votingPower || 0) * 100
       case "Commission":
-        return (data.commission || 0) * 100;
+        return (data.commission || 0) * 100
 
       default:
         return 0
@@ -37,18 +35,17 @@ const StakingPoolsList: React.FC = () => {
 
   // Sort the staking pools based on the selected criteria
   const sortedStakingPoolsData = [...combinedStakingPoolsData].sort((a, b) => {
-
-    const aValue = getSortValue(a.stakingPool.data, sortCriteria);
-    const bValue = getSortValue(b.stakingPool.data, sortCriteria);
-    return isAscending ? aValue - bValue : bValue - aValue;
-  });
+    const aValue = getSortValue(a.stakingPool.data, sortCriteria)
+    const bValue = getSortValue(b.stakingPool.data, sortCriteria)
+    return isAscending ? aValue - bValue : bValue - aValue
+  })
 
   const handleSortClick = (criteria: "APR" | "VP" | "Commission") => {
     if (sortCriteria === criteria) {
-      setIsAscending(!isAscending);
+      setIsAscending(!isAscending)
     } else {
-      setSortCriteria(criteria);
-      setIsAscending(true);
+      setSortCriteria(criteria)
+      setIsAscending(true)
     }
   }
 
@@ -70,9 +67,9 @@ const StakingPoolsList: React.FC = () => {
     {
       name: "Normal Staking ",
     },
-  ];
+  ]
 
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(0)
 
   return (
     <>
@@ -94,7 +91,7 @@ const StakingPoolsList: React.FC = () => {
                          : "border-transparent"
                      }`}
             onClick={() => {
-              setActiveTab(index);
+              setActiveTab(index)
             }}
           >
             {tab.name}

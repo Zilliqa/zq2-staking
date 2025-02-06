@@ -25,65 +25,63 @@ const StakingCalculator: React.FC = () => {
     stakeContractCallError,
   } = StakingOperations.useContainer()
 
-
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
 
   const [zilToStake, setZilToStake] = useState<string>(
     formatUnits(
       stakingPoolForView?.stakingPool.definition.minimumStake || 0n,
-      18,
-    ),
-  );
-
+      18
+    )
+  )
 
   useEffect(() => {
     onMinClick()
   }, [stakingPoolForView])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: inputValue } = e.target;
-    const reg = /^-?\d*(\.\d*)?$/;
+    const { value: inputValue } = e.target
+    const reg = /^-?\d*(\.\d*)?$/
     if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
-      setZilToStake(inputValue);
+      setZilToStake(inputValue)
     }
   }
 
   const handleFocus = () => {
-    if (zilToStake === "") onMinClick();
-  };
+    if (zilToStake === "") onMinClick()
+  }
 
   const handleBlur = () => {
-    let valueTemp = zilToStake;
+    let valueTemp = zilToStake
     if (
       zilToStake.charAt(zilToStake.length - 1) === "." ||
       zilToStake === "-"
     ) {
       valueTemp = zilToStake.slice(0, -1)
     }
-    setZilToStake(valueTemp.replace(/0*(\d+)/, "$1"));
+    setZilToStake(valueTemp.replace(/0*(\d+)/, "$1"))
 
-    if (zilToStake === "") onMinClick();
-  };
+    if (zilToStake === "") onMinClick()
+  }
 
-  const zilToStakeNumber = parseFloat(zilToStake);
+  const zilToStakeNumber = parseFloat(zilToStake)
 
-  const zilInWei = parseEther(zilToStake);
+  const zilInWei = parseEther(zilToStake)
   const zilToStakeOk =
-    !isNaN(zilToStakeNumber) && zilToStakeNumber <= (zilAvailable || 0n);
+    !isNaN(zilToStakeNumber) && zilToStakeNumber <= (zilAvailable || 0n)
   const canStake =
     stakingPoolForView?.stakingPool.data &&
     zilToStakeNumber > 0 &&
-    zilToStakeNumber <= (zilAvailable || 0n);
+    zilToStakeNumber <= (zilAvailable || 0n)
 
   const onMinClick = () => {
     setZilToStake(
-      `${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18)}`,
-    );
-  };
+      `${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18)}`
+    )
+  }
 
   const onMaxClick = () => {
-    setZilToStake(`${formatUnits(zilAvailable || 0n, 18)}`);
-  };
+    setZilToStake(`${formatUnits(zilAvailable || 0n, 18)}`)
+  }
 
   return (
     stakingPoolForView && (
@@ -113,7 +111,7 @@ const StakingCalculator: React.FC = () => {
                       !isNaN(stakingPoolForView.stakingPool.data.zilToTokenRate)
                         ? convertZilValueInToken(
                             zilToStakeNumber,
-                            stakingPoolForView.stakingPool.data.zilToTokenRate,
+                            stakingPoolForView.stakingPool.data.zilToTokenRate
                           )
                         : ""}{" "}
                       {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
@@ -121,7 +119,7 @@ const StakingCalculator: React.FC = () => {
                     <span className="body2-medium ml-2 text-aqua1">
                       ~
                       {formatPercentage(
-                        stakingPoolForView!.stakingPool.data.apr,
+                        stakingPoolForView!.stakingPool.data.apr
                       )}
                     </span>
                   </>
@@ -155,7 +153,7 @@ const StakingCalculator: React.FC = () => {
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     {formatPercentage(
-                      stakingPoolForView!.stakingPool.data.commission,
+                      stakingPoolForView!.stakingPool.data.commission
                     )}
                   </>
                 ) : (
@@ -204,7 +202,7 @@ const StakingCalculator: React.FC = () => {
               onClick={() =>
                 stake(
                   stakingPoolForView.stakingPool.definition.address,
-                  zilInWei,
+                  zilInWei
                 )
               }
               loading={isStakingInProgress}
@@ -237,5 +235,4 @@ const StakingCalculator: React.FC = () => {
   )
 }
 
-export default StakingCalculator;
-
+export default StakingCalculator

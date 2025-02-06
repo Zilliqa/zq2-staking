@@ -1,12 +1,8 @@
-import {
-  formatPercentage,
-  formatUnitsToHumanReadable,
-} from "@/misc/formatting";
-import { StakingPool } from "@/misc/stakingPoolsConfig";
-import { UserStakingPoolData } from "@/misc/walletsConfig";
-import { Tooltip } from "antd";
-import Image from "next/image";
-
+import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting"
+import { StakingPool } from "@/misc/stakingPoolsConfig"
+import { UserStakingPoolData } from "@/misc/walletsConfig"
+import { Tooltip } from "antd"
+import Image from "next/image"
 
 interface StakingPoolCardProps {
   stakingPoolData: StakingPool
@@ -113,7 +109,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                       {userStakingPoolData &&
                         `${formatUnitsToHumanReadable(
                           userStakingPoolData.stakingTokenAmount,
-                          stakingPoolData.definition.tokenDecimals,
+                          stakingPoolData.definition.tokenDecimals
                         )} ${stakingPoolData.definition.tokenSymbol}`}
                     </>
                   ) : (
@@ -130,7 +126,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   {userStakingPoolData &&
                     `${formatUnitsToHumanReadable(
                       userStakingPoolData.stakingTokenAmount,
-                      stakingPoolData.definition.tokenDecimals,
+                      stakingPoolData.definition.tokenDecimals
                     )}`}
                 </>
               ) : (

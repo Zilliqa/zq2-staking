@@ -25,7 +25,6 @@ const config: Config = {
           " linear-gradient(90deg, rgba(78, 78, 78, 0.3) -11.22%, rgba(32, 40, 50, 0.25) 47.4%, rgba(78, 78, 78, 0.3) 98.85%)",
         "aqua-gradient":
           "linear-gradient(90deg, rgba(124, 125, 126, 0.18) -11.22%, rgba(122, 131, 166, 0.15) 47.4%, rgba(124, 125, 126, 0.18) 98.85%)",
-
       },
       colors: {
         black1: "#010101",

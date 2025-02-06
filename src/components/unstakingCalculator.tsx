@@ -1,17 +1,16 @@
-import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
-import { useEffect, useState } from "react";
-import { Button, Input, Tooltip } from "antd";
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
+import { useEffect, useState } from "react"
+import { Button, Input, Tooltip } from "antd"
 
 import {
   formatPercentage,
   convertTokenToZil,
   formatUnitsToHumanReadable,
   getHumanFormDuration,
-} from "@/misc/formatting";
-import { formatUnits, parseEther } from "viem";
-import { StakingOperations } from "@/contexts/stakingOperations";
-import { DateTime } from "luxon";
-
+} from "@/misc/formatting"
+import { formatUnits, parseEther } from "viem"
+import { StakingOperations } from "@/contexts/stakingOperations"
+import { DateTime } from "luxon"
 
 const UnstakingCalculator: React.FC = () => {
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
@@ -19,21 +18,19 @@ const UnstakingCalculator: React.FC = () => {
   const { unstake, isUnstakingInProgress, unstakeContractCallError } =
     StakingOperations.useContainer()
 
-  const [zilToUnstake, setZilToUnstake] = useState<string>("0");
+  const [zilToUnstake, setZilToUnstake] = useState<string>("0")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: inputValue } = e.target;
-    const reg = /^-?\d*(\.\d*)?$/;
+    const { value: inputValue } = e.target
+    const reg = /^-?\d*(\.\d*)?$/
     if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
-      setZilToUnstake(inputValue);
-
+      setZilToUnstake(inputValue)
     }
   }
 
   const handleFocus = () => {
-
-    if (zilToUnstake === "") onMaxClick();
-  };
+    if (zilToUnstake === "") onMaxClick()
+  }
 
   const handleBlur = () => {
     let valueTemp = zilToUnstake
@@ -43,13 +40,13 @@ const UnstakingCalculator: React.FC = () => {
     ) {
       valueTemp = zilToUnstake.slice(0, -1)
     }
-    setZilToUnstake(valueTemp.replace(/0*(\d+)/, "$1"));
-    if (zilToUnstake === "") onMaxClick();
-  };
+    setZilToUnstake(valueTemp.replace(/0*(\d+)/, "$1"))
+    if (zilToUnstake === "") onMaxClick()
+  }
 
   useEffect(() => {
-    setZilToUnstake("1");
-  }, [stakingPoolForView]);
+    setZilToUnstake("1")
+  }, [stakingPoolForView])
 
   const stakedTokenAvailable =
     stakingPoolForView?.userData?.staked?.stakingTokenAmount || 0
@@ -57,7 +54,7 @@ const UnstakingCalculator: React.FC = () => {
   const zilToUnstakeNumber = parseFloat(zilToUnstake)
   const zilInWei = parseEther(zilToUnstake)
   const zilToUnstakeOk =
-    !isNaN(zilToUnstakeNumber) && zilToUnstakeNumber <= stakedTokenAvailable;
+    !isNaN(zilToUnstakeNumber) && zilToUnstakeNumber <= stakedTokenAvailable
   const canUnstake =
     stakingPoolForView?.stakingPool.data &&
     zilToUnstakeNumber > 0 &&
@@ -67,18 +64,17 @@ const UnstakingCalculator: React.FC = () => {
     setZilToUnstake(
       `${formatUnits(
         stakingPoolForView?.userData?.staked?.stakingTokenAmount || 0n,
-        stakingPoolForView?.stakingPool.definition.tokenDecimals || 18,
-      )}`,
-    );
-  };
-
+        stakingPoolForView?.stakingPool.definition.tokenDecimals || 18
+      )}`
+    )
+  }
 
   const unboudingPeriod = getHumanFormDuration(
     DateTime.now().plus({
       minutes:
         stakingPoolForView?.stakingPool.definition.withdrawPeriodInMinutes || 0,
-    }),
-  );
+    })
+  )
 
   return (
     stakingPoolForView && (
@@ -88,7 +84,6 @@ const UnstakingCalculator: React.FC = () => {
             <div className="h-fit self-center">
               <Input
                 className="flex items-baseline !bg-transparent !border-transparent !text-white1 text-40 font-semibold"
-
                 //    ${
                 //   zilToUnstakeOk ? '!text-white1' : '!text-red1'
                 // }
@@ -107,9 +102,9 @@ const UnstakingCalculator: React.FC = () => {
                       {formatUnitsToHumanReadable(
                         convertTokenToZil(
                           zilInWei,
-                          stakingPoolForView.stakingPool.data.zilToTokenRate,
+                          stakingPoolForView.stakingPool.data.zilToTokenRate
                         ),
-                        18,
+                        18
                       )}
                     </>
                   ) : (
@@ -146,7 +141,7 @@ const UnstakingCalculator: React.FC = () => {
                   <>
                     {" "}
                     {formatPercentage(
-                      stakingPoolForView!.stakingPool.data.commission,
+                      stakingPoolForView!.stakingPool.data.commission
                     )}{" "}
                   </>
                 ) : (
@@ -171,9 +166,9 @@ const UnstakingCalculator: React.FC = () => {
                       {formatUnitsToHumanReadable(
                         convertTokenToZil(
                           parseEther("1"),
-                          stakingPoolForView.stakingPool.data.zilToTokenRate,
+                          stakingPoolForView.stakingPool.data.zilToTokenRate
                         ),
-                        18,
+                        18
                       )}
                     </>
                   ) : (
@@ -218,7 +213,7 @@ const UnstakingCalculator: React.FC = () => {
               onClick={() =>
                 unstake(
                   stakingPoolForView.stakingPool.definition.address,
-                  zilInWei,
+                  zilInWei
                 )
               }
               loading={isUnstakingInProgress}
