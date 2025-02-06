@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface SortBtnProps {
   variable: String;
@@ -6,11 +6,7 @@ interface SortBtnProps {
   onClick: () => void;
 }
 
-const SortBtn: React.FC<SortBtnProps> = ({
-  variable,
-  isClicked,
-  onClick,
-}) => {
+const SortBtn: React.FC<SortBtnProps> = ({ variable, isClicked, onClick }) => {
   return (
     <div className="btn-secondary-gray group" onClick={onClick}>
       <svg
@@ -20,7 +16,7 @@ const SortBtn: React.FC<SortBtnProps> = ({
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={`duration-700 stroke-gray1 group-hover:stroke-white ease-in-out ${
-          isClicked ? 'scale-y-[-1]' : ''
+          isClicked ? "scale-y-[-1]" : ""
         }`}
       >
         <path

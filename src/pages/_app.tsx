@@ -1,11 +1,11 @@
 import "@/styles/globals.css";
-import 'tailwindcss/tailwind.css';
-import '@rainbow-me/rainbowkit/styles.css';
+import "tailwindcss/tailwind.css";
+import "@rainbow-me/rainbowkit/styles.css";
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage";
 import type { AppProps } from "next/app";
 import { WalletConnector } from "@/contexts/walletConnector";
 import DummyWalletSelector from "@/components/dummyWalletSelector";
-import { ConfigProvider } from 'antd';
+import { ConfigProvider } from "antd";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
@@ -20,33 +20,33 @@ export default function App({ Component, pageProps }: AppProps) {
   const [appConfig, setAppConfig] = useState<AppConfig | null>(null);
   const [loadingPercentage, setLoadingPercentage] = useState(0);
   const [displayedPercentage, setDisplayedPercentage] = useState(0);
-  const [fadeOut, setFadeOut] = useState(false); 
+  const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
     const fetchConfig = async () => {
-      const startTime = Date.now();  
+      const startTime = Date.now();
       let progress = 0;
 
-       const interval = setInterval(() => {
+      const interval = setInterval(() => {
         progress += 10;
         setLoadingPercentage(progress);
         if (progress >= 100) {
           clearInterval(interval);
         }
-      }, 50); 
+      }, 50);
 
       try {
         const res = await fetch("/api/config");
         const data = await res.json();
         const elapsedTime = Date.now() - startTime;
 
-        const remainingTime = Math.max(1000 - elapsedTime, 0);  
+        const remainingTime = Math.max(1000 - elapsedTime, 0);
         setTimeout(() => {
           clearInterval(interval);
-          setLoadingPercentage(100);  
+          setLoadingPercentage(100);
           setTimeout(() => {
-          setAppConfig(data);  
-        }, 500);
+            setAppConfig(data);
+          }, 500);
           setFadeOut(true);
         }, remainingTime);
       } catch (error) {
@@ -58,8 +58,8 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   useEffect(() => {
-    const duration = 500; 
-    const frameRate = 16; 
+    const duration = 500;
+    const frameRate = 16;
     const totalFrames = duration / frameRate;
     const increment = (loadingPercentage - displayedPercentage) / totalFrames;
 
@@ -88,16 +88,16 @@ export default function App({ Component, pageProps }: AppProps) {
   if (!appConfig) {
     return (
       <div
-      className={`h-screen bg-black text-white transition-opacity duration-500 ${
-        fadeOut ? "opacity-0" : "opacity-100"
-      }`}
-     >
-         <div className="h-full flex flex-col justify-between">
+        className={`h-screen bg-black text-white transition-opacity duration-500 ${
+          fadeOut ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        <div className="h-full flex flex-col justify-between">
           <div className="w-full h-10 overflow-hidden">
             <div
               className="h-full bg-colorful-gradient"
               style={{
-                width: `${displayedPercentage}%`, 
+                width: `${displayedPercentage}%`,
               }}
             ></div>
           </div>
@@ -112,7 +112,12 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AppConfigStorage.Provider initialState={{ appConfig }}>
       <ConfigProvider>
-        <WagmiProvider config={getWagmiConfig(appConfig.chainId, appConfig.walletConnectPrivateKey)}>
+        <WagmiProvider
+          config={getWagmiConfig(
+            appConfig.chainId,
+            appConfig.walletConnectPrivateKey,
+          )}
+        >
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider showRecentTransactions={true}>
               <WalletConnector.Provider>
