@@ -1,5 +1,6 @@
 import Image from "next/image"
 import ArrowRight from "../assets/svgs/arrow-right-black.svg"
+import ArrowRightWhite from "../assets/svgs/arrow-right-white.svg"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { WalletConnector } from "@/contexts/walletConnector"
 import { MOCK_CHAIN } from "@/misc/chainConfig"
@@ -26,8 +27,8 @@ const CustomConnectButton = () => {
               Connect Wallet
               <Image
                 className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-                src={ArrowRight}
-                alt={"arrow icon"}
+                src={ArrowRightWhite}
+                alt="arrow icon"
                 width={24}
                 height={24}
               />
@@ -76,13 +77,13 @@ const LoginView: React.FC = () => {
         type="primary"
         onClick={connectDummyWallet}
         loading={isDummyWalletConnecting}
-        className="btn-primary-gradient-aqua-lg !w-fit px-14 group"
+        className="btn-primary-gradient-aqua-lg !w-fit px-11 group"
       >
         Connect Wallet
         <Image
           className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-          src={ArrowRight}
-          alt={"arrow icon"}
+          src={ArrowRightWhite}
+          alt="arrow icon"
           width={24}
           height={24}
         />
@@ -93,14 +94,14 @@ const LoginView: React.FC = () => {
 
   return (
     <div className="relative">
-      <div className="text-end p-4">
-        <h1 className="hero text-white">Staking Portal</h1>
-        <p className="mt-5 body2">
+      <div className="text-center p-4">
+        <h1 className="hero-v2 text-white">Staking Portal</h1>
+        <p className="mt-6 body2-v2 text-white4">
           Help us Empower and secure the Zilliqa Chain{" "}
         </p>
       </div>
 
-      <div className="flex flex-col items-end mt-16 ">{connectWallet}</div>
+      <div className="flex flex-col items-center mt-12.5 ">{connectWallet}</div>
     </div>
   )
 }

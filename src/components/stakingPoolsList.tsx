@@ -27,6 +27,7 @@ const StakingPoolsList: React.FC = () => {
         return (data.votingPower || 0) * 100
       case "Commission":
         return (data.commission || 0) * 100
+
       default:
         return 0
     }

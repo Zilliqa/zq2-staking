@@ -15,6 +15,7 @@ import { useState } from "react"
 import { useWatchAsset } from "wagmi"
 import { useWalletClient } from "wagmi"
 import Plus from "../assets/svgs/plus.svg"
+import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
 
 interface StakingPoolDetailsViewProps {
@@ -35,21 +36,21 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   const colorInfoEntry = (title: string, value: string | null) => (
     <div>
-      <div className="body2-bold text-aqua2">{value}</div>
-      <div className="text-aqua3 info-label">{title}</div>
+      <div className="body2-semibold text-aqua2">{value}</div>
+      <div className="text-gray8 info-label">{title}</div>
     </div>
   )
 
   const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
     <div>
       {value ? (
-        <div className="body2-bold text-gray1 xl:whitespace-nowrap">
+        <div className="body2-semibold text-gray7 xl:whitespace-nowrap">
           {value}
         </div>
       ) : (
         <div className="animated-gradient h-[1.5em] w-[4em]"></div>
       )}
-      <div className="text-gray1 info-label xl:whitespace-nowrap">{title}</div>
+      <div className="text-gray8 info-label xl:whitespace-nowrap">{title}</div>
     </div>
   )
 
@@ -100,14 +101,23 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     >
       <div className="items-center flex justify-between py-1 lg:py-7.5">
         <div className="max-lg:ms-1 items-center flex">
-          <span className="hero lg:h2 text-white1">
+          <span className="text-white1 text-48 font-bold mr-6">
             {stakingPoolData.definition.name}
           </span>
-          <span className="body1 lg:h4 text-black2 ml-2.5">
+          <span className="text-38 lg:h4 text-black3  font-light">|</span>
+          <span className="body1 lg:h4 text-gray6 ml-6 font-medium">
             {stakingPoolData.definition.tokenSymbol}
           </span>
+          <Image
+            onClick={handleClickAaddToken}
+            className="h-[28px] w-[28px] ml-4 cursor-pointer"
+            src={PlusIcon}
+            alt="arrow icon"
+            width={28}
+            height={28}
+          />
         </div>
-        <div>
+        {/* <div>
           <Button
             onClick={handleClickAaddToken}
             className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua group"
@@ -123,10 +133,10 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
               Add Token
             </span>
           </Button>
-        </div>
+        </div> */}
       </div>
 
-      <div className="bg-darkbg py-7.5 lg:py-5 flex flex-col gap-4">
+      <div className="bg-grey-gradient py-6 flex flex-col gap-4 px-9.5 rounded-xl">
         {doesUserHoldAnyFundsInThisPool && (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pb-4 border-b border-black2/50">
             {colorInfoEntry(

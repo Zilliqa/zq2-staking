@@ -1,5 +1,6 @@
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { StakingOperations } from "@/contexts/stakingOperations"
+
 import {
   formatAddress,
   getHumanFormDuration,
@@ -58,7 +59,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
       {!!availableUnstake?.length ? (
         availableUnstake.map((item, claimIdx) => (
           <div
-            className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-gradientbg rounded-3xl w-full"
+            className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-grey-gradient rounded-3xl w-full"
             key={claimIdx}
           >
             <div className="items-center h4 w-full flex justify-between text-white1">
@@ -85,9 +86,10 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
           </div>
         ))
       ) : !!pendingUnstake?.length ? (
-        <div className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-gradientbg rounded-3xl w-full">
-          <div className="body2 text-gray1">Next available reward </div>
-          <div className=" h4 mt-2 w-full flex justify-between text-white1">
+        <div className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-7.5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-grey-gradient rounded-3xl w-full">
+          <div className="body2 text-gray1">Next available reward</div>
+          <div className="h4 mt-2 w-full flex justify-between text-white1">
+            <div>{getHumanFormDuration(pendingUnstake[0].availableAt)}</div>
             {stakingPoolData.data ? (
               <div>
                 {parseFloat(
@@ -98,7 +100,6 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             ) : (
               <div className="w-[4em] h-[1em] animated-gradient" />
             )}
-            <div>{getHumanFormDuration(pendingUnstake[0].availableAt)}</div>
           </div>
         </div>
       ) : (

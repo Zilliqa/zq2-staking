@@ -38,3 +38,5 @@ next-env.d.ts
 zenv/dev-data
 renders/
 secrets.cache.yaml
+
+.trunk/

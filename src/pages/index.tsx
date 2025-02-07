@@ -61,12 +61,12 @@ const HomePage = () => {
   )
 
   const desktopColumnContent = (
-    <div className="hidden lg:grid h-full">
+    <div className="hidden lg:grid h-full items-center">
       {!isWalletConnected && !stakingPoolForView ? (
         <LoginView />
       ) : stakingPoolForView ? (
         <div
-          className="bg-black xs:pt-5 lg:pt-7.5 xs:px-5 lg:px-7.5 rounded-2.5xl max-h-[80vh]
+          className="bg-black4/[68%] rounded-2.5xl xs:px-5 lg:px-7.5 rounded-2.5xl h-full 
          "
         >
           <StakingPoolDetailsView
@@ -132,6 +132,31 @@ const HomePage = () => {
                   <Image
                     className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
                     src={ArrowBack}
+                    alt="arrow icon"
+                    width={24}
+                    height={24}
+                  />
+                  {stakingPoolForView
+                    ? stakingPoolForView?.stakingPool.definition.name
+                    : "Back"}
+                </Button>
+              </div>
+            )}
+            {!mobileShowClaims && stakingPoolForView && (
+              <div
+                className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
+              >
+                <Button
+                  type="default"
+                  size="large"
+                  className="btn-secondary-lg group justify-start"
+                  onClick={() => {
+                    setMobileShowClaims(false)
+                  }}
+                >
+                  <Image
+                    className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                    src={ArrowBack}
                     alt={"arrow icon"}
                     width={24}
                     height={24}
@@ -158,7 +183,7 @@ const HomePage = () => {
                   <Image
                     className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
                     src={ArrowBack}
-                    alt={"arrow icon"}
+                    alt="arrow icon"
                     width={24}
                     height={24}
                   />
@@ -166,7 +191,6 @@ const HomePage = () => {
                 </Button>
               </div>
             )}
-
             {!mobileShowClaims &&
               availableForUnstaking.length + pendingUnstaking.length != 0 && (
                 <div
@@ -275,12 +299,12 @@ const HomePage = () => {
       </div>
 
       <div
-        className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "lg:h-[90vh] h-[80vh] " : " h-[90vh] "} relative max-w-screen-2xl mx-auto 
+        className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
       overflow-y-hidden `}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 px-4 lg:px-8 xl:px-12 pt-3 lg:pt-[4vh]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh]">
           {/* Left column */}
-          <div className="bg-white/[9%] p-4 xs:p-6 rounded-2.5xl">
+          <div className="bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl">
             <StakingPoolsList />
           </div>
 

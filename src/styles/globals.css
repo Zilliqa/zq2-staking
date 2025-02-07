@@ -71,14 +71,36 @@ body {
   }
 
   .btn-primary-gradient-aqua {
-    @apply py-1 lg:py-4 w-full rounded !bg-primary-gradient !text-black2 font-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
+    @apply py-1 lg:py-4  rounded-160 !bg-aqua4 border-aqua1 !text-white font-bold text-20 leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
     }
 
     &:disabled {
-      @apply !bg-gradientbg !text-gray1 cursor-not-allowed;
+      @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
+    }
+  }
+  .btn-primary-gradient-grey {
+    @apply py-1 lg:py-4  rounded-160 !bg-white/[9%] border-white !text-white font-bold text-20 leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply opacity-80 !border-white;
+    }
+
+    &:disabled {
+      @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
+    }
+  }
+  .btn-secondary-gradient-grey {
+    @apply py-1 lg:py-4 w-full rounded-160 !bg-white/[20%] border-white !text-white font-bold text-20 leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
+
+    &:hover {
+      @apply opacity-80 !border-white;
+    }
+
+    &:disabled {
+      @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
     }
   }
   .btn-secondary-lg {
@@ -102,7 +124,7 @@ body {
   }
 
   .btn-secondary-colored {
-    @apply !gap-0 !bg-transparent !whitespace-normal py-1.5 px-4 w-full rounded font-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-solid border-2 cursor-pointer duration-500 ease-in-out;
+    @apply !gap-0  !whitespace-normal py-2 px-5 w-full font-bold text-13 leading-6 tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full;
 
     &:hover {
       @apply !opacity-80;
@@ -112,7 +134,6 @@ body {
       @apply !bg-gradientbg !text-gray1 cursor-not-allowed;
     }
   }
-
   .btn-primary-white1 {
     @apply py-1 lg:py-4 w-full rounded !bg-white !text-black2 font-extrabold text-12 leading-6 tracking-widest !h-auto uppercase border-0 cursor-pointer duration-500 ease-in-out;
 
@@ -150,11 +171,14 @@ body {
   }
 
   .small-base {
-    @apply font-semibold text-12 lg:text-13 leading-5 lg:leading-6  text-white;
+    @apply font-medium text-12 lg:text-13 leading-5 lg:leading-6  text-white;
   }
 
   .base {
     @apply font-semibold text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray1;
+  }
+  .gray-base {
+    @apply font-normal text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray8;
   }
 
   .base-medium {
@@ -176,13 +200,24 @@ body {
   .info-label {
     @apply font-normal text-10 lg:text-12 leading-3 lg:leading-4 text-gray1;
   }
+  .body2-semibold {
+    @apply font-semibold text-10 lg:text-18 leading-3 lg:leading-8 text-gray1;
+  }
 
   .body2-bold {
     @apply font-bold text-10 lg:text-20 leading-3 lg:leading-8 text-gray1;
   }
 
+  .body2-medium {
+    @apply font-medium text-16 lg:text-17 leading-5 lg:leading-8 text-white1;
+  }
+
   .body2 {
     @apply font-normal lg:font-medium text-16 lg:text-20 leading-5 lg:leading-8 text-white1;
+  }
+
+  .body2-v2 {
+    @apply font-normal lg:font-semibold text-16 lg:text-32 leading-5 lg:leading-11 text-white1 px-17.5;
   }
 
   .body1 {
@@ -220,12 +255,20 @@ body {
     @apply font-extrabold text-40 lg:text-64 leading-12 lg:leading-16 text-white1;
   }
 
+  .hero-v2 {
+    @apply font-bold text-40 lg:text-58 leading-12 lg:leading-14.5 text-white1;
+  }
+
   .opacity-hover {
     @apply hover:opacity-70 duration-300 ease-in-out;
   }
 
   .text-22-bold {
     @apply font-bold text-18 lg:text-22 leading-4 lg:leading-6 text-white2;
+  }
+
+  .text-26-bold {
+    @apply font-bold text-18 lg:text-26 leading-4 lg:leading-6 text-white2;
   }
 
   .text-12-regular {
@@ -254,7 +297,7 @@ body {
 
 @media (min-width: 1024px) {
   .gradient-bottom-border {
-    background: linear-gradient(
+    /* background: linear-gradient(
       270deg,
       #00daba 8%,
       #4aa1a3 23%,
@@ -265,7 +308,9 @@ body {
       #8726aa 78%,
       #741bb7 91%,
       #6d17bd 100%
-    );
+    ); */
+    border-bottom: 1px solid;
+    background: linear-gradient(90deg, #00d0c6 0%, #522eff 100%);
     border-radius: 10px;
     position: relative;
   }
@@ -277,18 +322,20 @@ body {
     left: 0px;
     right: 0px;
     bottom: 1px;
-    background: black;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    /* background: black; */
+    background: linear-gradient(90deg, #212020 0%, #2d2c2c 100%);
+    /* border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; */
+    border-radius: 10px;
     z-index: 0;
   }
   .gradient-bottom-border .content {
     padding: 19.5px 20px 20.5px 20px;
-    background: linear-gradient(
+    /* background: linear-gradient(
       129.93deg,
       rgba(175, 175, 175, 0.12) 16.6%,
       rgba(17, 243, 179, 0.12) 90.65%
-    );
+    ); */
     border-radius: 10px;
     position: relative;
     z-index: 1;

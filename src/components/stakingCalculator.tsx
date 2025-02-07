@@ -2,6 +2,7 @@ import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import { useEffect, useState } from "react"
 import { Button, Input, Tooltip } from "antd"
 import { WalletConnector } from "@/contexts/walletConnector"
+
 import {
   formatPercentage,
   convertZilValueInToken,
@@ -17,7 +18,6 @@ const StakingCalculator: React.FC = () => {
   const { appConfig } = AppConfigStorage.useContainer()
 
   const { zilAvailable } = WalletConnector.useContainer()
-
   const {
     stake,
     isStakingInProgress,
@@ -52,7 +52,6 @@ const StakingCalculator: React.FC = () => {
 
   const handleBlur = () => {
     let valueTemp = zilToStake
-
     if (
       zilToStake.charAt(zilToStake.length - 1) === "." ||
       zilToStake === "-"
@@ -88,10 +87,10 @@ const StakingCalculator: React.FC = () => {
     stakingPoolForView && (
       <>
         <div>
-          <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7 bg-darkbg rounded-3xl items-center">
+          <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7 bg-grey-gradient rounded-xl items-center">
             <div className="h-fit self-center">
               <Input
-                className="h3 flex items-baseline !bg-transparent !border-transparent !text-white1"
+                className="flex items-baseline !bg-transparent !border-transparent !text-white1 text-40 font-semibold"
                 //   ${
                 //   zilToStakeOk ? '!text-white1' : '!text-red1'
                 // }
@@ -106,7 +105,7 @@ const StakingCalculator: React.FC = () => {
               <span className="flex items-center whitespace-nowrap ">
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
-                    <span className="body2-bold">
+                    <span className="body2-medium">
                       ~
                       {!isNaN(zilToStakeNumber) &&
                       !isNaN(stakingPoolForView.stakingPool.data.zilToTokenRate)
@@ -117,7 +116,7 @@ const StakingCalculator: React.FC = () => {
                         : ""}{" "}
                       {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
                     </span>
-                    <span className="body2-bold ml-2 text-aqua1">
+                    <span className="body2-medium ml-2 text-aqua1">
                       ~
                       {formatPercentage(
                         stakingPoolForView!.stakingPool.data.apr
@@ -127,19 +126,19 @@ const StakingCalculator: React.FC = () => {
                 ) : (
                   <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                 )}
-                <span className="body2-bold text-aqua1"> APR</span>
+                <span className="body2-medium text-aqua1"> APR</span>
               </span>
             </div>
 
             <div className="flex flex-col gap-3 max-w-[100px]">
               <Button
-                className="btn-secondary-colored text-aqua2 hover:!text-aqua2 hover:!border-aqua2 border-aqua2"
+                className="btn-secondary-colored text-aqua1 hover:!text-aqua1 border-0 bg-aqua5 hover:!bg-aqua5"
                 onClick={onMaxClick}
               >
                 MAX
               </Button>
               <Button
-                className="btn-secondary-colored text-purple1 hover:!text-purple1 hover:!border-purple1 border-purple1"
+                className="btn-secondary-colored text-purple3 hover:!text-purple1 border-0 bg-purple4 hover:!bg-purple4"
                 onClick={onMinClick}
               >
                 MIN
@@ -166,13 +165,13 @@ const StakingCalculator: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
-              <div className="base flex flex-col xl:flex-row xl:gap-5">
-                <div>Rate</div>
+              <div className="flex flex-col xl:flex-row xl:gap-5">
+                <div className="gray-base">Rate</div>
                 {stakingPoolForView!.stakingPool.data && (
-                  <div>{`1 ZIL = ~${stakingPoolForView.stakingPool.data.zilToTokenRate} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
+                  <div className="text-gray9">{`1 ZIL = ~${stakingPoolForView.stakingPool.data.zilToTokenRate} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
                 )}
               </div>
-              <div className=" regular-base text-aqua1 flex flex-row xl:gap-5">
+              <div className="text-gray9 text-aqua1 flex flex-row xl:gap-5">
                 <Tooltip
                   placement="top"
                   arrow={true}
@@ -180,7 +179,7 @@ const StakingCalculator: React.FC = () => {
                   className=" mr-1"
                   title="Annual Percentage Rate"
                 >
-                  <span>APR </span>
+                  <span className="gray-base">APR </span>
                 </Tooltip>
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
@@ -198,7 +197,7 @@ const StakingCalculator: React.FC = () => {
             <Button
               type="default"
               size="large"
-              className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua"
+              className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua mx-auto w-1/2"
               disabled={!canStake}
               onClick={() =>
                 stake(
@@ -208,7 +207,7 @@ const StakingCalculator: React.FC = () => {
               }
               loading={isStakingInProgress}
             >
-              STAKE
+              Stake
             </Button>
           </div>
         </div>
