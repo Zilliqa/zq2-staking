@@ -232,7 +232,6 @@ const UnstakingCalculator: React.FC = () => {
               {unstakeContractCallError.message}
             </div>
           )}
-        
         </div>
       </div>
     )

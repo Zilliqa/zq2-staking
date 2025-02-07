@@ -219,8 +219,6 @@ const StakingCalculator: React.FC = () => {
               </div>
             </div>
           </div>
-
-          
         </div>
 
         {stakingCallTxHash !== undefined && (
