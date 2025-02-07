@@ -274,6 +274,75 @@ body {
   .text-12-regular {
     @apply font-medium text-11 lg:text-12 lg:leading-4  text-white3;
   }
+  .bold52 {
+    @apply font-bold text-11 lg:text-52 lg:leading-16 text-white;
+  }
+  .bold33 {
+    @apply font-bold text-10 lg:text-33 lg:leading-10 text-white;
+  }
+  .bold26 {
+    @apply font-bold text-10 lg:text-26 lg:leading-7.75 text-white;
+  }
+  .bold22 {
+    @apply font-bold text-10 lg:text-22 lg:leading-6.5 text-white;
+  }
+  .bold16 {
+    @apply font-bold text-10 lg:text-16 lg:leading-6.5 text-white;
+  }
+  .bold14 {
+    @apply font-bold text-10 lg:text-14 lg:leading-6.5 text-white;
+  }
+  .bold13 {
+    @apply font-bold text-10 lg:text-13 lg:leading-6.5 text-white;
+  }
+  .bold12 {
+    @apply font-bold text-10 lg:text-12 lg:leading-6.5 text-white;
+  }
+  .bold10 {
+    @apply font-bold text-10  lg:leading-6.5 text-white;
+  }
+  .semi24 {
+    @apply font-semibold text-10 lg:text-24 lg:leading-6.5 text-white;
+  }
+  .semi15 {
+    @apply font-semibold text-10 lg:text-15 lg:leading-6.5 text-white;
+  }
+  .semi14 {
+    @apply font-semibold text-10 lg:text-14 lg:leading-5 text-white;
+  }
+  .semi13 {
+    @apply font-semibold text-10 lg:text-13 lg:leading-5 text-white;
+  }
+  .semi11 {
+    @apply font-semibold text-10 lg:text-11 lg:leading-4 text-white;
+  }
+  .medium20 {
+    @apply font-medium text-10 lg:text-20 lg:leading-6.5 text-white;
+  }
+  .medium17 {
+    @apply font-medium text-10 lg:text-17 lg:leading-5 text-white;
+  }
+  .medium16 {
+    @apply font-medium text-10 lg:text-16 lg:leading-5 text-white;
+  }
+  .medium15 {
+    @apply font-medium text-10 lg:text-15 lg:leading-4 text-white;
+  }
+  .medium12 {
+    @apply font-medium text-10 lg:text-12 lg:leading-3.5 text-white;
+  }
+  .light26 {
+    @apply font-light text-10 lg:text-26 lg:leading-7.75 text-white;
+  }
+  .light12 {
+    @apply font-light text-10 lg:text-12 lg:leading-3.5 text-white;
+  }
+  .regular12 {
+    @apply font-normal text-10 lg:text-12 lg:leading-3.5 text-white;
+  }
+  .regular9 {
+    @apply font-normal text-10 lg:text-9 lg:leading-3.5 text-white;
+  }
 }
 
 .animated-gradient {
