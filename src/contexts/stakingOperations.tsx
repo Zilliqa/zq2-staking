@@ -162,31 +162,33 @@ const useStakingOperations = () => {
   }, [unstakeCallReceiptStatus])
 
   /**
-   * CLAIMING
+   * CLAIMING UNSTAKE
    */
 
-  const [claimCallTxHash, setClaimCallTxHash] = useState<Address | undefined>(
-    undefined
-  )
-  const [preparingClaimTx, setPreparingClaimTx] = useState(false)
+  const [claimUnstakeCallTxHash, setClaimUnstakeCallTxHash] = useState<
+    Address | undefined
+  >(undefined)
+  const [preparingClaimUnstakeTx, setPreparingClaimUnstakeTx] = useState(false)
 
   const {
-    isLoading: submittingClaimTx,
+    isLoading: submittingClaimUnstakeTx,
     error: claimContractCallError,
     status: claimCallReceiptStatus,
   } = useWaitForTransactionReceipt({
-    hash: claimCallTxHash,
+    hash: claimUnstakeCallTxHash,
   })
 
-  const claim = (delegatorAddress: string) => {
-    setPreparingClaimTx(true)
+  const claimUnstake = (delegatorAddress: string) => {
+    setPreparingClaimUnstakeTx(true)
     if (isDummyWalletConnected) {
       setDummyWalletPopupContent(
         "Now User gonna approve the wallet transaction for withdrawing/claiming ZIL"
       )
       setIsDummyWalletPopupOpen(true)
-      setClaimCallTxHash("0x1234567890234567890234567890234567890" as Address)
-      setPreparingClaimTx(false)
+      setClaimUnstakeCallTxHash(
+        "0x1234567890234567890234567890234567890" as Address
+      )
+      setPreparingClaimUnstakeTx(false)
     } else {
       writeContract(wagmiConfig, {
         address: delegatorAddress as Address,
@@ -195,7 +197,7 @@ const useStakingOperations = () => {
         args: [],
       })
         .then((txHash) => {
-          setClaimCallTxHash(txHash)
+          setClaimUnstakeCallTxHash(txHash)
         })
         .catch((error) => {
           notification.error({
@@ -205,7 +207,7 @@ const useStakingOperations = () => {
             placement: "topRight",
           })
         })
-        .finally(() => setPreparingClaimTx(false))
+        .finally(() => setPreparingClaimUnstakeTx(false))
     }
   }
 
@@ -228,6 +230,39 @@ const useStakingOperations = () => {
   }, [claimCallReceiptStatus])
 
   /**
+   * CLAIM REWARDS
+   */
+
+  const [claimRewardCallTxHash, setClaimRewardCallTxHash] = useState<
+    Address | undefined
+  >(undefined)
+  const [preparingClaimRewardTx, setPreparingClaimRewardTx] = useState(false)
+
+  const {
+    isLoading: submittingClaimRewardTx,
+    error: claimRewardContractCallError,
+    status: claimRewardCallReceiptStatus,
+  } = useWaitForTransactionReceipt({
+    hash: claimRewardCallTxHash,
+  })
+
+  const claimReward = (delegatorAddress: string) => {
+    setPreparingClaimRewardTx(true)
+    if (isDummyWalletConnected) {
+      setDummyWalletPopupContent(
+        "Now User gonna approve the wallet transaction for claiming rewards"
+      )
+      setIsDummyWalletPopupOpen(true)
+      setClaimRewardCallTxHash(
+        "0x1234567890234567890234567890234567890" as Address
+      )
+      setPreparingClaimRewardTx(false)
+    } else {
+      console.error("Claiming rewards not implemented")
+    }
+  }
+
+  /**
    * OTHER
    */
 
@@ -235,7 +270,7 @@ const useStakingOperations = () => {
     function clearStateOnDelegatorChange() {
       setStakingCallTxHash(undefined)
       setUnstakingCallTxHash(undefined)
-      setClaimCallTxHash(undefined)
+      setClaimUnstakeCallTxHash(undefined)
     },
     [stakingPoolId]
   )
@@ -255,10 +290,17 @@ const useStakingOperations = () => {
     unstakingCallTxHash,
     unstakeContractCallError,
 
-    claim,
-    isClaimingInProgress: submittingClaimTx || preparingClaimTx,
-    claimCallTxHash,
+    claimUnstake,
+    isClaimingUnstakeInProgress:
+      submittingClaimUnstakeTx || preparingClaimUnstakeTx,
+    claimUnstakeCallTxHash,
     claimContractCallError,
+
+    claimReward,
+    isClaimingRewardInProgress:
+      submittingClaimRewardTx || preparingClaimRewardTx,
+    claimRewardCallTxHash,
+    claimRewardContractCallError,
   }
 }
 

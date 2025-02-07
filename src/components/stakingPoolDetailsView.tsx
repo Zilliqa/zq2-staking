@@ -2,9 +2,8 @@ import StakingCalculator from "@/components/stakingCalculator"
 import UnstakingCalculator from "@/components/unstakingCalculator"
 import WithdrawZilPanel from "@/components/withdrawUnstakedZilPanel"
 import { WalletConnector } from "@/contexts/walletConnector"
-import { getViemClient } from "@/misc/chainConfig"
 import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting"
-import { StakingPool } from "@/misc/stakingPoolsConfig"
+import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import {
   UserStakingPoolData,
   UserUnstakingPoolData,
@@ -13,7 +12,6 @@ import { Button } from "antd"
 import { DateTime } from "luxon"
 import { useState } from "react"
 import { useWatchAsset } from "wagmi"
-import { useWalletClient } from "wagmi"
 import Plus from "../assets/svgs/plus.svg"
 import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
@@ -53,6 +51,9 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       <div className="text-gray8 info-label xl:whitespace-nowrap">{title}</div>
     </div>
   )
+
+  const isPoolLiquid = () =>
+    stakingPoolData.definition.poolType === StakingPoolType.LIQUID
 
   const pendingUnstakesValue = userUnstakingPoolData
     ?.filter((item) => item.availableAt > DateTime.now())
@@ -104,36 +105,25 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
           <span className="text-white1 text-48 font-bold mr-6">
             {stakingPoolData.definition.name}
           </span>
-          <span className="text-38 lg:h4 text-black3  font-light">|</span>
-          <span className="body1 lg:h4 text-gray6 ml-6 font-medium">
-            {stakingPoolData.definition.tokenSymbol}
-          </span>
-          <Image
-            onClick={handleClickAaddToken}
-            className="h-[28px] w-[28px] ml-4 cursor-pointer"
-            src={PlusIcon}
-            alt="arrow icon"
-            width={28}
-            height={28}
-          />
+
+          {isPoolLiquid() && (
+            <>
+              <span className="text-38 lg:h4 text-black3  font-light">|</span>
+              <span className="body1 lg:h4 text-gray6 ml-6 font-medium">
+                {stakingPoolData.definition.tokenSymbol}
+              </span>
+
+              <Image
+                onClick={handleClickAaddToken}
+                className="h-[28px] w-[28px] ml-4 cursor-pointer"
+                src={PlusIcon}
+                alt="arrow icon"
+                width={28}
+                height={28}
+              />
+            </>
+          )}
         </div>
-        {/* <div>
-          <Button
-            onClick={handleClickAaddToken}
-            className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua group"
-          >
-            <Image
-              className="h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:rotate-180"
-              src={Plus}
-              alt={"arrow icon"}
-              width={24}
-              height={24}
-            />
-            <span className="!hidden sm:!block lg:!hidden xl:!block ">
-              Add Token
-            </span>
-          </Button>
-        </div> */}
       </div>
 
       <div className="bg-grey-gradient py-6 flex flex-col gap-4 px-9.5 rounded-xl">
@@ -185,16 +175,17 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             stakingPoolData.data &&
               formatPercentage(stakingPoolData.data.commission)
           )}
-          {greyInfoEntry(
-            "",
-            stakingPoolData.data && (
-              <>
-                1 ZIL ~ <br />
-                {stakingPoolData.data.zilToTokenRate.toPrecision(3)}{" "}
-                {stakingPoolData.definition.tokenSymbol}
-              </>
-            )
-          )}
+          {isPoolLiquid() &&
+            greyInfoEntry(
+              "",
+              stakingPoolData.data && (
+                <>
+                  1 ZIL ~ <br />
+                  {stakingPoolData.data.zilToTokenRate.toPrecision(3)}{" "}
+                  {stakingPoolData.definition.tokenSymbol}
+                </>
+              )
+            )}
         </div>
       </div>
       <div className="grid grid-cols-3">

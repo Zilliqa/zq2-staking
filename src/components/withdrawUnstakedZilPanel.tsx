@@ -22,7 +22,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
   userUnstakingPoolData,
   stakingPoolData,
 }) => {
-  const { claim, isClaimingInProgress, claimCallTxHash } =
+  const { claimUnstake, isClaimingUnstakeInProgress, claimUnstakeCallTxHash } =
     StakingOperations.useContainer()
 
   const { appConfig } = AppConfigStorage.useContainer()
@@ -43,15 +43,15 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
 
   return (
     <div>
-      {claimCallTxHash !== undefined && (
+      {claimUnstakeCallTxHash !== undefined && (
         <div className="text-center gradient-bg-1 py-2 text-gray-500">
           <Link
             rel="noopener noreferrer"
             target="_blank"
-            href={getTxExplorerUrl(claimCallTxHash, appConfig.chainId)}
+            href={getTxExplorerUrl(claimUnstakeCallTxHash, appConfig.chainId)}
             passHref={true}
           >
-            Last staking transaction: {formatAddress(claimCallTxHash)}
+            Last staking transaction: {formatAddress(claimUnstakeCallTxHash)}
           </Link>
         </div>
       )}
@@ -76,8 +76,8 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               <div className="lg:w-1/3 lg:max-w-[218px]">
                 <Button
                   className="btn-primary-gradient-aqua"
-                  onClick={() => claim(item.address)}
-                  loading={isClaimingInProgress}
+                  onClick={() => claimUnstake(item.address)}
+                  loading={isClaimingUnstakeInProgress}
                 >
                   Claim
                 </Button>

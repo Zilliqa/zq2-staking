@@ -56,7 +56,6 @@ const useWalletConnector = () => {
   /**
    * Rainbow wallet section
    */
-
   const { data: walletClient } = useWalletClient()
 
   /**
@@ -78,6 +77,11 @@ const useWalletConnector = () => {
   const updateWalletBalance = () => {
     if (!walletAddress) {
       setZilAvailable(null)
+      return
+    }
+
+    if (isDummyWalletConnected) {
+      setZilAvailable(dummyWallet!.currentZil)
       return
     }
 

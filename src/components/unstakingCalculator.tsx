@@ -11,6 +11,7 @@ import {
 import { formatUnits, parseEther } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { DateTime } from "luxon"
+import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 
 const UnstakingCalculator: React.FC = () => {
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
@@ -76,6 +77,10 @@ const UnstakingCalculator: React.FC = () => {
     })
   )
 
+  const isPoolLiquid = () =>
+    stakingPoolForView?.stakingPool.definition.poolType ===
+    StakingPoolType.LIQUID
+
   return (
     stakingPoolForView && (
       <div>
@@ -95,23 +100,25 @@ const UnstakingCalculator: React.FC = () => {
                 status={!zilToUnstakeOk ? "error" : undefined}
               />
               <div className="flex items-center ">
-                <span className="body2-medium">
-                  {stakingPoolForView!.stakingPool.data ? (
-                    <>
-                      ~
-                      {formatUnitsToHumanReadable(
-                        convertTokenToZil(
-                          zilInWei,
-                          stakingPoolForView.stakingPool.data.zilToTokenRate
-                        ),
-                        18
-                      )}
-                    </>
-                  ) : (
-                    <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
-                  )}
-                  ZIL
-                </span>
+                {isPoolLiquid() && (
+                  <span className="body2-medium">
+                    {stakingPoolForView!.stakingPool.data ? (
+                      <>
+                        ~
+                        {formatUnitsToHumanReadable(
+                          convertTokenToZil(
+                            zilInWei,
+                            stakingPoolForView.stakingPool.data.zilToTokenRate
+                          ),
+                          18
+                        )}
+                      </>
+                    ) : (
+                      <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
+                    )}
+                    ZIL
+                  </span>
+                )}
                 <span className="body2-medium ml-2 text-aqua1">
                   {unboudingPeriod}
                 </span>
@@ -156,27 +163,31 @@ const UnstakingCalculator: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
-              <div className="flex flex-col xl:flex-row xl:gap-5">
-                <div className="gray-base">Rate</div>
-                <div className="text-gray9">
-                  {stakingPoolForView!.stakingPool.data ? (
-                    <>
-                      1 {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
-                      = ~
-                      {formatUnitsToHumanReadable(
-                        convertTokenToZil(
-                          parseEther("1"),
-                          stakingPoolForView.stakingPool.data.zilToTokenRate
-                        ),
-                        18
-                      )}
-                    </>
-                  ) : (
-                    <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
-                  )}
-                  ZIL
+              {isPoolLiquid() && (
+                <div className="flex flex-col xl:flex-row xl:gap-5">
+                  <div className="gray-base">Rate</div>
+                  <div className="text-gray9">
+                    {stakingPoolForView!.stakingPool.data ? (
+                      <>
+                        1{" "}
+                        {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
+                        = ~
+                        {formatUnitsToHumanReadable(
+                          convertTokenToZil(
+                            parseEther("1"),
+                            stakingPoolForView.stakingPool.data.zilToTokenRate
+                          ),
+                          18
+                        )}
+                      </>
+                    ) : (
+                      <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
+                    )}
+                    ZIL
+                  </div>
                 </div>
-              </div>
+              )}
+
               <div className="text-gray9 flex flex-row xl:gap-5">
                 <Tooltip
                   placement="top"
@@ -187,6 +198,7 @@ const UnstakingCalculator: React.FC = () => {
                 >
                   <span className="gray-base">APR </span>
                 </Tooltip>
+
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     ~

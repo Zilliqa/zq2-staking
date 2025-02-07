@@ -9,8 +9,10 @@ import {
   stakingPoolsConfigForChainId,
 } from "@/misc/stakingPoolsConfig"
 import {
+  getWalletNonLiquidStakingPoolRewardData,
   getWalletStakingData,
   getWalletUnstakingData,
+  UserNonLiquidStakingPoolRewardData,
   UserStakingPoolData,
   UserUnstakingPoolData,
 } from "@/misc/walletsConfig"
@@ -30,6 +32,9 @@ const useStakingPoolsStorage = () => {
   >([])
   const [userUnstakesData, setUserUnstakesData] = useState<
     UserUnstakingPoolData[]
+  >([])
+  const [userNonLiquidPoolRewards, setUserNonLiquidPoolRewards] = useState<
+    UserNonLiquidStakingPoolRewardData[]
   >([])
 
   const [stakingPoolForView, setSelectedStakingPool] =
@@ -54,6 +59,11 @@ const useStakingPoolsStorage = () => {
     setIsUnstakingDataLoading(true)
     getWalletUnstakingData(walletAddress, appConfig!.chainId)
       .then(setUserUnstakesData)
+      .catch(console.error)
+      .finally(() => setIsUnstakingDataLoading(false))
+
+    getWalletNonLiquidStakingPoolRewardData(walletAddress, appConfig!.chainId)
+      .then(setUserNonLiquidPoolRewards)
       .catch(console.error)
       .finally(() => setIsUnstakingDataLoading(false))
   }
@@ -235,6 +245,14 @@ const useStakingPoolsStorage = () => {
       )!,
     })) || []
 
+  const combinedUserNonLiquidPoolRewards =
+    userNonLiquidPoolRewards?.map((rewardInfo) => ({
+      rewardInfo,
+      stakingPool: availableStakingPoolsData.find(
+        (pool) => pool.definition.address === rewardInfo.address
+      )!,
+    })) || []
+
   const availableForUnstaking = combinedUserUnstakesData.filter(
     (unstakeData) => unstakeData.unstakeInfo.availableAt <= DateTime.now()
   )
@@ -254,6 +272,7 @@ const useStakingPoolsStorage = () => {
     userUnstakesData,
     availableForUnstaking,
     pendingUnstaking,
+    nonLiquidRewards: combinedUserNonLiquidPoolRewards,
     reloadUserStakingPoolsData,
     isUnstakingDataLoading,
   }
