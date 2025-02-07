@@ -95,9 +95,9 @@ const LoginView: React.FC = () => {
   return (
     <div className="relative">
       <div className="text-center p-4">
-        <h1 className="hero-v2 text-white">Staking Portal</h1>
+        <h1 className="h1 text-white">Staking Portal</h1>
         <p className="mt-6 body2-v2 text-white4">
-          Help us Empower and secure the Zilliqa Chain{" "}
+          Help us Empower and secure <br /> the Zilliqa Chain{" "}
         </p>
       </div>
 

@@ -95,7 +95,7 @@ const StakingCalculator: React.FC = () => {
           <div className="flex justify-between gap-10 my-2.5 lg:my-7.5 p-3 lg:p-5 xl:p-7 bg-grey-gradient rounded-xl items-center">
             <div className="h-fit self-center">
               <Input
-                className="flex items-baseline !bg-transparent !border-transparent !text-white1 text-40 font-semibold"
+                className="flex items-baseline !bg-transparent !border-transparent !text-white1 bold33"
                 //   ${
                 //   zilToStakeOk ? '!text-white1' : '!text-red1'
                 // }
@@ -111,7 +111,7 @@ const StakingCalculator: React.FC = () => {
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     {isPoolLiquid() && (
-                      <span className="body2-medium">
+                      <span className="medium17">
                         ~
                         {!isNaN(zilToStakeNumber) &&
                         !isNaN(
@@ -125,7 +125,7 @@ const StakingCalculator: React.FC = () => {
                         {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
                       </span>
                     )}
-                    <span className="body2-medium ml-2 text-aqua1">
+                    <span className="medium17 ml-2 text-aqua1">
                       ~
                       {formatPercentage(
                         stakingPoolForView!.stakingPool.data.apr
@@ -135,26 +135,42 @@ const StakingCalculator: React.FC = () => {
                 ) : (
                   <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                 )}
-                <span className="body2-medium text-aqua1"> APR</span>
+                <span className="medium17 text-aqua1"> APR</span>
               </span>
             </div>
 
             <div className="flex flex-col gap-3 max-w-[100px]">
               <Button
-                className="btn-secondary-colored text-aqua1 hover:!text-aqua1 border-0 bg-aqua5 hover:!bg-aqua5"
+                className="btn-secondary-colored text-aqua1 hover:!text-aqua1 border-0 bg-tealDark hover:!bg-tealDark"
                 onClick={onMaxClick}
               >
                 MAX
               </Button>
               <Button
-                className="btn-secondary-colored text-purple3 hover:!text-purple1 border-0 bg-purple4 hover:!bg-purple4"
+                className="btn-secondary-colored text-purple3 hover:!text-purple1 border-0 bg-PurpleDarker hover:!bg-PurpleDarker"
                 onClick={onMinClick}
               >
                 MIN
               </Button>
             </div>
           </div>
-
+          <div className="flex mt-10 l:mt-12.5 mb-5">
+            <Button
+              type="default"
+              size="large"
+              className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua mx-auto w-1/2"
+              disabled={!canStake}
+              onClick={() =>
+                stake(
+                  stakingPoolForView.stakingPool.definition.address,
+                  zilInWei
+                )
+              }
+              loading={isStakingInProgress}
+            >
+              Stake
+            </Button>
+          </div>
           <div className="flex justify-between pt-2.5 lg:pt-5 border-t border-black2">
             <div className="flex flex-col gap-3.5 regular-base">
               <div className=" ">
@@ -204,23 +220,7 @@ const StakingCalculator: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex mt-10 l:mt-12.5 mb-5">
-            <Button
-              type="default"
-              size="large"
-              className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua mx-auto w-1/2"
-              disabled={!canStake}
-              onClick={() =>
-                stake(
-                  stakingPoolForView.stakingPool.definition.address,
-                  zilInWei
-                )
-              }
-              loading={isStakingInProgress}
-            >
-              Stake
-            </Button>
-          </div>
+          
         </div>
 
         {stakingCallTxHash !== undefined && (

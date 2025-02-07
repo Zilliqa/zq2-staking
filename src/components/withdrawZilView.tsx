@@ -31,8 +31,8 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
   claimUnstake: claim,
 }) => {
   return (
-    <div className="flex gap-2.5 lg:w-full max-lg:flex-col">
-      <div className="flex lg:flex-col bg-gradientbg content-center px-3 py-4 lg:px-4 rounded-lg justify-between max-lg:items-center lg:w-2/3">
+    <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-xl items-center">
+      <div className="flex lg:flex-col  content-center px-3 py-4 lg:px-4 rounded-lg justify-between max-lg:items-center lg:w-2/3">
         <div className="flex items-center">
           <Image
             className="mr-2 lg:mr-2.5"
@@ -70,7 +70,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
       <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px]">
         <div className="max-lg:w-1/2">
           <Button
-            className="btn-primary-gradient-aqua"
+            className="btn-secondary-gray2"
             disabled={!available}
             onClick={() => claim(unstakeInfo.address)}
           >
@@ -81,7 +81,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
         </div>
         <div className="max-lg:w-1/2 lg:mt-2.5">
           <Button
-            className="btn-primary-white1"
+            className="btn-secondary-gray3"
             onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
           >
             View
@@ -106,8 +106,8 @@ const RewardCard: React.FC<RewardCardProps> = ({
   claimReward,
 }) => {
   return (
-    <div className="flex gap-2.5 lg:w-full max-lg:flex-col">
-      <div className="flex lg:flex-col bg-gradientbg content-center px-3 py-4 lg:px-4 rounded-lg justify-between max-lg:items-center lg:w-2/3">
+    <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-xl items-center">
+      <div className="flex lg:flex-col  content-center px-3 py-4 lg:px-4 rounded-lg justify-between max-lg:items-center lg:w-2/3">
         <div className="flex items-center">
           <Image
             className="mr-2 lg:mr-2.5"
@@ -139,7 +139,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
       <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px]">
         <div className="max-lg:w-1/2">
           <Button
-            className="btn-primary-gradient-aqua"
+            className="btn-secondary-gray2"
             onClick={() => claimReward(stakingPool.definition.address)}
           >
             Claim Reward
@@ -147,7 +147,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
         </div>
         <div className="max-lg:w-1/2 lg:mt-2.5">
           <Button
-            className="btn-primary-white1"
+            className="btn-secondary-gray3"
             onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
           >
             View
@@ -181,7 +181,7 @@ const WithdrawZilView: React.FC = () => {
      flex flex-col gap-2"
     >
       <div className=" text-center max-h-[20vh]">
-        <h1 className="hero text-white mt-4">
+        <h1 className="h1 text-white mt-4">
           <span className="hidden lg:block">Staking Portal</span>
           <span className="block lg:hidden">Claims</span>
         </h1>
@@ -227,7 +227,7 @@ const WithdrawZilView: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="w-1/2 text-center text-white mx-auto lg:my-10">
+        <div className="text-center text-white mx-auto lg:my-10">
           {isUnstakingDataLoading ? (
             <div className="animated-gradient h-[2em] w-full"></div>
           ) : (
@@ -255,8 +255,8 @@ const WithdrawZilView: React.FC = () => {
                   height={56}
                 />
               </div>
-              <div className="text-28 mb-15 font-medium">
-                No claims? We’d love to hear your feedback !
+              <div className="bold26 mb-15 font-medium">
+                No claims? We’d love to hear<br /> your feedback !
               </div>
             </>
           )}

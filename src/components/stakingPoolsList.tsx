@@ -82,7 +82,7 @@ const StakingPoolsList: React.FC = () => {
           <button
             key={index}
             className={`w-1/2 whitespace-nowrap border-b-[0.5px] py-3 
-              ${selectedPoolType === tab.type ? "h3 border-aqua1" : "h3-inactive border-transparent"}
+              ${selectedPoolType === tab.type ? "bold33 border-aqua1" : "bold26 text-gray8 border-transparent"}
             `}
             onClick={() => {
               setSelectedPoolType(tab.type)
