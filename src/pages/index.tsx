@@ -231,7 +231,9 @@ const HomePage = () => {
                       ${stakingPoolForView ? "w-1/2" : "w-full"}`}
                 >
                   <a
-                    className={`justify-start flex items-center whitespace-nowrap `}
+                    className={
+                      "justify-start flex items-center whitespace-nowrap "
+                    }
                     onClick={() => setMobileShowClaims(true)}
                   >
                     {" "}
