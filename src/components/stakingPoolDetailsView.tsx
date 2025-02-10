@@ -96,20 +96,20 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   return (
     <div
-      className="relative overflow-y-auto max-h-[calc(90vh-10vh)] sm:max-h-[calc(90vh-15vh)]
+      className="relative overflow-y-auto max-h-[calc(90vh-10vh)] sm:max-h-[calc(100vh-5vh)]
       scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-2
        pr-2 lg:pr-4"
     >
       <div className="items-center flex justify-between py-1 lg:py-7.5">
         <div className="max-lg:ms-1 items-center flex">
-          <span className="text-white1 text-48 font-bold mr-6">
+          <span className="text-white1 bold33 mr-6">
             {stakingPoolData.definition.name}
           </span>
 
           {isPoolLiquid() && (
             <>
               <span className="text-38 lg:h4 text-black3  font-light">|</span>
-              <span className="body1 lg:h4 text-gray6 ml-6 font-medium">
+              <span className="medium20 text-gray6 ml-6">
                 {stakingPoolData.definition.tokenSymbol}
               </span>
 

@@ -22,14 +22,14 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
       className={`${
         isStakingPoolSelected
           ? "gradient-bottom-border "
-          : "border-b-[1.5px] border-black2 rounded-10 gradient-bottom-border-hover"
+          : "border-b-[1.5px] border-black2 rounded-10 gradient-bottom-border-hover "
       } ${isStakingPoolSelected && "bg-black"} hover:cursor-pointer`}
       onClick={onClick}
     >
       <div
         className={`${
           isStakingPoolSelected ? "content" : "content-hover p-2.5 lg:p-5"
-        } flex justify-between`}
+        } flex justify-between items-center`}
       >
         <Image
           className="mr-5 rounded-[9.5px] h-[61px] w-[61px] hidden md:block"
@@ -40,7 +40,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         />
         <div className="flex flex-col  w-full">
           <div className="flex justify-between items-center">
-            <h3 className="text-26-bold">{stakingPoolData.definition.name}</h3>
+            <h3 className="bold22">{stakingPoolData.definition.name}</h3>
             <Image
               className=" rounded-10 h[30px] w-[30px] xs:h-[40px] xs:w-[40px] md:hidden block"
               src={stakingPoolData.definition.iconUrl}
@@ -52,10 +52,10 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
 
           <div className="flex justify-between items-center">
             <div className="flex lg:justify-between lg:w-full items-center">
-              <div className="flex max-lg:order-2">
+              <div className="flex max-lg:order-2 items-center">
                 {stakingPoolData.data ? (
                   <div
-                    className={`base-medium max-xs:ml-2 xs:max-lg:ml-6 ${
+                    className={`regular12 max-xs:ml-2 xs:max-lg:ml-6 ${
                       stakingPoolData.data.votingPower * 100 >= 50
                         ? "text-red2"
                         : stakingPoolData.data.votingPower * 100 >= 30
@@ -68,13 +68,13 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   </div>
                 ) : (
                   <>
-                    <span className="base-medium max-xs:ml-2 xs:max-lg:ml-6">
+                    <span className="regular12 max-xs:ml-2 xs:max-lg:ml-6">
                       VP
                     </span>
                     <span className="w-[3em] ml-1 animated-gradient" />
                   </>
                 )}
-                <div className="flex base-medium ml-2 xs:ml-6">
+                <div className="flex regular12 ml-2 xs:ml-6">
                   Commission{" "}
                   {stakingPoolData.data ? (
                     <>{Math.floor(stakingPoolData.data.commission * 100)}%</>
@@ -83,7 +83,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   )}
                 </div>
 
-                <div className="flex base-medium font-bold max-md:order-1  ml-2 xs:ml-6">
+                <div className="flex bold13 max-md:order-1  ml-2 xs:ml-6">
                   <Tooltip
                     placement="top"
                     arrow={true}

@@ -43,6 +43,7 @@ const config: Config = {
         gray9: "#BBBBBB",
         gray10: "#7C7C7C",
         gray11: "#858A8A",
+        gray12: "#333333",
 
         white1: "#F1F4F4",
         white2: "#F7FBFA",
@@ -55,12 +56,12 @@ const config: Config = {
         aqua2: "#6DD3C2",
         aqua3: "#BCE6EC",
         aqua4: "#00D0C633",
-        aqua5: "#173C3F",
+        tealDark: "#173C3F",
 
         purple1: "#7839FF",
         purple2: "#B9A9FB",
         purple3: "#87A1FF",
-        purple4: "#2B2970",
+        PurpleDarker: "#2B2970",
 
         orange1: "#FE9950",
 
@@ -69,6 +70,7 @@ const config: Config = {
       },
       fontSize: {
         "10": "10px",
+        "11": "11px",
         "12": "12px",
         "14": "14px",
         "13": "13px",
@@ -86,9 +88,11 @@ const config: Config = {
 
         "30": "30px",
         "32": "32px",
+        "33": "33px",
         "38": "38px",
         "40": "40px",
         "48": "48px",
+        "52": "52px",
         "58": "58px",
 
         "64": "64px",
