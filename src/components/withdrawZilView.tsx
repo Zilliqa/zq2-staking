@@ -1,6 +1,6 @@
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
-
+import rewards from "../assets/svgs/rewards.svg"
 import {
   convertTokenToZil,
   formatUnitsToHumanReadable,
@@ -32,19 +32,20 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
 }) => {
   return (
     <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-xl items-center">
-      <div className="flex lg:flex-col  content-center px-3 py-4 lg:px-4 rounded-lg justify-between max-lg:items-center lg:w-2/3">
-        <div className="flex items-center">
+      <div className="flex lg:flex-col  content-center px-3 py-6 lg:px-9.5 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
+        <div className="flex items-center gap-2">
           <Image
-            className="mr-2 lg:mr-2.5"
+            className="rounded"
             src={stakingPool.definition.iconUrl}
             alt={`${stakingPool.definition.name} icon`}
             width={31}
             height={31}
           />
-          <div className="body1">{stakingPool.definition.name}</div>
+          <div className="semi24">{stakingPool.definition.name}</div>
+          <div className="text-gray4 lg:hidden text-20">|</div>
         </div>
         <div className="flex lg:mt-3 items-center">
-          <div className="h3-s max-lg:order-2">
+          <div className="bold33">
             {stakingPool.data ? (
               <>
                 {formatUnitsToHumanReadable(
@@ -62,15 +63,15 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               </>
             )}
           </div>
-          <div className="body1-s max-lg:mr-2.5 lg:ml-2.5 max-lg:order-1">
+          <div className="medium15 max-lg:mr-2.5 ml-2.5 max-lg:order-1">
             {unstakeInfo.zilAmount} {stakingPool.definition.tokenSymbol}
           </div>
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px]">
+      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full px-3 lg:pb-0 pb-4 lg:px-4">
         <div className="max-lg:w-1/2">
           <Button
-            className="btn-secondary-gray2"
+            className="btn-primary-grey lg:py-5 py-4"
             disabled={!available}
             onClick={() => claim(unstakeInfo.address)}
           >
@@ -81,7 +82,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
         </div>
         <div className="max-lg:w-1/2 lg:mt-2.5">
           <Button
-            className="btn-secondary-gray3"
+            className="btn-secondary-grey lg:py-5 py-4"
             onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
           >
             View
@@ -107,20 +108,30 @@ const RewardCard: React.FC<RewardCardProps> = ({
 }) => {
   return (
     <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-xl items-center">
-      <div className="flex lg:flex-col  content-center px-3 py-4 lg:px-4 rounded-lg justify-between max-lg:items-center lg:w-2/3">
-        <div className="flex items-center">
+      <div className="flex lg:flex-col  content-center px-3 py-6 lg:px-9.5 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
+        <div className="flex items-center gap-2">
           <Image
-            className="mr-2 lg:mr-2.5"
+            className="rounded"
             src={stakingPool.definition.iconUrl}
             alt={`${stakingPool.definition.name} icon`}
             width={31}
             height={31}
           />
-          <div className="body1">{stakingPool.definition.name}</div>
-          <div>Reward</div>
+          <div className="semi24">{stakingPool.definition.name}</div>
+          <div className="text-gray4 lg:hidden text-20">|</div>
+          <div className="bg-gray4 text-white3 py-1 px-2 items-center gap-2 medium12 lg:flex hidden">
+            <Image
+              className="rounded"
+              src={rewards}
+              alt="rewards"
+              width={14}
+              height={15}
+            />
+            Rewards
+          </div>
         </div>
         <div className="flex lg:mt-3 items-center">
-          <div className="h3-s max-lg:order-2">
+          <div className="bold33">
             {stakingPool.data ? (
               <>
                 {formatUnitsToHumanReadable(rewardInfo.zilRewardAmount, 18)} ZIL
@@ -131,15 +142,25 @@ const RewardCard: React.FC<RewardCardProps> = ({
               </>
             )}
           </div>
-          <div className="body1-s max-lg:mr-2.5 lg:ml-2.5 max-lg:order-1">
+          <div className="medium15 max-lg:mr-2.5 lg:ml-2.5 max-lg:order-1">
             {rewardInfo.zilRewardAmount}
+          </div>
+          <div className="bg-gray4 text-white3 py-1 px-2 flex items-center gap-2 medium12 lg:hidden ml-2.5">
+            <Image
+              className="rounded"
+              src={rewards}
+              alt="rewards"
+              width={14}
+              height={15}
+            />
+            Rewards
           </div>
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px]">
+      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[218px] px-3 lg:pb-0 pb-4 lg:px-4">
         <div className="max-lg:w-1/2">
           <Button
-            className="btn-secondary-gray2"
+            className="btn-primary-grey lg:py-5 py-4"
             onClick={() => claimReward(stakingPool.definition.address)}
           >
             Claim Reward
@@ -147,7 +168,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
         </div>
         <div className="max-lg:w-1/2 lg:mt-2.5">
           <Button
-            className="btn-secondary-gray3"
+            className="btn-secondary-grey lg:py-5 py-4"
             onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
           >
             View
@@ -180,11 +201,20 @@ const WithdrawZilView: React.FC = () => {
     scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1
      flex flex-col gap-2"
     >
-      <div className=" text-center max-h-[20vh]">
-        <h1 className="h1 text-white mt-4">
-          <span className="hidden lg:block">Staking Portal</span>
-          <span className="block lg:hidden">Claims</span>
-        </h1>
+      <div className=" text-center py-5">
+        {anyItemsAvailable ? (
+          <>
+            <h1 className="h1 text-white">My Claims</h1>
+            <p className="mt-2 h2 text-white4">
+              Help us Empower and secure <br /> the Zilliqa Chain{" "}
+            </p>
+          </>
+        ) : (
+          <h1 className="h1 text-white mt-4">
+            <span className="hidden lg:block">Staking Portal</span>
+            <span className="block lg:hidden">Claims</span>
+          </h1>
+        )}
       </div>
 
       {anyItemsAvailable ? (
@@ -256,8 +286,7 @@ const WithdrawZilView: React.FC = () => {
                 />
               </div>
               <div className="bold26 mb-15 font-medium">
-                No claims? We’d love to hear
-                <br /> your feedback !
+                No claims? We’d love to hear<br /> your feedback !
               </div>
             </>
           )}

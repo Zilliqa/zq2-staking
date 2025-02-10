@@ -81,22 +81,21 @@ body {
       @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
     }
   }
-  .btn-primary-gradient-grey {
-    @apply py-1 lg:py-4  rounded-160 !bg-white/[9%] border-white !text-white font-bold text-20 leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
+  .btn-primary-grey {
+    @apply flex w-full py-1.5 lg:py-2 px-1.5 lg:px-2 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray4 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
-      @apply opacity-80 !border-white;
+      @apply !bg-transparent !text-white !border-white;
     }
-
     &:disabled {
       @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
     }
   }
-  .btn-secondary-gradient-grey {
-    @apply py-1 lg:py-4 w-full rounded-160 !bg-white/[20%] border-white !text-white font-bold text-20 leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
+  .btn-secondary-grey {
+    @apply flex w-full py-1.5 lg:py-2 px-1.5 lg:px-2 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray12 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
-      @apply opacity-80 !border-white;
+      @apply !bg-transparent !text-white !border-white;
     }
 
     &:disabled {
@@ -157,16 +156,11 @@ body {
       @apply !bg-[#202025] !text-[#555555] cursor-not-allowed;
     }
   }
-
-  .btn-secondary-gray {
-    @apply flex w-fit py-1.5 lg:py-2 px-1.5 lg:px-2 rounded-[9px] border border-gray4 items-center bg-gray4 cursor-pointer  duration-700 ease-in-out;
-
-    &:hover {
-      @apply bg-transparent;
-    }
+  .btn-filter{
+    @apply flex w-fit py-1.5 lg:py-2 px-1.5 lg:px-2 border border-none rounded-[8px] items-center bg-white/[14%] cursor-pointer duration-700 ease-in-out;
   }
-  .btn-secondary-gray2 {
-    @apply flex py-1.5 w-full lg:py-5 px-1.5 lg:px-2 rounded-full border border-white items-center bg-gray4 !text-white bold16 cursor-pointer  duration-700 ease-in-out;
+  .btn-secondary-gray {
+    @apply flex w-full py-1.5 lg:py-2 px-1.5 lg:px-2 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray4 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
@@ -258,7 +252,7 @@ body {
   }
 
   .h2 {
-    @apply font-extrabold text-64 leading-16 text-black2;
+    @apply font-normal lg:text-28 text-14 xl:leading-10 leading-5 text-gray5;
   }
 
   .h1 {
@@ -289,16 +283,16 @@ body {
     @apply font-medium text-11 lg:text-12 lg:leading-4  text-white3;
   }
   .bold52 {
-    @apply font-bold text-11 lg:text-52 lg:leading-16 text-white;
+    @apply font-bold text-22 lg:text-52 lg:leading-16 text-white;
   }
   .bold33 {
-    @apply font-bold text-10 lg:text-33 lg:leading-10 text-white;
+    @apply font-bold text-20 lg:text-33 lg:leading-10 text-white;
   }
   .bold26 {
-    @apply font-bold text-10 lg:text-26 lg:leading-7.75;
+    @apply font-bold text-14 lg:text-26 lg:leading-7.75;
   }
   .bold22 {
-    @apply font-bold text-10 lg:text-22 lg:leading-6.5 text-white;
+    @apply font-bold text-18 lg:text-22 lg:leading-6.5 text-white;
   }
   .bold16 {
     @apply font-bold text-10 lg:text-16 lg:leading-6.5 text-white;
@@ -309,6 +303,9 @@ body {
   .bold13 {
     @apply font-bold text-10 lg:text-13 lg:leading-6.5 text-white;
   }
+  .bold12-s {
+    @apply font-bold text-12 leading-6.5;
+  }
   .bold12 {
     @apply font-bold text-10 lg:text-12 lg:leading-6.5 text-white;
   }
@@ -316,7 +313,7 @@ body {
     @apply font-bold text-10  lg:leading-6.5 text-white;
   }
   .semi24 {
-    @apply font-semibold text-10 lg:text-24 lg:leading-6.5 text-white;
+    @apply font-semibold text-12 lg:text-24 lg:leading-6.5 text-gray13;
   }
   .semi15 {
     @apply font-semibold text-10 lg:text-15 lg:leading-6.5 text-white;
@@ -340,7 +337,7 @@ body {
     @apply font-medium text-10 lg:text-16 lg:leading-5 text-white;
   }
   .medium15 {
-    @apply font-medium text-10 lg:text-15 lg:leading-4 text-white;
+    @apply font-medium text-10 lg:text-15 lg:leading-4 text-gray6;
   }
   .medium12 {
     @apply font-medium text-10 lg:text-12 lg:leading-3.5 text-white;

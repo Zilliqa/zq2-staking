@@ -44,6 +44,7 @@ const config: Config = {
         gray10: "#7C7C7C",
         gray11: "#858A8A",
         gray12: "#333333",
+        gray13: "#8E8E8E",
 
         white1: "#F1F4F4",
         white2: "#F7FBFA",
@@ -69,6 +70,7 @@ const config: Config = {
         red2: "#FF4A4A",
       },
       fontSize: {
+        "8": "8px",
         "10": "10px",
         "11": "11px",
         "12": "12px",
