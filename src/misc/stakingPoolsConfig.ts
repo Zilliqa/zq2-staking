@@ -1,14 +1,25 @@
-import { Address, erc20Abi, formatUnits, parseUnits } from "viem"
+import {
+  Address,
+  ContractFunctionArgs,
+  ContractFunctionName,
+  erc20Abi,
+  formatUnits,
+  parseUnits,
+  ReadContractReturnType,
+} from "viem"
 import {
   CHAIN_ZQ2_PROTOTESTNET,
-  CHAIN_ZQ2_DOCKERCOMPOSE,
   getViemClient,
   MOCK_CHAIN,
   CHAIN_ZQ2_DEVNET,
   CHAIN_ZQ2_PROTOMAINNET,
 } from "./chainConfig"
 import { readContract } from "viem/actions"
-import { delegatorAbi, depositAbi } from "./stakingAbis"
+import {
+  depositAbi,
+  liquidDelegatorAbi,
+  nonLiquidDelegatorAbi,
+} from "./stakingAbis"
 
 /**
  * Deposit address is always the same
@@ -56,9 +67,7 @@ export interface StakingPoolConfig {
 
 async function mockDelegatorDataProvider(
   mockData: StakingPoolData,
-  loadingMiliseconds: number,
-  definition: StakingPoolDefinition,
-  chainId: number
+  loadingMiliseconds: number
 ): Promise<StakingPoolData> {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -73,36 +82,26 @@ async function fetchLiquidDelegatorDataFromNetwork(
 ): Promise<StakingPoolData> {
   const viemClient = getViemClient(chainId)
 
-  const readDelegatorContract = async <T>(functionName: string): Promise<T> => {
-    return (await readContract(viemClient, {
+  const readDelegatorContract = async <
+    functionName extends ContractFunctionName<
+      typeof liquidDelegatorAbi,
+      "pure" | "view"
+    >,
+    const args extends ContractFunctionArgs<
+      typeof liquidDelegatorAbi,
+      "pure" | "view",
+      functionName
+    >,
+  >(
+    fname: functionName
+  ): Promise<
+    ReadContractReturnType<typeof liquidDelegatorAbi, functionName, args>
+  > => {
+    return readContract(viemClient, {
       address: definition.address as Address,
-      abi: delegatorAbi,
-      functionName,
-    })) as T
-  }
-
-  const readTokenContract = async <T>(
-    functionName:
-      | "symbol"
-      | "name"
-      | "totalSupply"
-      | "allowance"
-      | "balanceOf"
-      | "decimals"
-  ): Promise<T> => {
-    return (await readContract(viemClient, {
-      address: definition.tokenAddress as Address,
-      abi: erc20Abi,
-      functionName,
-    })) as T
-  }
-
-  const readDepositContract = async <T>(functionName: string): Promise<T> => {
-    return (await readContract(viemClient, {
-      address: DEPOSIT_ADDRESS,
-      abi: depositAbi,
-      functionName,
-    })) as T
+      abi: liquidDelegatorAbi,
+      functionName: fname,
+    })
   }
 
   try {
@@ -113,11 +112,19 @@ async function fetchLiquidDelegatorDataFromNetwork(
       depositTotalStake,
       [commissionNumerator, commissionDenominator],
     ] = await Promise.all([
-      readTokenContract<bigint>("totalSupply"),
-      readDelegatorContract<bigint>("getPrice"),
-      readDelegatorContract<bigint>("getStake"),
-      readDepositContract<bigint>("getFutureTotalStake"),
-      readDelegatorContract<[bigint, bigint]>("getCommission"),
+      readContract(viemClient, {
+        address: definition.tokenAddress as Address,
+        abi: erc20Abi,
+        functionName: "totalSupply",
+      }),
+      readDelegatorContract("getPrice"),
+      readDelegatorContract("getStake"),
+      readContract(viemClient, {
+        address: DEPOSIT_ADDRESS,
+        abi: depositAbi,
+        functionName: "getFutureTotalStake",
+      }),
+      readDelegatorContract("getCommission"),
     ])
 
     const zilToTokenRate = 1 / parseFloat(formatUnits(zilToTokenRateWei, 18))
@@ -157,31 +164,43 @@ async function fetchNonLiquidDelegatorDataFromNetwork(
 ): Promise<StakingPoolData> {
   const viemClient = getViemClient(chainId)
 
-  const readDelegatorContract = async <T>(functionName: string): Promise<T> => {
-    return (await readContract(viemClient, {
+  const readDelegatorContract = async <
+    functionName extends ContractFunctionName<
+      typeof nonLiquidDelegatorAbi,
+      "pure" | "view"
+    >,
+    const args extends ContractFunctionArgs<
+      typeof nonLiquidDelegatorAbi,
+      "pure" | "view",
+      functionName
+    >,
+  >(
+    fname: functionName
+  ): Promise<
+    ReadContractReturnType<typeof nonLiquidDelegatorAbi, functionName, args>
+  > => {
+    return readContract(viemClient, {
       address: definition.address as Address,
-      abi: delegatorAbi,
-      functionName,
-    })) as T
-  }
-
-  const readDepositContract = async <T>(functionName: string): Promise<T> => {
-    return (await readContract(viemClient, {
-      address: DEPOSIT_ADDRESS,
-      abi: depositAbi,
-      functionName,
-    })) as T
+      abi: nonLiquidDelegatorAbi,
+      functionName: fname,
+    })
   }
 
   try {
     const [
+      tvl,
       delegatorStake,
       depositTotalStake,
       [commissionNumerator, commissionDenominator],
     ] = await Promise.all([
-      readDelegatorContract<bigint>("getStake"),
-      readDepositContract<bigint>("getFutureTotalStake"),
-      readDelegatorContract<[bigint, bigint]>("getCommission"),
+      readDelegatorContract("getDelegatedTotal"),
+      readDelegatorContract("getStake"),
+      readContract(viemClient, {
+        address: DEPOSIT_ADDRESS,
+        abi: depositAbi,
+        functionName: "getFutureTotalStake",
+      }),
+      readDelegatorContract("getCommission"),
     ])
 
     const bigintDivisionPrecision = 1000000n
@@ -201,7 +220,7 @@ async function fetchNonLiquidDelegatorDataFromNetwork(
       delegatorRewardForShare / parseFloat(formatUnits(delegatorStake, 18))
 
     return {
-      tvl: parseUnits("10000", 18), // TODO get actual data
+      tvl,
       commission,
       zilToTokenRate: 1,
       votingPower,

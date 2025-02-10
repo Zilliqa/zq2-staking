@@ -97,6 +97,7 @@ interface RewardCardProps {
   rewardInfo: UserNonLiquidStakingPoolRewardData
   selectStakingPoolForView: (stakingPoolId: string | null) => void
   claimReward: (delegatorAddress: string) => void
+  stakeReward: (delegatorAddress: string) => void
 }
 
 const RewardCard: React.FC<RewardCardProps> = ({
@@ -104,6 +105,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
   stakingPool,
   selectStakingPoolForView,
   claimReward,
+  stakeReward,
 }) => {
   return (
     <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-xl items-center">
@@ -144,6 +146,13 @@ const RewardCard: React.FC<RewardCardProps> = ({
           >
             Claim Reward
           </Button>
+
+          <Button
+            className="btn-secondary-gray2"
+            onClick={() => stakeReward(stakingPool.definition.address)}
+          >
+            Stake Reward
+          </Button>
         </div>
         <div className="max-lg:w-1/2 lg:mt-2.5">
           <Button
@@ -167,7 +176,8 @@ const WithdrawZilView: React.FC = () => {
     nonLiquidRewards,
   } = StakingPoolsStorage.useContainer()
 
-  const { claimUnstake, claimReward } = StakingOperations.useContainer()
+  const { claimUnstake, claimReward, stakeReward } =
+    StakingOperations.useContainer()
 
   const anyItemsAvailable =
     availableForUnstaking.length > 0 ||
@@ -212,6 +222,7 @@ const WithdrawZilView: React.FC = () => {
               stakingPool={reward.stakingPool}
               selectStakingPoolForView={selectStakingPoolForView}
               claimReward={claimReward}
+              stakeReward={stakeReward}
             />
           ))}
 
