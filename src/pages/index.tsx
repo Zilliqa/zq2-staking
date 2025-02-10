@@ -54,7 +54,7 @@ const HomePage = () => {
     pendingUnstaking,
   } = StakingPoolsStorage.useContainer()
 
-  const [mobileHaveClaims, setMobileHaveClaims] = useState<boolean>(false)
+  const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false)
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
     <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full bg-black p-4">
@@ -87,7 +87,7 @@ const HomePage = () => {
     </div>
   )
 
-  const mobileOverlayContent = mobileHaveClaims
+  const mobileOverlayContent = mobileShowClaims
     ? mobileOverlayWrapper(<WithdrawZilView />)
     : stakingPoolForView &&
       mobileOverlayWrapper(
@@ -123,12 +123,12 @@ const HomePage = () => {
           <>
             <div className="flex justify-between items-center w-full">
               <div>
-                {mobileHaveClaims && (
+                {mobileShowClaims && (
                   <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
                     <a
                       className="justify-start flex items-center bold12-s"
                       onClick={() => {
-                        setMobileHaveClaims(false)
+                        setMobileShowClaims(false)
                       }}
                     >
                       {" "}
@@ -144,9 +144,9 @@ const HomePage = () => {
                   </div>
                 )}
 
-                {!mobileHaveClaims && stakingPoolForView && (
+                {!mobileShowClaims && stakingPoolForView && (
                   <div
-                    className={`${!mobileHaveClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
+                    className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
                   >
                     {" "}
                     <a
@@ -168,9 +168,9 @@ const HomePage = () => {
                   </div>
                 )}
 
-                {!mobileHaveClaims && !stakingPoolForView && (
+                {!mobileShowClaims && !stakingPoolForView && (
                   <div
-                    className={`${!mobileHaveClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
+                    className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
                   >
                     {" "}
                     <a
@@ -210,10 +210,10 @@ const HomePage = () => {
               <div className="flex items-center gap-3">
                 <a
                   className={`justify-start bold12-s relative max-lg:w-full lg:min-w-[320px] mx-auto
-                        ${mobileHaveClaims ? "text-gray5" : "text-aqua1"}
+                        ${mobileShowClaims ? "text-gray5" : "text-aqua1"}
                         `}
                   onClick={() => {
-                    setMobileHaveClaims(false)
+                    setMobileShowClaims(false)
                   }}
                 >
                   {stakingPoolForView
@@ -221,7 +221,7 @@ const HomePage = () => {
                     : !stakingPoolForView
                       ? "Staking"
                       : ""}
-                  {!mobileHaveClaims && (
+                  {!mobileShowClaims && (
                     <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full" />
                   )}
                 </a>
@@ -232,16 +232,16 @@ const HomePage = () => {
                 >
                   <a
                     className={`justify-start flex items-center whitespace-nowrap `}
-                    onClick={() => setMobileHaveClaims(true)}
+                    onClick={() => setMobileShowClaims(true)}
                   >
                     {" "}
                     <div
                       className={` relative
-                    ${mobileHaveClaims ? "text-aqua1" : "text-gray5"}
+                    ${mobileShowClaims ? "text-aqua1" : "text-gray5"}
                    whitespace-nowrap bold12-s`}
                     >
                       My Claims
-                      {mobileHaveClaims && (
+                      {mobileShowClaims && (
                         <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full" />
                       )}
                     </div>
@@ -344,7 +344,7 @@ const HomePage = () => {
       </div>
 
       <div
-        className={` ${mobileHaveClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
+        className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
       overflow-y-hidden `}
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh]">
