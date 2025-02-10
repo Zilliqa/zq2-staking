@@ -17,7 +17,9 @@ import { Button, Modal } from "antd"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import ArrowBack from "../assets/svgs/arrow-back-white.svg"
-import ArrowNext from "../assets/svgs/arrow-next-black.svg"
+import ArrowBackAqua from "../assets/svgs/arrow-back-aqua.svg"
+
+import Star from "../assets/svgs/star.svg"
 import Logo from "../assets/svgs/logo.svg"
 
 const HomePage = () => {
@@ -52,7 +54,7 @@ const HomePage = () => {
     pendingUnstaking,
   } = StakingPoolsStorage.useContainer()
 
-  const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false)
+  const [mobileHaveClaims, setMobileHaveClaims] = useState<boolean>(false)
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
     <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full bg-black p-4">
@@ -66,7 +68,7 @@ const HomePage = () => {
         <LoginView />
       ) : stakingPoolForView ? (
         <div
-          className="bg-black4/[68%] rounded-2.5xl xs:px-5 lg:px-7.5 rounded-2.5xl h-full 
+          className="bg-black4/[68%] rounded-2.5xl xs:px-5 lg:px-7.5 h-full 
          "
         >
           <StakingPoolDetailsView
@@ -85,20 +87,20 @@ const HomePage = () => {
     </div>
   )
 
-  const mobileOverlayContent = mobileShowClaims
+  const mobileOverlayContent = mobileHaveClaims
     ? mobileOverlayWrapper(<WithdrawZilView />)
     : stakingPoolForView &&
-      mobileOverlayWrapper(
-        <StakingPoolDetailsView
-          selectStakingPoolForStaking={(stakingPoolId) => {
-            selectStakingPoolForView(null)
-            selectStakingPoolForStaking(stakingPoolId)
-          }}
-          stakingPoolData={stakingPoolForView.stakingPool}
-          userStakingPoolData={stakingPoolForView.userData.staked}
-          userUnstakingPoolData={stakingPoolForView.userData.unstaked}
-        />
-      )
+    mobileOverlayWrapper(
+      <StakingPoolDetailsView
+        selectStakingPoolForStaking={(stakingPoolId) => {
+          selectStakingPoolForView(null)
+          selectStakingPoolForStaking(stakingPoolId)
+        }}
+        stakingPoolData={stakingPoolForView.stakingPool}
+        userStakingPoolData={stakingPoolForView.userData.staked}
+        userUnstakingPoolData={stakingPoolForView.userData.unstaked}
+      />
+    )
 
   const connectWallet =
     appConfig.chainId === MOCK_CHAIN.id ? (
@@ -115,105 +117,148 @@ const HomePage = () => {
     )
 
   const mobileBottomNavition = (
-    <div className="fixed bottom-0 left-0 lg:hidden w-full mt-7.5 bg-black pt-1.5">
-      <div className="flex justify-between gap-1 mb-4 mx-2.5">
+    <div className="fixed bottom-0 left-0 lg:hidden w-full mt-7.5  pt-1.5">
+      <div className="flex justify-between gap-1 mb-5 mt-2 mx-2.5 sm:mx-4 md:mx-6">
         {isWalletConnected ? (
           <>
-            {mobileShowClaims && (
-              <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
-                <Button
-                  type="default"
-                  size="large"
-                  className="btn-secondary-lg group justify-start"
-                  onClick={() => {
-                    setMobileShowClaims(false)
-                  }}
-                >
-                  <Image
-                    className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
-                    src={ArrowBack}
-                    alt="arrow icon"
-                    width={24}
-                    height={24}
-                  />
-                  {stakingPoolForView
-                    ? stakingPoolForView?.stakingPool.definition.name
-                    : "Back"}
-                </Button>
-              </div>
-            )}
-            {!mobileShowClaims && stakingPoolForView && (
-              <div
-                className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
-              >
-                <Button
-                  type="default"
-                  size="large"
-                  className="btn-secondary-lg group justify-start"
-                  onClick={() => {
-                    setMobileShowClaims(false)
-                  }}
-                >
-                  <Image
-                    className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
-                    src={ArrowBack}
-                    alt={"arrow icon"}
-                    width={24}
-                    height={24}
-                  />
-                  {stakingPoolForView
-                    ? stakingPoolForView?.stakingPool.definition.name
-                    : "Back"}
-                </Button>
-              </div>
-            )}
-            {!mobileShowClaims && stakingPoolForView && (
-              <div
-                className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
-              >
-                <Button
-                  type="default"
-                  size="large"
-                  className="btn-secondary-lg group justify-start"
-                  onClick={() => {
-                    selectStakingPoolForView(null)
-                  }}
-                >
-                  {" "}
-                  <Image
-                    className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
-                    src={ArrowBack}
-                    alt="arrow icon"
-                    width={24}
-                    height={24}
-                  />
-                  Back
-                </Button>
-              </div>
-            )}
-            {!mobileShowClaims &&
-              availableForUnstaking.length + pendingUnstaking.length != 0 && (
-                <div
-                  className={`h-inherit ${stakingPoolForView ? "w-1/2" : "w-full"}`}
-                >
-                  <Button
-                    type="default"
-                    size="large"
-                    className="btn-primary-gradient-aqua-lg group justify-end"
-                    onClick={() => setMobileShowClaims(true)}
+
+            <div className="flex justify-between items-center w-full">
+              <div>
+                {mobileHaveClaims && (
+                  <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
+                    <a
+                      className="justify-start flex items-center bold12-s"
+                      onClick={() => {
+                        setMobileHaveClaims(false)
+                      }}
+                    >  <Image
+                        className="mx-1 xs:mx-3 transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                        src={ArrowBackAqua}
+                        alt={"arrow icon"}
+                        width={8}
+                        height={4.5}
+                      />
+                      Back 
+                    </a>
+                  </div>
+                )}
+
+                {!mobileHaveClaims && stakingPoolForView && (
+                  <div
+                    className={`${!mobileHaveClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
+                  >  <a
+
+                    className="justify-start flex items-center bold12-s"
+                    onClick={() => {
+                      selectStakingPoolForView(null)
+                    }}
+                  > <Image
+                        className="mx-1 xs:mx-3 transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                        src={ArrowBackAqua}
+                        alt={"arrow icon"}
+                        width={8}
+                        height={4.5}
+                      />
+                      Back
+                    </a>
+                  </div>
+                )}
+
+                {!mobileHaveClaims && !stakingPoolForView && (
+                  <div
+                    className={`${!mobileHaveClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
+                  >  <a
+
+                    className="justify-start"
+                    onClick={() => {
+                      selectStakingPoolForView(null)
+                    }}
                   >
-                    {availableForUnstaking.length + pendingUnstaking.length}{" "}
-                    Claims
-                    <Image
-                      className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-                      src={ArrowNext}
-                      alt={"arrow icon"}
-                      width={24}
-                      height={24}
+                      <Button
+                        className="btn-primary-gradient-aqua px-5 py-2 group flex items-center gap-1"
+                      >
+                        <Image
+                          className=" h-2 w-2"
+                          src={Star}
+                          alt="star icon"
+                          width={8}
+                          height={8}
+                        /><Image
+                          className=" h-2 w-2"
+                          src={Star}
+                          alt="star icon"
+                          width={8}
+                          height={8}
+                        /><Image
+                          className=" h-2 w-2"
+                          src={Star}
+                          alt="star icon"
+                          width={8}
+                          height={8}
+                        />
+                      </Button>
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center gap-3">
+
+                <a
+                  className={`justify-start bold12-s relative max-lg:w-full lg:min-w-[320px] mx-auto
+                        ${mobileHaveClaims ? 'text-gray5' : 'text-aqua1'}
+                        `}
+                  onClick={() => {
+                    setMobileHaveClaims(false)
+                  }}
+                >
+                  {(stakingPoolForView)
+                    ?
+                    'Validator' :
+                    (!stakingPoolForView)
+                      ? 'Staking' :
+                      ''
+                  }
+                  {!mobileHaveClaims && (
+                    <span
+                      className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full"
                     />
-                  </Button>
+                  )}
+                </a>
+
+                <div
+                  className={`h-inherit
+                      ${stakingPoolForView ? "w-1/2" : "w-full"}`}
+                >
+                  <a
+                    className={`justify-start flex items-center whitespace-nowrap `}
+
+                    onClick={() => setMobileHaveClaims(true)}
+                  > <div className={` relative
+                    ${mobileHaveClaims ? 'text-aqua1' : 'text-gray5'}
+                   whitespace-nowrap bold12-s`} >
+                      My Claims
+
+                      {mobileHaveClaims && (
+                        <span
+                          className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full"
+                        />
+                      )}
+
+
+                    </div>
+                    {availableForUnstaking.length + pendingUnstaking.length != 0 &&
+                      <div
+                        className={`bg-red2 text-white rounded-full px-2 h-4 w-4
+                      text-8 font-bold p-0.5 ml-1 mb-5 items-center flex justify-center
+                     ${availableForUnstaking.length + pendingUnstaking.length != 0 && 'text-white'}`}
+                      >
+                        {availableForUnstaking.length + pendingUnstaking.length}
+                      </div>}
+                  </a>
                 </div>
-              )}
+              </div>
+            </div>
           </>
         ) : (
           <>
@@ -252,9 +297,8 @@ const HomePage = () => {
 
   return (
     <div
-      className={`h-screen w-screen relative transition-opacity duration-1000 ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}
+      className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden ${isVisible ? "opacity-100" : "opacity-0"
+        }`}
     >
       {/* Header */}
       <div className="h-[10vh] w-full flex items-center justify-center text-white border-b-[0.5px] border-gray2">
@@ -299,12 +343,12 @@ const HomePage = () => {
       </div>
 
       <div
-        className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
+        className={` ${mobileHaveClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
       overflow-y-hidden `}
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh]">
           {/* Left column */}
-          <div className="bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl">
+          <div className="lg:bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl ">
             <StakingPoolsList />
           </div>
 
