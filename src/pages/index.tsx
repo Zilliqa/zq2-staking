@@ -90,17 +90,17 @@ const HomePage = () => {
   const mobileOverlayContent = mobileHaveClaims
     ? mobileOverlayWrapper(<WithdrawZilView />)
     : stakingPoolForView &&
-    mobileOverlayWrapper(
-      <StakingPoolDetailsView
-        selectStakingPoolForStaking={(stakingPoolId) => {
-          selectStakingPoolForView(null)
-          selectStakingPoolForStaking(stakingPoolId)
-        }}
-        stakingPoolData={stakingPoolForView.stakingPool}
-        userStakingPoolData={stakingPoolForView.userData.staked}
-        userUnstakingPoolData={stakingPoolForView.userData.unstaked}
-      />
-    )
+      mobileOverlayWrapper(
+        <StakingPoolDetailsView
+          selectStakingPoolForStaking={(stakingPoolId) => {
+            selectStakingPoolForView(null)
+            selectStakingPoolForStaking(stakingPoolId)
+          }}
+          stakingPoolData={stakingPoolForView.stakingPool}
+          userStakingPoolData={stakingPoolForView.userData.staked}
+          userUnstakingPoolData={stakingPoolForView.userData.unstaked}
+        />
+      )
 
   const connectWallet =
     appConfig.chainId === MOCK_CHAIN.id ? (
@@ -121,7 +121,6 @@ const HomePage = () => {
       <div className="flex justify-between gap-1 mb-5 mt-2 mx-2.5 sm:mx-4 md:mx-6">
         {isWalletConnected ? (
           <>
-
             <div className="flex justify-between items-center w-full">
               <div>
                 {mobileHaveClaims && (
@@ -131,14 +130,16 @@ const HomePage = () => {
                       onClick={() => {
                         setMobileHaveClaims(false)
                       }}
-                    >  <Image
+                    >
+                      {" "}
+                      <Image
                         className="mx-1 xs:mx-3 transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
                         src={ArrowBackAqua}
                         alt={"arrow icon"}
                         width={8}
                         height={4.5}
                       />
-                      Back 
+                      Back
                     </a>
                   </div>
                 )}
@@ -146,13 +147,16 @@ const HomePage = () => {
                 {!mobileHaveClaims && stakingPoolForView && (
                   <div
                     className={`${!mobileHaveClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
-                  >  <a
-
-                    className="justify-start flex items-center bold12-s"
-                    onClick={() => {
-                      selectStakingPoolForView(null)
-                    }}
-                  > <Image
+                  >
+                    {" "}
+                    <a
+                      className="justify-start flex items-center bold12-s"
+                      onClick={() => {
+                        selectStakingPoolForView(null)
+                      }}
+                    >
+                      {" "}
+                      <Image
                         className="mx-1 xs:mx-3 transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
                         src={ArrowBackAqua}
                         alt={"arrow icon"}
@@ -167,29 +171,30 @@ const HomePage = () => {
                 {!mobileHaveClaims && !stakingPoolForView && (
                   <div
                     className={`${!mobileHaveClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
-                  >  <a
-
-                    className="justify-start"
-                    onClick={() => {
-                      selectStakingPoolForView(null)
-                    }}
                   >
-                      <Button
-                        className="btn-primary-gradient-aqua px-5 py-2 group flex items-center gap-1"
-                      >
+                    {" "}
+                    <a
+                      className="justify-start"
+                      onClick={() => {
+                        selectStakingPoolForView(null)
+                      }}
+                    >
+                      <Button className="btn-primary-gradient-aqua px-5 py-2 group flex items-center gap-1">
                         <Image
                           className=" h-2 w-2"
                           src={Star}
                           alt="star icon"
                           width={8}
                           height={8}
-                        /><Image
+                        />
+                        <Image
                           className=" h-2 w-2"
                           src={Star}
                           alt="star icon"
                           width={8}
                           height={8}
-                        /><Image
+                        />
+                        <Image
                           className=" h-2 w-2"
                           src={Star}
                           alt="star icon"
@@ -203,26 +208,21 @@ const HomePage = () => {
               </div>
 
               <div className="flex items-center gap-3">
-
                 <a
                   className={`justify-start bold12-s relative max-lg:w-full lg:min-w-[320px] mx-auto
-                        ${mobileHaveClaims ? 'text-gray5' : 'text-aqua1'}
+                        ${mobileHaveClaims ? "text-gray5" : "text-aqua1"}
                         `}
                   onClick={() => {
                     setMobileHaveClaims(false)
                   }}
                 >
-                  {(stakingPoolForView)
-                    ?
-                    'Validator' :
-                    (!stakingPoolForView)
-                      ? 'Staking' :
-                      ''
-                  }
+                  {stakingPoolForView
+                    ? "Validator"
+                    : !stakingPoolForView
+                      ? "Staking"
+                      : ""}
                   {!mobileHaveClaims && (
-                    <span
-                      className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full"
-                    />
+                    <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full" />
                   )}
                 </a>
 
@@ -232,29 +232,29 @@ const HomePage = () => {
                 >
                   <a
                     className={`justify-start flex items-center whitespace-nowrap `}
-
                     onClick={() => setMobileHaveClaims(true)}
-                  > <div className={` relative
-                    ${mobileHaveClaims ? 'text-aqua1' : 'text-gray5'}
-                   whitespace-nowrap bold12-s`} >
+                  >
+                    {" "}
+                    <div
+                      className={` relative
+                    ${mobileHaveClaims ? "text-aqua1" : "text-gray5"}
+                   whitespace-nowrap bold12-s`}
+                    >
                       My Claims
-
                       {mobileHaveClaims && (
-                        <span
-                          className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full"
-                        />
+                        <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full" />
                       )}
-
-
                     </div>
-                    {availableForUnstaking.length + pendingUnstaking.length != 0 &&
+                    {availableForUnstaking.length + pendingUnstaking.length !=
+                      0 && (
                       <div
                         className={`bg-red2 text-white rounded-full px-2 h-4 w-4
                       text-8 font-bold p-0.5 ml-1 mb-5 items-center flex justify-center
-                     ${availableForUnstaking.length + pendingUnstaking.length != 0 && 'text-white'}`}
+                     ${availableForUnstaking.length + pendingUnstaking.length != 0 && "text-white"}`}
                       >
                         {availableForUnstaking.length + pendingUnstaking.length}
-                      </div>}
+                      </div>
+                    )}
                   </a>
                 </div>
               </div>
@@ -297,8 +297,9 @@ const HomePage = () => {
 
   return (
     <div
-      className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden ${isVisible ? "opacity-100" : "opacity-0"
-        }`}
+      className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
     >
       {/* Header */}
       <div className="h-[10vh] w-full flex items-center justify-center text-white border-b-[0.5px] border-gray2">
