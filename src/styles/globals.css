@@ -107,7 +107,7 @@ body {
   }
 
   .btn-primary-gradient-aqua-lg {
-    @apply btn-primary-gradient-aqua py-4 max-lg:text-17;
+    @apply btn-primary-gradient-aqua py-2 max-lg:text-17;
   }
 
   .btn-secondary {
@@ -123,7 +123,7 @@ body {
   }
 
   .btn-secondary-colored {
-    @apply !gap-0  !whitespace-normal py-2 px-5 w-full font-bold text-13 leading-6 tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full;
+    @apply !gap-0  !whitespace-normal lg:py-2 px-5 w-full font-bold text-13 leading-6 tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full;
 
     &:hover {
       @apply !opacity-80;
@@ -286,7 +286,7 @@ body {
     @apply font-bold text-22 lg:text-52 lg:leading-16 text-white;
   }
   .bold33 {
-    @apply font-bold text-20 lg:text-33 lg:leading-10 text-white;
+    @apply font-bold text-22 lg:text-33 lg:leading-10 text-white;
   }
   .bold26 {
     @apply font-bold text-14 lg:text-26 lg:leading-7.75;
@@ -301,7 +301,7 @@ body {
     @apply font-bold text-10 lg:text-14 lg:leading-6.5 text-white;
   }
   .bold13 {
-    @apply font-bold text-10 lg:text-13 lg:leading-6.5 text-white;
+    @apply font-bold text-13 lg:leading-6.5 text-white;
   }
   .bold12-s {
     @apply font-bold text-12 leading-6.5;
@@ -322,13 +322,13 @@ body {
     @apply font-semibold text-10 lg:text-14 lg:leading-5 text-white;
   }
   .semi13 {
-    @apply font-semibold text-10 lg:text-13 lg:leading-5 text-white;
+    @apply font-semibold text-15 lg:text-13 lg:leading-5 text-white;
   }
   .semi11 {
     @apply font-semibold text-10 lg:text-11 lg:leading-4 text-white;
   }
   .medium20 {
-    @apply font-medium text-10 lg:text-20 lg:leading-6.5 text-white;
+    @apply font-medium text-18 lg:text-20 lg:leading-6.5 text-white;
   }
   .medium17 {
     @apply font-medium text-10 lg:text-17 lg:leading-5 text-gray8;

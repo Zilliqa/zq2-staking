@@ -71,6 +71,7 @@ const config: Config = {
       },
       fontSize: {
         "8": "8px",
+        "9": "9px",
         "10": "10px",
         "11": "11px",
         "12": "12px",

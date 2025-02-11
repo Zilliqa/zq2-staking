@@ -34,7 +34,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   const colorInfoEntry = (title: string, value: string | null) => (
     <div>
-      <div className="body2-semibold text-aqua2">{value}</div>
+      <div className="semi14 text-aqua2">{value}</div>
       <div className="text-gray8 info-label">{title}</div>
     </div>
   )
@@ -42,9 +42,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
     <div>
       {value ? (
-        <div className="body2-semibold text-gray7 xl:whitespace-nowrap">
-          {value}
-        </div>
+        <div className="semi14 text-gray7 xl:whitespace-nowrap">{value}</div>
       ) : (
         <div className="animated-gradient h-[1.5em] w-[4em]"></div>
       )}
@@ -96,20 +94,22 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   return (
     <div
-      className="relative overflow-y-auto max-h-[calc(90vh-10vh)] sm:max-h-[calc(100vh-5vh)]
-      scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-2
-       pr-2 lg:pr-4"
+      className="relative overflow-y-auto max-h-[calc(90vh-16vh)] sm:max-h-[calc(90vh-15vh)] lg:max-h-[calc(100vh-5vh)]
+    scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-2
+     pr-2 lg:pr-4"
     >
       <div className="items-center flex justify-between py-1 lg:py-7.5">
         <div className="max-lg:ms-1 items-center flex">
-          <span className="text-white1 bold33 mr-6">
+          <span className="text-white1 bold33 lg:mr-6 mr-2">
             {stakingPoolData.definition.name}
           </span>
 
           {isPoolLiquid() && (
             <>
-              <span className="text-38 lg:h4 text-black3  font-light">|</span>
-              <span className="medium20 text-gray6 ml-6">
+              <span className="lg:text-38 text-20 lg:h4 text-black3  font-light">
+                |
+              </span>
+              <span className="medium20 text-gray6 lg:ml-6 ml-2">
                 {stakingPoolData.definition.tokenSymbol}
               </span>
 
@@ -126,7 +126,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         </div>
       </div>
 
-      <div className="bg-grey-gradient py-6 flex flex-col gap-4 px-9.5 rounded-xl">
+      <div className="bg-grey-gradient py-6 flex flex-col gap-4 lg:px-9.5 px-5 rounded-xl">
         {doesUserHoldAnyFundsInThisPool && (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pb-4 border-b border-black2/50">
             {colorInfoEntry(
@@ -188,11 +188,11 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             )}
         </div>
       </div>
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-3 my-2">
         {["Stake", "Unstake", "Claim"].map((pane) => (
           <div
             key={pane}
-            className={`body1 lg:base text-center py-7 cursor-pointer border-solid border-b ${
+            className={`semi13 text-center py-4 cursor-pointer border-solid border-b ${
               selectedPane === pane
                 ? "text-white1 border-gradient-1"
                 : "text-gray1 border-black2"

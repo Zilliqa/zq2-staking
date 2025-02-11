@@ -39,8 +39,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
           height={61}
         />
         <div className="flex flex-col  w-full">
-          <div className="flex justify-between items-center">
-            <h3 className="bold22">{stakingPoolData.definition.name}</h3>
+          <div className="flex gap-2 items-center mb-3">
             <Image
               className=" rounded-10 h[30px] w-[30px] xs:h-[40px] xs:w-[40px] md:hidden block"
               src={stakingPoolData.definition.iconUrl}
@@ -48,6 +47,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               width={40}
               height={40}
             />
+            <h3 className="bold22">{stakingPoolData.definition.name}</h3>
           </div>
 
           <div className="flex justify-between items-center">
@@ -55,7 +55,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               <div className="flex max-lg:order-2 items-center">
                 {stakingPoolData.data ? (
                   <div
-                    className={`medium12 max-xs:ml-2 xs:max-lg:ml-6 ${
+                    className={`lg:medium12 regular12 max-xs:ml-2 xs:max-lg:ml-6 ${
                       stakingPoolData.data.votingPower * 100 >= 50
                         ? "text-red2"
                         : stakingPoolData.data.votingPower * 100 >= 30
@@ -68,7 +68,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   </div>
                 ) : (
                   <>
-                    <span className="medium12 max-xs:ml-2 xs:max-lg:ml-6">
+                    <span className="lg:medium12 regular12 max-xs:ml-2 xs:max-lg:ml-6">
                       VP
                     </span>
                     <span className="w-[3em] ml-1 animated-gradient" />
