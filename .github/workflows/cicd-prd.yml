@@ -1,0 +1,102 @@
+name: "CICD production"
+
+on:
+  # On released
+  release:
+    types: [published]
+
+jobs:
+  build-docker:
+    permissions:
+      id-token: write
+      contents: write
+    runs-on: ubuntu-22.04
+    name: "Deploy image"
+    strategy:
+      fail-fast: false
+      matrix:
+        application:
+          - zq2-staking-frontend
+        include:
+          - application: zq2-staking-frontend
+            image_name: zq2-staking-frontend
+            file: images/frontend/Dockerfile
+            context: .
+    env:
+      DOCKER_DOMAIN: asia-docker.pkg.dev
+      REGISTRY: asia-docker.pkg.dev/prj-p-devops-services-tvwmrf63/zilliqa-private
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: "true"
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          fetch-depth: 0
+
+      - name: Docker build and push - production
+        uses: Zilliqa/gh-actions-workflows/actions/ci-dockerized-app-build-push@v2
+        with:
+          file: ${{ matrix.file }}
+          context: ${{ matrix.context }}
+          push: true
+          tag: asia-docker.pkg.dev/prj-p-devops-services-tvwmrf63/zilliqa-private/${{ matrix.image_name }}:${{ github.ref_name }}
+          registry: asia-docker.pkg.dev
+          workload-identity-provider: "${{ secrets.GCP_PRD_GITHUB_WIF }}"
+          service-account: "${{ secrets.GCP_PRD_GITHUB_SA_DOCKER_REGISTRY }}"
+          cache-key: ${{ env.REGISTRY }}/${{ matrix.image_name }}-cache
+          build-args: |
+            DEPLOY_ENV=prd
+
+  deploy-to-production:
+    needs: [build-docker]
+    permissions:
+      id-token: write
+      contents: write
+    runs-on: ubuntu-22.04
+    if: github.event_name == 'release'
+    strategy:
+      fail-fast: false
+      matrix:
+        application:
+          - zq2-stake-protomainnet
+    env:
+      APP_NAME: ${{ matrix.application }}
+      Z_ENV: infra/live/gcp/production/prj-p-prod-apps/z_ase1.yaml
+      Z_SERVICE_ACCOUNT: ${{ secrets.GCP_PRD_GITHUB_SA_K8S_DEPLOY }}
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN_PRD }}
+      GITHUB_PAT: ${{ secrets.GH_PAT }}
+      Z_IMAGE: asia-docker.pkg.dev/prj-p-devops-services-tvwmrf63/zilliqa-private/z:latest
+      REGISTRY: asia-docker.pkg.dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+        with:
+          repository: Zilliqa/devops
+          token: ${{ env.GITHUB_PAT }}
+          ref: main
+          sparse-checkout: |
+            ${{ env.Z_ENV }}
+
+      - name: Authenticate to Google Cloud
+        id: google-auth
+        uses: google-github-actions/auth@71fee32a0bb7e97b4d33d548e7d957010649d8fa
+        with:
+          token_format: "access_token"
+          workload_identity_provider: "${{ secrets.GCP_PRD_GITHUB_WIF }}"
+          service_account: ${{ env.Z_SERVICE_ACCOUNT }}
+          create_credentials_file: true
+
+      - name: Deploy application
+        run: |
+          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://${{ env.REGISTRY }}
+          docker run --rm \
+              -e ZQ_USER='${{ env.Z_SERVICE_ACCOUNT }}' \
+              -e Z_ENV='/devops/${{ env.Z_ENV }}' \
+              -e OP_SERVICE_ACCOUNT_TOKEN='${{ env.OP_SERVICE_ACCOUNT_TOKEN }}' \
+              -e GITHUB_PAT='${{ env.GITHUB_PAT }}' \
+              -e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE='/google/application_default_credentials.json' \
+              -v `pwd`:/devops \
+              -v ${{ steps.google-auth.outputs.credentials_file_path }}:/google/application_default_credentials.json \
+              --name z_container ${{ env.Z_IMAGE }} \
+              bash -c "gcloud config set account ${{ env.Z_SERVICE_ACCOUNT }} && z /app /devops app sync --cache-dir .cache ${{ env.APP_NAME }}"

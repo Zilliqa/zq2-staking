@@ -31,3 +31,7 @@ This one makes the app connected to locally run docker-compose ZQ2 network.
 ## Adding new Delegator
 
 1. Fetch delegator static data using `npx tsx src/script/fetchPoolStaticData.ts`
+
+## Deployment
+
+The app is powered by `z app` utility. The `prototestnet` deployment is automatic on push to `main` branch. The `protomainnet` deployment is automatic on release. Deployment to `devnet` environment requires manual `z app sync`.
