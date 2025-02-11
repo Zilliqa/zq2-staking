@@ -345,17 +345,17 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      <div
-        className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
+        <div
+          className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
       overflow-y-hidden `}
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh]">
-          {/* Left column */}
-          <div
-            className={`lg:bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"}`}
-          >
-            <StakingPoolsList />
-          </div>
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh]">
+            {/* Left column */}
+            <div
+              className={`lg:bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"}`}
+            >
+              <StakingPoolsList />
+            </div>
 
             {desktopColumnContent}
 
