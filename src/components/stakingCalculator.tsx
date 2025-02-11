@@ -212,7 +212,9 @@ const StakingCalculator: React.FC = () => {
                   {stakingPoolForView!.stakingPool.data ? (
                     <>
                       ~
-                      {formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
+                      {formatPercentage(
+                        stakingPoolForView!.stakingPool.data.apr
+                      )}
                     </>
                   ) : (
                     <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>

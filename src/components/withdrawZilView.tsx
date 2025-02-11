@@ -31,7 +31,10 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
   claimUnstake: claim,
 }) => {
   return (
-    <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer" onClick={() => selectStakingPoolForView(stakingPool.definition.id)}>
+    <div
+      className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer"
+      onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
+    >
       <div className="flex lg:flex-col  content-center px-3 py-6 lg:px-9.5 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
         <div className="flex items-center gap-2">
           <Image
@@ -80,7 +83,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               : getHumanFormDuration(unstakeInfo.availableAt) + " left"}
           </Button>
         </div>
-          {/* <div className="max-lg:w-1/2 lg:mt-2.5">
+        {/* <div className="max-lg:w-1/2 lg:mt-2.5">
             <Button
               className="btn-secondary-grey lg:py-5 py-4"
               onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
@@ -109,7 +112,10 @@ const RewardCard: React.FC<RewardCardProps> = ({
   stakeReward,
 }) => {
   return (
-    <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer" onClick={() => selectStakingPoolForView(stakingPool.definition.id)}>
+    <div
+      className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer"
+      onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
+    >
       <div className="flex lg:flex-col  content-center px-3 py-6 lg:px-9.5 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
         <div className="flex items-center gap-2">
           <Image
@@ -161,13 +167,12 @@ const RewardCard: React.FC<RewardCardProps> = ({
       </div>
       <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[218px] px-3 lg:pb-0 pb-4 lg:px-4">
         <div className="max-lg:w-1/2">
-        <Button
+          <Button
             className="btn-primary-grey lg:py-5 py-4"
             onClick={() => stakeReward(stakingPool.definition.address)}
           >
             Stake Reward
           </Button>
-         
         </div>
         <div className="max-lg:w-1/2 lg:mt-2.5">
           {/* <Button
@@ -176,7 +181,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
           >
             View
           </Button> */}
-           <Button
+          <Button
             className="btn-secondary-grey lg:py-5 py-4"
             onClick={() => claimReward(stakingPool.definition.address)}
           >

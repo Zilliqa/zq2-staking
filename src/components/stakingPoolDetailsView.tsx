@@ -42,9 +42,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
     <div>
       {value ? (
-        <div className="semi14 text-gray7 xl:whitespace-nowrap">
-          {value}
-        </div>
+        <div className="semi14 text-gray7 xl:whitespace-nowrap">{value}</div>
       ) : (
         <div className="animated-gradient h-[1.5em] w-[4em]"></div>
       )}
@@ -96,7 +94,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   return (
     <div
-    className="relative overflow-y-auto max-h-[calc(90vh-16vh)] sm:max-h-[calc(90vh-15vh)] lg:max-h-[calc(100vh-5vh)]
+      className="relative overflow-y-auto max-h-[calc(90vh-16vh)] sm:max-h-[calc(90vh-15vh)] lg:max-h-[calc(100vh-5vh)]
     scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-2
      pr-2 lg:pr-4"
     >
@@ -108,7 +106,9 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
           {isPoolLiquid() && (
             <>
-              <span className="lg:text-38 text-20 lg:h4 text-black3  font-light">|</span>
+              <span className="lg:text-38 text-20 lg:h4 text-black3  font-light">
+                |
+              </span>
               <span className="medium20 text-gray6 lg:ml-6 ml-2">
                 {stakingPoolData.definition.tokenSymbol}
               </span>

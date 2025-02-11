@@ -40,7 +40,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         />
         <div className="flex flex-col  w-full">
           <div className="flex gap-2 items-center mb-3">
-          <Image
+            <Image
               className=" rounded-10 h[30px] w-[30px] xs:h-[40px] xs:w-[40px] md:hidden block"
               src={stakingPoolData.definition.iconUrl}
               alt={`${stakingPoolData.definition.name} icon`}
