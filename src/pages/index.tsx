@@ -298,7 +298,6 @@ const HomePage = () => {
 
   return (
     <>
-      <title>Zilliqa Staking</title>
       <div
         className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden ${
           isVisible ? "opacity-100" : "opacity-0"
