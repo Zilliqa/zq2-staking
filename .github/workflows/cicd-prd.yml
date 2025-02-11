@@ -24,7 +24,7 @@ jobs:
             context: .
     env:
       DOCKER_DOMAIN: asia-docker.pkg.dev
-      REGISTRY: asia-docker.pkg.dev/prj-p-devops-services-tvwmrf63/zilliqa-private
+      REGISTRY: asia-docker.pkg.dev/prj-p-devops-services-tvwmrf63/zilliqa-public
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
           file: ${{ matrix.file }}
           context: ${{ matrix.context }}
           push: true
-          tag: asia-docker.pkg.dev/prj-p-devops-services-tvwmrf63/zilliqa-private/${{ matrix.image_name }}:${{ github.ref_name }}
+          tag: ${{ env.REGISTRY }}/${{ matrix.image_name }}:${{ github.ref_name }}
           registry: asia-docker.pkg.dev
           workload-identity-provider: "${{ secrets.GCP_PRD_GITHUB_WIF }}"
           service-account: "${{ secrets.GCP_PRD_GITHUB_SA_DOCKER_REGISTRY }}"
