@@ -8,7 +8,7 @@ interface SortBtnProps {
 
 const SortBtn: React.FC<SortBtnProps> = ({ variable, isClicked, onClick }) => {
   return (
-    <div className="btn-secondary-gray group" onClick={onClick}>
+    <div className="btn-filter group" onClick={onClick}>
       <svg
         width="13"
         height="10"

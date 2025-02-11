@@ -55,7 +55,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               <div className="flex max-lg:order-2 items-center">
                 {stakingPoolData.data ? (
                   <div
-                    className={`regular12 max-xs:ml-2 xs:max-lg:ml-6 ${
+                    className={`medium12 max-xs:ml-2 xs:max-lg:ml-6 ${
                       stakingPoolData.data.votingPower * 100 >= 50
                         ? "text-red2"
                         : stakingPoolData.data.votingPower * 100 >= 30
@@ -68,13 +68,13 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   </div>
                 ) : (
                   <>
-                    <span className="regular12 max-xs:ml-2 xs:max-lg:ml-6">
+                    <span className="medium12 max-xs:ml-2 xs:max-lg:ml-6">
                       VP
                     </span>
                     <span className="w-[3em] ml-1 animated-gradient" />
                   </>
                 )}
-                <div className="flex regular12 ml-2 xs:ml-6">
+                <div className="flex medium12 ml-2 xs:ml-6">
                   Commission{" "}
                   {stakingPoolData.data ? (
                     <>{Math.floor(stakingPoolData.data.commission * 100)}%</>
