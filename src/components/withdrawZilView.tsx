@@ -286,7 +286,8 @@ const WithdrawZilView: React.FC = () => {
                 />
               </div>
               <div className="bold26 mb-15 font-medium">
-                No claims? We’d love to hear<br /> your feedback !
+                No claims? We’d love to hear
+                <br /> your feedback !
               </div>
             </>
           )}
