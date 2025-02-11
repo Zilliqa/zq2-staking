@@ -138,7 +138,7 @@ const HomePage = () => {
                         width={8}
                         height={4.5}
                       />
-                      Back2
+                      Back
                     </a>
                   </div>
                 )}
@@ -161,7 +161,7 @@ const HomePage = () => {
                         width={8}
                         height={4.5}
                       />
-                      Back1
+                      Back
                     </a>
                   </div>
                 )}
