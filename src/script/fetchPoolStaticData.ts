@@ -1,7 +1,7 @@
 import yargs from "yargs/yargs"
 import { hideBin } from "yargs/helpers"
 import { readContract } from "viem/actions"
-import { delegatorAbi } from "@/misc/stakingAbis"
+import { baseDelegatorAbi } from "@/misc/stakingAbis"
 import { Address, erc20Abi } from "viem"
 import { getViemClient } from "@/misc/chainConfig"
 import {
@@ -56,8 +56,8 @@ const argv = yargs(hideBin(process.argv))
   const readDelegatorContract = async <T>(functionName: string): Promise<T> => {
     return (await readContract(getViemClient(chainid), {
       address: argv.contract_address as Address,
-      abi: delegatorAbi,
-      functionName,
+      abi: baseDelegatorAbi,
+      functionName: functionName as any, // to be fixed in https://zilliqa-jira.atlassian.net/browse/APT-1696
     })) as T
   }
 
