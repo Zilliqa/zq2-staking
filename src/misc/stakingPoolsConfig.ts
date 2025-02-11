@@ -397,21 +397,6 @@ export const stakingPoolsConfigForChainId: Record<
       },
       delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
-    {
-      definition: {
-        id: "K23k2322",
-        address: "0x62f3FC68ba2Ff62b23E73c48010262aD64054032",
-        tokenAddress: "0x0000000000000000000000000000000000000000",
-        iconUrl: "/static/logo1.webp",
-        name: "Normal 1",
-        poolType: StakingPoolType.NORMAL,
-        tokenDecimals: 18,
-        tokenSymbol: "ZIL",
-        minimumStake: parseUnits("100", 18),
-        withdrawPeriodInMinutes: twoWeeksInMinutes,
-      },
-      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
-    },
   ],
   [CHAIN_ZQ2_DEVNET.id]: [
     {
