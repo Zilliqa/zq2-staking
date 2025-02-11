@@ -14,6 +14,7 @@ import { getWagmiConfig } from "@/misc/chainConfig"
 import { useEffect, useState } from "react"
 import { AppConfig } from "./api/config"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
+import Head from "next/head"
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient()
@@ -123,6 +124,9 @@ export default function App({ Component, pageProps }: AppProps) {
               <WalletConnector.Provider>
                 <StakingPoolsStorage.Provider>
                   <StakingOperations.Provider>
+                    <Head>
+                      <title>Zilliqa Staking</title>
+                    </Head>
                     <Component {...pageProps} />
                     <DummyWalletSelector />
                   </StakingOperations.Provider>

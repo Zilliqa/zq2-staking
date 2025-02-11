@@ -57,7 +57,7 @@ const HomePage = () => {
   const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false)
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full bg-black p-4">
+    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 p-4">
       {children}
     </div>
   )
@@ -108,7 +108,7 @@ const HomePage = () => {
         type="primary"
         onClick={connectDummyWallet}
         loading={isDummyWalletConnecting}
-        className="btn-primary-gradient-aqua-lg "
+        className="btn-primary-gradient-aqua sm:px-10 w-full sm:max-w-fit"
       >
         CONNECT WALLET
       </Button>
@@ -118,7 +118,7 @@ const HomePage = () => {
 
   const mobileBottomNavition = (
     <div className="fixed bottom-0 left-0 lg:hidden w-full mt-7.5  pt-1.5">
-      <div className="flex justify-between gap-1 mb-5 mt-2 mx-2.5 sm:mx-4 md:mx-6">
+      <div className="flex justify-between items-center gap-1 mb-5 mt-2 mx-2.5 sm:mx-4 md:mx-6">
         {isWalletConnected ? (
           <>
             <div className="flex justify-between items-center w-full">
@@ -266,28 +266,27 @@ const HomePage = () => {
           <>
             {stakingPoolForView && (
               <div className="w-1/2">
-                <Button
-                  type="default"
-                  size="large"
-                  className="btn-secondary-lg group justify-start"
-                  onClick={() => {
-                    selectStakingPoolForView(null)
-                  }}
-                >
-                  {" "}
-                  <Image
-                    className="mx-1 xs:mx-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
-                    src={ArrowBack}
-                    alt={"arrow icon"}
-                    width={24}
-                    height={24}
-                  />
-                  Back
-                </Button>
+                <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
+                  <a
+                    className="justify-start flex items-center bold12-s"
+                    onClick={() => {
+                      selectStakingPoolForView(null)
+                    }}
+                  >
+                    <Image
+                      className="mx-1 xs:mx-3 transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                      src={ArrowBackAqua}
+                      alt={"arrow icon"}
+                      width={8}
+                      height={4.5}
+                    />
+                    Back
+                  </a>
+                </div>
               </div>
             )}
             <div
-              className={`flex items-center justify-center h-[58.79px] bg-[#0e76fd] rounded-lg ${stakingPoolForView ? "w-1/2" : "w-full"}`}
+              className={`flex items-center h-[58.79px] w-full ${stakingPoolForView ? "justify-end" : "justify-center"}`}
             >
               {connectWallet}
             </div>
@@ -299,7 +298,6 @@ const HomePage = () => {
 
   return (
     <>
-      <title>Zilliqa Staking</title>
       <div
         className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden ${
           isVisible ? "opacity-100" : "opacity-0"
@@ -346,14 +344,15 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
         <div
           className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
-        overflow-y-hidden `}
+      overflow-y-hidden `}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh]">
             {/* Left column */}
-            <div className="lg:bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl ">
+            <div
+              className={`lg:bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"}`}
+            >
               <StakingPoolsList />
             </div>
 
