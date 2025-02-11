@@ -5,7 +5,7 @@ import { createContainer } from "./context"
 import { WalletConnector } from "./walletConnector"
 import { StakingPoolsStorage } from "./stakingPoolsStorage"
 import { Address } from "viem"
-import { delegatorAbi } from "@/misc/stakingAbis"
+import { baseDelegatorAbi, nonLiquidDelegatorAbi } from "@/misc/stakingAbis"
 import { writeContract } from "wagmi/actions"
 import { useConfig } from "wagmi"
 
@@ -55,7 +55,7 @@ const useStakingOperations = () => {
     } else {
       writeContract(wagmiConfig, {
         address: delegatorAddress as Address,
-        abi: delegatorAbi,
+        abi: baseDelegatorAbi,
         functionName: "stake",
         args: [],
         value: weiToStake,
@@ -124,7 +124,7 @@ const useStakingOperations = () => {
     } else {
       writeContract(wagmiConfig, {
         address: delegatorAddress as Address,
-        abi: delegatorAbi,
+        abi: baseDelegatorAbi,
         functionName: "unstake",
         args: [tokensToUnstake],
       })
@@ -192,7 +192,7 @@ const useStakingOperations = () => {
     } else {
       writeContract(wagmiConfig, {
         address: delegatorAddress as Address,
-        abi: delegatorAbi,
+        abi: baseDelegatorAbi,
         functionName: "claim",
         args: [],
       })
@@ -258,9 +258,112 @@ const useStakingOperations = () => {
       )
       setPreparingClaimRewardTx(false)
     } else {
-      console.error("Claiming rewards not implemented")
+      writeContract(wagmiConfig, {
+        address: delegatorAddress as Address,
+        abi: nonLiquidDelegatorAbi,
+        functionName: "withdrawAllRewards",
+        args: [],
+      })
+        .then((txHash) => {
+          setClaimRewardCallTxHash(txHash)
+        })
+        .catch((error) => {
+          notification.error({
+            message: "Claiming rewards failed",
+            description:
+              error?.message || "There was an error while claiming reward ZIL",
+            placement: "topRight",
+          })
+        })
+        .finally(() => setPreparingClaimRewardTx(false))
     }
   }
+
+  useEffect(() => {
+    if (claimRewardCallReceiptStatus === "success") {
+      notification.success({
+        message: "Claiming rewards successful",
+        description: "You have successfully claimed rewards",
+        placement: "topRight",
+      })
+      reloadUserStakingPoolsData()
+      updateWalletBalance()
+    } else if (claimRewardCallReceiptStatus === "error") {
+      notification.error({
+        message: "Claiming rewards failed",
+        description: "There was an error while claiming rewards",
+        placement: "topRight",
+      })
+    }
+  }, [claimRewardCallReceiptStatus])
+
+  /**
+   * RESTAKE REWARDS
+   */
+
+  const [stakeRewardCallTxHash, setStakeRewardCallTxHash] = useState<
+    Address | undefined
+  >(undefined)
+  const [preparingStakeRewardTx, setPreparingStakeRewardTx] = useState(false)
+
+  const {
+    isLoading: submittingStakeRewardTx,
+    error: stakeRewardContractCallError,
+    status: stakeRewardCallReceiptStatus,
+  } = useWaitForTransactionReceipt({
+    hash: stakeRewardCallTxHash,
+  })
+
+  const stakeReward = (delegatorAddress: string) => {
+    setPreparingStakeRewardTx(true)
+    if (isDummyWalletConnected) {
+      setDummyWalletPopupContent(
+        "Now User gonna approve the wallet transaction for staking rewards"
+      )
+      setIsDummyWalletPopupOpen(true)
+      setStakeRewardCallTxHash(
+        "0x1234567890234567890234567890234567890" as Address
+      )
+      setPreparingStakeRewardTx(false)
+    } else {
+      writeContract(wagmiConfig, {
+        address: delegatorAddress as Address,
+        abi: nonLiquidDelegatorAbi,
+        functionName: "stakeRewards",
+        args: [],
+      })
+        .then((txHash) => {
+          setStakeRewardCallTxHash(txHash)
+        })
+        .catch((error) => {
+          notification.error({
+            message: "Staking rewards failed",
+            description:
+              error?.message || "There was an error while staking rewards",
+            placement: "topRight",
+          })
+        })
+        .finally(() => setPreparingStakeRewardTx(false))
+    }
+  }
+
+  useEffect(() => {
+    if (stakeRewardCallReceiptStatus === "success") {
+      notification.success({
+        message: "Staking rewards successful",
+        description: "You have successfully staked rewards",
+        placement: "topRight",
+      })
+      reloadUserStakingPoolsData()
+      updateWalletBalance()
+    } else if (stakeRewardCallReceiptStatus === "error") {
+      notification.error({
+        message: "Staking rewards failed",
+        description: "There was an error while staking rewards",
+        placement: "topRight",
+      })
+    }
+  }, [stakeRewardCallReceiptStatus])
 
   /**
    * OTHER
@@ -301,6 +404,12 @@ const useStakingOperations = () => {
       submittingClaimRewardTx || preparingClaimRewardTx,
     claimRewardCallTxHash,
     claimRewardContractCallError,
+
+    stakeReward,
+    isStakingRewardInProgress:
+      submittingStakeRewardTx || preparingStakeRewardTx,
+    stakeRewardCallTxHash,
+    stakeRewardContractCallError,
   }
 }
 

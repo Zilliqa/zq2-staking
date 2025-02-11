@@ -298,80 +298,83 @@ const HomePage = () => {
   )
 
   return (
-    <div
-      className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      {/* Header */}
-      <div className="h-[10vh] w-full flex items-center justify-center text-white border-b-[0.5px] border-gray2">
-        <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 ">
-          <div className="flex items-center">
-            <Image
-              //src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg"
-              src={Logo}
-              alt="Zilliqa Logo"
-              width={32}
-              height={32}
-              className="h-10 md:h-12 w-auto"
-            />
-          </div>
-
-          <div className="flex items-center space-x-4">
-            {!isWalletConnected ? (
-              connectWallet
-            ) : (
-              <>
-                {connectedWalletType === ConnectedWalletType.MockWallet ? (
-                  <Button
-                    type="primary"
-                    className="group relative btn-primary-gradient-aqua-lg min-w-[214px] lg:min-w-[160px]"
-                    onClick={disconnectDummyWallet}
-                  >
-                    <div className=" group-hover:hidden transition-opacity flex items-center justify-center">
-                      <WalletOutlined className="mr-2 !text-black-100" />
-                      {formatAddress(walletAddress || "")}
-                    </div>
-                    <span className=" !hidden group-hover:!block transition-opacity  items-center justify-center">
-                      Disconnect
-                    </span>
-                  </Button>
-                ) : (
-                  <ConnectButton />
-                )}
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-
+    <>
+      <title>Zilliqa Staking</title>
       <div
-        className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
-      overflow-y-hidden `}
+        className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh]">
-          {/* Left column */}
-          <div className="lg:bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl ">
-            <StakingPoolsList />
+        {/* Header */}
+        <div className="h-[10vh] w-full flex items-center justify-center text-white border-b-[0.5px] border-gray2">
+          <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 ">
+            <div className="flex items-center">
+              <Image
+                //src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg"
+                src={Logo}
+                alt="Zilliqa Logo"
+                width={32}
+                height={32}
+                className="h-10 md:h-12 w-auto"
+              />
+            </div>
+
+            <div className="flex items-center space-x-4">
+              {!isWalletConnected ? (
+                connectWallet
+              ) : (
+                <>
+                  {connectedWalletType === ConnectedWalletType.MockWallet ? (
+                    <Button
+                      type="primary"
+                      className="group relative btn-primary-gradient-aqua-lg min-w-[214px] lg:min-w-[160px]"
+                      onClick={disconnectDummyWallet}
+                    >
+                      <div className=" group-hover:hidden transition-opacity flex items-center justify-center">
+                        <WalletOutlined className="mr-2 !text-black-100" />
+                        {formatAddress(walletAddress || "")}
+                      </div>
+                      <span className=" !hidden group-hover:!block transition-opacity  items-center justify-center">
+                        Disconnect
+                      </span>
+                    </Button>
+                  ) : (
+                    <ConnectButton />
+                  )}
+                </>
+              )}
+            </div>
           </div>
-
-          {desktopColumnContent}
-
-          {mobileOverlayContent}
-          {mobileBottomNavition}
         </div>
-      </div>
 
-      <Modal
-        title="User Wallet Interaction"
-        open={isDummyWalletPopupOpen}
-        okButtonProps={{ className: "btn-primary-cyan" }}
-        onOk={() => setIsDummyWalletPopupOpen(false)}
-        onCancel={() => setIsDummyWalletPopupOpen(false)}
-      >
-        <div>{dummyWalletPopupContent}</div>
-      </Modal>
-    </div>
+        <div
+          className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
+        overflow-y-hidden `}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh]">
+            {/* Left column */}
+            <div className="lg:bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl ">
+              <StakingPoolsList />
+            </div>
+
+            {desktopColumnContent}
+
+            {mobileOverlayContent}
+            {mobileBottomNavition}
+          </div>
+        </div>
+
+        <Modal
+          title="User Wallet Interaction"
+          open={isDummyWalletPopupOpen}
+          okButtonProps={{ className: "btn-primary-cyan" }}
+          onOk={() => setIsDummyWalletPopupOpen(false)}
+          onCancel={() => setIsDummyWalletPopupOpen(false)}
+        >
+          <div>{dummyWalletPopupContent}</div>
+        </Modal>
+      </div>
+    </>
   )
 }
 
