@@ -31,7 +31,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
   claimUnstake: claim,
 }) => {
   return (
-    <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-xl items-center">
+    <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center">
       <div className="flex lg:flex-col  content-center px-3 py-6 lg:px-9.5 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
         <div className="flex items-center gap-2">
           <Image
@@ -107,7 +107,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
   claimReward,
 }) => {
   return (
-    <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-xl items-center">
+    <div className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center">
       <div className="flex lg:flex-col  content-center px-3 py-6 lg:px-9.5 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
         <div className="flex items-center gap-2">
           <Image
