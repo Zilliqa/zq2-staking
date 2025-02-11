@@ -25,12 +25,12 @@ export const depositAbi = [
     stateMutability: "view",
     type: "function",
   },
-]
+] as const
 
-export const delegatorAbi = [
-  /**
-   * from Delegation.sol
-   */
+/**
+ * from Delegation.sol
+ */
+export const baseDelegatorAbi = [
   {
     inputs: [],
     name: "stake",
@@ -128,9 +128,12 @@ export const delegatorAbi = [
     stateMutability: "view",
     type: "function",
   },
-  /**
-   * From ILiquidDelegation.sol
-   */
+] as const
+
+/**
+ * From ILiquidDelegation.sol
+ */
+const _liquidDelegatorAbi = [
   {
     inputs: [],
     name: "getLST",
@@ -157,4 +160,76 @@ export const delegatorAbi = [
     stateMutability: "view",
     type: "function",
   },
-]
+] as const
+
+/**
+ * From INonLiquidDelegation
+ */
+const _nonLiquidDelegatorAbi = [
+  {
+    inputs: [],
+    name: "getDelegatedAmount",
+    outputs: [
+      {
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "rewards",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getDelegatedTotal",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "result",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawAllRewards",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "stakeRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+] as const
+
+export const liquidDelegatorAbi = [
+  ..._liquidDelegatorAbi,
+  ...baseDelegatorAbi,
+] as const
+export const nonLiquidDelegatorAbi = [
+  ..._nonLiquidDelegatorAbi,
+  ...baseDelegatorAbi,
+] as const

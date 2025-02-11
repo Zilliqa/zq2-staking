@@ -1,9 +1,12 @@
 import { DateTime } from "luxon"
 import { getViemClient, MOCK_CHAIN } from "./chainConfig"
-import { stakingPoolsConfigForChainId } from "./stakingPoolsConfig"
+import {
+  stakingPoolsConfigForChainId,
+  StakingPoolType,
+} from "./stakingPoolsConfig"
 import { readContract } from "viem/actions"
 import { Address, erc20Abi, parseUnits } from "viem"
-import { delegatorAbi } from "./stakingAbis"
+import { baseDelegatorAbi, nonLiquidDelegatorAbi } from "./stakingAbis"
 
 export interface UserStakingPoolData {
   address: string
@@ -185,14 +188,32 @@ export async function getWalletStakingData(
   } else {
     const stakingData: UserStakingPoolData[] = await Promise.all(
       stakingPoolsConfigForChainId[chainId].map(async (pool) => {
-        return {
-          address: pool.definition.address,
-          stakingTokenAmount: await readContract(getViemClient(chainId), {
-            address: pool.definition.tokenAddress as Address,
-            abi: erc20Abi,
-            functionName: "balanceOf",
-            args: [wallet as Address],
-          }),
+        if (pool.definition.poolType === StakingPoolType.LIQUID) {
+          return {
+            address: pool.definition.address,
+            stakingTokenAmount: await readContract(getViemClient(chainId), {
+              address: pool.definition.tokenAddress as Address,
+              abi: erc20Abi,
+              functionName: "balanceOf",
+              args: [wallet as Address],
+            }),
+          }
+        } else if (pool.definition.poolType === StakingPoolType.NORMAL) {
+          return {
+            address: pool.definition.address,
+            stakingTokenAmount: await readContract(getViemClient(chainId), {
+              address: pool.definition.address as Address,
+              abi: nonLiquidDelegatorAbi,
+              functionName: "getDelegatedAmount",
+              account: wallet as Address,
+            }),
+          }
+        } else {
+          console.error(`Unknown pool type ${pool.definition.poolType}`, pool)
+          return {
+            address: pool.definition.address,
+            stakingTokenAmount: 0n,
+          }
         }
       })
     )
@@ -222,15 +243,15 @@ export async function getWalletUnstakingData(
       stakingPoolsConfigForChainId[chainId].map(async (pool) => {
         return {
           address: pool.definition.address,
-          blockNumberAndAmount: (await readContract(getViemClient(chainId), {
+          blockNumberAndAmount: await readContract(getViemClient(chainId), {
             address: pool.definition.address as Address,
-            abi: delegatorAbi,
+            abi: baseDelegatorAbi,
             functionName: "getPendingClaims",
             account: wallet as Address,
-          })) as bigint[][],
+          }),
           claimableNow: (await readContract(getViemClient(chainId), {
             address: pool.definition.address as Address,
-            abi: delegatorAbi,
+            abi: baseDelegatorAbi,
             functionName: "getClaimable",
             account: wallet as Address,
           })) as bigint,
@@ -276,7 +297,7 @@ export async function getWalletUnstakingData(
   }
 }
 
-export function getWalletNonLiquidStakingPoolRewardData(
+export async function getWalletNonLiquidStakingPoolRewardData(
   wallet: string,
   chainId: number
 ): Promise<UserNonLiquidStakingPoolRewardData[]> {
@@ -290,6 +311,23 @@ export function getWalletNonLiquidStakingPoolRewardData(
       }, 1000)
     })
   } else {
-    return Promise.resolve(new Array<UserNonLiquidStakingPoolRewardData>())
+    const rewards: Array<UserNonLiquidStakingPoolRewardData> =
+      await Promise.all(
+        stakingPoolsConfigForChainId[chainId]
+          .filter((pool) => pool.definition.poolType === StakingPoolType.NORMAL)
+          .map(async (pool) => {
+            return {
+              address: pool.definition.address,
+              zilRewardAmount: await readContract(getViemClient(chainId), {
+                address: pool.definition.address as Address,
+                abi: nonLiquidDelegatorAbi,
+                functionName: "rewards",
+                account: wallet as Address,
+              }),
+            }
+          })
+      )
+
+    return rewards.filter((r) => r.zilRewardAmount > 0n)
   }
 }
