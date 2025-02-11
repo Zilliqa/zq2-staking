@@ -16,9 +16,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { Button, Modal } from "antd"
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import ArrowBack from "../assets/svgs/arrow-back-white.svg"
 import ArrowBackAqua from "../assets/svgs/arrow-back-aqua.svg"
-
 import Star from "../assets/svgs/star.svg"
 import Logo from "../assets/svgs/logo.svg"
 
@@ -87,20 +85,21 @@ const HomePage = () => {
     </div>
   )
 
-  const mobileOverlayContent = mobileShowClaims
-    ? mobileOverlayWrapper(<WithdrawZilView />)
-    : stakingPoolForView &&
-      mobileOverlayWrapper(
-        <StakingPoolDetailsView
-          selectStakingPoolForStaking={(stakingPoolId) => {
-            selectStakingPoolForView(null)
-            selectStakingPoolForStaking(stakingPoolId)
-          }}
-          stakingPoolData={stakingPoolForView.stakingPool}
-          userStakingPoolData={stakingPoolForView.userData.staked}
-          userUnstakingPoolData={stakingPoolForView.userData.unstaked}
-        />
-      )
+  const mobileOverlayContent =
+    mobileShowClaims && !stakingPoolForView
+      ? mobileOverlayWrapper(<WithdrawZilView />)
+      : stakingPoolForView &&
+        mobileOverlayWrapper(
+          <StakingPoolDetailsView
+            selectStakingPoolForStaking={(stakingPoolId) => {
+              selectStakingPoolForView(null)
+              selectStakingPoolForStaking(stakingPoolId)
+            }}
+            stakingPoolData={stakingPoolForView.stakingPool}
+            userStakingPoolData={stakingPoolForView.userData.staked}
+            userUnstakingPoolData={stakingPoolForView.userData.unstaked}
+          />
+        )
 
   const connectWallet =
     appConfig.chainId === MOCK_CHAIN.id ? (
@@ -128,10 +127,10 @@ const HomePage = () => {
                     <a
                       className="justify-start flex items-center bold12-s"
                       onClick={() => {
-                        setMobileShowClaims(false)
+                        if (stakingPoolForView) selectStakingPoolForView(null)
+                        else setMobileShowClaims(false)
                       }}
                     >
-                      {" "}
                       <Image
                         className="mx-1 xs:mx-3 transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
                         src={ArrowBackAqua}
@@ -148,14 +147,13 @@ const HomePage = () => {
                   <div
                     className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
                   >
-                    {" "}
                     <a
                       className="justify-start flex items-center bold12-s"
                       onClick={() => {
                         selectStakingPoolForView(null)
+                        setMobileShowClaims(false)
                       }}
                     >
-                      {" "}
                       <Image
                         className="mx-1 xs:mx-3 transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
                         src={ArrowBackAqua}
@@ -172,7 +170,6 @@ const HomePage = () => {
                   <div
                     className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
                   >
-                    {" "}
                     <a
                       className="justify-start"
                       onClick={() => {
@@ -210,7 +207,7 @@ const HomePage = () => {
               <div className="flex items-center gap-3">
                 <a
                   className={`justify-start bold12-s relative max-lg:w-full lg:min-w-[320px] mx-auto
-                        ${mobileShowClaims ? "text-gray5" : "text-aqua1"}
+                        ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "text-aqua1" : "text-gray5"}
                         `}
                   onClick={() => {
                     setMobileShowClaims(false)
@@ -221,9 +218,12 @@ const HomePage = () => {
                     : !stakingPoolForView
                       ? "Staking"
                       : ""}
-                  {!mobileShowClaims && (
-                    <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full" />
-                  )}
+
+                  <span
+                    className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1
+                  ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "bg-aqua1 " : " bg-transparent"}
+                     rounded-full`}
+                  />
                 </a>
 
                 <div
@@ -234,16 +234,18 @@ const HomePage = () => {
                     className={
                       "justify-start flex items-center whitespace-nowrap "
                     }
-                    onClick={() => setMobileShowClaims(true)}
+                    onClick={() => {
+                      selectStakingPoolForView(null)
+                      setMobileShowClaims(true)
+                    }}
                   >
-                    {" "}
                     <div
                       className={` relative
-                    ${mobileShowClaims ? "text-aqua1" : "text-gray5"}
+                    ${mobileShowClaims && !stakingPoolForView ? "text-aqua1" : "text-gray5"}
                    whitespace-nowrap bold12-s`}
                     >
                       My Claims
-                      {mobileShowClaims && (
+                      {mobileShowClaims && !stakingPoolForView && (
                         <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full" />
                       )}
                     </div>
@@ -325,7 +327,7 @@ const HomePage = () => {
                   {connectedWalletType === ConnectedWalletType.MockWallet ? (
                     <Button
                       type="primary"
-                      className="group relative btn-primary-gradient-aqua-lg min-w-[214px] lg:min-w-[160px]"
+                      className="group relative btn-primary-gradient-aqua max-lg:px-5 max-lg:w-fit lg:min-w-[160px]"
                       onClick={disconnectDummyWallet}
                     >
                       <div className=" group-hover:hidden transition-opacity flex items-center justify-center">
