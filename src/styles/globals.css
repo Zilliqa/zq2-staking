@@ -369,7 +369,7 @@ body {
     width: 5px;
   }
   .scrollbar-gradient::-webkit-scrollbar-thumb {
-    @apply bg-aqua1 rounded-lg ;
+    @apply bg-aqua1 rounded-lg;
   }
 }
 @keyframes gradientAnimation {
