@@ -220,7 +220,7 @@ const WithdrawZilView: React.FC = () => {
         {anyItemsAvailable ? (
           <>
             <h1 className="h1 text-white">My Claims</h1>
-            <p className="mt-2 h2 text-white4">
+            <p className="mt-6 body2-v2 text-white4">
               Help us Empower and secure <br /> the Zilliqa Chain{" "}
             </p>
           </>
@@ -301,7 +301,7 @@ const WithdrawZilView: React.FC = () => {
                   height={56}
                 />
               </div>
-              <div className="bold26 mb-15 font-medium">
+              <div className="mt-6 body2-v2 text-white4">
                 No claims? We’d love to hear
                 <br /> your feedback !
               </div>

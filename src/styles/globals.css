@@ -35,7 +35,7 @@ body {
 
 @layer components {
   .btn-primary-white {
-    @apply !py-5 px-5 !bg-white !text-black font-semibold rounded-lg !border-0 cursor-pointer;
+    @apply !py-1 lg:py-1.5 px-10 !bg-white !text-black font-semibold rounded-lg !border-0 cursor-pointer;
 
     &:hover {
       @apply !bg-[#00D0C6];
@@ -47,7 +47,7 @@ body {
   }
 
   .btn-primary-cyan {
-    @apply py-2 px-5 !bg-[#00D0C6] !text-black font-semibold rounded-lg border-0 cursor-pointer;
+    @apply py-1 lg:py-1.5 px-10 !bg-[#00D0C6] !text-black font-semibold rounded-lg border-0 cursor-pointer;
 
     &:hover {
       @apply !bg-white;
@@ -58,7 +58,7 @@ body {
     }
   }
   .btn-primary-aqua {
-    @apply py-6 px-14 rounded-none !bg-aqua1 !text-black1 font-extrabold text-20 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
+    @apply py-1 lg:py-1.5 px-10 rounded-none !bg-aqua1 !text-black1 font-extrabold text-20 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
@@ -70,7 +70,7 @@ body {
   }
 
   .btn-primary-gradient-aqua {
-    @apply bold16 py-1 lg:py-4  rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
+    @apply bold16 py-1 lg:py-1.5 px-10 rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
@@ -156,7 +156,7 @@ body {
     }
   }
   .btn-filter {
-    @apply flex w-fit py-1.5 lg:py-2 px-1.5 lg:px-2 border border-none rounded-[8px] items-center bg-white/[14%] cursor-pointer duration-700 ease-in-out;
+    @apply flex w-fit py-1 px-1.5 lg:px-2 border border-none rounded-[8px] items-center bg-white/[14%] cursor-pointer duration-700 ease-in-out;
   }
   .btn-secondary-gray {
     @apply flex w-full py-1.5 lg:py-2 px-1.5 lg:px-2 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray4 cursor-pointer duration-700 ease-in-out;
@@ -224,7 +224,7 @@ body {
   }
 
   .body2-v2 {
-    @apply font-normal lg:font-semibold text-16 lg:text-32 leading-5 lg:leading-11 text-white1 px-17.5;
+    @apply font-light lg:font-light text-16 lg:text-28 leading-5 lg:leading-10 text-white1 px-17.5;
   }
 
   .body1 {
@@ -321,7 +321,7 @@ body {
     @apply font-semibold text-10 lg:text-14 lg:leading-5 text-white;
   }
   .semi13 {
-    @apply font-semibold text-15 lg:text-13 lg:leading-5 text-white;
+    @apply font-semibold text-13 lg:text-15 lg:leading-5 text-white;
   }
   .semi11 {
     @apply font-semibold text-10 lg:text-11 lg:leading-4 text-white;

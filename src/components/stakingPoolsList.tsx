@@ -63,11 +63,11 @@ const StakingPoolsList: React.FC = () => {
 
   const tabs = [
     {
-      name: "Liquid staking",
+      name: "Liquid",
       type: StakingPoolType.LIQUID,
     },
     {
-      name: "Normal staking ",
+      name: "Non-liquid ",
       type: StakingPoolType.NORMAL,
     },
   ]
