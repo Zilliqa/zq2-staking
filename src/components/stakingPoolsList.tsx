@@ -71,21 +71,21 @@ const StakingPoolsList: React.FC = () => {
       type: StakingPoolType.NORMAL,
     },
   ]
-  const [isScrolling, setIsScrolling] = useState(false);
-  let scrollTimeout:any;
+  const [isScrolling, setIsScrolling] = useState(false)
+  let scrollTimeout: any
 
   const handleScroll = () => {
-    setIsScrolling(true);
-    clearTimeout(scrollTimeout);
+    setIsScrolling(true)
+    clearTimeout(scrollTimeout)
 
     scrollTimeout = setTimeout(() => {
-      setIsScrolling(false);
-    }, 1000);
-  };
+      setIsScrolling(false)
+    }, 1000)
+  }
 
   useEffect(() => {
-    return () => clearTimeout(scrollTimeout);
-  }, []);
+    return () => clearTimeout(scrollTimeout)
+  }, [])
   return (
     <>
       <nav
@@ -126,9 +126,10 @@ const StakingPoolsList: React.FC = () => {
           />
         </div>
 
-        <div onScroll={handleScroll}
+        <div
+          onScroll={handleScroll}
           className={`grid grid-cols-1 gap-2.5 lg:gap-4 overflow-y-auto max-h-[calc(90vh-38vh)] lg:max-h-[calc(90vh-25vh)]
-            pb-4 lg:pb-20 pr-2 lg:pr-4 scrollbar-gradient ${ isScrolling ? "scrollbar-visible" : "scrollbar-hidden"}`}
+            pb-4 lg:pb-20 pr-2 lg:pr-4 scrollbar-gradient ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"}`}
         >
           {sortedLiquidStakingPoolsData.map(({ stakingPool, userData }) => (
             <StakingPoolCard
