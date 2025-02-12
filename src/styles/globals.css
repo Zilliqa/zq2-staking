@@ -366,7 +366,7 @@ body {
 }
 @layer utilities {
   .scrollbar-gradient::-webkit-scrollbar {
-    width: 5px;
+    width: 2px;
   }
   .scrollbar-gradient::-webkit-scrollbar-thumb {
     @apply bg-aqua1 rounded-lg;
