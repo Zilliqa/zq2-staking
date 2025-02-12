@@ -91,8 +91,8 @@ const StakingCalculator: React.FC = () => {
   return (
     stakingPoolForView && (
       <>
-        <div className="overflow-y-auto max-h-[calc(90vh-50vh)] scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1">
-          <div className="flex lg:justify-between lg:gap-10 my-2.5 lg:my-4 p-3 lg:p-5 xl:p-7 bg-grey-gradient rounded-xl items-center">
+        <div className="max-h-[calc(90vh-50vh)] lg:max-h-[calc(90vh-45vh)] scrollbar-gradient overflow-y-scroll">
+          <div className="flex justify-between lg:gap-10 my-2.5 lg:my-4 p-3 lg:p-5 xl:p-7 bg-grey-gradient rounded-xl items-center">
             <div className="h-fit self-center">
               <Input
                 className="flex items-baseline !bg-transparent !border-transparent !text-white1 bold33 px-0"
@@ -139,7 +139,7 @@ const StakingCalculator: React.FC = () => {
               </span>
             </div>
 
-            <div className="flex lg:flex-col gap-3 ">
+            <div className="flex flex-col gap-3 ">
               <Button
                 className="btn-secondary-colored text-aqua1 hover:!text-aqua1 border-0 bg-tealDark hover:!bg-tealDark"
                 onClick={onMaxClick}
