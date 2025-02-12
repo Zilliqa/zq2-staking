@@ -57,7 +57,6 @@ body {
       @apply !bg-[#202025] !text-[#555555] cursor-not-allowed;
     }
   }
-
   .btn-primary-aqua {
     @apply py-6 px-14 rounded-none !bg-aqua1 !text-black1 font-extrabold text-20 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
 
@@ -362,7 +361,22 @@ body {
   animation: gradientAnimation 2s ease infinite;
   border-radius: 10px;
 }
+@layer utilities {
+  .scrollbar-gradient::-webkit-scrollbar {
+    width: 2px;
+  }
+  .scrollbar-gradient::-webkit-scrollbar-thumb {
+    @apply bg-aqua1 rounded-lg;
+  }
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
 
+  .scrollbar-visible::-webkit-scrollbar {
+    display: block;
+    transition: display 0.5s ease-in-out;
+  }
+}
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
