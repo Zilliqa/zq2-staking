@@ -42,7 +42,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
     )
 
   return (
-    <div>
+    <div className="overflow-y-scroll max-h-[calc(90vh-50vh)] lg:max-h-[calc(90vh-55vh)] scrollbar-gradient">
       {claimUnstakeCallTxHash !== undefined && (
         <div className="text-center gradient-bg-1 py-2 text-gray-500">
           <Link
@@ -86,7 +86,11 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
           </div>
         ))
       ) : !!pendingUnstake?.length ? (
-        <div className="flex flex-col min-h-[114px] lg:min-h-[157px] xl:min-h-[173px] justify-evenly gap-2 my-2.5 lg:my-5 py-2 lg:py-6 xl:py-8 px-3 lg:px-7.5 xl:px-10 bg-grey-gradient rounded-xl w-full">
+        <div
+          className="flex flex-col min-h-[100px] lg:min-h-[132px] xl:min-h-[148px] justify-evenly  
+         my-2.5 lg:my-4 py-2 lg:py-6 xl:py-8  
+         px-3 lg:px-7.5 xl:px-10 bg-grey-gradient rounded-xl w-full"
+        >
           <div className="body2 text-gray1">Next available reward</div>
           <div className="h4 mt-2 w-full flex justify-between text-white1">
             <div>{getHumanFormDuration(pendingUnstake[0].availableAt)}</div>
