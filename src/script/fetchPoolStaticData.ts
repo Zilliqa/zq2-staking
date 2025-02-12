@@ -1,7 +1,7 @@
 import yargs from "yargs/yargs"
 import { hideBin } from "yargs/helpers"
 import { readContract } from "viem/actions"
-import { baseDelegatorAbi } from "@/misc/stakingAbis"
+import { liquidDelegatorAbi, nonLiquidDelegatorAbi } from "@/misc/stakingAbis"
 import { Address, erc20Abi } from "viem"
 import { getViemClient } from "@/misc/chainConfig"
 import {
@@ -15,6 +15,90 @@ interface Args {
   icon_url: string
   name: string
   type: StakingPoolType
+}
+
+async function readLiquidDelegator(
+  poolDefinitionId: string,
+  poolName: string,
+  poolIconPublicPath: string,
+  chainid: number,
+  contractAddress: Address
+): Promise<StakingPoolDefinition> {
+  const viemClient = getViemClient(chainid)
+
+  const [tokenAddress] = await Promise.all([
+    readContract(viemClient, {
+      address: contractAddress,
+      abi: liquidDelegatorAbi,
+      functionName: "getLST",
+    }),
+  ])
+
+  const [tokenDecimals, tokenSymbol, minimumStake] = await Promise.all([
+    readContract(viemClient, {
+      address: tokenAddress,
+      abi: erc20Abi,
+      functionName: "decimals",
+    }),
+    readContract(viemClient, {
+      address: tokenAddress,
+      abi: erc20Abi,
+      functionName: "symbol",
+    }),
+    readContract(viemClient, {
+      address: contractAddress,
+      abi: liquidDelegatorAbi,
+      functionName: "getMinDelegation",
+    }),
+  ])
+
+  const twoWeeksInMinutes = 60 * 24 * 14
+
+  return {
+    id: poolDefinitionId,
+    address: contractAddress,
+    tokenAddress,
+    iconUrl: poolIconPublicPath,
+    name: poolName,
+    poolType: StakingPoolType.LIQUID,
+    tokenDecimals,
+    tokenSymbol,
+    minimumStake,
+    withdrawPeriodInMinutes: twoWeeksInMinutes,
+  }
+}
+
+async function readNonLiquidDelegator(
+  poolDefinitionId: string,
+  poolName: string,
+  poolIconPublicPath: string,
+  chainid: number,
+  contractAddress: Address
+): Promise<StakingPoolDefinition> {
+  const viemClient = getViemClient(chainid)
+
+  const [minimumStake] = await Promise.all([
+    readContract(viemClient, {
+      address: contractAddress,
+      abi: nonLiquidDelegatorAbi,
+      functionName: "getMinDelegation",
+    }),
+  ])
+
+  const twoWeeksInMinutes = 60 * 24 * 14
+
+  return {
+    id: poolDefinitionId,
+    address: contractAddress,
+    tokenAddress: "0x0000000000000000000000000000000000000000",
+    iconUrl: poolIconPublicPath,
+    name: poolName,
+    poolType: StakingPoolType.NORMAL,
+    tokenDecimals: 18,
+    tokenSymbol: "ZIL",
+    minimumStake,
+    withdrawPeriodInMinutes: twoWeeksInMinutes,
+  }
 }
 
 const argv = yargs(hideBin(process.argv))
@@ -40,6 +124,7 @@ const argv = yargs(hideBin(process.argv))
     demandOption: true,
   })
   .option("type", {
+    choices: Object.values(StakingPoolType),
     type: "string",
     description: "The type of the pool",
     demandOption: true,
@@ -52,51 +137,31 @@ const argv = yargs(hideBin(process.argv))
   console.log(`Contract Address: ${argv.contract_address}`)
 
   const chainid = parseInt(argv.network_id)
-
-  const readDelegatorContract = async <T>(functionName: string): Promise<T> => {
-    return (await readContract(getViemClient(chainid), {
-      address: argv.contract_address as Address,
-      abi: baseDelegatorAbi,
-      functionName: functionName as any, // to be fixed in https://zilliqa-jira.atlassian.net/browse/APT-1696
-    })) as T
-  }
-
-  const [tokenAddress] = await Promise.all([
-    readDelegatorContract<Address>("getLST"),
-  ])
-
-  const readTokenContract = async <T>(functionName: string): Promise<T> => {
-    return (await readContract(getViemClient(chainid), {
-      address: tokenAddress,
-      abi: erc20Abi,
-      functionName: "decimals",
-    })) as T
-  }
-
-  const [tokenDecimals, tokenSymbol, minimumStake] = await Promise.all([
-    readTokenContract<number>("decimals"),
-    readTokenContract<string>("symbol"),
-    readDelegatorContract<bigint>("getMinDelegation"),
-  ])
-
-  const hash = Buffer.from(argv.contract_address + tokenAddress)
+  const contractAddress = argv.contract_address as Address
+  const id = Buffer.from(`${contractAddress}"_"${argv.network_id}`)
     .toString("base64")
     .slice(0, 8)
-  const twoWeeksInMinutes = 60 * 24 * 14
-
-  const definition: StakingPoolDefinition = {
-    id: hash,
-    address: argv.contract_address,
-    tokenAddress,
-    iconUrl: argv.icon_url,
-    name: argv.name,
-    poolType: argv.type,
-    tokenDecimals,
-    tokenSymbol,
-    minimumStake: minimumStake as bigint,
-    withdrawPeriodInMinutes: twoWeeksInMinutes,
-  }
 
   console.log("Add following definition to stakingPoolsConfig.ts")
-  console.log({ definition })
+  if (argv.type === StakingPoolType.LIQUID) {
+    console.log({
+      definition: await readLiquidDelegator(
+        id,
+        argv.name,
+        argv.icon_url,
+        chainid,
+        contractAddress
+      ),
+    })
+  } else {
+    console.log({
+      definition: await readNonLiquidDelegator(
+        id,
+        argv.name,
+        argv.icon_url,
+        chainid,
+        contractAddress
+      ),
+    })
+  }
 })()
