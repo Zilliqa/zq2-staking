@@ -88,7 +88,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
       ) : !!pendingUnstake?.length ? (
         <div
           className="flex flex-col min-h-[100px] lg:min-h-[132px] xl:min-h-[148px] justify-evenly  
-         my-4 lg:my-6 py-2 lg:py-6 xl:py-8  
+         my-2.5 lg:my-4 py-2 lg:py-6 xl:py-8  
          px-3 lg:px-7.5 xl:px-10 bg-grey-gradient rounded-xl w-full"
         >
           <div className="body2 text-gray1">Next available reward</div>
