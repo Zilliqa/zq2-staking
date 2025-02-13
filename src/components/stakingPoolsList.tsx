@@ -63,11 +63,11 @@ const StakingPoolsList: React.FC = () => {
 
   const tabs = [
     {
-      name: "Liquid staking",
+      name: "Liquid",
       type: StakingPoolType.LIQUID,
     },
     {
-      name: "Normal staking ",
+      name: "Non-liquid ",
       type: StakingPoolType.NORMAL,
     },
   ]
@@ -108,7 +108,7 @@ const StakingPoolsList: React.FC = () => {
       </nav>
 
       <>
-        <div className="flex gap-x-2.5 mt-6 mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5">
+        <div className="flex gap-x-2.5 mt-3 mb-2.5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5">
           <SortBtn
             variable="APR"
             isClicked={isAscending && sortCriteria == "APR"}
