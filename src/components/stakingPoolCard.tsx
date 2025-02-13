@@ -50,20 +50,20 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               />
               <h3 className="bold22">{stakingPoolData.definition.name}</h3>
               <div className="base-medium text-gray13 mt-1">
-                    {stakingPoolData.definition.tokenSymbol}
+                {stakingPoolData.definition.tokenSymbol}
               </div>
             </div>
             <div>
+              {userStakingPoolData &&
+                userStakingPoolData.stakingTokenAmount && (
+                  <span className="regular15 text-aqua1">
                     {userStakingPoolData &&
-                    userStakingPoolData.stakingTokenAmount && (
-                      <span className="regular15 text-aqua1">
-                        {userStakingPoolData &&
-                          `${formatUnitsToHumanReadable(
-                            userStakingPoolData.stakingTokenAmount,
-                            stakingPoolData.definition.tokenDecimals
-                          )} ${stakingPoolData.definition.tokenSymbol}`}
-                      </span>
-                    )}
+                      `${formatUnitsToHumanReadable(
+                        userStakingPoolData.stakingTokenAmount,
+                        stakingPoolData.definition.tokenDecimals
+                      )} ${stakingPoolData.definition.tokenSymbol}`}
+                  </span>
+                )}
             </div>
           </div>
 
@@ -85,9 +85,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   </div>
                 ) : (
                   <div className=" pr-1 xs:pr-3">
-                    <span className="lg:medium12 regular12">
-                      VP
-                    </span>
+                    <span className="lg:medium12 regular12">VP</span>
                     <span className="w-[3em] ml-1 animated-gradient" />
                   </div>
                 )}
@@ -99,29 +97,29 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     <span className="w-[3em] ml-1 animated-gradient" />
                   )}
                 </div>
-                  </div>
-                  </div>
-                <div className="flex bold15 max-md:order-1  ml-2 xs:ml-6">
-                  <Tooltip
-                    placement="top"
-                    arrow={true}
-                    color="#555555"
-                    className=" mr-1"
-                    title="Annual Percentage Rate"
-                  >
-                    <span>APR </span>
-                  </Tooltip>
+              </div>
+            </div>
+            <div className="flex bold15 max-md:order-1  ml-2 xs:ml-6">
+              <Tooltip
+                placement="top"
+                arrow={true}
+                color="#555555"
+                className=" mr-1"
+                title="Annual Percentage Rate"
+              >
+                <span>APR </span>
+              </Tooltip>
 
-                  {stakingPoolData.data ? (
-                    <>{formatPercentage(stakingPoolData.data.apr)}</>
-                  ) : (
-                    <span className="w-[3em] ml-1 animated-gradient" />
-                  )}
-                </div>
+              {stakingPoolData.data ? (
+                <>{formatPercentage(stakingPoolData.data.apr)}</>
+              ) : (
+                <span className="w-[3em] ml-1 animated-gradient" />
+              )}
             </div>
           </div>
         </div>
       </div>
+    </div>
   )
 }
 
