@@ -113,7 +113,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                         )} ${stakingPoolData.definition.tokenSymbol}`}
                     </>
                   ) : (
-                    <span className="">-</span>
+                    <span className=""></span>
                   )}
                 </div>
                 <div>{stakingPoolData.definition.tokenSymbol}</div>

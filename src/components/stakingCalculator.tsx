@@ -125,7 +125,7 @@ const StakingCalculator: React.FC = () => {
                         {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
                       </span>
                     )}
-                    <span className="medium17 ml-2 text-aqua1">
+                    <span className="medium17 ml-2 text-aqua1 mr-1">
                       ~
                       {formatPercentage(
                         stakingPoolForView!.stakingPool.data.apr
@@ -135,7 +135,7 @@ const StakingCalculator: React.FC = () => {
                 ) : (
                   <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                 )}
-                <span className="medium17 text-aqua1"> APR</span>
+                <span className="medium17 text-aqua1">APR</span>
               </span>
             </div>
 
@@ -195,7 +195,7 @@ const StakingCalculator: React.FC = () => {
                   <div className="flex flex-col xl:flex-row xl:gap-5">
                     <div className="gray-base">Rate</div>
                     {stakingPoolForView!.stakingPool.data && (
-                      <div className="text-gray9">{`1 ZIL = ~${stakingPoolForView.stakingPool.data.zilToTokenRate} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
+                      <div className="text-gray9">{`1 ZIL = ~${stakingPoolForView.stakingPool.data.zilToTokenRate.toPrecision(3)} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
                     )}
                   </div>
                 )}

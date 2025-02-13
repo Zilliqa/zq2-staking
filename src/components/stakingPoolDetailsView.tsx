@@ -34,7 +34,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   const colorInfoEntry = (title: string, value: string | null) => (
     <div>
-      <div className="semi14 text-aqua2">{value}</div>
+      <div className="semi14 text-aqua1">{value}</div>
       <div className="text-gray8 info-label">{title}</div>
     </div>
   )
@@ -140,7 +140,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
               )} ${stakingPoolData.definition.tokenSymbol}`
             )}
             {colorInfoEntry(
-              "Unstake",
+              "Unstake Requested ",
               pendingUnstakesValue
                 ? `${humanReadableStakingToken(
                     pendingUnstakesValue
