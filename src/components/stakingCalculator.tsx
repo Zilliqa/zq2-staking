@@ -186,9 +186,7 @@ const StakingCalculator: React.FC = () => {
                     <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
                   )}
                 </div>
-                <div className="">
-                  Max transaction cost: {zilToStake ? "0.01" : "0"}$
-                </div>
+                <div className="">Max transaction cost: 3 ZIL</div>
               </div>
               <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
                 {isPoolLiquid() && (
