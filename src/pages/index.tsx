@@ -19,6 +19,7 @@ import { useEffect, useState } from "react"
 import ArrowBackAqua from "../assets/svgs/arrow-back-aqua.svg"
 import Star from "../assets/svgs/star.svg"
 import Logo from "../assets/svgs/logo.svg"
+import { useRouter } from "next/router"
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -28,6 +29,7 @@ const HomePage = () => {
   }, [])
 
   const { appConfig } = AppConfigStorage.useContainer()
+  const router = useRouter()
 
   const {
     connectDummyWallet,
@@ -46,13 +48,21 @@ const HomePage = () => {
 
   const {
     stakingPoolForView,
-    selectStakingPoolForStaking,
     selectStakingPoolForView,
     availableForUnstaking,
     pendingUnstaking,
   } = StakingPoolsStorage.useContainer()
 
   const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (router.query.claims) {
+      selectStakingPoolForView(null)
+      setMobileShowClaims(true)
+    } else {
+      setMobileShowClaims(false)
+    }
+  }, [router.query.claims])
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
     <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 p-4">
@@ -70,10 +80,6 @@ const HomePage = () => {
          "
         >
           <StakingPoolDetailsView
-            selectStakingPoolForStaking={(stakingPoolId) => {
-              selectStakingPoolForView(null)
-              selectStakingPoolForStaking(stakingPoolId)
-            }}
             stakingPoolData={stakingPoolForView.stakingPool}
             userStakingPoolData={stakingPoolForView.userData.staked}
             userUnstakingPoolData={stakingPoolForView.userData.unstaked}
@@ -91,10 +97,6 @@ const HomePage = () => {
       : stakingPoolForView &&
         mobileOverlayWrapper(
           <StakingPoolDetailsView
-            selectStakingPoolForStaking={(stakingPoolId) => {
-              selectStakingPoolForView(null)
-              selectStakingPoolForStaking(stakingPoolId)
-            }}
             stakingPoolData={stakingPoolForView.stakingPool}
             userStakingPoolData={stakingPoolForView.userData.staked}
             userUnstakingPoolData={stakingPoolForView.userData.unstaked}
@@ -121,88 +123,60 @@ const HomePage = () => {
         {isWalletConnected ? (
           <>
             <div className="flex justify-between items-center w-full">
-              <div>
-                {mobileShowClaims && (
-                  <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
-                    <a
-                      className="justify-start flex items-center bold12-s"
-                      onClick={() => {
-                        if (stakingPoolForView) selectStakingPoolForView(null)
-                        else setMobileShowClaims(false)
-                      }}
-                    >
-                      <Image
-                        className="mx-1 xs:mx-3 transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
-                        src={ArrowBackAqua}
-                        alt={"arrow icon"}
-                        width={8}
-                        height={4.5}
-                      />
-                      Back
-                    </a>
-                  </div>
-                )}
-
-                {!mobileShowClaims && stakingPoolForView && (
-                  <div
-                    className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
+              {mobileShowClaims || stakingPoolForView ? (
+                <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
+                  <a
+                    className="justify-start flex items-center bold12-s"
+                    onClick={() => {
+                      router.back()
+                    }}
                   >
-                    <a
-                      className="justify-start flex items-center bold12-s"
-                      onClick={() => {
-                        selectStakingPoolForView(null)
-                        setMobileShowClaims(false)
-                      }}
-                    >
-                      <Image
-                        className="mx-1 xs:mx-3 transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
-                        src={ArrowBackAqua}
-                        alt={"arrow icon"}
-                        width={8}
-                        height={4.5}
-                      />
-                      Back
-                    </a>
-                  </div>
-                )}
-
-                {!mobileShowClaims && !stakingPoolForView && (
-                  <div
-                    className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
+                    <Image
+                      className="mx-1 xs:mx-3 transform transition-transform ease-out duration-500 group-hover:-translate-x-2"
+                      src={ArrowBackAqua}
+                      alt={"arrow icon"}
+                      width={8}
+                      height={4.5}
+                    />
+                    Back
+                  </a>
+                </div>
+              ) : (
+                <div
+                  className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
+                >
+                  <a
+                    className="justify-start"
+                    onClick={() => {
+                      selectStakingPoolForView(null)
+                    }}
                   >
-                    <a
-                      className="justify-start"
-                      onClick={() => {
-                        selectStakingPoolForView(null)
-                      }}
-                    >
-                      <Button className="btn-primary-gradient-aqua px-5 py-2 group flex items-center gap-1">
-                        <Image
-                          className=" h-2 w-2"
-                          src={Star}
-                          alt="star icon"
-                          width={8}
-                          height={8}
-                        />
-                        <Image
-                          className=" h-2 w-2"
-                          src={Star}
-                          alt="star icon"
-                          width={8}
-                          height={8}
-                        />
-                        <Image
-                          className=" h-2 w-2"
-                          src={Star}
-                          alt="star icon"
-                          width={8}
-                          height={8}
-                        />
-                      </Button>
-                    </a>
-                  </div>
-                )}
-              </div>
+                    <Button className="btn-primary-gradient-aqua px-5 py-2 group flex items-center gap-1">
+                      <Image
+                        className=" h-2 w-2"
+                        src={Star}
+                        alt="star icon"
+                        width={8}
+                        height={8}
+                      />
+                      <Image
+                        className=" h-2 w-2"
+                        src={Star}
+                        alt="star icon"
+                        width={8}
+                        height={8}
+                      />
+                      <Image
+                        className=" h-2 w-2"
+                        src={Star}
+                        alt="star icon"
+                        width={8}
+                        height={8}
+                      />
+                    </Button>
+                  </a>
+                </div>
+              )}
 
               <div className="flex items-center gap-3">
                 <a
@@ -210,14 +184,22 @@ const HomePage = () => {
                         ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "text-aqua1" : "text-gray5"}
                         `}
                   onClick={() => {
-                    setMobileShowClaims(false)
+                    if (stakingPoolForView) {
+                      return
+                    }
+
+                    router.push(
+                      {
+                        pathname: "/",
+                      },
+                      undefined,
+                      { shallow: true }
+                    )
                   }}
                 >
                   {stakingPoolForView
                     ? `${stakingPoolForView.stakingPool.definition.name}`
-                    : !stakingPoolForView
-                      ? "List"
-                      : ""}
+                    : "List"}
 
                   <span
                     className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1
@@ -235,8 +217,14 @@ const HomePage = () => {
                       "justify-start flex items-center whitespace-nowrap "
                     }
                     onClick={() => {
-                      selectStakingPoolForView(null)
-                      setMobileShowClaims(true)
+                      router.push(
+                        {
+                          pathname: "/",
+                          query: { claims: true },
+                        },
+                        undefined,
+                        { shallow: true }
+                      )
                     }}
                   >
                     <div
@@ -272,7 +260,7 @@ const HomePage = () => {
                   <a
                     className="justify-start flex items-center bold12-s"
                     onClick={() => {
-                      selectStakingPoolForView(null)
+                      router.back()
                     }}
                   >
                     <Image
@@ -316,6 +304,7 @@ const HomePage = () => {
                 width={32}
                 height={32}
                 className="h-10 md:h-12 w-auto"
+                onClick={() => router.push("/")}
               />
             </div>
 
