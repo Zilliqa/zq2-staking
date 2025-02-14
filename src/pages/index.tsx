@@ -12,14 +12,15 @@ import {
 import { MOCK_CHAIN } from "@/misc/chainConfig"
 import { formatAddress } from "@/misc/formatting"
 import { WalletOutlined } from "@ant-design/icons"
+import Intercom from "@intercom/messenger-js-sdk"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { Button, Modal } from "antd"
 import Image from "next/image"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ArrowBackAqua from "../assets/svgs/arrow-back-aqua.svg"
-import Star from "../assets/svgs/star.svg"
 import Logo from "../assets/svgs/logo.svg"
-import { useRouter } from "next/router"
+import Star from "../assets/svgs/star.svg"
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -54,6 +55,15 @@ const HomePage = () => {
   } = StakingPoolsStorage.useContainer()
 
   const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (walletAddress) {
+      Intercom({
+        app_id: appConfig.intercomKey,
+        user_id: walletAddress,
+      })
+    }
+  }, [walletAddress])
 
   useEffect(() => {
     if (router.query.claims) {

@@ -38,3 +38,8 @@ spec:
                 secretKeyRef:
                   name: zq2-stake-frontend
                   key: ZQ2_STAKING_WALLET_CONNECT_API_KEY
+            - name: ZQ2_STAKING_INTERCOM_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: zq2-stake-frontend
+                  key: ZQ2_STAKING_INTERCOM_KEY
