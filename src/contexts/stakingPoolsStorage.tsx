@@ -109,7 +109,6 @@ const useStakingPoolsStorage = () => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    console.log("router.query", router.query)
     if (router.query.pool) {
       const selectedPool = availableStakingPoolsData.find(
         (pool) => pool.definition.id === router.query.pool

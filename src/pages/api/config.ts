@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 export type AppConfig = {
   chainId: number
   walletConnectPrivateKey: string
+  intercomKey: string
 }
 
 function getStringFromEnv(name: string): string {
@@ -31,6 +32,7 @@ const config: AppConfig = {
   walletConnectPrivateKey: getStringFromEnv(
     "ZQ2_STAKING_WALLET_CONNECT_API_KEY"
   ),
+  intercomKey: getStringFromEnv("ZQ2_STAKING_INTERCOM_KEY"),
 }
 
 export default function handler(
