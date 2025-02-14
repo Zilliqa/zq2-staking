@@ -140,7 +140,7 @@ const UnstakingCalculator: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-col">
-            <div className="flex mt-8 lg:mt-2 mb-5 lg:order-1 order-2">
+            <div className="flex mt-2 mb-5">
               <Button
                 type="default"
                 size="large"
@@ -157,7 +157,7 @@ const UnstakingCalculator: React.FC = () => {
                 Unstake
               </Button>
             </div>
-            <div className="flex justify-between pt-2.5 lg:pt-5 border-t border-black2 order-1 lg:order-2">
+            <div className="flex justify-between pt-2.5 lg:pt-5 border-t border-black2">
               <div className="flex flex-col gap-3.5 regular-base">
                 <div className=" ">
                   Commission Fee:{" "}

@@ -273,47 +273,46 @@ const WithdrawZilView: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="text-center text-white mx-auto lg:my-10">
-          {isUnstakingDataLoading ? (
-            <div className="animated-gradient h-[2em] w-full"></div>
-          ) : (
-            <>
-              <div className="flex justify-center mb-9.5">
-                <Image
-                  className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-                  src={FeedbackIcon}
-                  alt="arrow icon"
-                  width={56}
-                  height={56}
-                />
-                <Image
-                  className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-                  src={FeedbackIcon}
-                  alt="arrow icon"
-                  width={56}
-                  height={56}
-                />
-                <Image
-                  className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-                  src={FeedbackIcon}
-                  alt="arrow icon"
-                  width={56}
-                  height={56}
-                />
-              </div>
-              <div className="mb-15 body2-v2 text-white4">
-                No claims? We’d love to hear
-                <br /> your feedback !
-              </div>
-            </>
-          )}
-          <Button
-            type="primary"
-            className="btn-primary-gradient-aqua-lg !w-fit px-11 group"
-          >
-            Leave Feedback
-          </Button>
-        </div>
+        !isUnstakingDataLoading && (
+          <div className="text-center text-white mx-auto lg:my-10">
+            <div className="flex justify-center mb-9.5">
+              <Image
+                className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                src={FeedbackIcon}
+                alt="arrow icon"
+                width={56}
+                height={56}
+              />
+              <Image
+                className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                src={FeedbackIcon}
+                alt="arrow icon"
+                width={56}
+                height={56}
+              />
+              <Image
+                className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                src={FeedbackIcon}
+                alt="arrow icon"
+                width={56}
+                height={56}
+              />
+            </div>
+            <div className="mb-15 body2-v2 text-white4">
+              No claims? We’d love to hear
+              <br /> your feedback !
+            </div>
+            <Button
+              type="primary"
+              className="btn-primary-gradient-aqua-lg !w-fit px-11 group"
+            >
+              Leave Feedback
+            </Button>
+          </div>
+        )
+      )}
+      {isUnstakingDataLoading && (
+        <div className="animated-gradient h-[2em] mx-auto w-1/4"></div>
       )}
     </div>
   )
