@@ -59,7 +59,8 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
       {!!availableUnstake?.length ? (
         availableUnstake.map((item, claimIdx) => (
           <div
-            className="flex flex-col justify-evenly gap-2 my-2.5 lg:my-4 p-3 lg:p-5 xl:p-7 bg-grey-gradient rounded-xl w-full"
+            className=" min-h-[100px] lg:min-h-[124px] xl:min-h-[140px] 
+            flex flex-col justify-evenly gap-2 my-2.5 lg:my-4 p-3 lg:p-5 xl:p-7 bg-grey-gradient rounded-xl w-full"
             key={claimIdx}
           >
             <div className="items-center h4 w-full flex justify-between text-white1">
