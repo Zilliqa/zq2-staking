@@ -214,9 +214,9 @@ const HomePage = () => {
                   }}
                 >
                   {stakingPoolForView
-                    ? "Validator"
+                    ? `${stakingPoolForView.stakingPool.definition.name}`
                     : !stakingPoolForView
-                      ? "Staking"
+                      ? "List"
                       : ""}
 
                   <span
@@ -244,7 +244,7 @@ const HomePage = () => {
                     ${mobileShowClaims && !stakingPoolForView ? "text-aqua1" : "text-gray5"}
                    whitespace-nowrap bold12-s`}
                     >
-                      My Claims
+                      Claims
                       {mobileShowClaims && !stakingPoolForView && (
                         <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full" />
                       )}

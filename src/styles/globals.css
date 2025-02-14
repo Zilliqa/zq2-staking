@@ -140,7 +140,7 @@ body {
   }
 
   .base-medium {
-    @apply font-medium text-12 lg:text-13 leading-5 lg:leading-6  text-white3;
+    @apply font-medium text-11 lg:text-13 text-white3;
   }
 
   .regular-base {
@@ -247,6 +247,9 @@ body {
   .bold16 {
     @apply font-bold text-10 lg:text-16 lg:leading-6.5 text-white;
   }
+  .bold15 {
+    @apply font-bold text-12 lg:text-15 lg:leading-6.5 text-white;
+  }
   .bold14 {
     @apply font-bold text-10 lg:text-14 lg:leading-6.5 text-white;
   }
@@ -297,6 +300,9 @@ body {
   }
   .light12 {
     @apply font-light text-10 lg:text-12 lg:leading-3.5 text-white;
+  }
+  .regular15 {
+    @apply font-normal text-12 lg:text-15;
   }
   .regular12 {
     @apply font-normal text-10 lg:text-12 lg:leading-3.5 text-white;
