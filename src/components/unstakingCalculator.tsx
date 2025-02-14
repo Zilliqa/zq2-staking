@@ -172,9 +172,7 @@ const UnstakingCalculator: React.FC = () => {
                     <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
                   )}
                 </div>
-                <div className="">
-                  Max transaction cost: {zilToUnstake ? "0.01" : "0"}$
-                </div>
+                <div className="">Max transaction cost: 3 ZIL</div>
                 <div className="text-aqua1 ">
                   Unbonding Period: {unboudingPeriod}
                 </div>
