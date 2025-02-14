@@ -17,8 +17,11 @@ import {
   UserUnstakingPoolData,
 } from "@/misc/walletsConfig"
 import { AppConfigStorage } from "./appConfigStorage"
+import { useRouter } from "next/router"
 
 const useStakingPoolsStorage = () => {
+  const router = useRouter()
+
   const { walletAddress } = WalletConnector.useContainer()
 
   const { appConfig } = AppConfigStorage.useContainer()
@@ -38,11 +41,6 @@ const useStakingPoolsStorage = () => {
   >([])
 
   const [stakingPoolForView, setSelectedStakingPool] =
-    useState<StakingPool | null>(null)
-
-  const [stakingPoolForStaking, setStakingPoolForStaking] =
-    useState<StakingPool | null>(null)
-  const [stakingPoolForUnstaking, setStakingPoolForUnstaking] =
     useState<StakingPool | null>(null)
 
   const [isUnstakingDataLoading, setIsUnstakingDataLoading] = useState(false)
@@ -110,6 +108,21 @@ const useStakingPoolsStorage = () => {
     )
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    console.log("router.query", router.query)
+    if (router.query.pool) {
+      const selectedPool = availableStakingPoolsData.find(
+        (pool) => pool.definition.id === router.query.pool
+      )
+      console.log("selectedPool", selectedPool, availableStakingPoolsData)
+      if (selectedPool) {
+        setSelectedStakingPool(selectedPool)
+      }
+    } else {
+      setSelectedStakingPool(null)
+    }
+  }, [router.query.pool, availableStakingPoolsData])
+
   useEffect(
     function updateStakingForViewOnStakingPoolsDataChange() {
       if (stakingPoolForView) {
@@ -126,54 +139,29 @@ const useStakingPoolsStorage = () => {
   )
 
   const selectStakingPoolForView = (stakingPoolId: string | null) => {
-    if (!stakingPoolId) {
-      setSelectedStakingPool(null)
+    if (!stakingPoolId || stakingPoolId === stakingPoolForView?.definition.id) {
+      const currentQuery = router.query
+      delete currentQuery.pool
+      router.push(
+        {
+          pathname: "/",
+          query: currentQuery,
+        },
+        undefined,
+        { shallow: true }
+      )
+
       return
     }
 
-    const selectedPool = availableStakingPoolsData.find(
-      (pool) => pool.definition.id === stakingPoolId
+    router.push(
+      {
+        pathname: "/",
+        query: { pool: stakingPoolId },
+      },
+      undefined,
+      { shallow: true }
     )
-
-    if (selectedPool) {
-      if (selectedPool?.definition.id === stakingPoolForView?.definition.id) {
-        setSelectedStakingPool(null)
-      } else {
-        setSelectedStakingPool(selectedPool)
-      }
-    }
-
-    setStakingPoolForStaking(null)
-  }
-
-  const selectStakingPoolForStaking = (stakingPoolId: string | null) => {
-    if (!stakingPoolId) {
-      setStakingPoolForStaking(null)
-      return
-    }
-
-    const selectedPool = availableStakingPoolsData.find(
-      (pool) => pool.definition.id === stakingPoolId
-    )
-
-    if (selectedPool) {
-      setStakingPoolForStaking(selectedPool)
-    }
-  }
-
-  const selectStakingPoolForUnstaking = (stakingPoolId: string | null) => {
-    if (!stakingPoolId) {
-      setStakingPoolForUnstaking(null)
-      return
-    }
-
-    const selectedPool = availableStakingPoolsData.find(
-      (pool) => pool.definition.id === stakingPoolId
-    )
-
-    if (selectedPool) {
-      setStakingPoolForUnstaking(selectedPool)
-    }
   }
 
   const combinedStakingPoolsData = availableStakingPoolsData
@@ -217,26 +205,6 @@ const useStakingPoolsStorage = () => {
       }
     : null
 
-  const combinedSelectedStakingPoolForStakingData = stakingPoolForStaking
-    ? {
-        stakingPool: stakingPoolForStaking,
-        userData: userStakingPoolsData.find(
-          (userPool) =>
-            userPool.address === stakingPoolForStaking.definition.address
-        ),
-      }
-    : null
-
-  const combinedSelectedStakingPoolForUnstakingData = stakingPoolForUnstaking
-    ? {
-        stakingPool: stakingPoolForUnstaking,
-        userData: userStakingPoolsData.find(
-          (userPool) =>
-            userPool.address === stakingPoolForUnstaking.definition.address
-        ),
-      }
-    : null
-
   const combinedUserUnstakesData =
     userUnstakesData?.map((unstakeInfo) => ({
       unstakeInfo,
@@ -263,11 +231,7 @@ const useStakingPoolsStorage = () => {
   return {
     availableStakingPools: availableStakingPoolsData,
     stakingPoolForView: combinedSelectedStakingPoolForViewData,
-    stakingPoolForStaking: combinedSelectedStakingPoolForStakingData,
-    stakingPoolForUnstaking: combinedSelectedStakingPoolForUnstakingData,
     selectStakingPoolForView,
-    selectStakingPoolForStaking,
-    selectStakingPoolForUnstaking,
     combinedStakingPoolsData,
     userUnstakesData,
     availableForUnstaking,

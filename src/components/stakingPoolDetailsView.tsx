@@ -8,11 +8,9 @@ import {
   UserStakingPoolData,
   UserUnstakingPoolData,
 } from "@/misc/walletsConfig"
-import { Button } from "antd"
 import { DateTime } from "luxon"
 import { useState } from "react"
 import { useWatchAsset } from "wagmi"
-import Plus from "../assets/svgs/plus.svg"
 import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
 
@@ -20,7 +18,6 @@ interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool
   userStakingPoolData?: UserStakingPoolData
   userUnstakingPoolData?: Array<UserUnstakingPoolData>
-  selectStakingPoolForStaking: (stakingPoolId: string) => void
 }
 
 const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
