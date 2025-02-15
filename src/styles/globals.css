@@ -58,7 +58,7 @@ body {
   }
 
   .btn-primary-gradient-aqua {
-    @apply bold16 4k:bold22 py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
+    @apply bold16  py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
@@ -68,7 +68,7 @@ body {
     }
   }
   .btn-primary-grey {
-    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16 4k:bold22 bg-gray4 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16  bg-gray4 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
@@ -79,7 +79,7 @@ body {
   }
 
   .btn-secondary-grey {
-    @apply flex w-full  py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16 4k:bold22 bg-gray12 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full  py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16  bg-gray12 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
@@ -109,7 +109,7 @@ body {
     @apply flex w-fit py-1 4k:py-1.5 px-1.5 lg:px-2 4k:px-2.5 border border-none 4k:text-20 rounded-[8px] items-center bg-white/[14%] cursor-pointer duration-700 ease-in-out;
   }
   .btn-secondary-gray {
-    @apply flex w-full py-1.5 lg:py-2 4k:py-2.5 px-1.5 lg:px-2 4k:px-2.5 rounded-full border-[0.35px] border-white text-white items-center bold16 4k:bold22 bg-gray4 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full py-1.5 lg:py-2 4k:py-2.5 px-1.5 lg:px-2 4k:px-2.5 rounded-full border-[0.35px] border-white text-white items-center bold16  bg-gray4 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
@@ -117,7 +117,7 @@ body {
   }
 
   .btn-secondary-gray3 {
-    @apply flex py-1.5 w-full lg:py-5 4k:py-6 px-1.5 lg:px-2 4k:px-2.5 rounded-full border border-white items-center bg-gray12 text-white bold16 4k:bold22 cursor-pointer  duration-700 ease-in-out;
+    @apply flex py-1.5 w-full lg:py-5 4k:py-6 px-1.5 lg:px-2 4k:px-2.5 rounded-full border border-white items-center bg-gray12 text-white bold16  cursor-pointer  duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
@@ -179,13 +179,13 @@ body {
     @apply font-bold text-14 lg:text-26 4k:text-30 lg:leading-7.75;
   }
   .bold22 {
-    @apply font-bold text-18 lg:text-22 4k:text-26 lg:leading-6.5 text-white;
+    @apply font-bold text-18 lg:text-22 4k:text-28 lg:leading-6.5 text-white;
   }
   .bold16 {
-    @apply font-bold text-10 lg:text-16 4k:text-18 lg:leading-6.5 text-white;
+    @apply font-bold text-10 lg:text-16 4k:text-20 lg:leading-6.5 text-white;
   }
   .bold15 {
-    @apply font-bold text-12 lg:text-15 4k:text-17 lg:leading-6.5 text-white;
+    @apply font-bold text-12 lg:text-15 4k:text-18 lg:leading-6.5 text-white;
   }
   .bold14 {
     @apply font-bold text-10 lg:text-14 4k:text-16 lg:leading-6.5 text-white;
