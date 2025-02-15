@@ -35,7 +35,7 @@ body {
 
 @layer components {
   .btn-primary-cyan {
-    @apply py-1 lg:py-1.5 px-10 !bg-[#00D0C6] !text-black font-semibold rounded-lg border-0 cursor-pointer;
+    @apply py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 !bg-[#00D0C6] !text-black font-semibold rounded-lg border-0 cursor-pointer;
 
     &:hover {
       @apply !bg-white;
@@ -46,7 +46,7 @@ body {
     }
   }
   .btn-primary-aqua {
-    @apply py-1 lg:py-1.5 px-10 rounded-none !bg-aqua1 !text-black1 font-extrabold text-20 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
+    @apply py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-none !bg-aqua1 !text-black1 font-extrabold text-20 4k:text-24 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
@@ -58,18 +58,17 @@ body {
   }
 
   .btn-primary-gradient-aqua {
-    @apply bold16 py-1 lg:py-1.5 px-10 rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
+    @apply bold16 4k:bold22 py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
     }
-
     &:disabled {
       @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
     }
   }
   .btn-primary-grey {
-    @apply flex w-full py-1 lg:py-1.5 px-1.5 lg:px-2 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray4 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16 4k:bold22 bg-gray4 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
@@ -80,7 +79,7 @@ body {
   }
 
   .btn-secondary-grey {
-    @apply flex w-full  py-1 lg:py-1.5 px-1.5 lg:px-2 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray12 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full  py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16 4k:bold22 bg-gray12 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
@@ -92,11 +91,11 @@ body {
   }
 
   .btn-primary-gradient-aqua-lg {
-    @apply btn-primary-gradient-aqua py-2 max-lg:text-17;
+    @apply btn-primary-gradient-aqua py-2 4k:py-2.5 max-lg:text-17 4k:text-20;
   }
 
   .btn-secondary-colored {
-    @apply !gap-0 !whitespace-normal py-1 lg:py-1.5 px-5 w-full font-bold text-13 leading-6 tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full;
+    @apply !gap-0 !whitespace-normal py-1 lg:py-1.5 4k:py-2 px-5 4k:px-8 w-full font-bold text-13 4k:text-17 leading-6 tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full;
 
     &:hover {
       @apply !opacity-80;
@@ -107,208 +106,146 @@ body {
   }
 
   .btn-filter {
-    @apply flex w-fit py-1 px-1.5 lg:px-2 border border-none rounded-[8px] items-center bg-white/[14%] cursor-pointer duration-700 ease-in-out;
+    @apply flex w-fit py-1 4k:py-1.5 px-1.5 lg:px-2 4k:px-2.5 border border-none 4k:text-20 rounded-[8px] items-center bg-white/[14%] cursor-pointer duration-700 ease-in-out;
   }
   .btn-secondary-gray {
-    @apply flex w-full py-1.5 lg:py-2 px-1.5 lg:px-2 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray4 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full py-1.5 lg:py-2 4k:py-2.5 px-1.5 lg:px-2 4k:px-2.5 rounded-full border-[0.35px] border-white text-white items-center bold16 4k:bold22 bg-gray4 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
     }
   }
+
   .btn-secondary-gray3 {
-    @apply flex py-1.5 w-full lg:py-5 px-1.5 lg:px-2 rounded-full border border-white items-center bg-gray12 text-white bold16 cursor-pointer  duration-700 ease-in-out;
+    @apply flex py-1.5 w-full lg:py-5 4k:py-6 px-1.5 lg:px-2 4k:px-2.5 rounded-full border border-white items-center bg-gray12 text-white bold16 4k:bold22 cursor-pointer  duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
     }
-  }
-
-  .caption {
-    @apply font-medium text-14 leading-5  text-gray1;
   }
 
   .small-base {
-    @apply font-medium text-12 lg:text-13 leading-5 lg:leading-6  text-white;
+    @apply font-medium text-12 lg:text-13 4k:text-15 leading-5 lg:leading-6 text-white;
   }
-
   .base {
-    @apply font-semibold text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray1;
+    @apply font-semibold text-12 xs:text-14 lg:text-16 4k:text-20 leading-5 lg:leading-6 text-gray1;
   }
   .gray-base {
-    @apply font-normal text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray8;
+    @apply font-normal text-12 xs:text-14 lg:text-16 4k:text-20 leading-5 lg:leading-6 text-gray8;
   }
-
   .base-medium {
-    @apply font-medium text-11 lg:text-13 text-white3;
+    @apply font-medium text-11 lg:text-13 4k:text-16 text-white3;
   }
-
   .regular-base {
-    @apply font-normal text-12 xs:text-14 lg:text-16 leading-5 lg:leading-6  text-gray1;
+    @apply font-normal text-12 xs:text-14 lg:text-16 4k:text-20 leading-5 lg:leading-6 text-gray1;
   }
-
-  .base2 {
-    @apply font-medium text-12 xs:text-14 lg:text-18 leading-5 lg:leading-8  text-gray5;
-  }
-
-  .titles {
-    @apply font-bold text-18 leading-9  text-black1;
-  }
-
   .info-label {
-    @apply font-normal text-10 lg:text-12 leading-3 lg:leading-4 text-gray1;
+    @apply font-normal text-10 lg:text-12 4k:text-16 leading-3 lg:leading-4 text-gray1;
   }
-  .body2-semibold {
-    @apply font-semibold text-10 lg:text-18 leading-3 lg:leading-8 text-gray1;
-  }
-
-  .body2-bold {
-    @apply font-bold text-10 lg:text-20 leading-3 lg:leading-8 text-gray1;
-  }
-
-  .body2-medium {
-    @apply font-medium text-16 lg:text-17 leading-5 lg:leading-8 text-white1;
-  }
-
   .body2 {
-    @apply font-normal lg:font-medium text-16 lg:text-20 leading-5 lg:leading-8 text-white1;
+    @apply font-normal lg:font-medium text-16 lg:text-20 4k:text-24 leading-5 lg:leading-8 text-white1;
   }
-
   .body2-v2 {
-    @apply font-light text-16 lg:text-28 leading-5 lg:leading-10 text-white1 px-17.5;
+    @apply font-light text-16 lg:text-28 4k:text-33 leading-5 lg:leading-10 text-white1 px-17.5;
   }
-
   .body1 {
-    @apply font-bold text-16 lg:text-24 leading-6 lg:leading-8 text-gray1;
+    @apply font-bold text-16 lg:text-24 4k:text-28 leading-6 lg:leading-8 text-gray1;
   }
-
   .body1-s {
-    @apply font-extrabold lg:font-bold text-12 lg:text-16 leading-6 text-gray1;
+    @apply font-extrabold lg:font-bold text-12 lg:text-16 4k:text-20 leading-6 text-gray1;
   }
-
   .h4 {
-    @apply font-bold text-20 xs:text-22 lg:text-26 leading-8 lg:leading-10 text-white2;
+    @apply font-bold text-20 xs:text-22 lg:text-26 4k:text-30 leading-8 lg:leading-10 text-white2;
   }
-
-  .h3 {
-    @apply font-bold text-27 lg:text-30 xl:text-38 leading-10 lg:leading-12 text-white2;
-  }
-  .h3-inactive {
-    @apply h3 text-18 lg:text-20 xl:text-26 leading-8 lg:leading-10 text-gray3;
-  }
-
-  .h3-s {
-    @apply font-extrabold text-12 lg:text-27  leading-6 lg:leading-10 text-white1;
-  }
-
-  .h2 {
-    @apply font-normal lg:text-28 text-14 xl:leading-10 leading-5 text-gray5;
-  }
-
-  .h1 {
-    @apply bold52;
-  }
-
-  .hero {
-    @apply font-extrabold text-40 lg:text-64 leading-12 lg:leading-16 text-white1;
-  }
-
-  .hero-v2 {
-    @apply font-bold text-40 lg:text-58 leading-12 lg:leading-14.5 text-white1;
-  }
-
   .opacity-hover {
     @apply hover:opacity-70 duration-300 ease-in-out;
   }
-
   .text-22-bold {
-    @apply font-bold text-18 lg:text-22 leading-4 lg:leading-6 text-white2;
+    @apply font-bold text-18 lg:text-22 4k:text-26 leading-4 lg:leading-6 text-white2;
   }
-
   .text-26-bold {
-    @apply font-bold text-18 lg:text-26 leading-4 lg:leading-6 text-white2;
+    @apply font-bold text-18 lg:text-26 4k:text-30 leading-4 lg:leading-6 text-white2;
   }
-
   .text-12-regular {
-    @apply font-medium text-11 lg:text-12 lg:leading-4  text-white3;
+    @apply font-medium text-11 lg:text-12 4k:text-14 lg:leading-4  text-white3;
   }
   .bold52 {
-    @apply font-bold text-22 lg:text-52 lg:leading-16 text-white;
+    @apply font-bold text-22 lg:text-52 4k:text-58 lg:leading-16 text-white;
   }
   .bold33 {
-    @apply font-bold text-22 lg:text-33 lg:leading-10 text-white;
+    @apply font-bold text-22 lg:text-33 4k:text-38 lg:leading-10 text-white;
   }
   .bold26 {
-    @apply font-bold text-14 lg:text-26 lg:leading-7.75;
+    @apply font-bold text-14 lg:text-26 4k:text-30 lg:leading-7.75;
   }
   .bold22 {
-    @apply font-bold text-18 lg:text-22 lg:leading-6.5 text-white;
+    @apply font-bold text-18 lg:text-22 4k:text-26 lg:leading-6.5 text-white;
   }
   .bold16 {
-    @apply font-bold text-10 lg:text-16 lg:leading-6.5 text-white;
+    @apply font-bold text-10 lg:text-16 4k:text-18 lg:leading-6.5 text-white;
   }
   .bold15 {
-    @apply font-bold text-12 lg:text-15 lg:leading-6.5 text-white;
+    @apply font-bold text-12 lg:text-15 4k:text-17 lg:leading-6.5 text-white;
   }
   .bold14 {
-    @apply font-bold text-10 lg:text-14 lg:leading-6.5 text-white;
+    @apply font-bold text-10 lg:text-14 4k:text-16 lg:leading-6.5 text-white;
   }
   .bold13 {
-    @apply font-bold text-13 lg:leading-6.5 text-white;
+    @apply font-bold text-13 4k:text-15 lg:leading-6.5 text-white;
   }
   .bold12-s {
-    @apply font-bold text-12 leading-6.5;
+    @apply font-bold text-12 4k:text-14 leading-6.5;
   }
   .bold12 {
-    @apply font-bold text-10 lg:text-12 lg:leading-6.5 text-white;
+    @apply font-bold text-10 lg:text-12 4k:text-14 lg:leading-6.5 text-white;
   }
   .bold10 {
-    @apply font-bold text-10  lg:leading-6.5 text-white;
+    @apply font-bold text-10 4k:text-12 lg:leading-6.5 text-white;
   }
   .semi24 {
-    @apply font-semibold text-12 lg:text-24 lg:leading-6.5 text-gray13;
+    @apply font-semibold text-12 lg:text-24 4k:text-27 lg:leading-6.5 text-gray13;
   }
   .semi15 {
-    @apply font-semibold text-10 lg:text-15 lg:leading-6.5 text-white;
+    @apply font-semibold text-10 lg:text-15 4k:text-17 lg:leading-6.5 text-white;
   }
   .semi14 {
-    @apply font-semibold text-10 lg:text-14 lg:leading-5 text-white;
+    @apply font-semibold text-10 lg:text-14 4k:text-16 lg:leading-5 text-white;
   }
   .semi13 {
-    @apply font-semibold text-15 lg:leading-5 text-white;
+    @apply font-semibold text-15 4k:text-17 lg:leading-5 text-white;
   }
   .semi11 {
-    @apply font-semibold text-10 lg:text-11 lg:leading-4 text-white;
+    @apply font-semibold text-10 lg:text-11 4k:text-13 lg:leading-4 text-white;
   }
   .medium20 {
-    @apply font-medium text-18 lg:text-20 lg:leading-6.5 text-white;
+    @apply font-medium text-18 lg:text-20 4k:text-24 lg:leading-6.5 text-white;
   }
   .medium17 {
-    @apply font-medium text-10 lg:text-17 lg:leading-5 text-gray8;
+    @apply font-medium text-10 lg:text-17 4k:text-20 lg:leading-5 text-gray8;
   }
   .medium16 {
-    @apply font-medium text-10 lg:text-16 lg:leading-5 text-white;
+    @apply font-medium text-10 lg:text-16 4k:text-18 lg:leading-5 text-white;
   }
   .medium15 {
-    @apply font-medium text-10 lg:text-15 lg:leading-4 text-gray6;
+    @apply font-medium text-10 lg:text-15 4k:text-17 lg:leading-4 text-gray6;
   }
   .medium12 {
-    @apply font-medium text-10 lg:text-12 lg:leading-3.5 text-white;
+    @apply font-medium text-10 lg:text-12 4k:text-14 lg:leading-3.5 text-white;
   }
   .light26 {
-    @apply font-light text-10 lg:text-26 lg:leading-7.75 text-white;
+    @apply font-light text-10 lg:text-26 4k:text-33 lg:leading-7.75 text-white;
   }
   .light12 {
-    @apply font-light text-10 lg:text-12 lg:leading-3.5 text-white;
+    @apply font-light text-10 lg:text-12 4k:text-15 lg:leading-3.5 text-white;
   }
   .regular15 {
-    @apply font-normal text-12 lg:text-15;
+    @apply font-normal text-12 lg:text-15 4k:text-17;
   }
   .regular12 {
-    @apply font-normal text-10 lg:text-12 lg:leading-3.5 text-white;
+    @apply font-normal text-10 lg:text-12 4k:text-15 lg:leading-3.5 text-white;
   }
   .regular9 {
-    @apply font-normal text-10 lg:text-9 lg:leading-3.5 text-white;
+    @apply font-normal text-10 lg:text-9 4k:text-12 lg:leading-3.5 text-white;
   }
 }
 

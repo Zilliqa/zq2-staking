@@ -346,8 +346,7 @@ const HomePage = () => {
           </div>
         </div>
         <div
-          className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : " h-[100vh] "} relative mx-auto 
-      overflow-y-hidden `}
+          className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : "h-[100vh]"} relative mx-auto overflow-y-hidden max-w-screen-4k `}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh] h-full">
             {/* Left column */}

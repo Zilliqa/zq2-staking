@@ -6,7 +6,6 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: ["h3-inactive"],
   theme: {
     extend: {
       backgroundImage: {
@@ -142,6 +141,7 @@ const config: Config = {
       },
       screens: {
         xs: "450px",
+        '4k': "2380px",
       },
     },
   },
