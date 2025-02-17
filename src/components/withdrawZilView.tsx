@@ -214,9 +214,9 @@ const WithdrawZilView: React.FC = () => {
     <div
       className="relative overflow-y-auto max-h-[calc(90vh-15vh)]   
     scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1
-     flex flex-col gap-2 4k:gap-2.5"
+     flex flex-col gap-2 4k:gap-2.5 4k:mt-52"
     >
-      <div className=" text-center py-5 4k:py-6">
+      <div className=" text-center p-4">
         {anyItemsAvailable ? (
           <>
             <h1 className="bold52 text-white">My Claims</h1>
@@ -225,7 +225,7 @@ const WithdrawZilView: React.FC = () => {
             </p>
           </>
         ) : (
-          <h1 className="bold52 text-white mt-4">
+          <h1 className="bold52 text-white">
             <span className="hidden lg:block">Staking Portal</span>
             <span className="block lg:hidden">Claims</span>
           </h1>
@@ -274,7 +274,7 @@ const WithdrawZilView: React.FC = () => {
         </div>
       ) : (
         !isUnstakingDataLoading && (
-          <div className="text-center text-white mx-auto lg:my-10 4k:my-12">
+          <div className="text-center text-white mx-auto lg:my-10">
             <div className="flex justify-center mb-9.5">
               <Image
                 className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"

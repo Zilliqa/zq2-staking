@@ -93,7 +93,7 @@ const LoginView: React.FC = () => {
     )
 
   return (
-    <div className="relative">
+    <div className="relative 4k:mt-52">
       <div className="text-center p-4">
         <h1 className="bold52 text-white">Staking Portal</h1>
         <p className="mt-6 body2-v2 text-white4">

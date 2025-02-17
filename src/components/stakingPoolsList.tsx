@@ -108,7 +108,7 @@ const StakingPoolsList: React.FC = () => {
       </nav>
 
       <>
-        <div className="flex gap-x-2.5 mt-3 4k:mt-4 mb-2.5 4k:mb-3 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6">
+        <div className="flex gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6">
           <SortBtn
             variable="APR"
             isClicked={isAscending && sortCriteria == "APR"}

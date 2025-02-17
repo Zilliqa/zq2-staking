@@ -81,7 +81,7 @@ const HomePage = () => {
   )
 
   const desktopColumnContent = (
-    <div className="hidden lg:grid h-full items-center 4k:max-h-[70vh]">
+    <div className="hidden lg:grid h-full max-4k:items-center">
       {!isWalletConnected && !stakingPoolForView ? (
         <LoginView />
       ) : stakingPoolForView ? (
@@ -305,7 +305,7 @@ const HomePage = () => {
       >
         {/* Header */}
         <div className="h-[10vh] w-full flex items-center justify-center text-white border-b-[0.5px] border-gray2">
-          <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 ">
+          <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 4k:px-16 ">
             <div className="flex items-center">
               <Image
                 //src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg"
@@ -348,10 +348,10 @@ const HomePage = () => {
         <div
           className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : "h-[100vh]"} relative mx-auto overflow-y-hidden max-w-screen-4k `}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-3 lg:pt-[4vh] h-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 4k:gap-14 pt-3 lg:pt-[4vh] h-full">
             {/* Left column */}
             <div
-              className={`lg:bg-white/[9%] p-4 xs:p-6 rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"}`}
+              className={`lg:bg-white/[9%] p-4 xs:p-6 4k:p-10 max-4k:rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"}`}
             >
               <StakingPoolsList />
             </div>
