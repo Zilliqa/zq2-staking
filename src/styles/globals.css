@@ -26,6 +26,10 @@ body {
     rgb(var(--background-start-rgb));
   font-family: "Montserrat", sans-serif;
 }
+input,
+button {
+  font-family: "Montserrat", sans-serif;
+}
 
 @layer utilities {
   .text-balance {
