@@ -100,6 +100,7 @@ const StakingPoolsList: React.FC = () => {
             `}
             onClick={() => {
               setSelectedPoolType(tab.type)
+              selectStakingPoolForView(null)
             }}
           >
             {tab.name}
