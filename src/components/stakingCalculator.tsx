@@ -17,32 +17,25 @@ import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { MOCK_CHAIN } from "@/misc/chainConfig"
 const StakingCalculator: React.FC = () => {
+  const { appConfig } = AppConfigStorage.useContainer()
 
+  const { connectDummyWallet, isWalletConnected, isDummyWalletConnecting } =
+    WalletConnector.useContainer()
 
-  const { appConfig } = AppConfigStorage.useContainer();
- 
+  const connectWallet =
+    appConfig.chainId === MOCK_CHAIN.id ? (
+      <Button
+        type="primary"
+        onClick={connectDummyWallet}
+        loading={isDummyWalletConnecting}
+        className="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3"
+      >
+        CONNECT WALLET
+      </Button>
+    ) : (
+      <ConnectButton />
+    )
 
-
-  const {
-    connectDummyWallet,
-    isWalletConnected,
-    isDummyWalletConnecting, 
-  } = WalletConnector.useContainer() 
-
-    const connectWallet =
-      appConfig.chainId === MOCK_CHAIN.id ? (
-        <Button
-          type="primary"
-          onClick={connectDummyWallet}
-          loading={isDummyWalletConnecting}
-          className="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3"
-        >
-          CONNECT WALLET
-        </Button>
-      ) : (
-        <ConnectButton />
-      )
- 
   const { zilAvailable } = WalletConnector.useContainer()
   const {
     stake,
@@ -181,24 +174,25 @@ const StakingCalculator: React.FC = () => {
           </div>
           <div className="flex flex-col">
             <div className="flex mt-2 mb-5 ">
-              {isWalletConnected ?
-              <Button
-                type="default"
-                size="large"
-                className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua  mx-auto lg:w-1/2 w-2/3"
-                disabled={!canStake}
-                onClick={() =>
-                  stake(
-                    stakingPoolForView.stakingPool.definition.address,
-                    zilInWei
-                  )
-                }
-                loading={isStakingInProgress}
-              >
-                Stake
-              </Button>
-              :
-             <>{connectWallet}</> }
+              {isWalletConnected ? (
+                <Button
+                  type="default"
+                  size="large"
+                  className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua  mx-auto lg:w-1/2 w-2/3"
+                  disabled={!canStake}
+                  onClick={() =>
+                    stake(
+                      stakingPoolForView.stakingPool.definition.address,
+                      zilInWei
+                    )
+                  }
+                  loading={isStakingInProgress}
+                >
+                  Stake
+                </Button>
+              ) : (
+                <>{connectWallet}</>
+              )}
             </div>
             <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 ">
               <div className="flex flex-col gap-3.5 4k:gap-4 regular-base">

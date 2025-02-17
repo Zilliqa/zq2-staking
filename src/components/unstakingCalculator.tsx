@@ -17,30 +17,24 @@ import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { WalletConnector } from "@/contexts/walletConnector"
 
 const UnstakingCalculator: React.FC = () => {
+  const { appConfig } = AppConfigStorage.useContainer()
 
+  const { connectDummyWallet, isWalletConnected, isDummyWalletConnecting } =
+    WalletConnector.useContainer()
 
-    const { appConfig } = AppConfigStorage.useContainer();
-   
-    const {
-      connectDummyWallet, 
-      isWalletConnected,
-      isDummyWalletConnecting, 
-    } = WalletConnector.useContainer()
-  
-      const connectWallet =
-        appConfig.chainId === MOCK_CHAIN.id ? (
-          <Button
-            type="primary"
-            onClick={connectDummyWallet}
-            loading={isDummyWalletConnecting}
-            className="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3"
-          >
-            CONNECT WALLET
-          </Button>
-        ) : (
-          <ConnectButton />
-        )
-
+  const connectWallet =
+    appConfig.chainId === MOCK_CHAIN.id ? (
+      <Button
+        type="primary"
+        onClick={connectDummyWallet}
+        loading={isDummyWalletConnecting}
+        className="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3"
+      >
+        CONNECT WALLET
+      </Button>
+    ) : (
+      <ConnectButton />
+    )
 
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
 
@@ -169,24 +163,25 @@ const UnstakingCalculator: React.FC = () => {
           </div>
           <div className="flex flex-col">
             <div className="flex mt-2 mb-5">
-              {isWalletConnected ?
-              <Button
-                type="default"
-                size="large"
-                className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua mx-auto lg:w-1/2 w-2/3"
-                disabled={!canUnstake}
-                onClick={() =>
-                  unstake(
-                    stakingPoolForView.stakingPool.definition.address,
-                    zilInWei
-                  )
-                }
-                loading={isUnstakingInProgress}
-              >
-                Unstake
-              </Button>
-              :
-             <>{connectWallet}</> }
+              {isWalletConnected ? (
+                <Button
+                  type="default"
+                  size="large"
+                  className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua mx-auto lg:w-1/2 w-2/3"
+                  disabled={!canUnstake}
+                  onClick={() =>
+                    unstake(
+                      stakingPoolForView.stakingPool.definition.address,
+                      zilInWei
+                    )
+                  }
+                  loading={isUnstakingInProgress}
+                >
+                  Unstake
+                </Button>
+              ) : (
+                <>{connectWallet}</>
+              )}
             </div>
             <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2">
               <div className="flex flex-col gap-3.5 regular-base">
