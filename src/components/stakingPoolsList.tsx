@@ -4,7 +4,13 @@ import SortBtn from "./sortBtn"
 import { useEffect, useMemo, useState } from "react"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 
-const StakingPoolsList: React.FC = () => {
+interface StakingPoolsListProps {
+  setViewClaim: (value: boolean) => void
+}
+
+const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
+  setViewClaim,
+}) => {
   const {
     combinedStakingPoolsData,
     selectStakingPoolForView,
@@ -140,9 +146,10 @@ const StakingPoolsList: React.FC = () => {
                 stakingPoolForView?.stakingPool.definition.id ===
                 stakingPool.definition.id
               }
-              onClick={() =>
+              onClick={() => {
                 selectStakingPoolForView(stakingPool.definition.id)
-              }
+                setViewClaim(false)
+              }}
             />
           ))}
         </div>

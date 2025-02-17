@@ -21,6 +21,7 @@ interface UnstakeCardProps {
   stakingPool: StakingPool
   selectStakingPoolForView: (stakingPoolId: string | null) => void
   claimUnstake: (delegatorAddress: string) => void
+  setViewClaim: (value: boolean) => void
 }
 
 const UnstakeCard: React.FC<UnstakeCardProps> = ({
@@ -29,11 +30,15 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
   stakingPool,
   selectStakingPoolForView,
   claimUnstake: claim,
+  setViewClaim,
 }) => {
   return (
     <div
-      className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer"
-      onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
+      className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between"
+      onClick={() => {
+        selectStakingPoolForView(stakingPool.definition.id)
+        setViewClaim(true)
+      }}
     >
       <div className="flex lg:flex-col  content-center px-3 py-6 lg:px-9.5 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
         <div className="flex items-center gap-2">
@@ -102,6 +107,7 @@ interface RewardCardProps {
   selectStakingPoolForView: (stakingPoolId: string | null) => void
   claimReward: (delegatorAddress: string) => void
   stakeReward: (delegatorAddress: string) => void
+  setViewClaim: (value: boolean) => void
 }
 
 const RewardCard: React.FC<RewardCardProps> = ({
@@ -110,11 +116,15 @@ const RewardCard: React.FC<RewardCardProps> = ({
   selectStakingPoolForView,
   claimReward,
   stakeReward,
+  setViewClaim,
 }) => {
   return (
     <div
-      className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer"
-      onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
+      className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between"
+      onClick={() => {
+        selectStakingPoolForView(stakingPool.definition.id)
+        setViewClaim(true)
+      }}
     >
       <div className="flex lg:flex-col  content-center px-3 py-6 lg:px-9.5 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
         <div className="flex items-center gap-2">
@@ -193,7 +203,11 @@ const RewardCard: React.FC<RewardCardProps> = ({
   )
 }
 
-const WithdrawZilView: React.FC = () => {
+interface WithdrawZilViewProps {
+  setViewClaim: (value: boolean) => void // Fix: Correctly type the function
+}
+
+const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
   const {
     availableForUnstaking,
     pendingUnstaking,
@@ -247,6 +261,7 @@ const WithdrawZilView: React.FC = () => {
               unstakeInfo={unstakeClaim.unstakeInfo}
               claimUnstake={claimUnstake}
               selectStakingPoolForView={selectStakingPoolForView}
+              setViewClaim={setViewClaim}
             />
           ))}
 
@@ -258,6 +273,7 @@ const WithdrawZilView: React.FC = () => {
               selectStakingPoolForView={selectStakingPoolForView}
               claimReward={claimReward}
               stakeReward={stakeReward}
+              setViewClaim={setViewClaim}
             />
           ))}
 
@@ -269,6 +285,7 @@ const WithdrawZilView: React.FC = () => {
               unstakeInfo={pendingUnstakeClaim.unstakeInfo}
               claimUnstake={claimUnstake}
               selectStakingPoolForView={selectStakingPoolForView}
+              setViewClaim={setViewClaim}
             />
           ))}
         </div>

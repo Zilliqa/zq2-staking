@@ -9,7 +9,7 @@ import {
   UserUnstakingPoolData,
 } from "@/misc/walletsConfig"
 import { DateTime } from "luxon"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useWatchAsset } from "wagmi"
 import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
@@ -19,16 +19,23 @@ interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool
   userStakingPoolData?: UserStakingPoolData
   userUnstakingPoolData?: Array<UserUnstakingPoolData>
+  viewClaim?: boolean
 }
 
 const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   stakingPoolData,
   userStakingPoolData,
   userUnstakingPoolData,
+  viewClaim,
 }) => {
   const { zilAvailable } = WalletConnector.useContainer()
 
   const [selectedPane, setSelectedPane] = useState<string>("Stake")
+
+  useEffect(() => {
+    if (viewClaim === true) setSelectedPane("Claim")
+    else setSelectedPane("Stake")
+  }, [viewClaim])
 
   const colorInfoEntry = (title: string, value: string | null) => (
     <div>
