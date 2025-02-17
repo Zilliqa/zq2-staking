@@ -180,7 +180,6 @@ const UnstakingCalculator: React.FC = () => {
               <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
                 {isPoolLiquid() && (
                   <div className="flex flex-col xl:flex-row xl:gap-5 4k:gap-6">
-
                     <div className="gray-base">Rate</div>
                     <div className="text-gray9">
                       {stakingPoolForView!.stakingPool.data ? (
@@ -208,7 +207,6 @@ const UnstakingCalculator: React.FC = () => {
                 )}
 
                 <div className="text-gray9 flex flex-row xl:gap-5 4k:gap-6">
-
                   <Tooltip
                     placement="top"
                     arrow={true}
