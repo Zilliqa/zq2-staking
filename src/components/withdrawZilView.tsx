@@ -14,6 +14,7 @@ import {
 } from "@/misc/walletsConfig"
 import { Button } from "antd"
 import Image from "next/image"
+import { useState, useEffect } from "react"
 
 interface UnstakeCardProps {
   available: boolean
@@ -210,12 +211,24 @@ const WithdrawZilView: React.FC = () => {
     pendingUnstaking.length > 0 ||
     nonLiquidRewards.length > 0
 
+  const [isScrolling, setIsScrolling] = useState(false)
+  let scrollTimeout: any
+
+  const handleScroll = () => {
+    setIsScrolling(true)
+    clearTimeout(scrollTimeout)
+
+    scrollTimeout = setTimeout(() => {
+      setIsScrolling(false)
+    }, 1000)
+  }
+
+  useEffect(() => {
+    return () => clearTimeout(scrollTimeout)
+  }, [])
+
   return (
-    <div
-      className="relative overflow-y-auto max-h-[calc(90vh-15vh)]   
-    scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1
-     flex flex-col gap-2 4k:gap-2.5 4k:mt-52"
-    >
+    <div className="relative flex flex-col gap-2 4k:gap-2.5 4k:mt-52 h-full">
       <div className=" text-center p-4">
         {anyItemsAvailable ? (
           <>
@@ -234,43 +247,47 @@ const WithdrawZilView: React.FC = () => {
 
       {anyItemsAvailable ? (
         <div
-          className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 overflow-y-auto max-h-[calc(90vh-30vh)]
-          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 lg:pb-10
+          onScroll={handleScroll}
+          className={`flex-1 scrollbar-gradient overflow-y-scroll ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"} scrollbar-gradient `}
+        >
+          <div
+            className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6  lg:pb-10
            pr-2 lg:pr-4 4k:pl-5
           "
-        >
-          {availableForUnstaking.map((unstakeClaim, claimIdx) => (
-            <UnstakeCard
-              key={claimIdx}
-              available={true}
-              stakingPool={unstakeClaim.stakingPool}
-              unstakeInfo={unstakeClaim.unstakeInfo}
-              claimUnstake={claimUnstake}
-              selectStakingPoolForView={selectStakingPoolForView}
-            />
-          ))}
+          >
+            {availableForUnstaking.map((unstakeClaim, claimIdx) => (
+              <UnstakeCard
+                key={claimIdx}
+                available={true}
+                stakingPool={unstakeClaim.stakingPool}
+                unstakeInfo={unstakeClaim.unstakeInfo}
+                claimUnstake={claimUnstake}
+                selectStakingPoolForView={selectStakingPoolForView}
+              />
+            ))}
 
-          {nonLiquidRewards.map((reward, rewardIdx) => (
-            <RewardCard
-              key={rewardIdx}
-              rewardInfo={reward.rewardInfo}
-              stakingPool={reward.stakingPool}
-              selectStakingPoolForView={selectStakingPoolForView}
-              claimReward={claimReward}
-              stakeReward={stakeReward}
-            />
-          ))}
+            {nonLiquidRewards.map((reward, rewardIdx) => (
+              <RewardCard
+                key={rewardIdx}
+                rewardInfo={reward.rewardInfo}
+                stakingPool={reward.stakingPool}
+                selectStakingPoolForView={selectStakingPoolForView}
+                claimReward={claimReward}
+                stakeReward={stakeReward}
+              />
+            ))}
 
-          {pendingUnstaking.map((pendingUnstakeClaim, claimIdx) => (
-            <UnstakeCard
-              key={claimIdx + 1000}
-              available={false}
-              stakingPool={pendingUnstakeClaim.stakingPool}
-              unstakeInfo={pendingUnstakeClaim.unstakeInfo}
-              claimUnstake={claimUnstake}
-              selectStakingPoolForView={selectStakingPoolForView}
-            />
-          ))}
+            {pendingUnstaking.map((pendingUnstakeClaim, claimIdx) => (
+              <UnstakeCard
+                key={claimIdx + 1000}
+                available={false}
+                stakingPool={pendingUnstakeClaim.stakingPool}
+                unstakeInfo={pendingUnstakeClaim.unstakeInfo}
+                claimUnstake={claimUnstake}
+                selectStakingPoolForView={selectStakingPoolForView}
+              />
+            ))}
+          </div>
         </div>
       ) : (
         !isUnstakingDataLoading && (
