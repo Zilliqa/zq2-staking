@@ -1,6 +1,8 @@
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import rewards from "../assets/svgs/rewards.svg"
+import requests from "../assets/svgs/requests.svg"
+
 import {
   convertTokenToZil,
   formatUnitsToHumanReadable,
@@ -35,7 +37,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
       className="flex gap-2.5 4k:gap-3 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer justify-between"
       onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
     >
-      <div className="flex lg:flex-col  content-center px-3 py-6 4k:py-7 lg:px-9.5 4k:px-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
+      <div className="flex lg:flex-col  content-center pl-3 py-6 4k:py-7 lg:pl-9.5 4k:pl-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
         <div className="flex items-center gap-2 4k:gap-2.5">
           <Image
             className="rounded"
@@ -46,6 +48,16 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
           />
           <div className="semi24">{stakingPool.definition.name}</div>
           <div className="text-gray4 lg:hidden text-20">|</div>
+          <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
+            <Image
+              className="rounded"
+              src={requests}
+              alt="requests"
+              width={14}
+              height={15}
+            />
+            Requests
+          </div>
         </div>
         <div className="flex lg:mt-3 items-center">
           <div className="bold33">
@@ -116,7 +128,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
       className="flex gap-2.5 4k:gap-4 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer justify-between"
       onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
     >
-      <div className="flex lg:flex-col  content-center px-3 py-6 4k:py-7 lg:px-9.5 4k:px-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
+      <div className="flex lg:flex-col  content-center pl-3 py-6 4k:py-7 lg:pl-9.5 4k:pl-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
         <div className="flex items-center gap-2 4k:gap-2.5">
           <Image
             className="rounded"
