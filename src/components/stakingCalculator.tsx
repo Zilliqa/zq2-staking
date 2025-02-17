@@ -190,7 +190,9 @@ const StakingCalculator: React.FC = () => {
               </div>
               <div className="flex flex-col max-xl:justify-between xl:gap-3.5 4k:gap-5 xl:items-end">
                 {isPoolLiquid() && (
+
                   <div className="flex flex-col xl:flex-row xl:gap-5 4k:gap-6">
+
                     <div className="gray-base">Rate</div>
                     {stakingPoolForView!.stakingPool.data && (
                       <div className="text-gray9">{`1 ZIL = ~${stakingPoolForView.stakingPool.data.zilToTokenRate.toPrecision(3)} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
@@ -198,6 +200,7 @@ const StakingCalculator: React.FC = () => {
                   </div>
                 )}
                 <div className="text-aqua1 flex flex-row xl:gap-5 4k:gap-6">
+
                   <Tooltip
                     placement="top"
                     arrow={true}

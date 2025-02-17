@@ -56,7 +56,7 @@ jobs:
           build-args: |
             DEPLOY_ENV=stg
 
-  deploy-to-prototestnet:
+  deploy-to-prototestnet-and-devnet:
     needs: [build-docker]
     permissions:
       id-token: write
@@ -68,6 +68,7 @@ jobs:
       matrix:
         application:
           - zq2-stake-prototestnet
+          - zq2-stake-devnet
     env:
       APP_NAME: ${{ matrix.application }}
       Z_ENV: infra/live/gcp/non-production/prj-d-staging/z_ase1.yaml
