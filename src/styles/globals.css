@@ -26,8 +26,10 @@ body {
     rgb(var(--background-start-rgb));
   font-family: "Montserrat", sans-serif;
 }
+
 input,
-button {
+button,
+:where(.css-dev-only-do-not-override-1wwf28x).ant-btn {
   font-family: "Montserrat", sans-serif;
 }
 
