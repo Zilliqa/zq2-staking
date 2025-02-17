@@ -32,11 +32,11 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
 }) => {
   return (
     <div
-      className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer"
+      className="flex gap-2.5 4k:gap-3 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer justify-between"
       onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
     >
-      <div className="flex lg:flex-col  content-center px-3 py-6 lg:px-9.5 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
-        <div className="flex items-center gap-2">
+      <div className="flex lg:flex-col  content-center px-3 py-6 4k:py-7 lg:px-9.5 4k:px-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
+        <div className="flex items-center gap-2 4k:gap-2.5">
           <Image
             className="rounded"
             src={stakingPool.definition.iconUrl}
@@ -66,15 +66,15 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               </>
             )}
           </div>
-          <div className="medium15 max-lg:mr-2.5 ml-2.5 max-lg:order-1">
+          <div className="medium15 max-lg:mr-2.5 ml-2.5 4k:ml-3 max-lg:order-1">
             {unstakeInfo.zilAmount} {stakingPool.definition.tokenSymbol}
           </div>
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full px-3 lg:pb-0 pb-4 lg:px-4">
+      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full px-3 lg:pb-0 pb-4 lg:px-4 4k:px-5">
         <div className="max-lg:w-1/2">
           <Button
-            className="btn-primary-grey lg:py-5 py-4"
+            className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
             disabled={!available}
             onClick={() => claim(unstakeInfo.address)}
           >
@@ -113,11 +113,11 @@ const RewardCard: React.FC<RewardCardProps> = ({
 }) => {
   return (
     <div
-      className="flex gap-2.5 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer"
+      className="flex gap-2.5 4k:gap-4 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer justify-between"
       onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
     >
-      <div className="flex lg:flex-col  content-center px-3 py-6 lg:px-9.5 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
-        <div className="flex items-center gap-2">
+      <div className="flex lg:flex-col  content-center px-3 py-6 4k:py-7 lg:px-9.5 4k:px-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
+        <div className="flex items-center gap-2 4k:gap-2.5">
           <Image
             className="rounded"
             src={stakingPool.definition.iconUrl}
@@ -127,7 +127,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
           />
           <div className="semi24">{stakingPool.definition.name}</div>
           <div className="text-gray4 lg:hidden text-20">|</div>
-          <div className="bg-gray4 text-white3 py-1 px-2 items-center gap-2 medium12 lg:flex hidden">
+          <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
             <Image
               className="rounded"
               src={rewards}
@@ -150,10 +150,10 @@ const RewardCard: React.FC<RewardCardProps> = ({
               </>
             )}
           </div>
-          <div className="medium15 max-lg:mr-2.5 lg:ml-2.5 max-lg:order-1">
+          <div className="medium15 max-lg:mr-2.5 lg:ml-2.5 4k:ml-3 max-lg:order-1">
             {rewardInfo.zilRewardAmount}
           </div>
-          <div className="bg-gray4 text-white3 py-1 px-2 flex items-center gap-2 medium12 lg:hidden ml-2.5">
+          <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 flex items-center gap-2 4k:gap-2.5 medium12 lg:hidden ml-2.5 4k:ml-3">
             <Image
               className="rounded"
               src={rewards}
@@ -165,10 +165,10 @@ const RewardCard: React.FC<RewardCardProps> = ({
           </div>
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[218px] px-3 lg:pb-0 pb-4 lg:px-4">
+      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[218px] px-3 lg:pb-0 pb-4 lg:px-4 4k:px-5">
         <div className="max-lg:w-1/2">
           <Button
-            className="btn-primary-grey lg:py-5 py-4"
+            className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
             onClick={() => stakeReward(stakingPool.definition.address)}
           >
             Stake Reward
@@ -182,7 +182,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
             View
           </Button> */}
           <Button
-            className="btn-secondary-grey lg:py-5 py-4"
+            className="btn-secondary-grey 4k:py-6 lg:py-5 py-4"
             onClick={() => claimReward(stakingPool.definition.address)}
           >
             Claim Reward
@@ -214,18 +214,18 @@ const WithdrawZilView: React.FC = () => {
     <div
       className="relative overflow-y-auto max-h-[calc(90vh-15vh)]   
     scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1
-     flex flex-col gap-2"
+     flex flex-col gap-2 4k:gap-2.5 4k:mt-52"
     >
-      <div className=" text-center py-5">
+      <div className=" text-center p-4">
         {anyItemsAvailable ? (
           <>
-            <h1 className="h1 text-white">My Claims</h1>
+            <h1 className="bold52 text-white">My Claims</h1>
             <p className="mt-2 body2-v2 text-white4">
               Help us Empower and secure <br /> the Zilliqa Chain{" "}
             </p>
           </>
         ) : (
-          <h1 className="h1 text-white mt-4">
+          <h1 className="bold52 text-white">
             <span className="hidden lg:block">Staking Portal</span>
             <span className="block lg:hidden">Claims</span>
           </h1>
@@ -234,9 +234,9 @@ const WithdrawZilView: React.FC = () => {
 
       {anyItemsAvailable ? (
         <div
-          className="grid grid-cols-1 gap-4 lg:gap-5 overflow-y-auto  max-h-[calc(90vh-30vh)]
+          className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 overflow-y-auto max-h-[calc(90vh-30vh)]
           scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 lg:pb-10
-           pr-2 lg:pr-4
+           pr-2 lg:pr-4 4k:pl-5
           "
         >
           {availableForUnstaking.map((unstakeClaim, claimIdx) => (
@@ -277,21 +277,21 @@ const WithdrawZilView: React.FC = () => {
           <div className="text-center text-white mx-auto lg:my-10">
             <div className="flex justify-center mb-9.5">
               <Image
-                className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={FeedbackIcon}
                 alt="arrow icon"
                 width={56}
                 height={56}
               />
               <Image
-                className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={FeedbackIcon}
                 alt="arrow icon"
                 width={56}
                 height={56}
               />
               <Image
-                className="ml-3 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={FeedbackIcon}
                 alt="arrow icon"
                 width={56}
@@ -304,7 +304,7 @@ const WithdrawZilView: React.FC = () => {
             </div>
             <Button
               type="primary"
-              className="btn-primary-gradient-aqua-lg !w-fit px-11 group"
+              className="btn-primary-gradient-aqua-lg !w-fit px-11 4k:px-12 group"
             >
               Leave Feedback
             </Button>

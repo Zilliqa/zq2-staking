@@ -60,7 +60,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         availableUnstake.map((item, claimIdx) => (
           <div
             className=" min-h-[100px] lg:min-h-[124px] xl:min-h-[140px] 
-            flex flex-col justify-evenly gap-2 my-2.5 lg:my-4 p-3 lg:p-5 xl:p-7 bg-grey-gradient rounded-xl w-full"
+            flex flex-col justify-evenly gap-2 4k:gap-3 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl w-full"
             key={claimIdx}
           >
             <div className="items-center h4 w-full flex justify-between text-white1">
@@ -69,7 +69,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                   <div>
                     {parseFloat(formatUnits(item.zilAmount, 18)).toFixed(3)} ZIL
                   </div>
-                  <div className="body1-s lg:ml-2.5  mt-2">avZIL</div>
+                  <div className="body1-s lg:ml-2.5 mt-2">avZIL</div>
                 </div>
               ) : (
                 <div className="w-[4em] h-[1em] animated-gradient" />
@@ -89,8 +89,8 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
       ) : !!pendingUnstake?.length ? (
         <div
           className="flex flex-col min-h-[100px] lg:min-h-[132px] xl:min-h-[148px] justify-evenly  
-         my-2.5 lg:my-4 py-2 lg:py-6 xl:py-8  
-         px-3 lg:px-7.5 xl:px-10 bg-grey-gradient rounded-xl w-full"
+         my-2.5 lg:my-4 4k:my-6 py-2 lg:py-6 xl:py-8 4k:py-10 
+         px-3 lg:px-7.5 xl:px-10 4k:px-14 bg-grey-gradient rounded-xl w-full"
         >
           <div className="body2 text-gray1">Next available reward</div>
           <div className="h4 mt-2 w-full flex justify-between text-white1">

@@ -95,7 +95,7 @@ const StakingPoolsList: React.FC = () => {
         {tabs.map((tab, index) => (
           <button
             key={index}
-            className={`w-1/2 whitespace-nowrap border-b-[0.5px] py-3 
+            className={`w-1/2 whitespace-nowrap border-b-[0.5px] py-3 4k:py-4
               ${selectedPoolType === tab.type ? "bold33 border-aqua1" : "bold26 text-gray8 border-transparent"}
             `}
             onClick={() => {
@@ -108,7 +108,7 @@ const StakingPoolsList: React.FC = () => {
       </nav>
 
       <>
-        <div className="flex gap-x-2.5 mt-3 mb-2.5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5">
+        <div className="flex gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6">
           <SortBtn
             variable="APR"
             isClicked={isAscending && sortCriteria == "APR"}
@@ -128,8 +128,8 @@ const StakingPoolsList: React.FC = () => {
 
         <div
           onScroll={handleScroll}
-          className={`grid grid-cols-1 gap-2.5 lg:gap-4 overflow-y-auto max-h-[calc(90vh-38vh)] lg:max-h-[calc(90vh-25vh)]
-            pb-4 lg:pb-20 pr-2 lg:pr-4 scrollbar-gradient ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"}`}
+          className={`grid grid-cols-1 gap-2.5 lg:gap-4 4k:gap-5 overflow-y-auto max-h-[calc(90vh-38vh)] lg:max-h-[calc(90vh-25vh)]
+            pb-4 lg:pb-20 pr-2 lg:pr-4 4k:pr-5 scrollbar-gradient ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"}`}
         >
           {sortedLiquidStakingPoolsData.map(({ stakingPool, userData }) => (
             <StakingPoolCard
