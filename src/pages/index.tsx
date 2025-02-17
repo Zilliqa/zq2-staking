@@ -75,7 +75,7 @@ const HomePage = () => {
   }, [router.query.claims])
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 p-4">
+    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 p-4 4k:p-6">
       {children}
     </div>
   )
@@ -86,9 +86,7 @@ const HomePage = () => {
         <LoginView />
       ) : stakingPoolForView ? (
         <div
-          className="bg-black4/[68%] rounded-2.5xl xs:px-5 lg:px-7.5 h-full 
-         "
-        >
+          className="bg-black4/[68%] rounded-2.5xl xs:px-5 lg:px-7.5 4k:px-10 h-full">
           <StakingPoolDetailsView
             stakingPoolData={stakingPoolForView.stakingPool}
             userStakingPoolData={stakingPoolForView.userData.staked}

@@ -92,7 +92,7 @@ const StakingCalculator: React.FC = () => {
     stakingPoolForView && (
       <>
         <div className="max-h-[calc(90vh-50vh)] lg:max-h-[calc(90vh-45vh)] scrollbar-gradient overflow-y-scroll">
-          <div className="flex justify-between lg:gap-10 my-2.5 lg:my-4 p-3 lg:p-5 xl:p-7 bg-grey-gradient rounded-xl items-center">
+          <div className="flex justify-between lg:gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center">
             <div className="h-fit self-center">
               <Input
                 className="flex items-baseline !bg-transparent !border-transparent !text-white1 bold33 px-0"
@@ -172,8 +172,8 @@ const StakingCalculator: React.FC = () => {
                 Stake
               </Button>
             </div>
-            <div className="flex justify-between pt-2.5 lg:pt-5 border-t border-black2 ">
-              <div className="flex flex-col gap-3.5 regular-base">
+            <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 ">
+              <div className="flex flex-col gap-3.5 4k:gap-4 regular-base">
                 <div className=" ">
                   Commission Fee:{" "}
                   {stakingPoolForView!.stakingPool.data ? (
@@ -188,16 +188,16 @@ const StakingCalculator: React.FC = () => {
                 </div>
                 <div className="">Max transaction cost: 3 ZIL</div>
               </div>
-              <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
+              <div className="flex flex-col max-xl:justify-between xl:gap-3.5 4k:gap-5 xl:items-end">
                 {isPoolLiquid() && (
-                  <div className="flex flex-col xl:flex-row xl:gap-5">
+                  <div className="flex flex-col xl:flex-row xl:gap-5 4k:gap-6">
                     <div className="gray-base">Rate</div>
                     {stakingPoolForView!.stakingPool.data && (
                       <div className="text-gray9">{`1 ZIL = ~${stakingPoolForView.stakingPool.data.zilToTokenRate.toPrecision(3)} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
                     )}
                   </div>
                 )}
-                <div className="text-gray9 text-aqua1 flex flex-row xl:gap-5">
+                <div className="text-aqua1 flex flex-row xl:gap-5 4k:gap-6">
                   <Tooltip
                     placement="top"
                     arrow={true}
