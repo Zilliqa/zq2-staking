@@ -13,7 +13,8 @@ import { useState } from "react"
 import { useWatchAsset } from "wagmi"
 import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
-
+import router from "next/router"
+import CloseIcon from "../assets/svgs/close-icon.svg"
 interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool
   userStakingPoolData?: UserStakingPoolData
@@ -96,30 +97,48 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
      pr-2 lg:pr-4"
     >
       <div className="items-center flex justify-between py-1 lg:py-7.5">
-        <div className="max-lg:ms-1 items-center flex">
-          <span className="text-white1 bold33 lg:mr-6 mr-2">
-            {stakingPoolData.definition.name}
-          </span>
+        <div className="max-lg:ms-1 items-center w-full flex justify-between">
+          <div className="flex items-center">
+            <span className="text-white1 bold33 lg:mr-6 mr-2">
+              {stakingPoolData.definition.name}
+            </span>
 
-          {isPoolLiquid() && (
-            <>
-              <span className="lg:text-38 text-20 lg:h4 text-black3  font-light">
-                |
-              </span>
-              <span className="medium20 text-gray6 lg:ml-6 ml-2">
-                {stakingPoolData.definition.tokenSymbol}
-              </span>
+            {isPoolLiquid() && (
+              <>
+                <span className="lg:text-38 text-20 lg:h4 text-black3  font-light">
+                  |
+                </span>
+                <span className="medium20 text-gray6 lg:ml-6 ml-2">
+                  {stakingPoolData.definition.tokenSymbol}
+                </span>
 
+                <Image
+                  onClick={handleClickAaddToken}
+                  className="h-[28px] w-[28px] ml-4 cursor-pointer"
+                  src={PlusIcon}
+                  alt="arrow icon"
+                  width={28}
+                  height={28}
+                />
+              </>
+            )}
+          </div>
+          <div className="flex items-center">
+            <a
+              className="hover:cursor-pointer hover:opacity-80"
+              onClick={() => {
+                router.back()
+              }}
+            >
               <Image
-                onClick={handleClickAaddToken}
-                className="h-[28px] w-[28px] ml-4 cursor-pointer"
-                src={PlusIcon}
-                alt="arrow icon"
-                width={28}
-                height={28}
+                className=""
+                src={CloseIcon}
+                alt={"close icon"}
+                width={26}
+                height={26}
               />
-            </>
-          )}
+            </a>
+          </div>
         </div>
       </div>
 
