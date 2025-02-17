@@ -128,23 +128,24 @@ const StakingPoolsList: React.FC = () => {
 
         <div
           onScroll={handleScroll}
-          className={`grid grid-cols-1 gap-2.5 lg:gap-4 4k:gap-5 overflow-y-auto max-h-[calc(90vh-38vh)] lg:max-h-[calc(90vh-25vh)]
-            pb-4 lg:pb-20 pr-2 lg:pr-4 4k:pr-5 scrollbar-gradient ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"}`}
+          className={`flex-1 pb-4 lg:pb-20 pr-2 lg:pr-4 4k:pr-5 scrollbar-gradient overflow-y-scroll  ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"}`}
         >
-          {sortedLiquidStakingPoolsData.map(({ stakingPool, userData }) => (
-            <StakingPoolCard
-              key={stakingPool.definition.id}
-              stakingPoolData={stakingPool}
-              userStakingPoolData={userData}
-              isStakingPoolSelected={
-                stakingPoolForView?.stakingPool.definition.id ===
-                stakingPool.definition.id
-              }
-              onClick={() =>
-                selectStakingPoolForView(stakingPool.definition.id)
-              }
-            />
-          ))}
+          <div className="h-full overflow-y-autogrid grid-cols-1 gap-2.5 lg:gap-4 4k:gap-5">
+            {sortedLiquidStakingPoolsData.map(({ stakingPool, userData }) => (
+              <StakingPoolCard
+                key={stakingPool.definition.id}
+                stakingPoolData={stakingPool}
+                userStakingPoolData={userData}
+                isStakingPoolSelected={
+                  stakingPoolForView?.stakingPool.definition.id ===
+                  stakingPool.definition.id
+                }
+                onClick={() =>
+                  selectStakingPoolForView(stakingPool.definition.id)
+                }
+              />
+            ))}
+          </div>
         </div>
       </>
     </>
