@@ -130,7 +130,7 @@ const StakingPoolsList: React.FC = () => {
           onScroll={handleScroll}
           className={`flex-1 pb-4 mb-16 md:mb-0 overflow-y-scroll ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"} scrollbar-gradient `}
         >
-          <div className="h-full grid grid-cols-1 gap-2.5 lg:gap-4 4k:gap-5">
+          <div className="grid grid-cols-1 gap-2.5 lg:gap-4 4k:gap-5">
             {sortedLiquidStakingPoolsData.map(({ stakingPool, userData }) => (
               <StakingPoolCard
                 key={stakingPool.definition.id}
