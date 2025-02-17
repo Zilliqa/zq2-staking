@@ -42,7 +42,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
     )
 
   return (
-    <div className="overflow-y-scroll max-h-[calc(90vh-50vh)] lg:max-h-[calc(90vh-55vh)] scrollbar-gradient">
+    <div className="h-full">
       {claimUnstakeCallTxHash !== undefined && (
         <div className="text-center gradient-bg-1 py-2 text-gray-500">
           <Link
@@ -108,7 +108,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
           </div>
         </div>
       ) : (
-        <div className="flex justify-center items-center my-32 body2 text-gray1 ">
+        <div className="flex justify-center items-center h-full body2 text-gray1 ">
           No available Claims
         </div>
       )}
