@@ -93,7 +93,8 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     <div
       className="relative overflow-y-auto max-h-[calc(90vh-16vh)] sm:max-h-[calc(90vh-15vh)] lg:max-h-[calc(100vh-5vh)]
     scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-2 4k:pb-4
-     pr-2 lg:pr-4 4k:pr-6">
+     pr-2 lg:pr-4 4k:pr-6"
+    >
       <div className="items-center flex justify-between py-1 lg:py-7.5 4k:py-10">
         <div className="max-lg:ms-1 items-center flex">
           <span className="text-white1 bold33 4k:mr-10 lg:mr-6 mr-2">

@@ -141,7 +141,7 @@ const config: Config = {
       },
       screens: {
         xs: "450px",
-        '4k': "2380px",
+        "4k": "2380px",
       },
     },
   },
