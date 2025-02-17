@@ -232,7 +232,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
       <div
         onScroll={handleScroll}
-        className={`flex-1 scrollbar-gradient overflow-y-scroll ${
+        className={`flex-1 pb-4 mb-16 md:mb-0  scrollbar-gradient overflow-y-scroll ${
           isScrolling ? "scrollbar-visible" : "scrollbar-hidden"
         }`}
       >

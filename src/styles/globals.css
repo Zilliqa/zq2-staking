@@ -268,13 +268,8 @@ button,
   .scrollbar-gradient::-webkit-scrollbar-thumb {
     @apply bg-aqua1 rounded-lg;
   }
-  .scrollbar-hidden::-webkit-scrollbar {
-    display: none;
-  }
-
-  .scrollbar-visible::-webkit-scrollbar {
-    display: block;
-    transition: display 0.5s ease-in-out;
+  .scrollbar-hidden::-webkit-scrollbar-thumb {
+    @apply bg-transparent;
   }
 }
 @keyframes gradientAnimation {
