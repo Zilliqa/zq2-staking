@@ -81,7 +81,7 @@ const HomePage = () => {
   )
 
   const desktopColumnContent = (
-    <div className="hidden lg:grid h-full max:h-[1300px] max-4k:items-center">
+    <div className="hidden lg:block h-full 4k:h-[70vh] max-4k:items-center overflow-hidden">
       {!isWalletConnected && !stakingPoolForView ? (
         <LoginView />
       ) : stakingPoolForView ? (
@@ -296,7 +296,7 @@ const HomePage = () => {
   return (
     <>
       <div
-        className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden ${
+        className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden flex flex-col gap-3 lg:gap-[4vh] ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -342,9 +342,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div
-          className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : "h-[100vh]"} relative mx-auto overflow-y-hidden max-w-screen-4k `}
-        >
+        <div className="grow relative mx-auto overflow-y-hidden max-w-screen-4k w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 4k:gap-14 pt-3 lg:pt-[4vh] h-full">
             {/* Left column */}
             <div

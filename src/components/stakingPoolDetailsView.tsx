@@ -9,7 +9,7 @@ import {
   UserUnstakingPoolData,
 } from "@/misc/walletsConfig"
 import { DateTime } from "luxon"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useWatchAsset } from "wagmi"
 import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
@@ -36,7 +36,21 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       <div className="text-gray8 info-label">{title}</div>
     </div>
   )
+  const [isScrolling, setIsScrolling] = useState(false)
+  let scrollTimeout: any
 
+  const handleScroll = () => {
+    setIsScrolling(true)
+    clearTimeout(scrollTimeout)
+
+    scrollTimeout = setTimeout(() => {
+      setIsScrolling(false)
+    }, 1000)
+  }
+
+  useEffect(() => {
+    return () => clearTimeout(scrollTimeout)
+  }, [])
   const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
     <div>
       {value ? (
@@ -91,11 +105,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     )
 
   return (
-    <div
-      className="relative overflow-y-auto max-h-[calc(90vh-16vh)] sm:max-h-[calc(90vh-15vh)] lg:max-h-[calc(100vh-5vh)]
-    scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-2 4k:pb-4
-     pr-2 lg:pr-4 4k:pr-6"
-    >
+    <div className="relative pb-2 4k:pb-4 pr-2 lg:pr-4 4k:pr-6 flex flex-col h-full">
       <div className="items-center flex justify-between py-1 lg:py-7.5">
         <div className="max-lg:ms-1 items-center w-full flex justify-between">
           <div className="flex items-center">
@@ -220,16 +230,23 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         ))}
       </div>
 
-      {selectedPane === "Stake" ? (
-        <StakingCalculator />
-      ) : selectedPane === "Unstake" ? (
-        <UnstakingCalculator />
-      ) : (
-        <WithdrawZilPanel
-          userUnstakingPoolData={userUnstakingPoolData}
-          stakingPoolData={stakingPoolData}
-        />
-      )}
+      <div
+        onScroll={handleScroll}
+        className={`flex-1 scrollbar-gradient overflow-y-scroll ${
+          isScrolling ? "scrollbar-visible" : "scrollbar-hidden"
+        }`}
+      >
+        {selectedPane === "Stake" ? (
+          <StakingCalculator />
+        ) : selectedPane === "Unstake" ? (
+          <UnstakingCalculator />
+        ) : (
+          <WithdrawZilPanel
+            userUnstakingPoolData={userUnstakingPoolData}
+            stakingPoolData={stakingPoolData}
+          />
+        )}
+      </div>
     </div>
   )
 }
