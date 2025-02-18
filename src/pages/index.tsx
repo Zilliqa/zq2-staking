@@ -25,6 +25,8 @@ import Star from "../assets/svgs/star.svg"
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
 
+  const [viewClaim, setViewClaim] = useState(false)
+
   useEffect(() => {
     setIsVisible(true)
   }, [])
@@ -90,17 +92,18 @@ const HomePage = () => {
             stakingPoolData={stakingPoolForView.stakingPool}
             userStakingPoolData={stakingPoolForView.userData.staked}
             userUnstakingPoolData={stakingPoolForView.userData.unstaked}
+            viewClaim={viewClaim}
           />
         </div>
       ) : (
-        <WithdrawZilView />
+        <WithdrawZilView setViewClaim={setViewClaim} />
       )}
     </div>
   )
 
   const mobileOverlayContent =
     mobileShowClaims && !stakingPoolForView
-      ? mobileOverlayWrapper(<WithdrawZilView />)
+      ? mobileOverlayWrapper(<WithdrawZilView setViewClaim={setViewClaim} />)
       : stakingPoolForView &&
         mobileOverlayWrapper(
           <StakingPoolDetailsView
@@ -350,7 +353,7 @@ const HomePage = () => {
             <div
               className={`lg:bg-white/[9%] p-4 xs:p-6 4k:p-10 max-4k:rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"}`}
             >
-              <StakingPoolsList />
+              <StakingPoolsList setViewClaim={setViewClaim} />
             </div>
 
             {desktopColumnContent}
