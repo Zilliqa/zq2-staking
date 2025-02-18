@@ -133,7 +133,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             )}
           </div>
           <div className="flex items-center">
-            <a
+            <div
               className="hover:cursor-pointer hover:opacity-80"
               onClick={() => {
                 selectStakingPoolForView(null)
@@ -146,7 +146,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                 width={26}
                 height={26}
               />
-            </a>
+            </div>
           </div>
         </div>
       </div>

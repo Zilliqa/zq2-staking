@@ -1,8 +1,6 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import { useEffect, useState } from "react"
 import { Button, Input, Tooltip } from "antd"
-import { ConnectButton } from "@rainbow-me/rainbowkit"
-import { MOCK_CHAIN } from "@/misc/chainConfig"
 import {
   formatPercentage,
   convertTokenToZil,
@@ -14,28 +12,11 @@ import { StakingOperations } from "@/contexts/stakingOperations"
 import { DateTime } from "luxon"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "@/components/FastFadeScroll"
-import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { WalletConnector } from "@/contexts/walletConnector"
+import CustomWalletConnect from "./customWalletConnect"
 
 const UnstakingCalculator: React.FC = () => {
-  const { appConfig } = AppConfigStorage.useContainer()
-
-  const { connectDummyWallet, isWalletConnected, isDummyWalletConnecting } =
-    WalletConnector.useContainer()
-
-  const connectWallet =
-    appConfig.chainId === MOCK_CHAIN.id ? (
-      <Button
-        type="primary"
-        onClick={connectDummyWallet}
-        loading={isDummyWalletConnecting}
-        className="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3"
-      >
-        CONNECT WALLET
-      </Button>
-    ) : (
-      <ConnectButton />
-    )
+  const { isWalletConnected } = WalletConnector.useContainer()
 
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
 
@@ -262,7 +243,9 @@ const UnstakingCalculator: React.FC = () => {
                     Unstake
                   </Button>
                 ) : (
-                  <>{connectWallet}</>
+                  <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3">
+                    Connect wallet
+                  </CustomWalletConnect>
                 )}
               </div>
               <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2">
