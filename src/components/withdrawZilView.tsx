@@ -14,6 +14,7 @@ import {
 } from "@/misc/walletsConfig"
 import { Button } from "antd"
 import Image from "next/image"
+import { Dispatch, SetStateAction } from "react"
 
 interface UnstakeCardProps {
   available: boolean
@@ -21,7 +22,7 @@ interface UnstakeCardProps {
   stakingPool: StakingPool
   selectStakingPoolForView: (stakingPoolId: string | null) => void
   claimUnstake: (delegatorAddress: string) => void
-  setViewClaim: (value: boolean) => void
+  setViewClaim: Dispatch<SetStateAction<boolean>>
 }
 
 const UnstakeCard: React.FC<UnstakeCardProps> = ({
@@ -107,7 +108,7 @@ interface RewardCardProps {
   selectStakingPoolForView: (stakingPoolId: string | null) => void
   claimReward: (delegatorAddress: string) => void
   stakeReward: (delegatorAddress: string) => void
-  setViewClaim: (value: boolean) => void
+  setViewClaim: Dispatch<SetStateAction<boolean>>
 }
 
 const RewardCard: React.FC<RewardCardProps> = ({
@@ -204,7 +205,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
 }
 
 interface WithdrawZilViewProps {
-  setViewClaim: (value: boolean) => void // Fix: Correctly type the function
+  setViewClaim: Dispatch<SetStateAction<boolean>>
 }
 
 const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {

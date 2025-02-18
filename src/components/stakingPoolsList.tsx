@@ -1,11 +1,11 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import StakingPoolCard from "./stakingPoolCard"
 import SortBtn from "./sortBtn"
-import { useEffect, useMemo, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 
 interface StakingPoolsListProps {
-  setViewClaim: (value: boolean) => void
+  setViewClaim: Dispatch<SetStateAction<boolean>>
 }
 
 const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
