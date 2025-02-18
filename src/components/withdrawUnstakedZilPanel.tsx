@@ -14,9 +14,7 @@ import {
 import { Button } from "antd"
 import { DateTime } from "luxon"
 import Link from "next/link"
-import Image from "next/image"
 import { formatUnits } from "viem"
-import rewards from "../assets/svgs/rewards.svg"
 
 interface WithdrawZilPanelProps {
   stakingPoolData: StakingPool
