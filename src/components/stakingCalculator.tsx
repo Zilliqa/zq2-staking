@@ -159,7 +159,7 @@ const StakingCalculator: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-col">
-            <div className="flex mt-2 mb-5 ">
+            <div className="flex mt-2 mb-2 ">
               {isWalletConnected ? (
                 <Button
                   type="default"
@@ -182,6 +182,20 @@ const StakingCalculator: React.FC = () => {
                 </CustomWalletConnect>
               )}
             </div>
+       
+        {stakingCallTxHash !== undefined && (
+          <div className="text-center mb-3 regular-base ">
+            <Link
+              rel="noopener noreferrer"
+              target="_blank"
+              href={getTxExplorerUrl(stakingCallTxHash, appConfig.chainId)}
+              passHref={true}
+            >
+              Last staking transaction: <span className="text-white underline"> {formatAddress(stakingCallTxHash)}</span> 
+            </Link>
+          </div>
+        )}
+
             <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 ">
               <div className="flex flex-col gap-3.5 4k:gap-4 regular-base">
                 <div className=" ">
@@ -233,18 +247,6 @@ const StakingCalculator: React.FC = () => {
           </div>
         </div>
 
-        {stakingCallTxHash !== undefined && (
-          <div className="text-center gradient-bg-1 py-2">
-            <Link
-              rel="noopener noreferrer"
-              target="_blank"
-              href={getTxExplorerUrl(stakingCallTxHash, appConfig.chainId)}
-              passHref={true}
-            >
-              Last staking transaction: {formatAddress(stakingCallTxHash)}
-            </Link>
-          </div>
-        )}
 
         {stakeContractCallError && (
           <div className="text-red1 text-center">

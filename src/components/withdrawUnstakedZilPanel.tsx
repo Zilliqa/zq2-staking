@@ -44,7 +44,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
   return (
     <div className="h-full">
       {claimUnstakeCallTxHash !== undefined && (
-        <div className="text-center gradient-bg-1 py-2 text-gray-500">
+        <div className="text-center gradient-bg-1 py-2 regular-base">
           <Link
             rel="noopener noreferrer"
             target="_blank"
