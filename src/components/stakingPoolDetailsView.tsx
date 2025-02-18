@@ -17,20 +17,31 @@ import router from "next/router"
 import CloseIcon from "../assets/svgs/close-icon.svg"
 import FastFadeScroll from "@/components/FastFadeScroll"
 
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
+
 interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool
   userStakingPoolData?: UserStakingPoolData
   userUnstakingPoolData?: Array<UserUnstakingPoolData>
+  viewClaim?: boolean
 }
 
 const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   stakingPoolData,
   userStakingPoolData,
   userUnstakingPoolData,
+  viewClaim,
 }) => {
+  const { selectStakingPoolForView } = StakingPoolsStorage.useContainer()
+
   const { zilAvailable } = WalletConnector.useContainer()
 
   const [selectedPane, setSelectedPane] = useState<string>("Stake")
+
+  useEffect(() => {
+    if (viewClaim === true) setSelectedPane("Claim")
+    else setSelectedPane("Stake")
+  }, [viewClaim])
 
   const colorInfoEntry = (title: string, value: string | null) => (
     <div>
@@ -125,7 +136,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             <a
               className="hover:cursor-pointer hover:opacity-80"
               onClick={() => {
-                router.back()
+                selectStakingPoolForView(null)
               }}
             >
               <Image

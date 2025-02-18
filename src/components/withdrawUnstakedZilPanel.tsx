@@ -74,9 +74,9 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               ) : (
                 <div className="w-[4em] h-[1em] animated-gradient" />
               )}
-              <div className="">
+              <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full">
                 <Button
-                  className="btn-primary-gradient-aqua"
+                  className="btn-secondary-grey lg:py-5 py-4"
                   onClick={() => claimUnstake(item.address)}
                   loading={isClaimingUnstakeInProgress}
                 >

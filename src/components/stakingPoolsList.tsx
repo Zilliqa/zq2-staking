@@ -1,11 +1,17 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import StakingPoolCard from "./stakingPoolCard"
 import SortBtn from "./sortBtn"
-import { useEffect, useMemo, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "@/components/FastFadeScroll"
 
-const StakingPoolsList: React.FC = () => {
+interface StakingPoolsListProps {
+  setViewClaim: Dispatch<SetStateAction<boolean>>
+}
+
+const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
+  setViewClaim,
+}) => {
   const {
     combinedStakingPoolsData,
     selectStakingPoolForView,
@@ -87,6 +93,7 @@ const StakingPoolsList: React.FC = () => {
             `}
             onClick={() => {
               setSelectedPoolType(tab.type)
+              selectStakingPoolForView(null)
             }}
           >
             {tab.name}
