@@ -16,8 +16,9 @@ import {
 } from "@/misc/walletsConfig"
 import { Button } from "antd"
 import Image from "next/image"
-import { Dispatch, SetStateAction } from "react"
-
+import { Dispatch, SetStateAction, useState } from "react"
+import FilterBtn from "./filterBtn"
+import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 interface UnstakeCardProps {
   available: boolean
   unstakeInfo: UserUnstakingPoolData
@@ -230,6 +231,31 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
     availableForUnstaking.length > 0 ||
     pendingUnstaking.length > 0 ||
     nonLiquidRewards.length > 0
+  const [selectedPoolType, setSelectedPoolType] = useState("ALL")
+
+  const filters = [
+    {
+      name: "All ",
+      type: "ALL",
+      activeGradient: "bg-aquaBlue",
+    },
+    {
+      name: "Liquid",
+      type: StakingPoolType.LIQUID,
+      activeGradient: "bg-aqua5",
+    },
+    {
+      name: "Normal ",
+      type: StakingPoolType.NORMAL,
+      activeGradient: "bg-navyBlue",
+    },
+  ]
+  const filterByPoolType = (item: any) => {
+    if (selectedPoolType === "ALL") {
+      return true
+    }
+    return item.stakingPool.definition.poolType === selectedPoolType
+  }
 
   return (
     <div
@@ -252,6 +278,18 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
           </h1>
         )}
       </div>
+      <div className="flex justify-center items-center gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6">
+        <div className="text-14 text-gray14">Filter by</div>
+        {filters.map((filter, index) => (
+          <FilterBtn
+            key={index}
+            variable={filter.name}
+            isActive={selectedPoolType === filter.type}
+            onClick={() => setSelectedPoolType(filter.type)}
+            activeGradient={filter.activeGradient}
+          />
+        ))}
+      </div>
 
       {anyItemsAvailable ? (
         <div
@@ -260,41 +298,47 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
            pr-2 lg:pr-4 4k:pl-5
           "
         >
-          {availableForUnstaking.map((unstakeClaim, claimIdx) => (
-            <UnstakeCard
-              key={claimIdx}
-              available={true}
-              stakingPool={unstakeClaim.stakingPool}
-              unstakeInfo={unstakeClaim.unstakeInfo}
-              claimUnstake={claimUnstake}
-              selectStakingPoolForView={selectStakingPoolForView}
-              setViewClaim={setViewClaim}
-            />
-          ))}
+          {availableForUnstaking
+            .filter(filterByPoolType)
+            .map((unstakeClaim, claimIdx) => (
+              <UnstakeCard
+                key={claimIdx}
+                available={true}
+                stakingPool={unstakeClaim.stakingPool}
+                unstakeInfo={unstakeClaim.unstakeInfo}
+                claimUnstake={claimUnstake}
+                selectStakingPoolForView={selectStakingPoolForView}
+                setViewClaim={setViewClaim}
+              />
+            ))}
 
-          {nonLiquidRewards.map((reward, rewardIdx) => (
-            <RewardCard
-              key={rewardIdx}
-              rewardInfo={reward.rewardInfo}
-              stakingPool={reward.stakingPool}
-              selectStakingPoolForView={selectStakingPoolForView}
-              claimReward={claimReward}
-              stakeReward={stakeReward}
-              setViewClaim={setViewClaim}
-            />
-          ))}
+          {nonLiquidRewards
+            .filter(filterByPoolType)
+            .map((reward, rewardIdx) => (
+              <RewardCard
+                key={rewardIdx}
+                rewardInfo={reward.rewardInfo}
+                stakingPool={reward.stakingPool}
+                selectStakingPoolForView={selectStakingPoolForView}
+                claimReward={claimReward}
+                stakeReward={stakeReward}
+                setViewClaim={setViewClaim}
+              />
+            ))}
 
-          {pendingUnstaking.map((pendingUnstakeClaim, claimIdx) => (
-            <UnstakeCard
-              key={claimIdx + 1000}
-              available={false}
-              stakingPool={pendingUnstakeClaim.stakingPool}
-              unstakeInfo={pendingUnstakeClaim.unstakeInfo}
-              claimUnstake={claimUnstake}
-              selectStakingPoolForView={selectStakingPoolForView}
-              setViewClaim={setViewClaim}
-            />
-          ))}
+          {pendingUnstaking
+            .filter(filterByPoolType)
+            .map((pendingUnstakeClaim, claimIdx) => (
+              <UnstakeCard
+                key={claimIdx + 1000}
+                available={false}
+                stakingPool={pendingUnstakeClaim.stakingPool}
+                unstakeInfo={pendingUnstakeClaim.unstakeInfo}
+                claimUnstake={claimUnstake}
+                selectStakingPoolForView={selectStakingPoolForView}
+                setViewClaim={setViewClaim}
+              />
+            ))}
         </div>
       ) : (
         !isUnstakingDataLoading && (
