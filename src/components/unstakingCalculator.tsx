@@ -143,8 +143,8 @@ const UnstakingCalculator: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2">
-          <div className="flex mt-2 mb-5">
+        <div className="flex flex-col justify-between">
+          <div className="flex mt-2 mb-3">
             {isWalletConnected ? (
               <Button
                 type="default"

@@ -168,7 +168,7 @@ const StakingCalculator: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-col">
-            <div className="flex mt-2 mb-2 ">
+            <div className="flex mt-2 mb-3">
               {isWalletConnected ? (
                 <Button
                   type="default"
