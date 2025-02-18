@@ -9,7 +9,7 @@ import {
   getHumanFormDuration,
 } from "@/misc/formatting"
 import FeedbackIcon from "../assets/svgs/feedback-icon.svg"
-import { StakingPool } from "@/misc/stakingPoolsConfig"
+import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import {
   UserNonLiquidStakingPoolRewardData,
   UserUnstakingPoolData,
@@ -55,6 +55,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
           />
           <div className="semi24">{stakingPool.definition.name}</div>
           <div className="text-gray4 lg:hidden text-20">|</div>
+          {stakingPool.definition.poolType != StakingPoolType.LIQUID &&
           <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
             <Image
               className="rounded"
@@ -64,7 +65,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               height={15}
             />
             Requests
-          </div>
+          </div>}
         </div>
         <div className="flex lg:mt-3 items-center">
           <div className="bold33">
@@ -151,6 +152,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
           />
           <div className="semi24">{stakingPool.definition.name}</div>
           <div className="text-gray4 lg:hidden text-20">|</div>
+          {stakingPool.definition.poolType != StakingPoolType.LIQUID &&
           <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
             <Image
               className="rounded"
@@ -160,7 +162,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
               height={15}
             />
             Rewards
-          </div>
+          </div>}
         </div>
         <div className="flex lg:mt-3 items-center">
           <div className="bold33">
