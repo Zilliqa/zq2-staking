@@ -431,13 +431,9 @@ button,
   }
 }
 
-
-  
-  @media (max-width: 1024px) {
-.intercom-lightweight-app-launcher{
-
+@media (max-width: 1024px) {
+  .intercom-lightweight-app-launcher {
     bottom: 60px !important;
-  right:10px !important;
+    right: 10px !important;
   }
-
 }

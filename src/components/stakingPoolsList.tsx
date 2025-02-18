@@ -131,10 +131,10 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
                   stakingPoolForView?.stakingPool.definition.id ===
                   stakingPool.definition.id
                 }
-                onClick={() =>
-{                selectStakingPoolForView(stakingPool.definition.id)
-                setViewClaim(false)}
-                }
+                onClick={() => {
+                  selectStakingPoolForView(stakingPool.definition.id)
+                  setViewClaim(false)
+                }}
               />
             ))}
           </div>

@@ -94,12 +94,12 @@ const StakingCalculator: React.FC = () => {
     stakingPoolForView?.stakingPool.definition.poolType ===
     StakingPoolType.LIQUID
 
-      const unboudingPeriod = getHumanFormDuration(
-        DateTime.now().plus({
-          minutes:
-            stakingPoolForView?.stakingPool.definition.withdrawPeriodInMinutes || 0,
-        })
-      )
+  const unboudingPeriod = getHumanFormDuration(
+    DateTime.now().plus({
+      minutes:
+        stakingPoolForView?.stakingPool.definition.withdrawPeriodInMinutes || 0,
+    })
+  )
 
   return (
     stakingPoolForView && (
@@ -191,19 +191,23 @@ const StakingCalculator: React.FC = () => {
                 </CustomWalletConnect>
               )}
             </div>
-       
-        {stakingCallTxHash !== undefined && (
-          <div className="text-center mb-3 regular-base ">
-            <Link
-              rel="noopener noreferrer"
-              target="_blank"
-              href={getTxExplorerUrl(stakingCallTxHash, appConfig.chainId)}
-              passHref={true}
-            >
-              Last staking transaction: <span className="text-white underline"> {formatAddress(stakingCallTxHash)}</span> 
-            </Link>
-          </div>
-        )}
+
+            {stakingCallTxHash !== undefined && (
+              <div className="text-center mb-3 regular-base ">
+                <Link
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={getTxExplorerUrl(stakingCallTxHash, appConfig.chainId)}
+                  passHref={true}
+                >
+                  Last staking transaction:{" "}
+                  <span className="text-white underline">
+                    {" "}
+                    {formatAddress(stakingCallTxHash)}
+                  </span>
+                </Link>
+              </div>
+            )}
 
             <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 lg:pb-10">
               <div className="flex flex-col gap-3.5 4k:gap-4 regular-base">
@@ -221,8 +225,8 @@ const StakingCalculator: React.FC = () => {
                 </div>
                 <div className="">Max transaction cost: 3 ZIL</div>
                 <div className="text-aqua1 ">
-                Unbonding Period: {unboudingPeriod}
-              </div>
+                  Unbonding Period: {unboudingPeriod}
+                </div>
               </div>
               <div className="flex flex-col max-xl:justify-between xl:gap-3.5 4k:gap-5 xl:items-end">
                 {isPoolLiquid() && (
@@ -258,7 +262,6 @@ const StakingCalculator: React.FC = () => {
             </div>
           </div>
         </div>
-
 
         {stakeContractCallError && (
           <div className="text-red1 text-center">

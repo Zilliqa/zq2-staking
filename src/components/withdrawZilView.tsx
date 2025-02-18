@@ -55,17 +55,18 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
           />
           <div className="semi24">{stakingPool.definition.name}</div>
           <div className="text-gray4 lg:hidden text-20">|</div>
-          {stakingPool.definition.poolType != StakingPoolType.LIQUID &&
-          <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
-            <Image
-              className="rounded"
-              src={requests}
-              alt="requests"
-              width={14}
-              height={15}
-            />
-            Requests
-          </div>}
+          {stakingPool.definition.poolType != StakingPoolType.LIQUID && (
+            <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
+              <Image
+                className="rounded"
+                src={requests}
+                alt="requests"
+                width={14}
+                height={15}
+              />
+              Requests
+            </div>
+          )}
         </div>
         <div className="flex lg:mt-3 items-center">
           <div className="bold33">
@@ -152,17 +153,18 @@ const RewardCard: React.FC<RewardCardProps> = ({
           />
           <div className="semi24">{stakingPool.definition.name}</div>
           <div className="text-gray4 lg:hidden text-20">|</div>
-          {stakingPool.definition.poolType != StakingPoolType.LIQUID &&
-          <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
-            <Image
-              className="rounded"
-              src={rewards}
-              alt="rewards"
-              width={14}
-              height={15}
-            />
-            Rewards
-          </div>}
+          {stakingPool.definition.poolType != StakingPoolType.LIQUID && (
+            <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
+              <Image
+                className="rounded"
+                src={rewards}
+                alt="rewards"
+                width={14}
+                height={15}
+              />
+              Rewards
+            </div>
+          )}
         </div>
         <div className="flex lg:mt-3 items-center">
           <div className="bold33">
