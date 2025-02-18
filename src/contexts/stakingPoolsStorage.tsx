@@ -109,18 +109,20 @@ const useStakingPoolsStorage = () => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (router.query.pool) {
-      const selectedPool = availableStakingPoolsData.find(
-        (pool) => pool.definition.id === router.query.pool
+    const poolToShow = router.query.poolId as string | null
+
+    const selectedPool =
+      poolToShow &&
+      availableStakingPoolsData.find(
+        (pool) => pool.definition.id === poolToShow
       )
-      console.log("selectedPool", selectedPool, availableStakingPoolsData)
-      if (selectedPool) {
-        setSelectedStakingPool(selectedPool)
-      }
+
+    if (selectedPool) {
+      setSelectedStakingPool(selectedPool)
     } else {
       setSelectedStakingPool(null)
     }
-  }, [router.query.pool, availableStakingPoolsData])
+  }, [router.query.poolId, availableStakingPoolsData])
 
   useEffect(
     function updateStakingForViewOnStakingPoolsDataChange() {
@@ -140,10 +142,10 @@ const useStakingPoolsStorage = () => {
   const selectStakingPoolForView = (stakingPoolId: string | null) => {
     if (!stakingPoolId || stakingPoolId === stakingPoolForView?.definition.id) {
       const currentQuery = router.query
-      delete currentQuery.pool
+      delete currentQuery.poolId
+
       router.push(
         {
-          pathname: "/",
           query: currentQuery,
         },
         undefined,
@@ -151,16 +153,15 @@ const useStakingPoolsStorage = () => {
       )
 
       return
+    } else {
+      router.push(
+        {
+          query: { poolId: stakingPoolId },
+        },
+        undefined,
+        { shallow: true }
+      )
     }
-
-    router.push(
-      {
-        pathname: "/",
-        query: { pool: stakingPoolId },
-      },
-      undefined,
-      { shallow: true }
-    )
   }
 
   const combinedStakingPoolsData = availableStakingPoolsData

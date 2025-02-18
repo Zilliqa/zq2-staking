@@ -11,13 +11,14 @@ import { WagmiProvider } from "wagmi"
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { getWagmiConfig } from "@/misc/chainConfig"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { AppConfig } from "./api/config"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import Head from "next/head"
 
+const queryClient = new QueryClient()
+
 export default function App({ Component, pageProps }: AppProps) {
-  const queryClient = new QueryClient()
   const [appConfig, setAppConfig] = useState<AppConfig | null>(null)
   const [loadingPercentage, setLoadingPercentage] = useState(0)
   const [displayedPercentage, setDisplayedPercentage] = useState(0)
@@ -86,6 +87,14 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [loadingPercentage])
 
+  const wagmiConfig = useMemo(() => {
+    if (!appConfig) {
+      return null
+    }
+
+    return getWagmiConfig(appConfig.chainId, appConfig.walletConnectPrivateKey)
+  }, [appConfig?.chainId, appConfig?.walletConnectPrivateKey])
+
   if (!appConfig) {
     return (
       <div
@@ -113,12 +122,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AppConfigStorage.Provider initialState={{ appConfig }}>
       <ConfigProvider>
-        <WagmiProvider
-          config={getWagmiConfig(
-            appConfig.chainId,
-            appConfig.walletConnectPrivateKey
-          )}
-        >
+        <WagmiProvider config={wagmiConfig!} reconnectOnMount={true}>
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider showRecentTransactions={true}>
               <WalletConnector.Provider>
