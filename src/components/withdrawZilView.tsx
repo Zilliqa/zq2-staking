@@ -20,8 +20,6 @@ import { Dispatch, SetStateAction, useState } from "react"
 import FilterBtn from "./filterBtn"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "./FastFadeScroll"
-import { Dispatch, SetStateAction } from "react"
-
 
 interface UnstakeCardProps {
   available: boolean
@@ -284,63 +282,58 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       </div>
 
       {anyItemsAvailable ? (
-
         <div
           className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 overflow-y-auto max-h-[calc(90vh-30vh)]
           scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 lg:pb-10
            pr-2 lg:pr-4 4k:pl-5
           "
         >
+          <FastFadeScroll className="flex-1 overflow-y-scroll">
+            <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 pr-2 lg:pr-4 4k:pl-5">
+              {availableForUnstaking
+                .filter(filterByPoolType)
+                .map((unstakeClaim, claimIdx) => (
+                  <UnstakeCard
+                    key={claimIdx}
+                    available={true}
+                    stakingPool={unstakeClaim.stakingPool}
+                    unstakeInfo={unstakeClaim.unstakeInfo}
+                    claimUnstake={claimUnstake}
+                    selectStakingPoolForView={selectStakingPoolForView}
+                    setViewClaim={setViewClaim}
+                  />
+                ))}
 
-        <FastFadeScroll className="flex-1 overflow-y-scroll">
-          <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 pr-2 lg:pr-4 4k:pl-5">
-             {availableForUnstaking
-            .filter(filterByPoolType)
-            .map((unstakeClaim, claimIdx) => (
-              <UnstakeCard
-                key={claimIdx}
-                available={true}
-                stakingPool={unstakeClaim.stakingPool}
-                unstakeInfo={unstakeClaim.unstakeInfo}
-                claimUnstake={claimUnstake}
-                selectStakingPoolForView={selectStakingPoolForView}
-                setViewClaim={setViewClaim}
-              />
-            ))}
+              {nonLiquidRewards
+                .filter(filterByPoolType)
+                .map((reward, rewardIdx) => (
+                  <RewardCard
+                    key={rewardIdx}
+                    rewardInfo={reward.rewardInfo}
+                    stakingPool={reward.stakingPool}
+                    selectStakingPoolForView={selectStakingPoolForView}
+                    claimReward={claimReward}
+                    stakeReward={stakeReward}
+                    setViewClaim={setViewClaim}
+                  />
+                ))}
 
-
-          {nonLiquidRewards
-            .filter(filterByPoolType)
-            .map((reward, rewardIdx) => (
-              <RewardCard
-                key={rewardIdx}
-                rewardInfo={reward.rewardInfo}
-                stakingPool={reward.stakingPool}
-                selectStakingPoolForView={selectStakingPoolForView}
-                claimReward={claimReward}
-                stakeReward={stakeReward}
-                setViewClaim={setViewClaim}
-              />
-            ))}
-
-
-          {pendingUnstaking
-            .filter(filterByPoolType)
-            .map((pendingUnstakeClaim, claimIdx) => (
-                <UnstakeCard
-                key={claimIdx + 1000}
-                available={false}
-                stakingPool={pendingUnstakeClaim.stakingPool}
-                unstakeInfo={pendingUnstakeClaim.unstakeInfo}
-                claimUnstake={claimUnstake}
-                selectStakingPoolForView={selectStakingPoolForView}
-                setViewClaim={setViewClaim}
-              />
-            ))}
-
-          </div>
-        </FastFadeScroll>
-
+              {pendingUnstaking
+                .filter(filterByPoolType)
+                .map((pendingUnstakeClaim, claimIdx) => (
+                  <UnstakeCard
+                    key={claimIdx + 1000}
+                    available={false}
+                    stakingPool={pendingUnstakeClaim.stakingPool}
+                    unstakeInfo={pendingUnstakeClaim.unstakeInfo}
+                    claimUnstake={claimUnstake}
+                    selectStakingPoolForView={selectStakingPoolForView}
+                    setViewClaim={setViewClaim}
+                  />
+                ))}
+            </div>
+          </FastFadeScroll>
+        </div>
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto lg:my-10">
