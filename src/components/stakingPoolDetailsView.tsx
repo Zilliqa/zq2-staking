@@ -5,6 +5,7 @@ import { WalletConnector } from "@/contexts/walletConnector"
 import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting"
 import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import {
+  UserNonLiquidStakingPoolRewardData,
   UserStakingPoolData,
   UserUnstakingPoolData,
 } from "@/misc/walletsConfig"
@@ -13,7 +14,6 @@ import { useEffect, useState } from "react"
 import { useWatchAsset } from "wagmi"
 import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
-import router from "next/router"
 import CloseIcon from "../assets/svgs/close-icon.svg"
 import FastFadeScroll from "@/components/FastFadeScroll"
 
@@ -24,6 +24,7 @@ interface StakingPoolDetailsViewProps {
   userStakingPoolData?: UserStakingPoolData
   userUnstakingPoolData?: Array<UserUnstakingPoolData>
   viewClaim?: boolean
+  reward?: UserNonLiquidStakingPoolRewardData
 }
 
 const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
@@ -31,6 +32,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   userStakingPoolData,
   userUnstakingPoolData,
   viewClaim,
+  reward,
 }) => {
   const { selectStakingPoolForView } = StakingPoolsStorage.useContainer()
 
@@ -238,6 +240,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
           <WithdrawZilPanel
             userUnstakingPoolData={userUnstakingPoolData}
             stakingPoolData={stakingPoolData}
+            reward={reward}
           />
         )}
       </FastFadeScroll>

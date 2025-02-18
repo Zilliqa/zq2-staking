@@ -201,6 +201,10 @@ const useStakingPoolsStorage = () => {
             (userPoolData) =>
               userPoolData.address === stakingPoolForView.definition.address
           ),
+          reward: userNonLiquidPoolRewards.find(
+            (userPoolData) =>
+              userPoolData.address === stakingPoolForView.definition.address
+          ),
         },
       }
     : null
