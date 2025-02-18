@@ -261,6 +261,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
                 unstakeInfo={unstakeClaim.unstakeInfo}
                 claimUnstake={claimUnstake}
                 selectStakingPoolForView={selectStakingPoolForView}
+                setViewClaim={setViewClaim}
               />
             ))}
 
@@ -272,6 +273,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
                 selectStakingPoolForView={selectStakingPoolForView}
                 claimReward={claimReward}
                 stakeReward={stakeReward}
+                setViewClaim={setViewClaim}
               />
             ))}
 
@@ -283,11 +285,11 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
                 unstakeInfo={pendingUnstakeClaim.unstakeInfo}
                 claimUnstake={claimUnstake}
                 selectStakingPoolForView={selectStakingPoolForView}
+                setViewClaim={setViewClaim}
               />
             ))}
           </div>
         </FastFadeScroll>
-
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto lg:my-10">
