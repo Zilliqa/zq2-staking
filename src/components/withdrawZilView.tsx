@@ -91,7 +91,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
           </div>
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full px-3 lg:pb-0 pb-4 lg:px-4 4k:px-5">
+      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[218px] w-full px-3 lg:pb-0 pb-4 lg:px-4 4k:px-5">
         <div className="max-lg:w-1/2">
           <Button
             className="btn-primary-grey 4k:py-6 lg:py-5 py-4"

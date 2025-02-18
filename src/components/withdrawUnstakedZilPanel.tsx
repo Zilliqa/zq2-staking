@@ -65,7 +65,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
           >
             <div className="items-center h4 w-full flex justify-between text-white1">
               {stakingPoolData.data ? (
-                <div className="flex">
+                <div className="flex items-center gap-1">
                   <div>
                     {parseFloat(formatUnits(item.zilAmount, 18)).toFixed(3)} ZIL
                   </div>
@@ -74,7 +74,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               ) : (
                 <div className="w-[4em] h-[1em] animated-gradient" />
               )}
-              <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full">
+              <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[218px] w-full">
                 <Button
                   className="btn-secondary-grey lg:py-5 py-4"
                   onClick={() => claimUnstake(item.address)}
