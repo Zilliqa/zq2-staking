@@ -15,6 +15,7 @@ import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
 import router from "next/router"
 import CloseIcon from "../assets/svgs/close-icon.svg"
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool
   userStakingPoolData?: UserStakingPoolData
@@ -26,6 +27,8 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   userStakingPoolData,
   userUnstakingPoolData,
 }) => {
+  const { selectStakingPoolForView } = StakingPoolsStorage.useContainer()
+
   const { zilAvailable } = WalletConnector.useContainer()
 
   const [selectedPane, setSelectedPane] = useState<string>("Stake")
@@ -127,7 +130,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             <a
               className="hover:cursor-pointer hover:opacity-80"
               onClick={() => {
-                router.back()
+                selectStakingPoolForView(null)
               }}
             >
               <Image
