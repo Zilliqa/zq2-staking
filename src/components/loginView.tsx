@@ -26,7 +26,7 @@ const CustomConnectButton = () => {
             >
               Connect Wallet
               <Image
-                className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+                className="ml-3 h-6 w-6 transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={ArrowRightWhite}
                 alt="arrow icon"
                 width={24}
@@ -81,7 +81,7 @@ const LoginView: React.FC = () => {
       >
         Connect Wallet
         <Image
-          className="ml-3 h-[24px] w-[24px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
+          className="ml-3 h-6 w-6 transform transition-transform ease-out duration-500 group-hover:translate-x-2"
           src={ArrowRightWhite}
           alt="arrow icon"
           width={24}
@@ -93,9 +93,9 @@ const LoginView: React.FC = () => {
     )
 
   return (
-    <div className="relative">
+    <div className="relative 4k:mt-52">
       <div className="text-center p-4">
-        <h1 className="h1 text-white">Staking Portal</h1>
+        <h1 className="bold52 text-white">Staking Portal</h1>
         <p className="mt-6 body2-v2 text-white4">
           Help us Empower and secure <br /> the Zilliqa Chain{" "}
         </p>

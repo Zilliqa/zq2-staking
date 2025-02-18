@@ -32,7 +32,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         } flex justify-between items-center`}
       >
         <Image
-          className="mr-5 rounded-[9.5px] h-[61px] w-[61px] hidden md:block"
+          className="mr-5 4k:mr-6 rounded-[9.5px] h-[61px] w-[61px] hidden md:block"
           src={stakingPoolData.definition.iconUrl}
           alt={`${stakingPoolData.definition.name} icon`}
           width={61}
@@ -40,9 +40,9 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         />
         <div className="flex flex-col  w-full">
           <div className="flex justify-between items-center">
-            <div className="flex gap-2 items-center mb-3">
+            <div className="flex gap-2 4k:gap-3 items-center mb-3">
               <Image
-                className=" rounded-10 h[20px] w-[20px] xs:h-[30px] xs:w-[30px] md:hidden block"
+                className=" rounded-10 h5 w-5 xs:h-[30px] xs:w-[30px] md:hidden block"
                 src={stakingPoolData.definition.iconUrl}
                 alt={`${stakingPoolData.definition.name} icon`}
                 width={40}
@@ -72,7 +72,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               <div className="flex max-lg:order-2 items-center">
                 {stakingPoolData.data ? (
                   <div
-                    className={`lg:medium12 regular12 pr-1 xs:pr-3 ${
+                    className={`lg:medium12 regular12 4k:pr-1.5 pr-1 xs:pr-3 ${
                       stakingPoolData.data.votingPower * 100 >= 50
                         ? "text-red2"
                         : stakingPoolData.data.votingPower * 100 >= 30
@@ -84,27 +84,27 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     %
                   </div>
                 ) : (
-                  <div className=" pr-1 xs:pr-3">
+                  <div className="4k:pr-1.5 pr-1 xs:pr-3">
                     <span className="lg:medium12 regular12">VP</span>
-                    <span className="w-[3em] ml-1 animated-gradient" />
+                    <span className="w-[3em] ml-1 4k:ml-1.5 animated-gradient" />
                   </div>
                 )}
-                <div className="flex medium12 text-gray13 pl-1 xs:pl-3 border-l-[1px] border-gray4">
+                <div className="flex medium12 text-gray13 4k:pl-1.5 pl-1 xs:pl-3 border-l-[1px] border-gray4">
                   Commission{" "}
                   {stakingPoolData.data ? (
                     <>{Math.floor(stakingPoolData.data.commission * 100)}%</>
                   ) : (
-                    <span className="w-[3em] ml-1 animated-gradient" />
+                    <span className="w-[3em] ml-1 4k:ml-1.5 animated-gradient" />
                   )}
                 </div>
               </div>
             </div>
-            <div className="flex bold15 max-md:order-1  ml-2 xs:ml-6">
+            <div className="flex bold15 max-md:order-1 4k:ml-2.5 ml-2 xs:ml-6">
               <Tooltip
                 placement="top"
                 arrow={true}
                 color="#555555"
-                className=" mr-1"
+                className="mr-1 4k:mr-1.5"
                 title="Annual Percentage Rate"
               >
                 <span>APR </span>
@@ -113,7 +113,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               {stakingPoolData.data ? (
                 <>{formatPercentage(stakingPoolData.data.apr)}</>
               ) : (
-                <span className="w-[3em] ml-1 animated-gradient" />
+                <span className="w-[3em] ml-1 4k:ml-1.5 animated-gradient" />
               )}
             </div>
           </div>
