@@ -109,7 +109,7 @@ const StakingCalculator: React.FC = () => {
   return (
     stakingPoolForView && (
       <>
-        <div className="max-h-[calc(90vh-50vh)] lg:max-h-[calc(90vh-45vh)] scrollbar-gradient overflow-y-scroll">
+        <div className="">
           <div className="flex justify-between lg:gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center">
             <div className="h-fit self-center">
               <Input

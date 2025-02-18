@@ -15,7 +15,10 @@ import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
 import router from "next/router"
 import CloseIcon from "../assets/svgs/close-icon.svg"
+import FastFadeScroll from "@/components/FastFadeScroll"
+
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
+
 interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool
   userStakingPoolData?: UserStakingPoolData
@@ -101,11 +104,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     )
 
   return (
-    <div
-      className="relative overflow-y-auto max-h-[calc(90vh-16vh)] sm:max-h-[calc(90vh-15vh)] lg:max-h-[calc(100vh-5vh)]
-    scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 pb-2 4k:pb-4
-     pr-2 lg:pr-4 4k:pr-6"
-    >
+    <div className="relative pb-2 4k:pb-4 pr-2 lg:pr-4 4k:pr-6 flex flex-col h-full">
       <div className="items-center flex justify-between py-1 lg:py-7.5">
         <div className="max-lg:ms-1 items-center w-full flex justify-between">
           <div className="flex items-center">
@@ -230,16 +229,18 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         ))}
       </div>
 
-      {selectedPane === "Stake" ? (
-        <StakingCalculator />
-      ) : selectedPane === "Unstake" ? (
-        <UnstakingCalculator />
-      ) : (
-        <WithdrawZilPanel
-          userUnstakingPoolData={userUnstakingPoolData}
-          stakingPoolData={stakingPoolData}
-        />
-      )}
+      <FastFadeScroll className="flex-1 pb-4 mb-16 md:mb-0 overflow-y-scroll">
+        {selectedPane === "Stake" ? (
+          <StakingCalculator />
+        ) : selectedPane === "Unstake" ? (
+          <UnstakingCalculator />
+        ) : (
+          <WithdrawZilPanel
+            userUnstakingPoolData={userUnstakingPoolData}
+            stakingPoolData={stakingPoolData}
+          />
+        )}
+      </FastFadeScroll>
     </div>
   )
 }

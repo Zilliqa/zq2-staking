@@ -3,6 +3,7 @@ import StakingPoolCard from "./stakingPoolCard"
 import SortBtn from "./sortBtn"
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
+import FastFadeScroll from "@/components/FastFadeScroll"
 
 interface StakingPoolsListProps {
   setViewClaim: Dispatch<SetStateAction<boolean>>
@@ -77,21 +78,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
       type: StakingPoolType.NORMAL,
     },
   ]
-  const [isScrolling, setIsScrolling] = useState(false)
-  let scrollTimeout: any
 
-  const handleScroll = () => {
-    setIsScrolling(true)
-    clearTimeout(scrollTimeout)
-
-    scrollTimeout = setTimeout(() => {
-      setIsScrolling(false)
-    }, 1000)
-  }
-
-  useEffect(() => {
-    return () => clearTimeout(scrollTimeout)
-  }, [])
   return (
     <>
       <nav
@@ -133,27 +120,24 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
           />
         </div>
 
-        <div
-          onScroll={handleScroll}
-          className={`grid grid-cols-1 gap-2.5 lg:gap-4 4k:gap-5 overflow-y-auto max-h-[calc(90vh-38vh)] lg:max-h-[calc(90vh-25vh)]
-            pb-4 lg:pb-20 pr-2 lg:pr-4 4k:pr-5 scrollbar-gradient ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"}`}
-        >
-          {sortedLiquidStakingPoolsData.map(({ stakingPool, userData }) => (
-            <StakingPoolCard
-              key={stakingPool.definition.id}
-              stakingPoolData={stakingPool}
-              userStakingPoolData={userData}
-              isStakingPoolSelected={
-                stakingPoolForView?.stakingPool.definition.id ===
-                stakingPool.definition.id
-              }
-              onClick={() => {
-                selectStakingPoolForView(stakingPool.definition.id)
-                setViewClaim(false)
-              }}
-            />
-          ))}
-        </div>
+        <FastFadeScroll className="flex-1 pb-4 mb-16 md:mb-0 overflow-y-scroll">
+          <div className="grid grid-cols-1 gap-2.5 lg:gap-4 4k:gap-5">
+            {sortedLiquidStakingPoolsData.map(({ stakingPool, userData }) => (
+              <StakingPoolCard
+                key={stakingPool.definition.id}
+                stakingPoolData={stakingPool}
+                userStakingPoolData={userData}
+                isStakingPoolSelected={
+                  stakingPoolForView?.stakingPool.definition.id ===
+                  stakingPool.definition.id
+                }
+                onClick={() =>
+                  selectStakingPoolForView(stakingPool.definition.id)
+                }
+              />
+            ))}
+          </div>
+        </FastFadeScroll>
       </>
     </>
   )

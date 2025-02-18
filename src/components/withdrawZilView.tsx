@@ -16,6 +16,7 @@ import {
 } from "@/misc/walletsConfig"
 import { Button } from "antd"
 import Image from "next/image"
+import FastFadeScroll from "./FastFadeScroll"
 import { Dispatch, SetStateAction } from "react"
 
 interface UnstakeCardProps {
@@ -232,11 +233,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
     nonLiquidRewards.length > 0
 
   return (
-    <div
-      className="relative overflow-y-auto max-h-[calc(90vh-15vh)]   
-    scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1
-     flex flex-col gap-2 4k:gap-2.5 4k:mt-52"
-    >
+    <div className="relative flex flex-col gap-2 4k:gap-2.5 4k:mt-52 h-full">
       <div className=" text-center p-4">
         {anyItemsAvailable ? (
           <>
@@ -254,48 +251,45 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       </div>
 
       {anyItemsAvailable ? (
-        <div
-          className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 overflow-y-auto max-h-[calc(90vh-30vh)]
-          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 lg:pb-10
-           pr-2 lg:pr-4 4k:pl-5
-          "
-        >
-          {availableForUnstaking.map((unstakeClaim, claimIdx) => (
-            <UnstakeCard
-              key={claimIdx}
-              available={true}
-              stakingPool={unstakeClaim.stakingPool}
-              unstakeInfo={unstakeClaim.unstakeInfo}
-              claimUnstake={claimUnstake}
-              selectStakingPoolForView={selectStakingPoolForView}
-              setViewClaim={setViewClaim}
-            />
-          ))}
+        <FastFadeScroll className="flex-1 overflow-y-scroll">
+          <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 pr-2 lg:pr-4 4k:pl-5">
+            {availableForUnstaking.map((unstakeClaim, claimIdx) => (
+              <UnstakeCard
+                key={claimIdx}
+                available={true}
+                stakingPool={unstakeClaim.stakingPool}
+                unstakeInfo={unstakeClaim.unstakeInfo}
+                claimUnstake={claimUnstake}
+                selectStakingPoolForView={selectStakingPoolForView}
+                setViewClaim={setViewClaim}
+              />
+            ))}
 
-          {nonLiquidRewards.map((reward, rewardIdx) => (
-            <RewardCard
-              key={rewardIdx}
-              rewardInfo={reward.rewardInfo}
-              stakingPool={reward.stakingPool}
-              selectStakingPoolForView={selectStakingPoolForView}
-              claimReward={claimReward}
-              stakeReward={stakeReward}
-              setViewClaim={setViewClaim}
-            />
-          ))}
+            {nonLiquidRewards.map((reward, rewardIdx) => (
+              <RewardCard
+                key={rewardIdx}
+                rewardInfo={reward.rewardInfo}
+                stakingPool={reward.stakingPool}
+                selectStakingPoolForView={selectStakingPoolForView}
+                claimReward={claimReward}
+                stakeReward={stakeReward}
+                setViewClaim={setViewClaim}
+              />
+            ))}
 
-          {pendingUnstaking.map((pendingUnstakeClaim, claimIdx) => (
-            <UnstakeCard
-              key={claimIdx + 1000}
-              available={false}
-              stakingPool={pendingUnstakeClaim.stakingPool}
-              unstakeInfo={pendingUnstakeClaim.unstakeInfo}
-              claimUnstake={claimUnstake}
-              selectStakingPoolForView={selectStakingPoolForView}
-              setViewClaim={setViewClaim}
-            />
-          ))}
-        </div>
+            {pendingUnstaking.map((pendingUnstakeClaim, claimIdx) => (
+              <UnstakeCard
+                key={claimIdx + 1000}
+                available={false}
+                stakingPool={pendingUnstakeClaim.stakingPool}
+                unstakeInfo={pendingUnstakeClaim.unstakeInfo}
+                claimUnstake={claimUnstake}
+                selectStakingPoolForView={selectStakingPoolForView}
+                setViewClaim={setViewClaim}
+              />
+            ))}
+          </div>
+        </FastFadeScroll>
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto lg:my-10">
@@ -323,7 +317,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
               />
             </div>
             <div className="mb-15 body2-v2 text-white4">
-              No claims? We’d love to hear
+              No claims? We&apos;d love to hear
               <br /> your feedback !
             </div>
             <Button
