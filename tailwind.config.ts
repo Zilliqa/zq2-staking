@@ -10,6 +10,9 @@ const config: Config = {
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        aquaBlue:
+          "linear-gradient(270deg, rgba(6, 187, 179, 0.8) -13.46%, rgba(57, 30, 188, 0.8) 140.38%)",
+
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "primary-gradient":
@@ -44,6 +47,7 @@ const config: Config = {
         gray11: "#858A8A",
         gray12: "#333333",
         gray13: "#8E8E8E",
+        gray14: "#878787",
 
         white1: "#F1F4F4",
         white2: "#F7FBFA",
@@ -51,11 +55,13 @@ const config: Config = {
         white4: "#D7D8D8",
 
         blue1: "#1966F7",
+        navyBlue: "#391EBCB2",
 
         aqua1: "#00D0C6",
         aqua2: "#6DD3C2",
         aqua3: "#BCE6EC",
         aqua4: "#00D0C633",
+        aqua5: "#00D0C699",
         tealDark: "#173C3F",
 
         purple1: "#7839FF",

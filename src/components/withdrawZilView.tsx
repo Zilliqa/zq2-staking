@@ -16,8 +16,10 @@ import {
 } from "@/misc/walletsConfig"
 import { Button } from "antd"
 import Image from "next/image"
+import { Dispatch, SetStateAction, useState } from "react"
+import FilterBtn from "./filterBtn"
+import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "./FastFadeScroll"
-import { Dispatch, SetStateAction } from "react"
 
 interface UnstakeCardProps {
   available: boolean
@@ -223,6 +225,31 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
     availableForUnstaking.length > 0 ||
     pendingUnstaking.length > 0 ||
     nonLiquidRewards.length > 0
+  const [selectedPoolType, setSelectedPoolType] = useState("ALL")
+
+  const filters = [
+    {
+      name: "All ",
+      type: "ALL",
+      activeGradient: "bg-aquaBlue",
+    },
+    {
+      name: "Liquid",
+      type: StakingPoolType.LIQUID,
+      activeGradient: "bg-aqua5",
+    },
+    {
+      name: "Normal ",
+      type: StakingPoolType.NORMAL,
+      activeGradient: "bg-navyBlue",
+    },
+  ]
+  const filterByPoolType = (item: any) => {
+    if (selectedPoolType === "ALL") {
+      return true
+    }
+    return item.stakingPool.definition.poolType === selectedPoolType
+  }
 
   return (
     <div className="relative flex flex-col gap-2 4k:gap-2.5 4k:mt-52 h-full">
@@ -241,47 +268,72 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
           </h1>
         )}
       </div>
+      <div className="flex justify-center items-center gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6">
+        <div className="text-14 text-gray14">Filter by</div>
+        {filters.map((filter, index) => (
+          <FilterBtn
+            key={index}
+            variable={filter.name}
+            isActive={selectedPoolType === filter.type}
+            onClick={() => setSelectedPoolType(filter.type)}
+            activeGradient={filter.activeGradient}
+          />
+        ))}
+      </div>
 
       {anyItemsAvailable ? (
-        <FastFadeScroll className="flex-1 overflow-y-scroll">
-          <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 pr-2 lg:pr-4 4k:pl-5">
-            {availableForUnstaking.map((unstakeClaim, claimIdx) => (
-              <UnstakeCard
-                key={claimIdx}
-                available={true}
-                stakingPool={unstakeClaim.stakingPool}
-                unstakeInfo={unstakeClaim.unstakeInfo}
-                claimUnstake={claimUnstake}
-                selectStakingPoolForView={selectStakingPoolForView}
-                setViewClaim={setViewClaim}
-              />
-            ))}
+        <div
+          className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 overflow-y-auto max-h-[calc(90vh-30vh)]
+          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 lg:pb-10
+           pr-2 lg:pr-4 4k:pl-5
+          "
+        >
+          <FastFadeScroll className="flex-1 overflow-y-scroll">
+            <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 pr-2 lg:pr-4 4k:pl-5">
+              {availableForUnstaking
+                .filter(filterByPoolType)
+                .map((unstakeClaim, claimIdx) => (
+                  <UnstakeCard
+                    key={claimIdx}
+                    available={true}
+                    stakingPool={unstakeClaim.stakingPool}
+                    unstakeInfo={unstakeClaim.unstakeInfo}
+                    claimUnstake={claimUnstake}
+                    selectStakingPoolForView={selectStakingPoolForView}
+                    setViewClaim={setViewClaim}
+                  />
+                ))}
 
-            {nonLiquidRewards.map((reward, rewardIdx) => (
-              <RewardCard
-                key={rewardIdx}
-                rewardInfo={reward.rewardInfo}
-                stakingPool={reward.stakingPool}
-                selectStakingPoolForView={selectStakingPoolForView}
-                claimReward={claimReward}
-                stakeReward={stakeReward}
-                setViewClaim={setViewClaim}
-              />
-            ))}
+              {nonLiquidRewards
+                .filter(filterByPoolType)
+                .map((reward, rewardIdx) => (
+                  <RewardCard
+                    key={rewardIdx}
+                    rewardInfo={reward.rewardInfo}
+                    stakingPool={reward.stakingPool}
+                    selectStakingPoolForView={selectStakingPoolForView}
+                    claimReward={claimReward}
+                    stakeReward={stakeReward}
+                    setViewClaim={setViewClaim}
+                  />
+                ))}
 
-            {pendingUnstaking.map((pendingUnstakeClaim, claimIdx) => (
-              <UnstakeCard
-                key={claimIdx + 1000}
-                available={false}
-                stakingPool={pendingUnstakeClaim.stakingPool}
-                unstakeInfo={pendingUnstakeClaim.unstakeInfo}
-                claimUnstake={claimUnstake}
-                selectStakingPoolForView={selectStakingPoolForView}
-                setViewClaim={setViewClaim}
-              />
-            ))}
-          </div>
-        </FastFadeScroll>
+              {pendingUnstaking
+                .filter(filterByPoolType)
+                .map((pendingUnstakeClaim, claimIdx) => (
+                  <UnstakeCard
+                    key={claimIdx + 1000}
+                    available={false}
+                    stakingPool={pendingUnstakeClaim.stakingPool}
+                    unstakeInfo={pendingUnstakeClaim.unstakeInfo}
+                    claimUnstake={claimUnstake}
+                    selectStakingPoolForView={selectStakingPoolForView}
+                    setViewClaim={setViewClaim}
+                  />
+                ))}
+            </div>
+          </FastFadeScroll>
+        </div>
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto lg:my-10">
