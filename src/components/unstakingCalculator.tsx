@@ -168,7 +168,7 @@ const UnstakingCalculator: React.FC = () => {
             )}
           </div>
 
-          <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2">
+          <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 lg:pb-10">
             <div className="flex flex-col gap-3.5 regular-base">
               <div className=" ">
                 Commission Fee:{" "}
@@ -188,6 +188,7 @@ const UnstakingCalculator: React.FC = () => {
                 Unbonding Period: {unboudingPeriod}
               </div>
             </div>
+            <div className="flex flex-col justify-between">
             <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
               {isPoolLiquid() && (
                 <div className="flex flex-col xl:flex-row xl:gap-5 4k:gap-6">
@@ -233,6 +234,7 @@ const UnstakingCalculator: React.FC = () => {
               ) : (
                 <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
               )}
+            </div>
             </div>
           </div>
         </div>

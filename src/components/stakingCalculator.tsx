@@ -205,7 +205,7 @@ const StakingCalculator: React.FC = () => {
           </div>
         )}
 
-            <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 ">
+            <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 lg:pb-10">
               <div className="flex flex-col gap-3.5 4k:gap-4 regular-base">
                 <div className=" ">
                   Commission Fee:{" "}
