@@ -145,6 +145,16 @@ export const dummyWallets: Array<DummyWallet> = [
         zilAmount: parseUnits("100", 18),
         availableAt: DateTime.now().plus({ days: 5 }),
       },
+      {
+        address: "0xe863906941de820bde06701a0d804dd0b8575d67",
+        zilAmount: parseUnits("220.2", 18),
+        availableAt: DateTime.now().minus({ days: 5 }),
+      },
+      {
+        address: "0xe863906941de820bde06701a0d804dd0b8575d67",
+        zilAmount: parseUnits("440.2", 18),
+        availableAt: DateTime.now().plus({ days: 5 }),
+      },
     ],
     nonLiquidRewards: [
       {

@@ -142,24 +142,32 @@ const UnstakingCalculator: React.FC = () => {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col">
+
+        <div className="flex flex-col justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2">
           <div className="flex mt-2 mb-5">
-            <Button
-              type="default"
-              size="large"
-              className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua mx-auto lg:w-1/2 w-2/3"
-              disabled={!canUnstake}
-              onClick={() =>
-                unstake(
-                  stakingPoolForView.stakingPool.definition.address,
-                  zilInWei
-                )
-              }
-              loading={isUnstakingInProgress}
-            >
-              Unstake
-            </Button>
+            {isWalletConnected ? (
+              <Button
+                type="default"
+                size="large"
+                className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua  mx-auto lg:w-1/2 w-2/3"
+                disabled={!canUnstake}
+                onClick={() =>
+                  unstake(
+                    stakingPoolForView.stakingPool.definition.address,
+                    zilInWei
+                  )
+                }
+                loading={isUnstakingInProgress}
+              >
+                Unstake
+              </Button>
+            ) : (
+              <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3">
+                Connect wallet
+              </CustomWalletConnect>
+            )}
           </div>
+
           <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2">
             <div className="flex flex-col gap-3.5 regular-base">
               <div className=" ">
@@ -202,129 +210,33 @@ const UnstakingCalculator: React.FC = () => {
                       <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                     )}
                     ZIL
-                    <span className="medium17 ml-2 text-aqua1">
-                      {unboudingPeriod}
-                    </span>
                   </div>
                 </div>
               )}
-
-              <div className="flex flex-col gap-3">
-                <Button
-                  className="btn-secondary-colored text-aqua1 hover:!text-aqua1 border-0 bg-tealDark hover:!bg-tealDark"
-                  onClick={onMaxClick}
-                >
-                  MAX
-                </Button>
-                <Button
-                  className="btn-secondary-colored text-purple3 hover:!text-purple1 border-0 bg-PurpleDarker hover:!bg-PurpleDarker"
-                  onClick={() => setZilToUnstake("0")}
-                >
-                  MIN
-                </Button>
-              </div>
             </div>
-            <div className="flex flex-col">
-              <div className="flex mt-2 mb-5">
-                {isWalletConnected ? (
-                  <Button
-                    type="default"
-                    size="large"
-                    className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua mx-auto lg:w-1/2 w-2/3"
-                    disabled={!canUnstake}
-                    onClick={() =>
-                      unstake(
-                        stakingPoolForView.stakingPool.definition.address,
-                        zilInWei
-                      )
-                    }
-                    loading={isUnstakingInProgress}
-                  >
-                    Unstake
-                  </Button>
-                ) : (
-                  <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3">
-                    Connect wallet
-                  </CustomWalletConnect>
-                )}
-              </div>
-              <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2">
-                <div className="flex flex-col gap-3.5 regular-base">
-                  <div className=" ">
-                    Commission Fee:{" "}
-                    {stakingPoolForView!.stakingPool.data ? (
-                      <>
-                        {" "}
-                        {formatPercentage(
-                          stakingPoolForView!.stakingPool.data.commission
-                        )}{" "}
-                      </>
-                    ) : (
-                      <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
-                    )}
-                  </div>
-                  <div className="">Max transaction cost: 3 ZIL</div>
-                  <div className="text-aqua1 ">
-                    Unbonding Period: {unboudingPeriod}
-                  </div>
-                </div>
-                <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
-                  {isPoolLiquid() && (
-                    <div className="flex flex-col xl:flex-row xl:gap-5 4k:gap-6">
-                      <div className="gray-base">Rate</div>
-                      <div className="text-gray9">
-                        {stakingPoolForView!.stakingPool.data ? (
-                          <>
-                            1{" "}
-                            {
-                              stakingPoolForView.stakingPool.definition
-                                .tokenSymbol
-                            }{" "}
-                            = ~
-                            {formatUnitsToHumanReadable(
-                              convertTokenToZil(
-                                parseEther("1"),
-                                stakingPoolForView.stakingPool.data
-                                  .zilToTokenRate
-                              ),
-                              18
-                            )}
-                          </>
-                        ) : (
-                          <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
-                        )}
-                        ZIL
-                      </div>
-                    </div>
-                  )}
-                </div>
 
-                <div className="text-gray9 flex flex-row xl:gap-5 4k:gap-6">
-                  <Tooltip
-                    placement="top"
-                    arrow={true}
-                    color="#555555"
-                    className=" mr-1"
-                    title="Annual Percentage Rate"
-                  >
-                    <span className="gray-base">APR </span>
-                  </Tooltip>
+            <div className="text-gray9 flex flex-row xl:gap-5 4k:gap-6">
+              <Tooltip
+                placement="top"
+                arrow={true}
+                color="#555555"
+                className=" mr-1"
+                title="Annual Percentage Rate"
+              >
+                <span className="gray-base">APR </span>
+              </Tooltip>
 
-                  {stakingPoolForView!.stakingPool.data ? (
-                    <>
-                      ~
-                      {formatPercentage(
-                        stakingPoolForView!.stakingPool.data.apr
-                      )}
-                    </>
-                  ) : (
-                    <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
-                  )}
-                </div>
-              </div>
+              {stakingPoolForView!.stakingPool.data ? (
+                <>
+                  ~{formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
+                </>
+              ) : (
+                <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
+              )}
             </div>
           </div>
         </div>
+
         {unstakeContractCallError && (
           <div className="text-red1 text-center">
             {unstakeContractCallError.message}

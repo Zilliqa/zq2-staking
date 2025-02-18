@@ -102,14 +102,6 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               : getHumanFormDuration(unstakeInfo.availableAt) + " left"}
           </Button>
         </div>
-        {/* <div className="max-lg:w-1/2 lg:mt-2.5">
-            <Button
-              className="btn-secondary-grey lg:py-5 py-4"
-              onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
-            >
-              View
-            </Button>
-          </div> */}
       </div>
     </div>
   )
