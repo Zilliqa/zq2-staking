@@ -7,7 +7,10 @@ import {
   getTxExplorerUrl,
 } from "@/misc/formatting"
 import { StakingPool } from "@/misc/stakingPoolsConfig"
-import { UserUnstakingPoolData } from "@/misc/walletsConfig"
+import {
+  UserNonLiquidStakingPoolRewardData,
+  UserUnstakingPoolData,
+} from "@/misc/walletsConfig"
 import { Button } from "antd"
 import { DateTime } from "luxon"
 import Link from "next/link"
@@ -16,14 +19,25 @@ import { formatUnits } from "viem"
 interface WithdrawZilPanelProps {
   stakingPoolData: StakingPool
   userUnstakingPoolData?: Array<UserUnstakingPoolData>
+  reward?: UserNonLiquidStakingPoolRewardData
 }
 
 const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
   userUnstakingPoolData,
   stakingPoolData,
+  reward,
 }) => {
-  const { claimUnstake, isClaimingUnstakeInProgress, claimUnstakeCallTxHash } =
-    StakingOperations.useContainer()
+  const {
+    claimUnstake,
+    isClaimingUnstakeInProgress,
+    claimUnstakeCallTxHash,
+    claimReward,
+    isClaimingRewardInProgress,
+    claimRewardCallTxHash,
+    stakeReward,
+    isStakingRewardInProgress,
+    stakeRewardCallTxHash,
+  } = StakingOperations.useContainer()
 
   const { appConfig } = AppConfigStorage.useContainer()
 
@@ -41,18 +55,63 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         claimA.availableAt.diff(claimB.availableAt).milliseconds
     )
 
+  const hashToShow =
+    claimRewardCallTxHash || stakeRewardCallTxHash || claimUnstakeCallTxHash
+
   return (
     <div className="h-full">
-      {claimUnstakeCallTxHash !== undefined && (
+      {hashToShow !== undefined && (
         <div className="text-center gradient-bg-1 py-2 regular-base">
           <Link
             rel="noopener noreferrer"
             target="_blank"
-            href={getTxExplorerUrl(claimUnstakeCallTxHash, appConfig.chainId)}
+            href={getTxExplorerUrl(hashToShow, appConfig.chainId)}
             passHref={true}
           >
-            Last staking transaction: {formatAddress(claimUnstakeCallTxHash)}
+            Last staking transaction: {formatAddress(hashToShow)}
           </Link>
+        </div>
+      )}
+
+      {reward && (
+        <div
+          className=" min-h-[100px] lg:min-h-[124px] xl:min-h-[140px] 
+            flex flex-col justify-evenly gap-2 4k:gap-3 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl w-full"
+        >
+          <div className="items-center h4 w-full flex justify-between text-white1">
+            {stakingPoolData.data ? (
+              <div>
+                <div className="body2">
+                  <span className="mr-1 text-aqua2">Available</span>
+                  <span className="text-aqua1">rewards</span>
+                </div>
+                <div>
+                  {parseFloat(formatUnits(reward.zilRewardAmount, 18)).toFixed(
+                    5
+                  )}{" "}
+                  ZIL
+                </div>
+              </div>
+            ) : (
+              <div className="w-[4em] h-[1em] animated-gradient" />
+            )}
+            <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full">
+              <Button
+                className="btn-secondary-grey lg:py-5 py-4 mb-2.5"
+                onClick={() => stakeReward(reward.address)}
+                loading={isStakingRewardInProgress}
+              >
+                Stake Reward
+              </Button>
+              <Button
+                className="btn-secondary-grey lg:py-5 py-4"
+                onClick={() => claimReward(reward.address)}
+                loading={isClaimingRewardInProgress}
+              >
+                Claim Reward
+              </Button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -65,11 +124,15 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
           >
             <div className="items-center h4 w-full flex justify-between text-white1">
               {stakingPoolData.data ? (
-                <div className="flex items-center gap-1">
+
+                <div>
+                  <div className="body2">
+                    <span className="mr-1 text-aqua2">Available</span>
+                    <span className="text-aqua1">requests</span>
+                  </div>
                   <div>
                     {parseFloat(formatUnits(item.zilAmount, 18)).toFixed(3)} ZIL
                   </div>
-                  <div className="body1-s lg:ml-2.5 mt-2">avZIL</div>
                 </div>
               ) : (
                 <div className="w-[4em] h-[1em] animated-gradient" />
@@ -92,7 +155,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
          my-2.5 lg:my-4 4k:my-6 py-2 lg:py-6 xl:py-8 4k:py-10 
          px-3 lg:px-7.5 xl:px-10 4k:px-14 bg-grey-gradient rounded-xl w-full"
         >
-          <div className="body2 text-gray1">Next available reward</div>
+          <div className="body2 text-gray1">Next available unstake request</div>
           <div className="h4 mt-2 w-full flex justify-between text-white1">
             <div>{getHumanFormDuration(pendingUnstake[0].availableAt)}</div>
             {stakingPoolData.data ? (
@@ -107,10 +170,12 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             )}
           </div>
         </div>
-      ) : (
+      ) : !reward ? (
         <div className="flex justify-center items-center h-full body2 text-gray1 ">
           No available Claims
         </div>
+      ) : (
+        <></>
       )}
 
       {!!pendingUnstake?.length && (

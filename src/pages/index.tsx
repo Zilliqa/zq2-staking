@@ -80,6 +80,7 @@ const HomePage = () => {
             userStakingPoolData={stakingPoolForView.userData.staked}
             userUnstakingPoolData={stakingPoolForView.userData.unstaked}
             viewClaim={viewClaim}
+            reward={stakingPoolForView.userData.reward}
           />
         </div>
       ) : (
@@ -97,6 +98,7 @@ const HomePage = () => {
             stakingPoolData={stakingPoolForView.stakingPool}
             userStakingPoolData={stakingPoolForView.userData.staked}
             userUnstakingPoolData={stakingPoolForView.userData.unstaked}
+            reward={stakingPoolForView.userData.reward}
           />
         )
 
