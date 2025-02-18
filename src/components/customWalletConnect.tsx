@@ -109,7 +109,7 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
               onClick={openAccountModal}
               className={connectedClassName ?? notConnectedClassName}
             >
-              {account.displayName} | {account.balanceFormatted}{" "}
+              {account.displayName} | {account.balanceDecimals?.toFixed(0)}{" "}
               {account.balanceSymbol}
             </Button>
           )
