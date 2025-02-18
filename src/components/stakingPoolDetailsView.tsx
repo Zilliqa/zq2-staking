@@ -15,6 +15,8 @@ import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
 import router from "next/router"
 import CloseIcon from "../assets/svgs/close-icon.svg"
+import FastFadeScroll from "@/components/FastFadeScroll"
+
 interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool
   userStakingPoolData?: UserStakingPoolData
@@ -36,21 +38,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       <div className="text-gray8 info-label">{title}</div>
     </div>
   )
-  const [isScrolling, setIsScrolling] = useState(false)
-  let scrollTimeout: any
 
-  const handleScroll = () => {
-    setIsScrolling(true)
-    clearTimeout(scrollTimeout)
-
-    scrollTimeout = setTimeout(() => {
-      setIsScrolling(false)
-    }, 1000)
-  }
-
-  useEffect(() => {
-    return () => clearTimeout(scrollTimeout)
-  }, [])
   const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
     <div>
       {value ? (
@@ -230,12 +218,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         ))}
       </div>
 
-      <div
-        onScroll={handleScroll}
-        className={`flex-1 pb-4 mb-16 md:mb-0  scrollbar-gradient overflow-y-scroll ${
-          isScrolling ? "scrollbar-visible" : "scrollbar-hidden"
-        }`}
-      >
+      <FastFadeScroll className="flex-1 pb-4 mb-16 md:mb-0 overflow-y-scroll">
         {selectedPane === "Stake" ? (
           <StakingCalculator />
         ) : selectedPane === "Unstake" ? (
@@ -246,7 +229,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             stakingPoolData={stakingPoolData}
           />
         )}
-      </div>
+      </FastFadeScroll>
     </div>
   )
 }

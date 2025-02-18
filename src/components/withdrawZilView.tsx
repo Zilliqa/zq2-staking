@@ -15,6 +15,7 @@ import {
 import { Button } from "antd"
 import Image from "next/image"
 import { useState, useEffect } from "react"
+import FastFadeScroll from "./FastFadeScroll"
 
 interface UnstakeCardProps {
   available: boolean
@@ -211,22 +212,6 @@ const WithdrawZilView: React.FC = () => {
     pendingUnstaking.length > 0 ||
     nonLiquidRewards.length > 0
 
-  const [isScrolling, setIsScrolling] = useState(false)
-  let scrollTimeout: any
-
-  const handleScroll = () => {
-    setIsScrolling(true)
-    clearTimeout(scrollTimeout)
-
-    scrollTimeout = setTimeout(() => {
-      setIsScrolling(false)
-    }, 1000)
-  }
-
-  useEffect(() => {
-    return () => clearTimeout(scrollTimeout)
-  }, [])
-
   return (
     <div className="relative flex flex-col gap-2 4k:gap-2.5 4k:mt-52 h-full">
       <div className=" text-center p-4">
@@ -246,15 +231,8 @@ const WithdrawZilView: React.FC = () => {
       </div>
 
       {anyItemsAvailable ? (
-        <div
-          onScroll={handleScroll}
-          className={`flex-1 scrollbar-gradient overflow-y-scroll ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"} scrollbar-gradient `}
-        >
-          <div
-            className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6  lg:pb-10
-           pr-2 lg:pr-4 4k:pl-5
-          "
-          >
+        <FastFadeScroll className="flex-1 overflow-y-scroll">
+          <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 pr-2 lg:pr-4 4k:pl-5">
             {availableForUnstaking.map((unstakeClaim, claimIdx) => (
               <UnstakeCard
                 key={claimIdx}
@@ -288,7 +266,7 @@ const WithdrawZilView: React.FC = () => {
               />
             ))}
           </div>
-        </div>
+        </FastFadeScroll>
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto lg:my-10">
@@ -316,7 +294,7 @@ const WithdrawZilView: React.FC = () => {
               />
             </div>
             <div className="mb-15 body2-v2 text-white4">
-              No claims? We’d love to hear
+              No claims? We&apos;d love to hear
               <br /> your feedback !
             </div>
             <Button

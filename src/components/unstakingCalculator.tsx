@@ -12,6 +12,7 @@ import { formatUnits, parseEther } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { DateTime } from "luxon"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
+import FastFadeScroll from "@/components/FastFadeScroll"
 
 const UnstakingCalculator: React.FC = () => {
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
@@ -81,27 +82,9 @@ const UnstakingCalculator: React.FC = () => {
     stakingPoolForView?.stakingPool.definition.poolType ===
     StakingPoolType.LIQUID
 
-  const [isScrolling, setIsScrolling] = useState(false)
-  let scrollTimeout: any
-
-  const handleScroll = () => {
-    setIsScrolling(true)
-    clearTimeout(scrollTimeout)
-
-    scrollTimeout = setTimeout(() => {
-      setIsScrolling(false)
-    }, 1000)
-  }
-
-  useEffect(() => {
-    return () => clearTimeout(scrollTimeout)
-  }, [])
   return (
     stakingPoolForView && (
-      <div
-        onScroll={handleScroll}
-        className={`flex-1 scrollbar-gradient overflow-y-scroll ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"} scrollbar-gradient `}
-      >
+      <FastFadeScroll className="flex-1 scrollbar-gradient overflow-y-scroll">
         <div className="flex justify-between gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center">
           <div className="h-fit self-center">
             <Input
@@ -248,7 +231,7 @@ const UnstakingCalculator: React.FC = () => {
             {unstakeContractCallError.message}
           </div>
         )}
-      </div>
+      </FastFadeScroll>
     )
   )
 }
