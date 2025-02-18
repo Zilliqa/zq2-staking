@@ -14,27 +14,13 @@ import { StakingOperations } from "@/contexts/stakingOperations"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import Link from "next/link"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
-import { ConnectButton } from "@rainbow-me/rainbowkit"
-import { MOCK_CHAIN } from "@/misc/chainConfig"
+import CustomWalletConnect from "./customWalletConnect"
+
 const StakingCalculator: React.FC = () => {
   const { appConfig } = AppConfigStorage.useContainer()
 
   const { connectDummyWallet, isWalletConnected, isDummyWalletConnecting } =
     WalletConnector.useContainer()
-
-  const connectWallet =
-    appConfig.chainId === MOCK_CHAIN.id ? (
-      <Button
-        type="primary"
-        onClick={connectDummyWallet}
-        loading={isDummyWalletConnecting}
-        className="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3"
-      >
-        CONNECT WALLET
-      </Button>
-    ) : (
-      <ConnectButton />
-    )
 
   const { zilAvailable } = WalletConnector.useContainer()
   const {
@@ -109,7 +95,7 @@ const StakingCalculator: React.FC = () => {
   return (
     stakingPoolForView && (
       <>
-        <div className="max-h-[calc(90vh-50vh)] lg:max-h-[calc(90vh-45vh)] scrollbar-gradient overflow-y-scroll">
+        <div className="">
           <div className="flex justify-between lg:gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center">
             <div className="h-fit self-center">
               <Input
@@ -191,7 +177,9 @@ const StakingCalculator: React.FC = () => {
                   Stake
                 </Button>
               ) : (
-                <>{connectWallet}</>
+                <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3">
+                  Connect wallet
+                </CustomWalletConnect>
               )}
             </div>
             <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 ">

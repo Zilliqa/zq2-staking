@@ -5,15 +5,8 @@ import WithdrawZilView from "@/components/withdrawZilView"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
-import {
-  ConnectedWalletType,
-  WalletConnector,
-} from "@/contexts/walletConnector"
-import { MOCK_CHAIN } from "@/misc/chainConfig"
-import { formatAddress } from "@/misc/formatting"
-import { WalletOutlined } from "@ant-design/icons"
+import { WalletConnector } from "@/contexts/walletConnector"
 import Intercom from "@intercom/messenger-js-sdk"
-import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { Button, Modal } from "antd"
 import Image from "next/image"
 import { useRouter } from "next/router"
@@ -21,6 +14,7 @@ import { useEffect, useState } from "react"
 import ArrowBackAqua from "../assets/svgs/arrow-back-aqua.svg"
 import Logo from "../assets/svgs/logo.svg"
 import Star from "../assets/svgs/star.svg"
+import CustomWalletConnect from "@/components/customWalletConnect"
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -34,14 +28,7 @@ const HomePage = () => {
   const { appConfig } = AppConfigStorage.useContainer()
   const router = useRouter()
 
-  const {
-    connectDummyWallet,
-    isWalletConnected,
-    isDummyWalletConnecting,
-    walletAddress,
-    disconnectDummyWallet,
-    connectedWalletType,
-  } = WalletConnector.useContainer()
+  const { isWalletConnected, walletAddress } = WalletConnector.useContainer()
 
   const {
     dummyWalletPopupContent,
@@ -77,13 +64,13 @@ const HomePage = () => {
   }, [router.query.claims])
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 p-4 4k:p-6">
+    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 p-4 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
       {children}
     </div>
   )
 
   const desktopColumnContent = (
-    <div className="hidden lg:grid h-full max:h-[1300px] max-4k:items-center">
+    <div className="hidden lg:block h-full 4k:h-[70vh] max-4k:items-center overflow-hidden">
       {!isWalletConnected && !stakingPoolForView ? (
         <LoginView />
       ) : stakingPoolForView ? (
@@ -93,6 +80,7 @@ const HomePage = () => {
             userStakingPoolData={stakingPoolForView.userData.staked}
             userUnstakingPoolData={stakingPoolForView.userData.unstaked}
             viewClaim={viewClaim}
+            reward={stakingPoolForView.userData.reward}
           />
         </div>
       ) : (
@@ -113,20 +101,6 @@ const HomePage = () => {
           />
         )
 
-  const connectWallet =
-    appConfig.chainId === MOCK_CHAIN.id ? (
-      <Button
-        type="primary"
-        onClick={connectDummyWallet}
-        loading={isDummyWalletConnecting}
-        className="btn-primary-gradient-aqua sm:px-10 w-full sm:max-w-fit"
-      >
-        CONNECT WALLET
-      </Button>
-    ) : (
-      <ConnectButton />
-    )
-
   const mobileBottomNavition = (
     <div className="fixed bottom-0 left-0 lg:hidden w-full mt-7.5  pt-1.5">
       <div className="flex justify-between items-center gap-1 mb-5 mt-2 mx-2.5 sm:mx-4 md:mx-6">
@@ -135,7 +109,7 @@ const HomePage = () => {
             <div className="flex justify-between items-center w-full">
               {mobileShowClaims || stakingPoolForView ? (
                 <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
-                  <a
+                  <div
                     className="justify-start flex items-center bold12-s"
                     onClick={() => {
                       router.back()
@@ -149,13 +123,13 @@ const HomePage = () => {
                       height={4.5}
                     />
                     Back
-                  </a>
+                  </div>
                 </div>
               ) : (
                 <div
                   className={`${!mobileShowClaims && availableForUnstaking.length + pendingUnstaking.length != 0 ? "w-1/2" : "w-full"}`}
                 >
-                  <a
+                  <div
                     className="justify-start"
                     onClick={() => {
                       selectStakingPoolForView(null)
@@ -184,12 +158,12 @@ const HomePage = () => {
                         height={8}
                       />
                     </Button>
-                  </a>
+                  </div>
                 </div>
               )}
 
               <div className="flex items-center gap-3">
-                <a
+                <div
                   className={`justify-start bold12-s relative max-lg:w-full lg:min-w-[320px] mx-auto
                         ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "text-aqua1" : "text-gray5"}
                         `}
@@ -200,7 +174,7 @@ const HomePage = () => {
 
                     router.push(
                       {
-                        pathname: "/",
+                        query: {},
                       },
                       undefined,
                       { shallow: true }
@@ -216,20 +190,19 @@ const HomePage = () => {
                   ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "bg-aqua1 " : " bg-transparent"}
                      rounded-full`}
                   />
-                </a>
+                </div>
 
                 <div
                   className={`h-inherit
                       ${stakingPoolForView ? "w-1/2" : "w-full"}`}
                 >
-                  <a
+                  <div
                     className={
                       "justify-start flex items-center whitespace-nowrap "
                     }
                     onClick={() => {
                       router.push(
                         {
-                          pathname: "/",
                           query: { claims: true },
                         },
                         undefined,
@@ -257,7 +230,7 @@ const HomePage = () => {
                         {availableForUnstaking.length + pendingUnstaking.length}
                       </div>
                     )}
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -267,7 +240,7 @@ const HomePage = () => {
             {stakingPoolForView && (
               <div className="w-1/2">
                 <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
-                  <a
+                  <div
                     className="justify-start flex items-center bold12-s"
                     onClick={() => {
                       router.back()
@@ -281,14 +254,16 @@ const HomePage = () => {
                       height={4.5}
                     />
                     Back
-                  </a>
+                  </div>
                 </div>
               </div>
             )}
             <div
               className={`flex items-center h-[58.79px] w-full ${stakingPoolForView ? "justify-end" : "justify-center"}`}
             >
-              {connectWallet}
+              <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 w-full sm:max-w-fit">
+                Connect wallet
+              </CustomWalletConnect>
             </div>
           </>
         )}
@@ -299,7 +274,7 @@ const HomePage = () => {
   return (
     <>
       <div
-        className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden ${
+        className={`h-screen w-screen relative transition-opacity duration-1000 overflow-hidden flex flex-col gap-3 lg:gap-[4vh] ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -314,44 +289,30 @@ const HomePage = () => {
                 width={32}
                 height={32}
                 className="h-10 md:h-12 w-auto"
-                onClick={() => router.push("/")}
+                onClick={() =>
+                  router.push(
+                    {
+                      query: {},
+                    },
+                    undefined,
+                    { shallow: true }
+                  )
+                }
               />
             </div>
 
             <div className="flex items-center space-x-4">
-              {!isWalletConnected ? (
-                connectWallet
-              ) : (
-                <>
-                  {connectedWalletType === ConnectedWalletType.MockWallet ? (
-                    <Button
-                      type="primary"
-                      className="group relative btn-primary-gradient-aqua max-lg:px-5 max-lg:w-fit lg:min-w-[160px]"
-                      onClick={disconnectDummyWallet}
-                    >
-                      <div className=" group-hover:hidden transition-opacity flex items-center justify-center">
-                        <WalletOutlined className="mr-2 !text-black-100" />
-                        {formatAddress(walletAddress || "")}
-                      </div>
-                      <span className=" !hidden group-hover:!block transition-opacity  items-center justify-center">
-                        Disconnect
-                      </span>
-                    </Button>
-                  ) : (
-                    <ConnectButton />
-                  )}
-                </>
-              )}
+              <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 w-full sm:max-w-fit">
+                Connect wallet
+              </CustomWalletConnect>
             </div>
           </div>
         </div>
-        <div
-          className={` ${mobileShowClaims || stakingPoolForView || availableForUnstaking.length + pendingUnstaking.length != 0 ? "h-[90vh]" : "h-[100vh]"} relative mx-auto overflow-y-hidden max-w-screen-4k `}
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 4k:gap-14 pt-3 lg:pt-[4vh] h-full">
+        <div className="grow relative mx-auto overflow-y-hidden max-w-screen-4k w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 4k:gap-14 h-full">
             {/* Left column */}
             <div
-              className={`lg:bg-white/[9%] p-4 xs:p-6 4k:p-10 max-4k:rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"}`}
+              className={`lg:bg-white/[9%] p-4 xs:p-6 4k:p-10 max-4k:rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"} overflow-hidden h-full flex flex-col `}
             >
               <StakingPoolsList setViewClaim={setViewClaim} />
             </div>

@@ -19,6 +19,10 @@ import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
 import FilterBtn from "./filterBtn"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
+import FastFadeScroll from "./FastFadeScroll"
+import { Dispatch, SetStateAction } from "react"
+
+
 interface UnstakeCardProps {
   available: boolean
   unstakeInfo: UserUnstakingPoolData
@@ -102,14 +106,6 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               : getHumanFormDuration(unstakeInfo.availableAt) + " left"}
           </Button>
         </div>
-        {/* <div className="max-lg:w-1/2 lg:mt-2.5">
-            <Button
-              className="btn-secondary-grey lg:py-5 py-4"
-              onClick={() => selectStakingPoolForView(stakingPool.definition.id)}
-            >
-              View
-            </Button>
-          </div> */}
       </div>
     </div>
   )
@@ -258,11 +254,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
   }
 
   return (
-    <div
-      className="relative overflow-y-auto max-h-[calc(90vh-15vh)]   
-    scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1
-     flex flex-col gap-2 4k:gap-2.5 4k:mt-52"
-    >
+    <div className="relative flex flex-col gap-2 4k:gap-2.5 4k:mt-52 h-full">
       <div className=" text-center p-4">
         {anyItemsAvailable ? (
           <>
@@ -292,13 +284,17 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       </div>
 
       {anyItemsAvailable ? (
+
         <div
           className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 overflow-y-auto max-h-[calc(90vh-30vh)]
           scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 lg:pb-10
            pr-2 lg:pr-4 4k:pl-5
           "
         >
-          {availableForUnstaking
+
+        <FastFadeScroll className="flex-1 overflow-y-scroll">
+          <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 pr-2 lg:pr-4 4k:pl-5">
+             {availableForUnstaking
             .filter(filterByPoolType)
             .map((unstakeClaim, claimIdx) => (
               <UnstakeCard
@@ -311,6 +307,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
                 setViewClaim={setViewClaim}
               />
             ))}
+
 
           {nonLiquidRewards
             .filter(filterByPoolType)
@@ -326,10 +323,11 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
               />
             ))}
 
+
           {pendingUnstaking
             .filter(filterByPoolType)
             .map((pendingUnstakeClaim, claimIdx) => (
-              <UnstakeCard
+                <UnstakeCard
                 key={claimIdx + 1000}
                 available={false}
                 stakingPool={pendingUnstakeClaim.stakingPool}
@@ -339,7 +337,10 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
                 setViewClaim={setViewClaim}
               />
             ))}
-        </div>
+
+          </div>
+        </FastFadeScroll>
+
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto lg:my-10">
@@ -367,7 +368,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
               />
             </div>
             <div className="mb-15 body2-v2 text-white4">
-              No claims? We’d love to hear
+              No claims? We&apos;d love to hear
               <br /> your feedback !
             </div>
             <Button
