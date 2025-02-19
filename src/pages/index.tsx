@@ -15,6 +15,7 @@ import ArrowBackAqua from "../assets/svgs/arrow-back-aqua.svg"
 import Logo from "../assets/svgs/logo.svg"
 import Star from "../assets/svgs/star.svg"
 import CustomWalletConnect from "@/components/customWalletConnect"
+import ZilGiveaway from "@/components/zilGiveaway"
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -302,7 +303,12 @@ const HomePage = () => {
               />
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex gap-2.5">
+              {
+                isWalletConnected && (
+                  <ZilGiveaway />
+                )
+              }
               <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 w-full sm:max-w-fit">
                 Connect wallet
               </CustomWalletConnect>
