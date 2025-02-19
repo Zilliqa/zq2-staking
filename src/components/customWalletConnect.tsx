@@ -82,7 +82,11 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
           }
 
           // all other cases
-          return <ConnectButton />
+          return (
+            <div className="flex min-w-[11em] md:min-w-[20em] items-center">
+              <ConnectButton />
+            </div>
+          )
         }}
       </ConnectButton.Custom>
     )
