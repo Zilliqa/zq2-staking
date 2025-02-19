@@ -46,7 +46,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   }, [viewClaim])
 
   const colorInfoEntry = (title: string, value: string | null) => (
-    <div>
+    <div className="text-center">
       <div className="semi14 text-aqua1">{value}</div>
       <div className="text-gray8 info-label">{title}</div>
     </div>
