@@ -220,7 +220,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         )}
 
         <div
-          className={`grid gap-4 4k:gap-6 ${
+          className={`grid gap-4 4k:gap-6 text-center ${
             columnCount === 1
               ? "grid-cols-1"
               : columnCount === 2
