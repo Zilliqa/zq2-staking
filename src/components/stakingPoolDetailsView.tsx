@@ -53,7 +53,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   )
 
   const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
-    <div>
+    <div key={title}>
       {value ? (
         <div className="semi14 text-gray7 xl:whitespace-nowrap">{value}</div>
       ) : (
