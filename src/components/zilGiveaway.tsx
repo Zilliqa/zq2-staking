@@ -5,7 +5,7 @@ import { useState } from "react"
 const ZilGiveaway: React.FC = () => {
   const [showRequestZilPopup, setShowRequestZilPopup] = useState(false)
   const [zilRequested, setZilRequested] = useState(false)
-  const [zilRequestFailed, setZilRequestFailed] = useState(true)
+  const [zilRequestFailed, setZilRequestFailed] = useState(false)
   const [failureReason, setFailureReason] = useState("")
   const { walletAddress } = WalletConnector.useContainer()
 
@@ -27,8 +27,8 @@ const ZilGiveaway: React.FC = () => {
 
       setZilRequested(true)
     } catch (error: any) {
-      console.log({ error })
-      if (`${error}`.startsWith("TypeError: Failed to fetch")) {
+      const errorString = `${error}`.trim()
+      if (errorString.startsWith("TypeError: Failed to fetch")) {
         // This is hack around not adding the correct CORS headers on the faucet side
         setZilRequested(true)
       } else {
@@ -48,13 +48,13 @@ const ZilGiveaway: React.FC = () => {
     <>
       <Button
         size="small"
-        className="btn-primary-gradient-aqua-lg px-0 lg:btn-primary-gradient-aqua lg:w-1/2 w-2/3"
+        className="btn-primary-gradient-aqua-lg px-0 lg:btn-primary-gradient-aqua px-3"
         onClick={() => {
           setShowRequestZilPopup(true)
           requestZil()
         }}
       >
-        Get Free ZIL
+        + ZIL
       </Button>
 
       <Modal
