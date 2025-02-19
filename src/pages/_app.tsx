@@ -102,7 +102,7 @@ export default function App({ Component, pageProps }: AppProps) {
           fadeOut ? "opacity-0" : "opacity-100"
         }`}
       >
-        <div className="h-full flex flex-col justify-between">
+        <div className="h-screen flex flex-col justify-between">
           <div className="w-full h-10 overflow-hidden">
             <div
               className="h-full bg-colorful-gradient"
