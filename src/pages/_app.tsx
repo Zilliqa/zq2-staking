@@ -95,51 +95,51 @@ export default function App({ Component, pageProps }: AppProps) {
     return getWagmiConfig(appConfig.chainId, appConfig.walletConnectPrivateKey)
   }, [appConfig?.chainId, appConfig?.walletConnectPrivateKey])
 
-  //if (!appConfig) {
-  return (
-    <div
-      className={
-        "h-screen bg-black text-white transition-opacity duration-500  "
-      }
-    >
-      <div className="h-screen flex flex-col justify-between">
-        <div className="w-full h-10 overflow-hidden">
-          <div
-            className="h-full bg-colorful-gradient"
-            style={{
-              width: `${displayedPercentage}%`,
-            }}
-          ></div>
-        </div>
-        <div className="self-end text-80 lg:text-114 font-extrabold mr-7">
-          {Math.round(displayedPercentage)}%
+  if (!appConfig) {
+    return (
+      <div
+        className={`h-screen bg-black text-white transition-opacity duration-500 ${
+          fadeOut ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        <div className="h-screen flex flex-col justify-between">
+          <div className="w-full h-10 overflow-hidden">
+            <div
+              className="h-full bg-colorful-gradient"
+              style={{
+                width: `${displayedPercentage}%`,
+              }}
+            ></div>
+          </div>
+          <div className="self-end text-80 lg:text-114 font-extrabold mr-7">
+            {Math.round(displayedPercentage)}%
+          </div>
         </div>
       </div>
-    </div>
-  )
-  // }
+    )
+  }
 
-  // return (
-  //   <AppConfigStorage.Provider initialState={{ appConfig }}>
-  //     <ConfigProvider>
-  //       <WagmiProvider config={wagmiConfig!} reconnectOnMount={true}>
-  //         <QueryClientProvider client={queryClient}>
-  //           <RainbowKitProvider showRecentTransactions={true}>
-  //             <WalletConnector.Provider>
-  //               <StakingPoolsStorage.Provider>
-  //                 <StakingOperations.Provider>
-  //                   <Head>
-  //                     <title>Zilliqa Staking</title>
-  //                   </Head>
-  //                   <Component {...pageProps} />
-  //                   <DummyWalletSelector />
-  //                 </StakingOperations.Provider>
-  //               </StakingPoolsStorage.Provider>
-  //             </WalletConnector.Provider>
-  //           </RainbowKitProvider>
-  //         </QueryClientProvider>
-  //       </WagmiProvider>
-  //     </ConfigProvider>
-  //   </AppConfigStorage.Provider>
-  // )
+  return (
+    <AppConfigStorage.Provider initialState={{ appConfig }}>
+      <ConfigProvider>
+        <WagmiProvider config={wagmiConfig!} reconnectOnMount={true}>
+          <QueryClientProvider client={queryClient}>
+            <RainbowKitProvider showRecentTransactions={true}>
+              <WalletConnector.Provider>
+                <StakingPoolsStorage.Provider>
+                  <StakingOperations.Provider>
+                    <Head>
+                      <title>Zilliqa Staking</title>
+                    </Head>
+                    <Component {...pageProps} />
+                    <DummyWalletSelector />
+                  </StakingOperations.Provider>
+                </StakingPoolsStorage.Provider>
+              </WalletConnector.Provider>
+            </RainbowKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
+      </ConfigProvider>
+    </AppConfigStorage.Provider>
+  )
 }
