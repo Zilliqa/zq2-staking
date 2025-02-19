@@ -19,7 +19,7 @@ const DummyWalletSelector: React.FC = () => {
   return (
     <>
       <Modal
-        title="Basic Modal"
+        title="Available mock wallets"
         open={isDummyWalletSelectorOpen}
         okText="Connect"
         onOk={() => selectDummyWallet(dummyWallets[walletIndex])}
