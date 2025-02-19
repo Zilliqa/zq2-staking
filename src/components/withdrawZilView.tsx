@@ -18,7 +18,6 @@ import { Button } from "antd"
 import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
 import FilterBtn from "./filterBtn"
-import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "./FastFadeScroll"
 
 interface UnstakeCardProps {

@@ -124,7 +124,6 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
           >
             <div className="items-center h4 w-full flex justify-between text-white1">
               {stakingPoolData.data ? (
-
                 <div>
                   <div className="body2">
                     <span className="mr-1 text-aqua2">Available</span>
