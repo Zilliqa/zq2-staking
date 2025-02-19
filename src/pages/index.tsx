@@ -277,7 +277,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className="grow relative mx-auto overflow-y-hidden max-w-screen-4k w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 4k:gap-14 h-full pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 4k:gap-14 h-full max-lg:pb-16">
 
             {/* Left column */}
             <div className={`lg:bg-white/[9%] p-4 xs:p-6 4k:p-10 max-4k:rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"} overflow-hidden h-full flex flex-col `}>

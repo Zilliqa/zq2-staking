@@ -365,21 +365,21 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
               <Image
                 className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={FeedbackIcon}
-                alt="arrow icon"
+                alt="star icon"
                 width={56}
                 height={56}
               />
               <Image
                 className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={FeedbackIcon}
-                alt="arrow icon"
+                alt="star icon"
                 width={56}
                 height={56}
               />
               <Image
                 className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={FeedbackIcon}
-                alt="arrow icon"
+                alt="star icon"
                 width={56}
                 height={56}
               />
