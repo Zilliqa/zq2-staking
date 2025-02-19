@@ -232,6 +232,18 @@ const useStakingPoolsStorage = () => {
     (unstakeData) => unstakeData.unstakeInfo.availableAt > DateTime.now()
   )
 
+  const getMinimalPoolStakingAmount = (stakinPoolAddress: string) => {
+    const stakingPoolData = availableStakingPoolsData.find(
+      (pool) => pool.definition.address === stakinPoolAddress
+    )
+
+    if (!stakingPoolData) {
+      throw new Error("Staking pool not found") // this means that config is invalid
+    }
+
+    return stakingPoolData.definition.minimumStake
+  }
+
   return {
     availableStakingPools: availableStakingPoolsData,
     stakingPoolForView: combinedSelectedStakingPoolForViewData,
@@ -243,6 +255,7 @@ const useStakingPoolsStorage = () => {
     nonLiquidRewards: combinedUserNonLiquidPoolRewards,
     reloadUserStakingPoolsData,
     isUnstakingDataLoading,
+    getMinimalPoolStakingAmount,
   }
 }
 
