@@ -309,14 +309,11 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       </div>
 
       {anyItemsAvailable ? (
-        <div
-          className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 overflow-y-auto max-h-[calc(90vh-30vh)]
-          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 lg:pb-10
-           pr-2 lg:pr-4 4k:pl-5
-          "
-        >
-          <FastFadeScroll className="flex-1 overflow-y-scroll">
-            <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 pr-2 lg:pr-4 4k:pl-5">
+           <div className="flex-1 pb-4 mb-16 lg:mb-0 overflow-y-scroll scrollbar-hidden scrollbar-gradient">
+           <FastFadeScroll className=" flex-1 scrollbar-gradient overflow-y-scroll 
+           
+ ">
+            <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 ">
               {availableForUnstaking
                 .filter(filterByPoolType)
                 .map((unstakeClaim, claimIdx) => (
@@ -359,8 +356,8 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
                   />
                 ))}
             </div>
-          </FastFadeScroll>
-        </div>
+          </FastFadeScroll></div>
+ 
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto lg:my-10">

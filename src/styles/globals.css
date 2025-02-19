@@ -152,7 +152,7 @@ button,
     @apply font-normal lg:font-medium text-16 lg:text-20 4k:text-24 leading-5 lg:leading-8 text-white1;
   }
   .body2-v2 {
-    @apply font-light text-16 lg:text-28 4k:text-33 leading-5 lg:leading-10 text-white1 px-17.5;
+    @apply font-light text-16 lg:text-28 4k:text-33 leading-5 lg:leading-10 text-white1 sm:px-17.5;
   }
   .body1 {
     @apply font-bold text-16 lg:text-24 4k:text-28 leading-6 lg:leading-8 text-gray1;
