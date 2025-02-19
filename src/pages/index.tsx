@@ -15,6 +15,7 @@ import ArrowBackAqua from "../assets/svgs/arrow-back-aqua.svg"
 import Logo from "../assets/svgs/logo.svg"
 import Star from "../assets/svgs/star.svg"
 import CustomWalletConnect from "@/components/customWalletConnect"
+import MobilePopup from "@/components/mobilePopup"
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -259,19 +260,21 @@ const HomePage = () => {
                 </div>
               </div>
             )}
-            <div
-              className={`flex items-center h-[58.79px] w-full ${stakingPoolForView ? "justify-end" : "justify-center"}`}
-            >
-              <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 w-full sm:max-w-fit">
-                Connect wallet
-              </CustomWalletConnect>
-            </div>
           </>
         )}
       </div>
     </div>
   )
+  const [isOpen, setIsOpen] = useState(false)
 
+  useEffect(() => {
+    if (isWalletConnected) {
+      setIsOpen(false)
+    } else {
+      setIsOpen(true)
+    }
+  }, [])
+  console.log(isWalletConnected)
   return (
     <>
       <div
@@ -321,6 +324,13 @@ const HomePage = () => {
             {desktopColumnContent}
 
             {mobileOverlayContent}
+            <div>
+              <MobilePopup
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                isWalletConnected={isWalletConnected ? true : false}
+              />
+            </div>
             {mobileBottomNavition}
           </div>
         </div>

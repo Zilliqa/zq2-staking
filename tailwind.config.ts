@@ -27,6 +27,8 @@ const config: Config = {
           " linear-gradient(90deg, rgba(78, 78, 78, 0.3) -11.22%, rgba(32, 40, 50, 0.25) 47.4%, rgba(78, 78, 78, 0.3) 98.85%)",
         "aqua-gradient":
           "linear-gradient(90deg, rgba(124, 125, 126, 0.18) -11.22%, rgba(122, 131, 166, 0.15) 47.4%, rgba(124, 125, 126, 0.18) 98.85%)",
+        "aqua-grey-gradient":
+          "linear-gradient(180deg, var(--grey-black, #000) 33%, rgba(0, 0, 0, 0.00) 100%)",
       },
       colors: {
         black1: "#010101",
@@ -110,7 +112,7 @@ const config: Config = {
       borderRadius: {
         "10": "10px",
         "160": "160px",
-
+        "15": "15px",
         "2.5xl": "1.25rem",
       },
       lineHeight: {
@@ -148,6 +150,9 @@ const config: Config = {
       screens: {
         xs: "450px",
         "4k": "2380px",
+      },
+      backdropBlur: {
+        "17": "17px",
       },
     },
   },
