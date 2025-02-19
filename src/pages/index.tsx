@@ -320,13 +320,13 @@ const HomePage = () => {
             {desktopColumnContent}
 
             {mobileOverlayContent}
-            <div>
+           
               <MobilePopup
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
                 isWalletConnected={!!isWalletConnected}
               />
-            </div>
+             
             {mobileBottomNavition}
           </div>
         </div>
