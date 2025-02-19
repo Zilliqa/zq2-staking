@@ -11,36 +11,30 @@ const ZilGiveaway: React.FC = () => {
 
   const requestZil = async () => {
     const url = "https://faucet.zq2-devnet.zilliqa.com"
-    const formData = new FormData()
-    formData.append("address", walletAddress!)
+    // const formData = new FormData()
+    // formData.append("address", walletAddress!.toLowerCase())
+    const params = new URLSearchParams()
+    params.append("address", walletAddress!)
 
     try {
-      const response = await fetch(url, {
+      await fetch(url, {
         method: "POST",
-        body: formData,
+        body: params,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       })
 
-      if (response.ok) {
-        // Successful request (status code 200-299)
-        console.log("Faucet request successful!")
-        // You might want to process the response body here.  It could be HTML, JSON, or plain text.
-        const responseText = await response.text()
-        console.log("Response:", responseText) // Inspect the response
+      setZilRequested(true)
+    } catch (error: any) {
+      console.log({ error })
+      if (`${error}`.startsWith("TypeError: Failed to fetch")) {
+        // This is hack around not adding the correct CORS headers on the faucet side
         setZilRequested(true)
       } else {
-        // Handle errors (status codes 400 and above)
-        console.error(
-          `Faucet request failed: ${response.status} ${response.statusText}`
-        )
-        const errorText = await response.text() // Get error details, if any
-        setFailureReason(errorText)
+        setFailureReason(error.message)
         setZilRequestFailed(true)
       }
-    } catch (error: any) {
-      // Network errors (e.g., no internet connection)
-      console.error("Network error:", error)
-      setFailureReason(error.message)
-      setZilRequestFailed(true)
     }
   }
 
@@ -72,7 +66,7 @@ const ZilGiveaway: React.FC = () => {
         okButtonProps={{ className: "hidden" }}
         maskClosable={false}
       >
-        <div className="py-5">
+        <div className="pt-5">
           {zilRequestFailed ? (
             <>
               <div>Request failed</div>
@@ -84,12 +78,20 @@ const ZilGiveaway: React.FC = () => {
               </div>
             </>
           ) : zilRequested ? (
-            <Button
-              className="btn-primary-gradient-aqua-lg"
-              onClick={closePopup}
-            >
-              Free ZIL should be in your wallet soon!
-            </Button>
+            <div>
+              <div>Free ZIL should be in your wallet soon!</div>
+              <div>
+                Remember that you can only make one request every 1 minute
+              </div>
+              <div className="flex justify-end">
+                <Button
+                  className="btn-primary-gradient-aqua-lg mt-5"
+                  onClick={closePopup}
+                >
+                  Ok
+                </Button>
+              </div>
+            </div>
           ) : (
             <div className="animated-gradient h-[1.5em] "></div>
           )}
