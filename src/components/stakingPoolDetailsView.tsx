@@ -105,6 +105,40 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       }
     )
 
+  const greyInfoEntries = [
+    stakingPoolData.data &&
+      greyInfoEntry(
+        "Voting power",
+        formatPercentage(stakingPoolData.data.votingPower)
+      ),
+
+    stakingPoolData.data &&
+      greyInfoEntry(
+        "Total supply",
+        `${humanReadableStakingToken(stakingPoolData.data.tvl)} ${stakingPoolData.definition.tokenSymbol}`
+      ),
+
+    stakingPoolData.data &&
+      greyInfoEntry(
+        "Commission",
+        formatPercentage(stakingPoolData.data.commission)
+      ),
+
+    isPoolLiquid() &&
+      stakingPoolData.data &&
+      greyInfoEntry(
+        "",
+        <>
+          1 ZIL ~ <br />
+          {stakingPoolData.data.zilToTokenRate.toPrecision(3)}{" "}
+          {stakingPoolData.definition.tokenSymbol}
+        </>
+      ),
+  ]
+
+  const availableEntries = greyInfoEntries.filter(Boolean)
+  const columnCount = availableEntries.length
+
   return (
     <div className="relative pb-2 4k:pb-4 pr-2 lg:pr-4 4k:pr-6 flex flex-col h-full">
       <div className="items-center flex justify-between py-1 lg:py-7.5">
@@ -184,35 +218,19 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             )}
           </div>
         )}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 4k:gap-6">
-          {greyInfoEntry(
-            "Voting power",
-            stakingPoolData.data &&
-              formatPercentage(stakingPoolData.data.votingPower)
-          )}
-          {greyInfoEntry(
-            "Total supply",
-            stakingPoolData.data &&
-              `${humanReadableStakingToken(
-                stakingPoolData.data.tvl
-              )} ${stakingPoolData.definition.tokenSymbol}`
-          )}
-          {greyInfoEntry(
-            "Commission",
-            stakingPoolData.data &&
-              formatPercentage(stakingPoolData.data.commission)
-          )}
-          {isPoolLiquid() &&
-            greyInfoEntry(
-              "",
-              stakingPoolData.data && (
-                <>
-                  1 ZIL ~ <br />
-                  {stakingPoolData.data.zilToTokenRate.toPrecision(3)}{" "}
-                  {stakingPoolData.definition.tokenSymbol}
-                </>
-              )
-            )}
+
+        <div
+          className={`grid gap-4 4k:gap-6 ${
+            columnCount === 1
+              ? "grid-cols-1"
+              : columnCount === 2
+                ? "grid-cols-2"
+                : columnCount === 3
+                  ? "grid-cols-3"
+                  : "grid-cols-4"
+          }`}
+        >
+          {availableEntries}
         </div>
       </div>
       <div className="grid grid-cols-3 my-2 4k:my-4">
@@ -231,7 +249,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         ))}
       </div>
 
-      <FastFadeScroll className="flex-1 pb-4 mb-16 md:mb-0 overflow-y-scroll">
+      <FastFadeScroll className="flex-1 pb-4 mb-16 lg:mb-0 overflow-y-scroll">
         {selectedPane === "Stake" ? (
           <StakingCalculator />
         ) : selectedPane === "Unstake" ? (

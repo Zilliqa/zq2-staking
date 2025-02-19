@@ -9,7 +9,7 @@ import {
   getHumanFormDuration,
 } from "@/misc/formatting"
 import FeedbackIcon from "../assets/svgs/feedback-icon.svg"
-import { StakingPool } from "@/misc/stakingPoolsConfig"
+import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import {
   UserNonLiquidStakingPoolRewardData,
   UserUnstakingPoolData,
@@ -18,7 +18,6 @@ import { Button } from "antd"
 import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
 import FilterBtn from "./filterBtn"
-import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "./FastFadeScroll"
 
 interface UnstakeCardProps {
@@ -57,16 +56,18 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
           />
           <div className="semi24">{stakingPool.definition.name}</div>
           <div className="text-gray4 lg:hidden text-20">|</div>
-          <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
-            <Image
-              className="rounded"
-              src={requests}
-              alt="requests"
-              width={14}
-              height={15}
-            />
-            Requests
-          </div>
+          {stakingPool.definition.poolType != StakingPoolType.LIQUID && (
+            <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
+              <Image
+                className="rounded"
+                src={requests}
+                alt="requests"
+                width={14}
+                height={15}
+              />
+              Requests
+            </div>
+          )}
         </div>
         <div className="flex lg:mt-3 items-center">
           <div className="bold33">
@@ -92,7 +93,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
           </div>
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full px-3 lg:pb-0 pb-4 lg:px-4 4k:px-5">
+      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[218px] w-full px-3 lg:pb-0 pb-4 lg:px-4 4k:px-5">
         <div className="max-lg:w-1/2">
           <Button
             className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
@@ -145,16 +146,18 @@ const RewardCard: React.FC<RewardCardProps> = ({
           />
           <div className="semi24">{stakingPool.definition.name}</div>
           <div className="text-gray4 lg:hidden text-20">|</div>
-          <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
-            <Image
-              className="rounded"
-              src={rewards}
-              alt="rewards"
-              width={14}
-              height={15}
-            />
-            Rewards
-          </div>
+          {stakingPool.definition.poolType != StakingPoolType.LIQUID && (
+            <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
+              <Image
+                className="rounded"
+                src={rewards}
+                alt="rewards"
+                width={14}
+                height={15}
+              />
+              Rewards
+            </div>
+          )}
         </div>
         <div className="flex lg:mt-3 items-center">
           <div className="bold33">

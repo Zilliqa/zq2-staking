@@ -61,7 +61,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
   return (
     <div className="h-full">
       {hashToShow !== undefined && (
-        <div className="text-center gradient-bg-1 py-2 text-gray-500">
+        <div className="text-center gradient-bg-1 py-2 regular-base">
           <Link
             rel="noopener noreferrer"
             target="_blank"
@@ -136,7 +136,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               ) : (
                 <div className="w-[4em] h-[1em] animated-gradient" />
               )}
-              <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full">
+              <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[218px] w-full">
                 <Button
                   className="btn-secondary-grey lg:py-5 py-4"
                   onClick={() => claimUnstake(item.address)}

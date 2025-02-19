@@ -143,8 +143,8 @@ const UnstakingCalculator: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2">
-          <div className="flex mt-2 mb-5">
+        <div className="flex flex-col justify-between">
+          <div className="flex mt-2 mb-3">
             {isWalletConnected ? (
               <Button
                 type="default"
@@ -168,7 +168,7 @@ const UnstakingCalculator: React.FC = () => {
             )}
           </div>
 
-          <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2">
+          <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 lg:pb-10">
             <div className="flex flex-col gap-3.5 regular-base">
               <div className=" ">
                 Commission Fee:{" "}
@@ -188,51 +188,57 @@ const UnstakingCalculator: React.FC = () => {
                 Unbonding Period: {unboudingPeriod}
               </div>
             </div>
-            <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
-              {isPoolLiquid() && (
-                <div className="flex flex-col xl:flex-row xl:gap-5 4k:gap-6">
-                  <div className="gray-base">Rate</div>
-                  <div className="text-gray9">
-                    {stakingPoolForView!.stakingPool.data ? (
-                      <>
-                        1{" "}
-                        {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
-                        = ~
-                        {formatUnitsToHumanReadable(
-                          convertTokenToZil(
-                            parseEther("1"),
-                            stakingPoolForView.stakingPool.data.zilToTokenRate
-                          ),
-                          18
-                        )}
-                      </>
-                    ) : (
-                      <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
-                    )}
-                    ZIL
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-col max-xl:justify-between xl:gap-3.5 xl:items-end">
+                {isPoolLiquid() && (
+                  <div className="flex flex-col xl:flex-row xl:gap-5 4k:gap-6">
+                    <div className="gray-base">Rate</div>
+                    <div className="text-gray9">
+                      {stakingPoolForView!.stakingPool.data ? (
+                        <>
+                          1{" "}
+                          {
+                            stakingPoolForView.stakingPool.definition
+                              .tokenSymbol
+                          }{" "}
+                          = ~
+                          {formatUnitsToHumanReadable(
+                            convertTokenToZil(
+                              parseEther("1"),
+                              stakingPoolForView.stakingPool.data.zilToTokenRate
+                            ),
+                            18
+                          )}
+                        </>
+                      ) : (
+                        <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
+                      )}
+                      ZIL
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
 
-            <div className="text-gray9 flex flex-row xl:gap-5 4k:gap-6">
-              <Tooltip
-                placement="top"
-                arrow={true}
-                color="#555555"
-                className=" mr-1"
-                title="Annual Percentage Rate"
-              >
-                <span className="gray-base">APR </span>
-              </Tooltip>
+              <div className="text-gray9 flex flex-row xl:gap-5 4k:gap-6">
+                <Tooltip
+                  placement="top"
+                  arrow={true}
+                  color="#555555"
+                  className=" mr-1"
+                  title="Annual Percentage Rate"
+                >
+                  <span className="gray-base">APR </span>
+                </Tooltip>
 
-              {stakingPoolForView!.stakingPool.data ? (
-                <>
-                  ~{formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
-                </>
-              ) : (
-                <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
-              )}
+                {stakingPoolForView!.stakingPool.data ? (
+                  <>
+                    ~
+                    {formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
+                  </>
+                ) : (
+                  <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
+                )}
+              </div>
             </div>
           </div>
         </div>
