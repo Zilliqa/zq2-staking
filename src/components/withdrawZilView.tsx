@@ -279,7 +279,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
   }
 
   return (
-    <div className="relative flex flex-col gap-2 4k:gap-2.5 4k:mt-52 h-full">
+    <div className="relative flex flex-col gap-2 4k:gap-2.5 4k:mt-52 h-full max-lg:pb-16">
       <div className=" text-center p-4">
         {anyItemsAvailable ? (
           <>

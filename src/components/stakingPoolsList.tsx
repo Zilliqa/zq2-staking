@@ -123,19 +123,19 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
         <FastFadeScroll className="flex-1 pb-8 lg:pb-4 mb-16 md:mb-0 overflow-y-scroll">
           <div className="grid grid-cols-1 gap-2.5 lg:gap-4 4k:gap-5">
             {sortedLiquidStakingPoolsData.map(({ stakingPool, userData }) => (
-              <StakingPoolCard
-                key={stakingPool.definition.id}
-                stakingPoolData={stakingPool}
-                userStakingPoolData={userData}
-                isStakingPoolSelected={
-                  stakingPoolForView?.stakingPool.definition.id ===
-                  stakingPool.definition.id
-                }
-                onClick={() => {
-                  selectStakingPoolForView(stakingPool.definition.id)
-                  setViewClaim(false)
-                }}
-              />
+ <StakingPoolCard
+              key={stakingPool.definition.id}
+              stakingPoolData={stakingPool}
+              userStakingPoolData={userData}
+              isStakingPoolSelected={
+                stakingPoolForView?.stakingPool.definition.id ===
+                stakingPool.definition.id
+              }
+              onClick={() => {
+                selectStakingPoolForView(stakingPool.definition.id)
+                setViewClaim(false)
+              }}
+            />             
             ))}
           </div>
         </FastFadeScroll>
