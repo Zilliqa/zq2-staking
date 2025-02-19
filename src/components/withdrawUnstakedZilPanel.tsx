@@ -1,8 +1,10 @@
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { StakingOperations } from "@/contexts/stakingOperations"
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 
 import {
   formatAddress,
+  formatUnitsToHumanReadable,
   getHumanFormDuration,
   getTxExplorerUrl,
 } from "@/misc/formatting"
@@ -11,7 +13,7 @@ import {
   UserNonLiquidStakingPoolRewardData,
   UserUnstakingPoolData,
 } from "@/misc/walletsConfig"
-import { Button } from "antd"
+import { Button, Tooltip } from "antd"
 import { DateTime } from "luxon"
 import Link from "next/link"
 import { formatUnits } from "viem"
@@ -40,6 +42,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
   } = StakingOperations.useContainer()
 
   const { appConfig } = AppConfigStorage.useContainer()
+  const { getMinimalPoolStakingAmount } = StakingPoolsStorage.useContainer()
 
   const pendingUnstake = userUnstakingPoolData
     ?.filter((claim) => claim.availableAt > DateTime.now())
@@ -96,13 +99,37 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               <div className="w-[4em] h-[1em] animated-gradient" />
             )}
             <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full">
-              <Button
-                className="btn-secondary-grey lg:py-5 py-4 mb-2.5"
-                onClick={() => stakeReward(reward.address)}
-                loading={isStakingRewardInProgress}
-              >
-                Stake Reward
-              </Button>
+              {getMinimalPoolStakingAmount(reward.address) >
+              reward.zilRewardAmount ? (
+                <Tooltip
+                  placement="top"
+                  arrow={true}
+                  color="#555555"
+                  className="mr-1"
+                  title={`Reward is less than the minimal staking amount of ${formatUnitsToHumanReadable(
+                    getMinimalPoolStakingAmount(reward.address),
+                    18
+                  )} ZIL`}
+                >
+                  <Button
+                    className="btn-secondary-grey lg:py-5 py-4 mb-2.5"
+                    onClick={() => stakeReward(reward.address)}
+                    loading={isStakingRewardInProgress}
+                    disabled={true}
+                  >
+                    Stake Reward
+                  </Button>
+                </Tooltip>
+              ) : (
+                <Button
+                  className="btn-secondary-grey lg:py-5 py-4 mb-2.5"
+                  onClick={() => stakeReward(reward.address)}
+                  loading={isStakingRewardInProgress}
+                >
+                  Stake Reward
+                </Button>
+              )}
+
               <Button
                 className="btn-secondary-grey lg:py-5 py-4"
                 onClick={() => claimReward(reward.address)}

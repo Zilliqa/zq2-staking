@@ -101,7 +101,7 @@ export default function App({ Component, pageProps }: AppProps) {
         className={`h-screen bg-black text-white transition-opacity duration-500 ${
           fadeOut ? "opacity-0" : "opacity-100"
         }`}
-      >
+      > 
         <div className="w-full h-10 ">
           <div
             className="h-full bg-colorful-gradient"
