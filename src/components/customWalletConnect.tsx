@@ -1,11 +1,10 @@
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { WalletConnector } from "@/contexts/walletConnector"
 import { MOCK_CHAIN } from "@/misc/chainConfig"
-import { formatAddress } from "@/misc/formatting"
+import { formatAddress, formatUnitsToHumanReadable } from "@/misc/formatting"
 import { WalletOutlined } from "@ant-design/icons"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { Button } from "antd"
-import { useMemo } from "react"
 
 /**
  * notConnectedClassName will be used for other cases if if connectedClassName or wrongNetworkClassName is not provided
@@ -13,15 +12,11 @@ import { useMemo } from "react"
 interface CustomWalletConnectProps {
   children: React.ReactNode
   notConnectedClassName: string
-  connectedClassName?: string
-  wrongNetworkClassName?: string
 }
 
 const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
   children,
   notConnectedClassName,
-  connectedClassName,
-  wrongNetworkClassName,
 }) => {
   const { appConfig } = AppConfigStorage.useContainer()
 
@@ -31,6 +26,7 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
     disconnectDummyWallet,
     isDummyWalletConnected,
     walletAddress,
+    zilAvailable,
   } = WalletConnector.useContainer()
 
   if (appConfig.chainId === MOCK_CHAIN.id) {
@@ -54,7 +50,8 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
         >
           <div className=" group-hover:hidden transition-opacity flex items-center justify-center">
             <WalletOutlined className="mr-2 !text-black-100" />
-            {formatAddress(walletAddress || "")}
+            {formatAddress(walletAddress || "")} |{" "}
+            {formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL
           </div>
           <span className=" !hidden group-hover:!block transition-opacity  items-center justify-center">
             Disconnect
@@ -65,14 +62,7 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
   } else {
     return (
       <ConnectButton.Custom>
-        {({
-          account,
-          chain,
-          mounted,
-          openAccountModal,
-          openChainModal,
-          openConnectModal,
-        }) => {
+        {({ account, chain, mounted, openConnectModal }) => {
           if (!mounted) {
             return (
               <Button className={notConnectedClassName}>refreshing...</Button>
@@ -91,28 +81,8 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
             )
           }
 
-          // Wrong network
-          if (chain.unsupported) {
-            return (
-              <Button
-                onClick={openChainModal}
-                className={wrongNetworkClassName ?? notConnectedClassName}
-              >
-                Switch network
-              </Button>
-            )
-          }
-
-          // Connected and correct network
-          return (
-            <Button
-              onClick={openAccountModal}
-              className={connectedClassName ?? notConnectedClassName}
-            >
-              {account.displayName} | {account.balanceFormatted?.split(".")[0]}{" "}
-              {account.balanceSymbol}
-            </Button>
-          )
+          // all other cases
+          return <ConnectButton />
         }}
       </ConnectButton.Custom>
     )

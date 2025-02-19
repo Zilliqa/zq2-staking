@@ -6,6 +6,8 @@ import {
   convertTokenToZil,
   formatUnitsToHumanReadable,
   getHumanFormDuration,
+  getTxExplorerUrl,
+  formatAddress,
 } from "@/misc/formatting"
 import { formatUnits, parseEther } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
@@ -14,14 +16,22 @@ import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "@/components/FastFadeScroll"
 import { WalletConnector } from "@/contexts/walletConnector"
 import CustomWalletConnect from "./customWalletConnect"
+import Link from "next/link"
+import { AppConfigStorage } from "@/contexts/appConfigStorage"
 
 const UnstakingCalculator: React.FC = () => {
+  const { appConfig } = AppConfigStorage.useContainer()
+
   const { isWalletConnected } = WalletConnector.useContainer()
 
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
 
-  const { unstake, isUnstakingInProgress, unstakeContractCallError } =
-    StakingOperations.useContainer()
+  const {
+    unstake,
+    isUnstakingInProgress,
+    unstakingCallTxHash,
+    unstakeContractCallError,
+  } = StakingOperations.useContainer()
 
   const [zilToUnstake, setZilToUnstake] = useState<string>("0")
 
@@ -136,7 +146,7 @@ const UnstakingCalculator: React.FC = () => {
             </Button>
             <Button
               className="btn-secondary-colored text-purple3 hover:!text-purple1 border-0 bg-PurpleDarker hover:!bg-PurpleDarker"
-              onClick={() => setZilToUnstake("0")}
+              onClick={() => setZilToUnstake("1")}
             >
               MIN
             </Button>
@@ -167,6 +177,23 @@ const UnstakingCalculator: React.FC = () => {
               </CustomWalletConnect>
             )}
           </div>
+
+          {unstakingCallTxHash !== undefined && (
+            <div className="text-center mb-3 regular-base ">
+              <Link
+                rel="noopener noreferrer"
+                target="_blank"
+                href={getTxExplorerUrl(unstakingCallTxHash, appConfig.chainId)}
+                passHref={true}
+              >
+                Last staking transaction:{" "}
+                <span className="text-white underline">
+                  {" "}
+                  {formatAddress(unstakingCallTxHash)}
+                </span>
+              </Link>
+            </div>
+          )}
 
           <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 lg:pb-10">
             <div className="flex flex-col gap-3.5 regular-base">

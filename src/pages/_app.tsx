@@ -11,7 +11,7 @@ import { WagmiProvider } from "wagmi"
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { getWagmiConfig } from "@/misc/chainConfig"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { AppConfig } from "./api/config"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import Head from "next/head"
@@ -87,14 +87,6 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [loadingPercentage])
 
-  const wagmiConfig = useMemo(() => {
-    if (!appConfig) {
-      return null
-    }
-
-    return getWagmiConfig(appConfig.chainId, appConfig.walletConnectPrivateKey)
-  }, [appConfig?.chainId, appConfig?.walletConnectPrivateKey])
-
   if (!appConfig) {
     return (
       <div
@@ -102,18 +94,16 @@ export default function App({ Component, pageProps }: AppProps) {
           fadeOut ? "opacity-0" : "opacity-100"
         }`}
       >
-        <div className="h-full flex flex-col justify-between">
-          <div className="w-full h-10 overflow-hidden">
-            <div
-              className="h-full bg-colorful-gradient"
-              style={{
-                width: `${displayedPercentage}%`,
-              }}
-            ></div>
-          </div>
-          <div className="self-end text-80 lg:text-114 font-extrabold mr-7">
-            {Math.round(displayedPercentage)}%
-          </div>
+        <div className="w-full h-10 ">
+          <div
+            className="h-full bg-colorful-gradient"
+            style={{
+              width: `${displayedPercentage}%`,
+            }}
+          ></div>
+        </div>
+        <div className="absolute self-end text-80 lg:text-114 font-extrabold right-5 bottom-0">
+          {Math.round(displayedPercentage)}%
         </div>
       </div>
     )
@@ -122,7 +112,14 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AppConfigStorage.Provider initialState={{ appConfig }}>
       <ConfigProvider>
-        <WagmiProvider config={wagmiConfig!} reconnectOnMount={true}>
+        <WagmiProvider
+          config={getWagmiConfig(
+            appConfig.chainId,
+            appConfig.walletConnectPrivateKey,
+            appConfig.appUrl
+          )}
+          reconnectOnMount={true}
+        >
           <QueryClientProvider client={queryClient}>
             <RainbowKitProvider showRecentTransactions={true}>
               <WalletConnector.Provider>

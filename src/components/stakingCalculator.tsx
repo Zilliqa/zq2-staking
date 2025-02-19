@@ -21,8 +21,7 @@ import { DateTime } from "luxon"
 const StakingCalculator: React.FC = () => {
   const { appConfig } = AppConfigStorage.useContainer()
 
-  const { connectDummyWallet, isWalletConnected, isDummyWalletConnecting } =
-    WalletConnector.useContainer()
+  const { isWalletConnected } = WalletConnector.useContainer()
 
   const { zilAvailable } = WalletConnector.useContainer()
   const {
@@ -33,6 +32,8 @@ const StakingCalculator: React.FC = () => {
   } = StakingOperations.useContainer()
 
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
+
+  const stakingTxCostInZill = 4
 
   const [zilToStake, setZilToStake] = useState<string>(
     formatUnits(
@@ -71,14 +72,46 @@ const StakingCalculator: React.FC = () => {
   }
 
   const zilToStakeNumber = parseFloat(zilToStake)
-
   const zilInWei = parseEther(zilToStake)
-  const zilToStakeOk =
-    !isNaN(zilToStakeNumber) && zilToStakeNumber <= (zilAvailable || 0n)
-  const canStake =
-    stakingPoolForView?.stakingPool.data &&
-    zilToStakeNumber > 0 &&
-    zilToStakeNumber <= (zilAvailable || 0n)
+
+  const { canStake, whyCantStake } = (() => {
+    if (!stakingPoolForView?.stakingPool.data) {
+      return {
+        canStake: false,
+        whyCantStake: "Loading staking pool data",
+      }
+    } else if (zilToStakeNumber <= 0 || isNaN(zilToStakeNumber)) {
+      return {
+        canStake: false,
+        whyCantStake: "Please enter a valid amount",
+      }
+    } else if (zilInWei > (zilAvailable || 0n)) {
+      return {
+        canStake: false,
+        whyCantStake: "Insufficient ZIL balance",
+      }
+    } else if (
+      zilInWei + parseEther(`${stakingTxCostInZill}`) >
+      (zilAvailable || 0n)
+    ) {
+      return {
+        canStake: false,
+        whyCantStake: "Insufficient ZIL balance for transaction fee",
+      }
+    } else if (
+      zilInWei < stakingPoolForView.stakingPool.definition.minimumStake
+    ) {
+      return {
+        canStake: false,
+        whyCantStake: `Amount ${zilToStakeNumber} ZIL is below minimum stake ${formatUnits(stakingPoolForView.stakingPool.definition.minimumStake, 18)} ZIL`,
+      }
+    } else {
+      return {
+        canStake: true,
+        whyCantStake: "",
+      }
+    }
+  })()
 
   const onMinClick = () => {
     setZilToStake(
@@ -109,16 +142,12 @@ const StakingCalculator: React.FC = () => {
             <div className="h-fit self-center">
               <Input
                 className="flex items-baseline !bg-transparent !border-transparent !text-white1 bold33 px-0"
-                //   ${
-                //   zilToStakeOk ? '!text-white1' : '!text-red1'
-                // }
-
                 value={zilToStake}
                 onChange={handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 prefix="ZIL"
-                status={!zilToStakeOk ? "error" : undefined}
+                status={!canStake ? "warning" : undefined}
               />
               <span className="flex items-center whitespace-nowrap ">
                 {stakingPoolForView!.stakingPool.data ? (
@@ -170,21 +199,40 @@ const StakingCalculator: React.FC = () => {
           <div className="flex flex-col">
             <div className="flex mt-2 mb-3">
               {isWalletConnected ? (
-                <Button
-                  type="default"
-                  size="large"
-                  className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua  mx-auto lg:w-1/2 w-2/3"
-                  disabled={!canStake}
-                  onClick={() =>
-                    stake(
-                      stakingPoolForView.stakingPool.definition.address,
-                      zilInWei
-                    )
-                  }
-                  loading={isStakingInProgress}
-                >
-                  Stake
-                </Button>
+                <>
+                  {canStake ? (
+                    <Button
+                      type="default"
+                      size="large"
+                      className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua  mx-auto lg:w-1/2 w-2/3"
+                      onClick={() =>
+                        stake(
+                          stakingPoolForView.stakingPool.definition.address,
+                          zilInWei
+                        )
+                      }
+                      loading={isStakingInProgress}
+                    >
+                      Stake
+                    </Button>
+                  ) : (
+                    <Tooltip
+                      placement="top"
+                      arrow={true}
+                      color="#555555"
+                      title={whyCantStake}
+                    >
+                      <Button
+                        type="default"
+                        size="large"
+                        className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua  mx-auto lg:w-1/2 w-2/3"
+                        disabled={true}
+                      >
+                        Stake
+                      </Button>
+                    </Tooltip>
+                  )}
+                </>
               ) : (
                 <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3">
                   Connect wallet
@@ -223,7 +271,9 @@ const StakingCalculator: React.FC = () => {
                     <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
                   )}
                 </div>
-                <div className="">Max transaction cost: 3 ZIL</div>
+                <div className="">
+                  Max transaction cost: ~{stakingTxCostInZill} ZIL
+                </div>
                 <div className="text-aqua1 ">
                   Unbonding Period: {unboudingPeriod}
                 </div>
