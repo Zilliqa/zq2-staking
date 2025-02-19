@@ -320,7 +320,7 @@ const HomePage = () => {
               <MobilePopup
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
-                isWalletConnected={isWalletConnected ? true : false}
+                isWalletConnected={!!isWalletConnected}
               />
             </div>
             {mobileBottomNavition}
