@@ -98,7 +98,7 @@ export default function App({ Component, pageProps }: AppProps) {
   if (!appConfig) {
     return (
       <div
-        className={`h-screen bg-black text-white transition-opacity duration-500 flex flex-col justify-between ${
+        className={`h-screen bg-black text-white transition-opacity duration-500 ${
           fadeOut ? "opacity-0" : "opacity-100"
         }`}
       >
@@ -110,7 +110,7 @@ export default function App({ Component, pageProps }: AppProps) {
             }}
           ></div>
         </div>
-        <div className="absolute self-end text-80 lg:text-114 font-extrabold mr-7 bottom-0">
+        <div className="absolute self-end text-80 lg:text-114 font-extrabold right-5 bottom-0">
           {Math.round(displayedPercentage)}%
         </div>
       </div>
