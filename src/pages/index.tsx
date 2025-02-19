@@ -136,7 +136,7 @@ const HomePage = () => {
 
               <div className="flex items-center gap-3">
                 <div
-                  className={`justify-start bold12-s relative max-lg:w-full lg:min-w-[320px] mx-auto
+                  className={`justify-start bold12-s relative max-lg:w-full lg:min-w-[320px] mx-auto whitespace-nowrap
                         ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "text-aqua1" : "text-gray5"}
                         `}
                   onClick={() => {
