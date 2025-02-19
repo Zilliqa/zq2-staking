@@ -142,7 +142,7 @@ export const dummyWallets: Array<DummyWallet> = [
     unstakingEntries: [
       {
         address: "0x96525678902345678902345678918278372212",
-        zilAmount: parseUnits("100", 18),
+        zilAmount: parseUnits("89", 18),
         availableAt: DateTime.now().plus({ days: 5 }),
       },
       {
@@ -178,7 +178,12 @@ export const dummyWallets: Array<DummyWallet> = [
       },
     ],
     unstakingEntries: [],
-    nonLiquidRewards: [],
+    nonLiquidRewards: [
+      {
+        address: "0xe863906941de820bde06701a0d804dd0b8575d67",
+        zilRewardAmount: parseUnits("1000", 18),
+      },
+    ],
   },
 ]
 

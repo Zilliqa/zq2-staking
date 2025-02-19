@@ -14,7 +14,7 @@ import {
   UserNonLiquidStakingPoolRewardData,
   UserUnstakingPoolData,
 } from "@/misc/walletsConfig"
-import { Button } from "antd"
+import { Button, Tooltip } from "antd"
 import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
 import FilterBtn from "./filterBtn"
@@ -127,6 +127,8 @@ const RewardCard: React.FC<RewardCardProps> = ({
   stakeReward,
   setViewClaim,
 }) => {
+  const { isStakingRewardInProgress } = StakingOperations.useContainer()
+
   return (
     <div
       className="flex gap-2.5 4k:gap-4 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between"
@@ -188,17 +190,39 @@ const RewardCard: React.FC<RewardCardProps> = ({
       </div>
       <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[218px] px-3 lg:pb-0 pb-4 lg:px-4 4k:px-5">
         <div className="max-lg:w-1/2">
-          <Button
-            className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
-            onClick={() => stakeReward(stakingPool.definition.address)}
-          >
-            Stake Reward
-          </Button>
+          {stakingPool.definition.minimumStake > rewardInfo.zilRewardAmount ? (
+            <Tooltip
+              placement="top"
+              arrow={true}
+              color="#555555"
+              title={`Reward is less than the minimal staking amount of ${formatUnitsToHumanReadable(
+                stakingPool.definition.minimumStake,
+                18
+              )} ZIL`}
+            >
+              <Button
+                className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
+                onClick={() => stakeReward(rewardInfo.address)}
+                loading={isStakingRewardInProgress}
+                disabled={true}
+              >
+                Stake Reward
+              </Button>
+            </Tooltip>
+          ) : (
+            <Button
+              className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
+              onClick={() => stakeReward(rewardInfo.address)}
+              loading={isStakingRewardInProgress}
+            >
+              Stake Reward
+            </Button>
+          )}
         </div>
         <div className="max-lg:w-1/2 lg:mt-2.5">
           <Button
             className="btn-secondary-grey 4k:py-6 lg:py-5 py-4"
-            onClick={() => claimReward(stakingPool.definition.address)}
+            onClick={() => claimReward(rewardInfo.address)}
           >
             Claim Reward
           </Button>
