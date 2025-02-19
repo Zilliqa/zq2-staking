@@ -1,11 +1,10 @@
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { WalletConnector } from "@/contexts/walletConnector"
 import { MOCK_CHAIN } from "@/misc/chainConfig"
-import { formatAddress } from "@/misc/formatting"
+import { formatAddress, formatUnitsToHumanReadable } from "@/misc/formatting"
 import { WalletOutlined } from "@ant-design/icons"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { Button } from "antd"
-import { useMemo } from "react"
 
 /**
  * notConnectedClassName will be used for other cases if if connectedClassName or wrongNetworkClassName is not provided
@@ -31,6 +30,7 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
     disconnectDummyWallet,
     isDummyWalletConnected,
     walletAddress,
+    zilAvailable,
   } = WalletConnector.useContainer()
 
   if (appConfig.chainId === MOCK_CHAIN.id) {
@@ -54,7 +54,8 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
         >
           <div className=" group-hover:hidden transition-opacity flex items-center justify-center">
             <WalletOutlined className="mr-2 !text-black-100" />
-            {formatAddress(walletAddress || "")}
+            {formatAddress(walletAddress || "")} |{" "}
+            {formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL
           </div>
           <span className=" !hidden group-hover:!block transition-opacity  items-center justify-center">
             Disconnect
