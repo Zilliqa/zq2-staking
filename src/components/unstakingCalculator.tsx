@@ -146,7 +146,7 @@ const UnstakingCalculator: React.FC = () => {
             </Button>
             <Button
               className="btn-secondary-colored text-purple3 hover:!text-purple1 border-0 bg-PurpleDarker hover:!bg-PurpleDarker"
-              onClick={() => setZilToUnstake("0")}
+              onClick={() => setZilToUnstake("1")}
             >
               MIN
             </Button>
