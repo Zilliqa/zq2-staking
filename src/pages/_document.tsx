@@ -9,7 +9,7 @@ export default function Document() {
           rel="stylesheet"
         />
       </Head>
-      <body className="bg-[url('/static/stake-background.webp')] bg-right bg-no-repeat bg-cover bg-origin-content">
+      <body className="max-h-screen overflow-hidden bg-[url('/static/stake-background.webp')] bg-right bg-no-repeat bg-cover bg-origin-content">
         <Main />
         <NextScript />
       </body>
