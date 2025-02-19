@@ -20,7 +20,6 @@ import MobilePopup from "@/components/mobilePopup"
 
 import ZilGiveaway from "@/components/zilGiveaway"
 
-
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
 
