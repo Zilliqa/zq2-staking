@@ -295,18 +295,20 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
           </h1>
         )}
       </div>
-      <div className="flex justify-center items-center gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6">
-        <div className="text-14 text-gray14">Filter by</div>
-        {filters.map((filter, index) => (
-          <FilterBtn
-            key={index}
-            variable={filter.name}
-            isActive={selectedPoolType === filter.type}
-            onClick={() => setSelectedPoolType(filter.type)}
-            activeGradient={filter.activeGradient}
-          />
-        ))}
-      </div>
+      {anyItemsAvailable && (
+        <div className="flex justify-center items-center gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6">
+          <div className="text-14 text-gray14">Filter by</div>
+          {filters.map((filter, index) => (
+            <FilterBtn
+              key={index}
+              variable={filter.name}
+              isActive={selectedPoolType === filter.type}
+              onClick={() => setSelectedPoolType(filter.type)}
+              activeGradient={filter.activeGradient}
+            />
+          ))}
+        </div>
+      )}
 
       {anyItemsAvailable ? (
         <div
