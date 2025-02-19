@@ -12,15 +12,11 @@ import { Button } from "antd"
 interface CustomWalletConnectProps {
   children: React.ReactNode
   notConnectedClassName: string
-  connectedClassName?: string
-  wrongNetworkClassName?: string
 }
 
 const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
   children,
   notConnectedClassName,
-  connectedClassName,
-  wrongNetworkClassName,
 }) => {
   const { appConfig } = AppConfigStorage.useContainer()
 
@@ -66,14 +62,7 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
   } else {
     return (
       <ConnectButton.Custom>
-        {({
-          account,
-          chain,
-          mounted,
-          openAccountModal,
-          openChainModal,
-          openConnectModal,
-        }) => {
+        {({ account, chain, mounted, openConnectModal }) => {
           if (!mounted) {
             return (
               <Button className={notConnectedClassName}>refreshing...</Button>
@@ -92,28 +81,8 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
             )
           }
 
-          // Wrong network
-          if (chain.unsupported) {
-            return (
-              <Button
-                onClick={openChainModal}
-                className={wrongNetworkClassName ?? notConnectedClassName}
-              >
-                Switch network
-              </Button>
-            )
-          }
-
-          // Connected and correct network
-          return (
-            <Button
-              onClick={openAccountModal}
-              className={connectedClassName ?? notConnectedClassName}
-            >
-              {account.displayName} | {account.balanceFormatted?.split(".")[0]}{" "}
-              {account.balanceSymbol}
-            </Button>
-          )
+          // all other cases
+          return <ConnectButton />
         }}
       </ConnectButton.Custom>
     )

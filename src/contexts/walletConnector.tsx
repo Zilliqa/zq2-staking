@@ -62,8 +62,6 @@ const useWalletConnector = () => {
    * Wallet data
    */
 
-  console.log({ walletClient })
-
   const isWalletConnected = walletClient || isDummyWalletConnected
   const connectedWalletType = walletClient
     ? ConnectedWalletType.RealWallet
