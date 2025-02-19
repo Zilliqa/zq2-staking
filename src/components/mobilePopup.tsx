@@ -15,7 +15,6 @@ const MobilePopup = ({
   onClose,
   isWalletConnected,
 }: MobilePopupProps) => {
-  const [isAnimating, setIsAnimating] = useState(false)
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
   const router = useRouter()
 
@@ -26,20 +25,7 @@ const MobilePopup = ({
     }
   }, [isWalletConnected, onClose])
 
-  useEffect(() => {
-    if (isOpen) {
-      setIsAnimating(true)
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = "unset"
-    }
-
-    return () => {
-      document.body.style.overflow = "unset"
-    }
-  }, [isOpen])
-
-  if (!isOpen && !isAnimating) return null
+  if (!isOpen) return null
 
   return (
     <div
@@ -51,9 +37,6 @@ const MobilePopup = ({
                  bg-aqua-grey-gradient backdrop-blur-17 p-5 transform transition-transform duration-300 ease-out
                  ${isOpen ? "translate-y-0" : "translate-y-full"}`}
         onClick={(e) => e.stopPropagation()}
-        onTransitionEnd={() => {
-          if (!isOpen) setIsAnimating(false)
-        }}
       >
         <div className="flex justify-end ">
           <button onClick={onClose} aria-label="Close">

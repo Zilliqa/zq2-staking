@@ -265,16 +265,8 @@ const HomePage = () => {
       </div>
     </div>
   )
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
 
-  useEffect(() => {
-    if (isWalletConnected) {
-      setIsOpen(false)
-    } else {
-      setIsOpen(true)
-    }
-  }, [])
-  console.log(isWalletConnected)
   return (
     <>
       <div
