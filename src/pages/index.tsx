@@ -95,8 +95,7 @@ const HomePage = () => {
 
   const mobileOverlayContent =
     mobileShowClaims && !stakingPoolForView
-      ? mobileOverlayWrapper(
-      <WithdrawZilView setViewClaim={setViewClaim} />)
+      ? mobileOverlayWrapper(<WithdrawZilView setViewClaim={setViewClaim} />)
       : stakingPoolForView &&
         mobileOverlayWrapper(
           <StakingPoolDetailsView
@@ -132,7 +131,7 @@ const HomePage = () => {
                   </div>
                 </div>
               ) : (
-               <div></div>
+                <div></div>
               )}
 
               <div className="flex items-center gap-3">
@@ -278,22 +277,23 @@ const HomePage = () => {
         </div>
         <div className="grow relative mx-auto overflow-y-hidden max-w-screen-4k w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 4k:gap-14 h-full max-lg:pb-16">
-
             {/* Left column */}
-            <div className={`lg:bg-white/[9%] p-4 xs:p-6 4k:p-10 max-4k:rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"} overflow-hidden h-full flex flex-col `}>
+            <div
+              className={`lg:bg-white/[9%] p-4 xs:p-6 4k:p-10 max-4k:rounded-s-none rounded-2.5xl ${mobileOverlayContent && "max-lg:hidden"} overflow-hidden h-full flex flex-col `}
+            >
               <StakingPoolsList setViewClaim={setViewClaim} />
             </div>
 
             {desktopColumnContent}
- 
+
             {mobileOverlayContent}
-         
+
             <MobilePopup
               isOpen={isOpen}
               onClose={() => setIsOpen(false)}
               isWalletConnected={!!isWalletConnected}
             />
-             
+
             {mobileBottomNavition}
           </div>
         </div>
