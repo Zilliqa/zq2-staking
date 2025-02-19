@@ -60,7 +60,7 @@ const ZilGiveaway: React.FC = () => {
           requestZil()
         }}
       >
-        Get 200 ZIL
+        Get Free ZIL
       </Button>
 
       <Modal
@@ -88,7 +88,7 @@ const ZilGiveaway: React.FC = () => {
               className="btn-primary-gradient-aqua-lg"
               onClick={closePopup}
             >
-              200 ZIL should be in your wallet soon!
+              Free ZIL should be in your wallet soon!
             </Button>
           ) : (
             <div className="animated-gradient h-[1.5em] "></div>
