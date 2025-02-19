@@ -4,6 +4,7 @@ export type AppConfig = {
   chainId: number
   walletConnectPrivateKey: string
   intercomKey: string
+  appUrl: string
 }
 
 function getStringFromEnv(name: string): string {
@@ -33,6 +34,7 @@ const config: AppConfig = {
     "ZQ2_STAKING_WALLET_CONNECT_API_KEY"
   ),
   intercomKey: getStringFromEnv("ZQ2_STAKING_INTERCOM_KEY"),
+  appUrl: getStringFromEnv("ZQ2_STAKING_APP_URL"),
 }
 
 export default function handler(

@@ -97,7 +97,7 @@ export const MOCK_CHAIN = defineChain({
   },
 })
 
-function getConnectorsForWallets(walletConnectApiKey: string) {
+function getConnectorsForWallets(walletConnectApiKey: string, appUrl: string) {
   return connectorsForWallets(
     [
       {
@@ -117,6 +117,7 @@ function getConnectorsForWallets(walletConnectApiKey: string) {
     {
       appName: "ZQ2 Staking",
       projectId: walletConnectApiKey,
+      appUrl,
     }
   )
 }
@@ -137,14 +138,25 @@ export function getChain(chainId: number) {
   return chain
 }
 
-export function getWagmiConfig(chainId: number, walletConnectApiKey: string) {
-  return createConfig({
-    chains: [getChain(chainId)] as any, // for some reason there is a type mismatch
-    client({ chain }) {
-      return createClient({ chain, transport: http() })
-    },
-    connectors: getConnectorsForWallets(walletConnectApiKey),
-  })
+let wagmiConfig: ReturnType<typeof createConfig> | null = null
+
+export function getWagmiConfig(
+  chainId: number,
+  walletConnectApiKey: string,
+  appUrl: string
+) {
+  if (!wagmiConfig) {
+    wagmiConfig = createConfig({
+      chains: [getChain(chainId)],
+      client({ chain }) {
+        return createClient({ chain, transport: http() })
+      },
+      connectors: getConnectorsForWallets(walletConnectApiKey, appUrl),
+      ssr: true,
+    })
+  }
+
+  return wagmiConfig
 }
 
 export function getViemClient(chainId: number) {

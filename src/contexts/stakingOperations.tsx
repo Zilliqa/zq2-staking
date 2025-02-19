@@ -129,6 +129,7 @@ const useStakingOperations = () => {
         args: [tokensToUnstake],
       })
         .then((txHash) => {
+          console.log("txHash", txHash)
           setUnstakingCallTxHash(txHash)
         })
         .catch((error) => {
