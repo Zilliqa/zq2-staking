@@ -98,22 +98,20 @@ export default function App({ Component, pageProps }: AppProps) {
   if (!appConfig) {
     return (
       <div
-        className={`h-screen bg-black text-white transition-opacity duration-500 ${
+        className={`h-screen bg-black text-white transition-opacity duration-500 flex flex-col justify-between ${
           fadeOut ? "opacity-0" : "opacity-100"
         }`}
       >
-        <div className="h-screen flex flex-col justify-between">
-          <div className="w-full h-10 overflow-hidden">
-            <div
-              className="h-full bg-colorful-gradient"
-              style={{
-                width: `${displayedPercentage}%`,
-              }}
-            ></div>
-          </div>
-          <div className="self-end text-80 lg:text-114 font-extrabold mr-7">
-            {Math.round(displayedPercentage)}%
-          </div>
+        <div className="w-full h-10 ">
+          <div
+            className="h-full bg-colorful-gradient"
+            style={{
+              width: `${displayedPercentage}%`,
+            }}
+          ></div>
+        </div>
+        <div className="absolute self-end text-80 lg:text-114 font-extrabold mr-7 bottom-0">
+          {Math.round(displayedPercentage)}%
         </div>
       </div>
     )
