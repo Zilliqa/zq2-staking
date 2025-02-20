@@ -8,7 +8,7 @@ import {
   getHumanFormDuration,
   getTxExplorerUrl,
 } from "@/misc/formatting"
-import { StakingPool } from "@/misc/stakingPoolsConfig"
+import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import {
   UserNonLiquidStakingPoolRewardData,
   UserUnstakingPoolData,
@@ -85,8 +85,26 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             {stakingPoolData.data ? (
               <div>
                 <div className="body2">
-                  <span className="mr-1 text-aqua2">Available</span>
-                  <span className="text-aqua1">rewards</span>
+                  <span
+                    className={`mr-1 ${
+                      stakingPoolData.definition.poolType ===
+                      StakingPoolType.LIQUID
+                        ? "text-aqua2"
+                        : "text-purple1"
+                    }`}
+                  >
+                    Available
+                  </span>
+                  <span
+                    className={`${
+                      stakingPoolData.definition.poolType ===
+                      StakingPoolType.LIQUID
+                        ? "text-aqua1"
+                        : "text-purple5"
+                    }`}
+                  >
+                    rewards
+                  </span>
                 </div>
                 <div>
                   {parseFloat(formatUnits(reward.zilRewardAmount, 18)).toFixed(
@@ -153,8 +171,26 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               {stakingPoolData.data ? (
                 <div>
                   <div className="body2">
-                    <span className="mr-1 text-aqua2">Available</span>
-                    <span className="text-aqua1">requests</span>
+                    <span
+                      className={`mr-1 ${
+                        stakingPoolData.definition.poolType ===
+                        StakingPoolType.LIQUID
+                          ? "text-aqua2"
+                          : "text-purple1"
+                      }`}
+                    >
+                      Available
+                    </span>
+                    <span
+                      className={`${
+                        stakingPoolData.definition.poolType ===
+                        StakingPoolType.LIQUID
+                          ? "text-aqua1"
+                          : "text-purple5"
+                      }`}
+                    >
+                      requests
+                    </span>
                   </div>
                   <div>
                     {parseFloat(formatUnits(item.zilAmount, 18)).toFixed(3)} ZIL
