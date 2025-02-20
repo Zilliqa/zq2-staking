@@ -311,9 +311,9 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       )}
 
       {anyItemsAvailable ? (
-        <div className="flex-1 pb-4 mb-16 lg:mb-0 overflow-y-scroll scrollbar-hidden scrollbar-gradient">
-          <FastFadeScroll
-            className=" flex-1 scrollbar-gradient overflow-y-scroll 
+        <div className="flex-1 pb-4 mb-16 lg:mb-0 overflow-y-scroll scrollbar-hidden scrollbar-aqua">
+          <FastFadeScroll  isPoolLiquid={StakingPoolType.LIQUID}
+            className=" flex-1 scrollbar-aqua overflow-y-scroll 
            
  "
           >

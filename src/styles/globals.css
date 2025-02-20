@@ -271,12 +271,19 @@ button,
   border-radius: 10px;
 }
 @layer utilities {
-  .scrollbar-gradient::-webkit-scrollbar {
+  .scrollbar-aqua::-webkit-scrollbar {
     width: 2px;
   }
-  .scrollbar-gradient::-webkit-scrollbar-thumb {
+  .scrollbar-aqua::-webkit-scrollbar-thumb {
     @apply bg-aqua1 rounded-lg;
   }
+  .scrollbar-purple::-webkit-scrollbar {
+    width: 2px;
+  }
+  .scrollbar-purple::-webkit-scrollbar-thumb {
+    @apply bg-purple4 rounded-lg;
+  }
+
   .scrollbar-hidden::-webkit-scrollbar-thumb {
     @apply bg-transparent;
   }

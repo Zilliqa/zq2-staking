@@ -97,7 +97,7 @@ const UnstakingCalculator: React.FC = () => {
 
   return (
     stakingPoolForView && (
-      <FastFadeScroll className="flex-1 scrollbar-gradient overflow-y-scroll">
+      <FastFadeScroll isPoolLiquid={stakingPoolForView?.stakingPool.definition.poolType } className={`flex-1 overflow-y-scroll`}>
         <div className="flex justify-between gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center">
           <div className="h-fit self-center">
             <Input
