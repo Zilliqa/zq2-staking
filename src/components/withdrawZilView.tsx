@@ -65,7 +65,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
                 width={14}
                 height={15}
               />
-              Requests
+              Withdrawals
             </div>
           )}
         </div>
@@ -266,7 +266,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       activeGradient: "bg-aqua5",
     },
     {
-      name: "Normal ",
+      name: "Non-Liquid",
       type: StakingPoolType.NORMAL,
       activeGradient: "bg-navyBlue",
     },

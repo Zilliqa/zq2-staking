@@ -90,7 +90,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                       stakingPoolData.definition.poolType ===
                       StakingPoolType.LIQUID
                         ? "text-aqua2"
-                        : "text-purple1"
+                        : "text-purple5"
                     }`}
                   >
                     Available
@@ -103,7 +103,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                         : "text-purple5"
                     }`}
                   >
-                    rewards
+                    Rewards
                   </span>
                 </div>
                 <div>
@@ -176,7 +176,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                         stakingPoolData.definition.poolType ===
                         StakingPoolType.LIQUID
                           ? "text-aqua2"
-                          : "text-purple1"
+                          : "text-purple5"
                       }`}
                     >
                       Available
@@ -189,7 +189,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                           : "text-purple5"
                       }`}
                     >
-                      requests
+                      Withdrawals
                     </span>
                   </div>
                   <div>
@@ -217,7 +217,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
          my-2.5 lg:my-4 4k:my-6 py-2 lg:py-6 xl:py-8 4k:py-10 
          px-3 lg:px-7.5 xl:px-10 4k:px-14 bg-grey-gradient rounded-xl w-full"
         >
-          <div className="body2 text-gray1">Next available unstake request</div>
+          <div className="body2 text-gray1">Next available unstake withdrawal</div>
           <div className="h4 mt-2 w-full flex justify-between text-white1">
             <div>{getHumanFormDuration(pendingUnstake[0].availableAt)}</div>
             {stakingPoolData.data ? (
