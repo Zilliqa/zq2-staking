@@ -46,10 +46,12 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     else setSelectedPane("Stake")
   }, [viewClaim])
 
+  const isPoolLiquid = () =>
+    stakingPoolData.definition.poolType === StakingPoolType.LIQUID
   const colorInfoEntry = (title: string, value: string | null) => (
-    <div className="lg:text-left text-center">
+    <div className="lg:text-left text-center lg:w-1/4 w-1/2">
       <div
-        className={`semi14 ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-aqua1" : "text-purple5"}`}
+        className={`semi14 ${isPoolLiquid() ? "text-aqua1" : "text-purple5"}`}
       >
         {value}
       </div>
@@ -58,7 +60,10 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   )
 
   const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
-    <div key={title}>
+    <div
+      key={title}
+      className={`lg:w-1/4  ${isPoolLiquid() ? "w-1/2" : "w-1/3"} `}
+    >
       {value ? (
         <div className="semi14 text-gray7 xl:whitespace-nowrap">{value}</div>
       ) : (
@@ -67,10 +72,6 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       <div className="text-gray8 info-label xl:whitespace-nowrap">{title}</div>
     </div>
   )
-
-  const isPoolLiquid = () =>
-    stakingPoolData.definition.poolType === StakingPoolType.LIQUID
-
   const pendingUnstakesValue = userUnstakingPoolData
     ?.filter((item) => item.availableAt > DateTime.now())
     .reduce((acc, item) => acc + item.zilAmount, 0n)
@@ -148,6 +149,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const toggleExpand = () => {
     setIsExpanded(!isExpanded)
   }
+  const { isWalletConnected } = WalletConnector.useContainer()
   return (
     <div className="relative pb-2 4k:pb-4  lg:pr-4 4k:pr-6 flex flex-col h-full ">
       <div className="items-center flex justify-between py-1 lg:py-7.5">
@@ -196,83 +198,75 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         </div>
       </div>
 
-      {doesUserHoldAnyFundsInThisPool && availableEntries && (
-        <div className="bg-grey-gradient  flex flex-col gap-4 4k:gap-6 max-lg:mt-5  rounded-xl">
-          <div
-            className={` ${doesUserHoldAnyFundsInThisPool ? "max-lg:pt-6 " : "py-6"} lg:py-6 4k:py-10 4k:px-16 lg:px-9.5 px-5`}
-          >
-            {doesUserHoldAnyFundsInThisPool && (
-              <div
-                className={
-                  "grid grid-cols-2 lg:grid-cols-4 gap-4 4k:gap-6  4k:pb-6  pb-4 "
-                }
-              >
-                {colorInfoEntry(
-                  "Available to stake",
-                  `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`
-                )}
-                {colorInfoEntry(
-                  "Staked",
-                  `${humanReadableStakingToken(
-                    userStakingPoolData?.stakingTokenAmount || 0n
-                  )} ${stakingPoolData.definition.tokenSymbol}`
-                )}
-                {colorInfoEntry(
-                  "Unstake Requested ",
-                  pendingUnstakesValue
-                    ? `${humanReadableStakingToken(
-                        pendingUnstakesValue
-                      )} ${stakingPoolData.definition.tokenSymbol}`
-                    : "-"
-                )}
-                {colorInfoEntry(
-                  "Available to claim",
-                  availableToClaim
-                    ? `${humanReadableStakingToken(availableToClaim)} ${
-                        stakingPoolData.definition.tokenSymbol
-                      }`
-                    : "-"
-                )}
-              </div>
-            )}
-
+      <div className="bg-grey-gradient  flex flex-col gap-2 4k:gap-6 max-lg:mt-5  rounded-xl">
+        <div
+          className={` ${doesUserHoldAnyFundsInThisPool ? "max-lg:pt-6 " : "py-6"} lg:py-6 4k:py-10 4k:px-16 lg:px-9.5 px-5`}
+        >
+          {doesUserHoldAnyFundsInThisPool && isWalletConnected && (
             <div
-              className={`grid gap-4 4k:gap-6 lg:text-left text-center ${doesUserHoldAnyFundsInThisPool && "max-lg:border-t  border-gradient-3 max-lg:pt-4 "}
-                ${
-                  columnCount === 1
-                    ? "grid-cols-1"
-                    : columnCount === 2
-                      ? "grid-cols-2"
-                      : columnCount === 3
-                        ? "lg:grid-cols-3 grid-cols-2"
-                        : "lg:grid-cols-4 grid-cols-2"
-                } ${isExpanded ? "grid" : "hidden"} lg:grid`}
+              className={
+                "flex flex-wrap max-lg:gap-y-4  4k:gap-6  4k:pb-6  pb-4 "
+              }
             >
-              {availableEntries}
+              {colorInfoEntry(
+                "Available to stake",
+                `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`
+              )}
+              {colorInfoEntry(
+                "Staked",
+                `${humanReadableStakingToken(
+                  userStakingPoolData?.stakingTokenAmount || 0n
+                )} ${stakingPoolData.definition.tokenSymbol}`
+              )}
+              {colorInfoEntry(
+                "Unstake Requested ",
+                pendingUnstakesValue
+                  ? `${humanReadableStakingToken(
+                      pendingUnstakesValue
+                    )} ${stakingPoolData.definition.tokenSymbol}`
+                  : "-"
+              )}
+              {colorInfoEntry(
+                "Available to claim",
+                availableToClaim
+                  ? `${humanReadableStakingToken(availableToClaim)} ${
+                      stakingPoolData.definition.tokenSymbol
+                    }`
+                  : "-"
+              )}
             </div>
+          )}
+
+          <div
+            className={`flex flex-wrap justify-center  max-lg:gap-y-4 4k:gap-6 lg:text-left text-center ${doesUserHoldAnyFundsInThisPool && "max-lg:border-t  border-gradient-3 max-lg:pt-4 "}
+               ${!isExpanded || (doesUserHoldAnyFundsInThisPool && "max-lg:hidden")} 
+               ${columnCount < 4 && "!text-center"}`}
+          >
+            {availableEntries}
           </div>
-          {availableEntries &&
-            availableEntries.length > 0 &&
-            doesUserHoldAnyFundsInThisPool && (
-              <>
-                <button
-                  onClick={toggleExpand}
-                  className="bg-custom-grey-gradient py-1 rounded-b-xl  items-center justify-center w-full mx-auto max-lg:flex hidden"
-                >
-                  <Image
-                    src={arrow}
-                    width={12}
-                    height={6}
-                    alt="Arrow"
-                    className={` w-3 h-2 transform transition-transform duration-300 ${
-                      isExpanded ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-              </>
-            )}
         </div>
-      )}
+        {availableEntries &&
+          availableEntries.length > 0 &&
+          doesUserHoldAnyFundsInThisPool && (
+            <>
+              <button
+                onClick={toggleExpand}
+                className="bg-custom-grey-gradient py-1 rounded-b-xl  items-center justify-center w-full mx-auto max-lg:flex hidden"
+              >
+                <Image
+                  src={arrow}
+                  width={12}
+                  height={6}
+                  alt="Arrow"
+                  className={` w-3 h-2 transform transition-transform duration-300 ${
+                    !isExpanded ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+            </>
+          )}
+      </div>
+
       <div className="lg:mx-10 mx-3 grid grid-cols-3 my-4 lg:gap-20 gap-5">
         {["Stake", "Unstake", "Claim"].map((pane) => (
           <div
@@ -288,7 +282,6 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
           </div>
         ))}
       </div>
-
 
       <FastFadeScroll
         isPoolLiquid={stakingPoolData.definition.poolType}
