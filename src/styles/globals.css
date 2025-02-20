@@ -320,12 +320,18 @@ button,
 }
 
 @layer utilities {
-  .scrollbar-gradient::-webkit-scrollbar {
+  .scrollbar-aqua::-webkit-scrollbar {
     width: 2px;
   }
 
-  .scrollbar-gradient::-webkit-scrollbar-thumb {
+  .scrollbar-aqua::-webkit-scrollbar-thumb {
     @apply bg-aqua1 rounded-lg;
+  }
+  .scrollbar-purple::-webkit-scrollbar {
+    width: 2px;
+  }
+  .scrollbar-purple::-webkit-scrollbar-thumb {
+    @apply bg-purple4 rounded-lg;
   }
 
   .scrollbar-hidden::-webkit-scrollbar-thumb {
@@ -349,19 +355,6 @@ button,
 
 @media (min-width: 1024px) {
   .gradient-bottom-border {
-    /* background: linear-gradient(
-      270deg,
-      #00daba 8%,
-      #4aa1a3 23%,
-      #8a7191 36%,
-      #b15485 46%,
-      #c14981 51%,
-      #a73993 62%,
-      #8726aa 78%,
-      #741bb7 91%,
-      #6d17bd 100%
-    ); */
-    border-bottom: 1px solid;
     background: linear-gradient(90deg, #00d0c6 0%, #522eff 100%);
     border-radius: 10px;
     position: relative;
@@ -395,7 +388,6 @@ button,
   }
 
   .gradient-bottom-border-hover:hover {
-    border-bottom: 1px solid;
     background: linear-gradient(90deg, #00d0c6 0%, #522eff 100%);
     border-radius: 10px;
     position: relative;

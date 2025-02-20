@@ -9,6 +9,8 @@ const ZilGiveaway: React.FC = () => {
   const [failureReason, setFailureReason] = useState("")
   const { walletAddress } = WalletConnector.useContainer()
 
+  const { updateWalletBalance } = WalletConnector.useContainer()
+
   const requestZil = async () => {
     const url = "https://faucet.zq2-devnet.zilliqa.com"
     // const formData = new FormData()
@@ -35,6 +37,10 @@ const ZilGiveaway: React.FC = () => {
         setFailureReason(error.message)
         setZilRequestFailed(true)
       }
+    } finally {
+      setTimeout(() => {
+        updateWalletBalance()
+      }, 5000)
     }
   }
 
