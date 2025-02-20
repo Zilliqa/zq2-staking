@@ -1,12 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { createContainer } from "./context"
 import { DummyWallet } from "@/misc/walletsConfig"
-import { useWalletClient } from "wagmi"
-import { getBalance } from "viem/actions"
+import { useBalance, useWalletClient } from "wagmi"
 import { Address } from "viem"
-import { getViemClient } from "@/misc/chainConfig"
 import { AppConfigStorage } from "./appConfigStorage"
 
 export enum ConnectedWalletType {
@@ -16,8 +14,6 @@ export enum ConnectedWalletType {
 }
 
 const useWalletConnector = () => {
-  const [zilAvailable, setZilAvailable] = useState<bigint | null>(null)
-
   const { appConfig } = AppConfigStorage.useContainer()
 
   /**
@@ -36,10 +32,6 @@ const useWalletConnector = () => {
 
   const selectDummyWallet = (wallet: DummyWallet) => {
     setDummyWallet(wallet)
-    setTimeout(() => {
-      setZilAvailable(wallet.currentZil)
-    }, 1500)
-
     setIsDummyWalletConnected(true)
     setIsDummyWalletSelectorOpen(false)
     setIsDummyWalletConnecting(false)
@@ -50,7 +42,6 @@ const useWalletConnector = () => {
     setDummyWallet(null)
     setIsDummyWalletConnecting(false)
     setIsDummyWalletSelectorOpen(false)
-    setZilAvailable(0n)
   }
 
   /**
@@ -74,25 +65,25 @@ const useWalletConnector = () => {
       ? dummyWallet!.address
       : null
 
+  const { data: zilBalanceData, refetch: refetchZilBalance } = useBalance({
+    address: walletAddress ? (walletAddress as Address) : undefined,
+  })
+
+  let zilAvailable: bigint | null = null
+
   const updateWalletBalance = () => {
-    if (!walletAddress) {
-      setZilAvailable(null)
-      return
-    }
-
     if (isDummyWalletConnected) {
-      setZilAvailable(dummyWallet!.currentZil)
       return
     }
 
-    getBalance(getViemClient(appConfig.chainId), {
-      address: walletAddress as Address,
-    }).then((balanceInWei) => {
-      setZilAvailable(balanceInWei)
-    })
+    refetchZilBalance()
   }
 
-  useEffect(updateWalletBalance, [walletAddress])
+  if (zilBalanceData) {
+    zilAvailable = zilBalanceData.value
+  } else if (isDummyWalletConnected) {
+    zilAvailable = dummyWallet!.currentZil
+  }
 
   return {
     isWalletConnected,
