@@ -17,6 +17,7 @@ import Image from "next/image"
 import CloseIcon from "../assets/svgs/close-icon.svg"
 import FastFadeScroll from "@/components/FastFadeScroll"
 
+import arrow from "../assets/svgs/arrow.svg"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 
 interface StakingPoolDetailsViewProps {
@@ -45,10 +46,12 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     else setSelectedPane("Stake")
   }, [viewClaim])
 
+  const isPoolLiquid = () =>
+    stakingPoolData.definition.poolType === StakingPoolType.LIQUID
   const colorInfoEntry = (title: string, value: string | null) => (
-    <div className="text-center">
+    <div className="lg:text-left text-center lg:w-1/4 w-1/2">
       <div
-        className={`semi14 ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-aqua1" : "text-purple5"}`}
+        className={`semi14 ${isPoolLiquid() ? "text-aqua1" : "text-purple5"}`}
       >
         {value}
       </div>
@@ -57,7 +60,10 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   )
 
   const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
-    <div key={title}>
+    <div
+      key={title}
+      className={`lg:w-1/4  ${isPoolLiquid() ? "w-1/2" : "w-1/3"} `}
+    >
       {value ? (
         <div className="semi14 text-gray7 xl:whitespace-nowrap">{value}</div>
       ) : (
@@ -66,10 +72,6 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       <div className="text-gray8 info-label xl:whitespace-nowrap">{title}</div>
     </div>
   )
-
-  const isPoolLiquid = () =>
-    stakingPoolData.definition.poolType === StakingPoolType.LIQUID
-
   const pendingUnstakesValue = userUnstakingPoolData
     ?.filter((item) => item.availableAt > DateTime.now())
     .reduce((acc, item) => acc + item.zilAmount, 0n)
@@ -142,9 +144,14 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   const availableEntries = greyInfoEntries.filter(Boolean)
   const columnCount = availableEntries.length
+  const [isExpanded, setIsExpanded] = useState(false)
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded)
+  }
+  const { isWalletConnected } = WalletConnector.useContainer()
   return (
-    <div className="relative pb-2 4k:pb-4 pr-2 lg:pr-4 4k:pr-6 flex flex-col h-full">
+    <div className="relative pb-2 4k:pb-4  lg:pr-4 4k:pr-6 flex flex-col h-full ">
       <div className="items-center flex justify-between py-1 lg:py-7.5">
         <div className="max-lg:ms-1 items-center w-full flex justify-between">
           <div className="flex items-center">
@@ -191,57 +198,80 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         </div>
       </div>
 
-      <div className="bg-grey-gradient py-6 4k:py-10 flex flex-col gap-4 4k:gap-6 4k:px-16 lg:px-9.5 px-5 rounded-xl">
-        {doesUserHoldAnyFundsInThisPool && (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 4k:gap-6 pb-4 4k:pb-6 border-b border-black2/50">
-            {colorInfoEntry(
-              "Available to stake",
-              `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`
-            )}
-            {colorInfoEntry(
-              "Staked",
-              `${humanReadableStakingToken(
-                userStakingPoolData?.stakingTokenAmount || 0n
-              )} ${stakingPoolData.definition.tokenSymbol}`
-            )}
-            {colorInfoEntry(
-              "Unstake Requested ",
-              pendingUnstakesValue
-                ? `${humanReadableStakingToken(
-                    pendingUnstakesValue
-                  )} ${stakingPoolData.definition.tokenSymbol}`
-                : "-"
-            )}
-            {colorInfoEntry(
-              "Available to claim",
-              availableToClaim
-                ? `${humanReadableStakingToken(availableToClaim)} ${
-                    stakingPoolData.definition.tokenSymbol
-                  }`
-                : "-"
-            )}
-          </div>
-        )}
-
+      <div className="bg-grey-gradient  flex flex-col gap-2 4k:gap-6 max-lg:mt-5  rounded-xl">
         <div
-          className={`grid gap-4 4k:gap-6 text-center ${
-            columnCount === 1
-              ? "grid-cols-1"
-              : columnCount === 2
-                ? "grid-cols-2"
-                : columnCount === 3
-                  ? "grid-cols-3"
-                  : "grid-cols-4"
-          }`}
+          className={` ${doesUserHoldAnyFundsInThisPool ? "max-lg:pt-6 " : "py-6"} lg:py-6 4k:py-10 4k:px-16 lg:px-9.5 px-5`}
         >
-          {availableEntries}
+          {doesUserHoldAnyFundsInThisPool && isWalletConnected && (
+            <div
+              className={
+                "flex flex-wrap max-lg:gap-y-4  4k:gap-6  4k:pb-6  pb-4 "
+              }
+            >
+              {colorInfoEntry(
+                "Available to stake",
+                `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`
+              )}
+              {colorInfoEntry(
+                "Staked",
+                `${humanReadableStakingToken(
+                  userStakingPoolData?.stakingTokenAmount || 0n
+                )} ${stakingPoolData.definition.tokenSymbol}`
+              )}
+              {colorInfoEntry(
+                "Unstake Requested ",
+                pendingUnstakesValue
+                  ? `${humanReadableStakingToken(
+                      pendingUnstakesValue
+                    )} ${stakingPoolData.definition.tokenSymbol}`
+                  : "-"
+              )}
+              {colorInfoEntry(
+                "Available to claim",
+                availableToClaim
+                  ? `${humanReadableStakingToken(availableToClaim)} ${
+                      stakingPoolData.definition.tokenSymbol
+                    }`
+                  : "-"
+              )}
+            </div>
+          )}
+
+          <div
+            className={`flex flex-wrap justify-center  max-lg:gap-y-4 4k:gap-6 lg:text-left text-center ${doesUserHoldAnyFundsInThisPool && "max-lg:border-t  border-gradient-3 max-lg:pt-4 "}
+               ${!isExpanded || (doesUserHoldAnyFundsInThisPool && "max-lg:hidden")} 
+               ${columnCount < 4 && "!text-center"}`}
+          >
+            {availableEntries}
+          </div>
         </div>
+        {availableEntries &&
+          availableEntries.length > 0 &&
+          doesUserHoldAnyFundsInThisPool && (
+            <>
+              <button
+                onClick={toggleExpand}
+                className="bg-custom-grey-gradient py-1 rounded-b-xl  items-center justify-center w-full mx-auto max-lg:flex hidden"
+              >
+                <Image
+                  src={arrow}
+                  width={12}
+                  height={6}
+                  alt="Arrow"
+                  className={` w-3 h-2 transform transition-transform duration-300 ${
+                    !isExpanded ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+            </>
+          )}
       </div>
-      <div className="grid grid-cols-3 my-2 4k:my-4">
+
+      <div className="lg:mx-10 mx-3 grid grid-cols-3 my-4 lg:gap-20 gap-5">
         {["Stake", "Unstake", "Claim"].map((pane) => (
           <div
             key={pane}
-            className={`semi13 text-center py-4 4k:py-6 cursor-pointer border-solid border-b ${
+            className={`semi13 text-center py-2 4k:py-6 cursor-pointer border-solid border-b ${
               selectedPane === pane
                 ? "text-white1 border-gradient-1"
                 : "text-gray1 border-black2"

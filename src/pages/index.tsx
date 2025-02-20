@@ -68,7 +68,7 @@ const HomePage = () => {
   }, [router.query.claims])
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 p-4 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
+    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 p-5 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
       {children}
     </div>
   )
@@ -111,7 +111,7 @@ const HomePage = () => {
       <div className="flex justify-between items-center gap-1 mb-5 mt-2 mx-5 md:mx-7">
         {isWalletConnected ? (
           <>
-            <div className="flex justify-between items-center w-full">
+            <div className="flex justify-between items-center w-full max-lg:mr-15">
               {mobileShowClaims || stakingPoolForView ? (
                 <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
                   <div
