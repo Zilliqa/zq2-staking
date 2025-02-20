@@ -167,8 +167,14 @@ const StakingCalculator: React.FC = () => {
                         {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
                       </span>
                     )}
-                    <span className={`${ stakingPoolForView?.stakingPool.definition.poolType ===
-    StakingPoolType.LIQUID ? "text-aqua1" : "text-purple3"} medium17 ml-2 mr-1`}>
+                    <span
+                      className={`${
+                        stakingPoolForView?.stakingPool.definition.poolType ===
+                        StakingPoolType.LIQUID
+                          ? "text-aqua1"
+                          : "text-purple3"
+                      } medium17 ml-2 mr-1`}
+                    >
                       ~
                       {formatPercentage(
                         stakingPoolForView!.stakingPool.data.apr
@@ -178,8 +184,16 @@ const StakingCalculator: React.FC = () => {
                 ) : (
                   <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
                 )}
-                <span className={`${ stakingPoolForView?.stakingPool.definition.poolType ===
-    StakingPoolType.LIQUID ? "text-aqua1" : "text-purple3"} medium17`} >APR</span>
+                <span
+                  className={`${
+                    stakingPoolForView?.stakingPool.definition.poolType ===
+                    StakingPoolType.LIQUID
+                      ? "text-aqua1"
+                      : "text-purple3"
+                  } medium17`}
+                >
+                  APR
+                </span>
               </span>
             </div>
 
@@ -206,8 +220,12 @@ const StakingCalculator: React.FC = () => {
                     <Button
                       type="default"
                       size="large"
-                      className={`${ stakingPoolForView?.stakingPool.definition.poolType ===
-                        StakingPoolType.LIQUID ? "btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua " :"btn-primary-gradient-purple-lg lg:btn-primary-gradient-purple " } mx-auto lg:w-1/2 w-2/3 `}
+                      className={`${
+                        stakingPoolForView?.stakingPool.definition.poolType ===
+                        StakingPoolType.LIQUID
+                          ? "btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua "
+                          : "btn-primary-gradient-purple-lg lg:btn-primary-gradient-purple "
+                      } mx-auto lg:w-1/2 w-2/3 `}
                       onClick={() =>
                         stake(
                           stakingPoolForView.stakingPool.definition.address,
@@ -277,8 +295,14 @@ const StakingCalculator: React.FC = () => {
                 <div className="">
                   Max transaction cost: ~{stakingTxCostInZill} ZIL
                 </div>
-                <div className={`${ stakingPoolForView?.stakingPool.definition.poolType ===
-    StakingPoolType.LIQUID ? "text-aqua1" : "text-purple3"} `}>
+                <div
+                  className={`${
+                    stakingPoolForView?.stakingPool.definition.poolType ===
+                    StakingPoolType.LIQUID
+                      ? "text-aqua1"
+                      : "text-purple3"
+                  } `}
+                >
                   Unbonding Period: {unboudingPeriod}
                 </div>
               </div>

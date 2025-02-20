@@ -132,8 +132,14 @@ const UnstakingCalculator: React.FC = () => {
                   ZIL
                 </span>
               )}
-              <span className={`${ stakingPoolForView?.stakingPool.definition.poolType ===
-    StakingPoolType.LIQUID ? "text-aqua1" : "text-purple3"} medium17 ml-2 `}>
+              <span
+                className={`${
+                  stakingPoolForView?.stakingPool.definition.poolType ===
+                  StakingPoolType.LIQUID
+                    ? "text-aqua1"
+                    : "text-purple3"
+                } medium17 ml-2 `}
+              >
                 {unboudingPeriod}
               </span>
             </div>
@@ -160,8 +166,12 @@ const UnstakingCalculator: React.FC = () => {
               <Button
                 type="default"
                 size="large"
-                className={`${ stakingPoolForView?.stakingPool.definition.poolType ===
-                  StakingPoolType.LIQUID ? "btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua":"btn-primary-gradient-purple-lg lg:btn-primary-gradient-purple"}  mx-auto lg:w-1/2 w-2/3`}
+                className={`${
+                  stakingPoolForView?.stakingPool.definition.poolType ===
+                  StakingPoolType.LIQUID
+                    ? "btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua"
+                    : "btn-primary-gradient-purple-lg lg:btn-primary-gradient-purple"
+                }  mx-auto lg:w-1/2 w-2/3`}
                 disabled={!canUnstake}
                 onClick={() =>
                   unstake(
@@ -213,8 +223,14 @@ const UnstakingCalculator: React.FC = () => {
                 )}
               </div>
               <div className="">Max transaction cost: 3 ZIL</div>
-              <div className={`${ stakingPoolForView?.stakingPool.definition.poolType ===
-    StakingPoolType.LIQUID ? "text-aqua1" : "text-purple3"} `}>
+              <div
+                className={`${
+                  stakingPoolForView?.stakingPool.definition.poolType ===
+                  StakingPoolType.LIQUID
+                    ? "text-aqua1"
+                    : "text-purple3"
+                } `}
+              >
                 Unbonding Period: {unboudingPeriod}
               </div>
             </div>

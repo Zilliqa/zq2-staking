@@ -56,7 +56,9 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
             <div>
               {userStakingPoolData &&
                 userStakingPoolData.stakingTokenAmount && (
-                  <span className= {`${ stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-aqua1":"text-purple3"} regular15 `}>
+                  <span
+                    className={`${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-aqua1" : "text-purple3"} regular15 `}
+                  >
                     {userStakingPoolData &&
                       `${formatUnitsToHumanReadable(
                         userStakingPoolData.stakingTokenAmount,
