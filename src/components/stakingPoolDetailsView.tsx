@@ -47,7 +47,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   const colorInfoEntry = (title: string, value: string | null) => (
     <div className="text-center">
-      <div className="semi14 text-aqua1">{value}</div>
+      <div className={ `semi14 ${ stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-aqua1":"text-purple5"}`}>{value}</div>
       <div className="text-gray8 info-label">{title}</div>
     </div>
   )

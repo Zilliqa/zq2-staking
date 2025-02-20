@@ -89,7 +89,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
           <button
             key={index}
             className={`w-1/2 whitespace-nowrap border-b-[0.5px] py-3 4k:py-4
-              ${selectedPoolType === tab.type ? "bold33 border-aqua1" : "bold26 text-gray8 border-transparent"}
+              ${selectedPoolType === tab.type ? `bold33 ${ tab.type === StakingPoolType.LIQUID ? "border-aqua1":"border-purple4"}` : "bold26 text-gray8 border-transparent"}
             `}
             onClick={() => {
               setSelectedPoolType(tab.type)
