@@ -1,5 +1,5 @@
 import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting"
-import { StakingPool } from "@/misc/stakingPoolsConfig"
+import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import { UserStakingPoolData } from "@/misc/walletsConfig"
 import { Tooltip } from "antd"
 import Image from "next/image"
@@ -56,7 +56,9 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
             <div>
               {userStakingPoolData &&
                 userStakingPoolData.stakingTokenAmount && (
-                  <span className="regular15 text-aqua1">
+                  <span
+                    className={`${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-aqua1" : "text-purple3"} regular15 `}
+                  >
                     {userStakingPoolData &&
                       `${formatUnitsToHumanReadable(
                         userStakingPoolData.stakingTokenAmount,

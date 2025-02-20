@@ -46,8 +46,12 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   }, [viewClaim])
 
   const colorInfoEntry = (title: string, value: string | null) => (
-    <div>
-      <div className="semi14 text-aqua1">{value}</div>
+    <div className="text-center">
+      <div
+        className={`semi14 ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-aqua1" : "text-purple5"}`}
+      >
+        {value}
+      </div>
       <div className="text-gray8 info-label">{title}</div>
     </div>
   )
@@ -220,7 +224,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         )}
 
         <div
-          className={`grid gap-4 4k:gap-6 ${
+          className={`grid gap-4 4k:gap-6 text-center ${
             columnCount === 1
               ? "grid-cols-1"
               : columnCount === 2

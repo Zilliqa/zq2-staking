@@ -70,6 +70,9 @@ const config: Config = {
         purple2: "#B9A9FB",
         purple3: "#87A1FF",
         PurpleDarker: "#2B2970",
+        purple4: "#522EFF",
+        purple5: "#5B6FFF",
+        purpleDark: "#522EFF33",
 
         orange1: "#FE9950",
 

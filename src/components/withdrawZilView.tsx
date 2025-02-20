@@ -279,7 +279,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
   }
 
   return (
-    <div className="relative flex flex-col gap-2 4k:gap-2.5 4k:mt-52 h-full">
+    <div className="relative flex flex-col gap-2 4k:gap-2.5 4k:mt-52 h-full max-lg:pb-16">
       <div className=" text-center p-4">
         {anyItemsAvailable ? (
           <>
@@ -311,14 +311,13 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       )}
 
       {anyItemsAvailable ? (
-        <div
-          className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 overflow-y-auto max-h-[calc(90vh-30vh)]
-          scrollbar-thin scrollbar-thumb-gray1 scrollbar-track-gray1 hover:scrollbar-thumb-gray1 lg:pb-10
-           pr-2 lg:pr-4 4k:pl-5
-          "
-        >
-          <FastFadeScroll className="flex-1 overflow-y-scroll">
-            <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 pr-2 lg:pr-4 4k:pl-5">
+        <div className="flex-1 pb-4 mb-16 lg:mb-0 overflow-y-scroll scrollbar-hidden scrollbar-gradient">
+          <FastFadeScroll
+            className=" flex-1 scrollbar-gradient overflow-y-scroll 
+           
+ "
+          >
+            <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 ">
               {availableForUnstaking
                 .filter(filterByPoolType)
                 .map((unstakeClaim, claimIdx) => (
@@ -370,21 +369,21 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
               <Image
                 className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={FeedbackIcon}
-                alt="arrow icon"
+                alt="star icon"
                 width={56}
                 height={56}
               />
               <Image
                 className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={FeedbackIcon}
-                alt="arrow icon"
+                alt="star icon"
                 width={56}
                 height={56}
               />
               <Image
                 className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
                 src={FeedbackIcon}
-                alt="arrow icon"
+                alt="star icon"
                 width={56}
                 height={56}
               />

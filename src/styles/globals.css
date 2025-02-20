@@ -73,6 +73,11 @@ button,
       @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
     }
   }
+
+  .btn-primary-gradient-purple {
+    @apply btn-primary-gradient-aqua !bg-purpleDark border-purple4;
+  }
+
   .btn-primary-grey {
     @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16  bg-gray4 cursor-pointer duration-700 ease-in-out;
 
@@ -98,6 +103,10 @@ button,
 
   .btn-primary-gradient-aqua-lg {
     @apply btn-primary-gradient-aqua py-2 4k:py-2.5 max-lg:text-17 4k:text-20;
+  }
+
+  .btn-primary-gradient-purple-lg {
+    @apply btn-primary-gradient-purple  py-2 4k:py-2.5 max-lg:text-17 4k:text-20;
   }
 
   .btn-secondary-colored {
@@ -152,7 +161,7 @@ button,
     @apply font-normal lg:font-medium text-16 lg:text-20 4k:text-24 leading-5 lg:leading-8 text-white1;
   }
   .body2-v2 {
-    @apply font-light text-16 lg:text-28 4k:text-33 leading-5 lg:leading-10 text-white1 px-17.5;
+    @apply font-light text-16 lg:text-28 4k:text-33 leading-5 lg:leading-10 text-white1 sm:px-17.5;
   }
   .body1 {
     @apply font-bold text-16 lg:text-24 4k:text-28 leading-6 lg:leading-8 text-gray1;
