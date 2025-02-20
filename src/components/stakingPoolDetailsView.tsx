@@ -253,7 +253,10 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         ))}
       </div>
 
-      <FastFadeScroll  isPoolLiquid={stakingPoolData.definition.poolType} className="flex-1 pb-4 mb-16 lg:mb-0 overflow-y-scroll">
+      <FastFadeScroll
+        isPoolLiquid={stakingPoolData.definition.poolType}
+        className="flex-1 pb-4 mb-16 lg:mb-0 overflow-y-scroll"
+      >
         {selectedPane === "Stake" ? (
           <StakingCalculator />
         ) : selectedPane === "Unstake" ? (

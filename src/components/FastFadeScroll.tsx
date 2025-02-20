@@ -5,14 +5,14 @@ interface FastFadeScrollProps {
   children: ReactNode
   fadeDuration?: number
   className?: string
-  isPoolLiquid?: StakingPoolType 
+  isPoolLiquid?: StakingPoolType
 }
 
 const FastFadeScroll = ({
   children,
   fadeDuration = 1000,
   className = "",
-  isPoolLiquid 
+  isPoolLiquid,
 }: FastFadeScrollProps) => {
   const [isScrolling, setIsScrolling] = useState(false)
   let scrollTimeout: any
@@ -30,16 +30,14 @@ const FastFadeScroll = ({
     return () => clearTimeout(scrollTimeout)
   }, [])
 
-  const isPoolLiquidBool = () =>
-    isPoolLiquid ===
-    StakingPoolType.LIQUID
+  const isPoolLiquidBool = () => isPoolLiquid === StakingPoolType.LIQUID
   console.log(isPoolLiquid)
 
   return (
     <div
       onScroll={handleScroll}
       className={`${className} ${isScrolling ? "scrollbar-visible" : "scrollbar-hidden"}
-        ${isPoolLiquidBool() ? "scrollbar-aqua":"scrollbar-purple"}`}
+        ${isPoolLiquidBool() ? "scrollbar-aqua" : "scrollbar-purple"}`}
     >
       {children}
     </div>
