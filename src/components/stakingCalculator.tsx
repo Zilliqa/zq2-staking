@@ -279,7 +279,7 @@ const StakingCalculator: React.FC = () => {
             )}
 
             <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 lg:pb-10">
-              <div className="flex flex-col gap-3.5 4k:gap-4 regular-base">
+              <div className="flex flex-col lg:gap-3.5 gap-1 4k:gap-4 regular-base">
                 <div className=" ">
                   Commission Fee:{" "}
                   {stakingPoolForView!.stakingPool.data ? (
@@ -306,16 +306,16 @@ const StakingCalculator: React.FC = () => {
                   Unbonding Period: {unboudingPeriod}
                 </div>
               </div>
-              <div className="flex flex-col max-xl:justify-between xl:gap-3.5 4k:gap-5 xl:items-end">
+              <div className="flex flex-col lg:gray-base gray-base2 xl:gap-3.5 4k:gap-5 xl:items-end justify-end ">
                 {isPoolLiquid() && (
-                  <div className="flex flex-col xl:flex-row xl:gap-5 4k:gap-6">
-                    <div className="gray-base">Rate</div>
+                  <div className="flex  max-lg:gap-2 max-xl:justify-between max-lg:items-start flex-row xl:gap-5 4k:gap-6">
+                    <div className=" ">Rate</div>
                     {stakingPoolForView!.stakingPool.data && (
                       <div className="text-gray9">{`1 ZIL = ~${stakingPoolForView.stakingPool.data.zilToTokenRate.toPrecision(3)} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
                     )}
                   </div>
                 )}
-                <div className="text-aqua1 flex flex-row xl:gap-5 4k:gap-6">
+                <div className="text-aqua1 max-lg:mt-1 flex flex-row max-lg:justify-between max-lg:gap-5 max-lg:items-center xl:gap-5 4k:gap-6">
                   <Tooltip
                     placement="top"
                     arrow={true}
@@ -323,7 +323,7 @@ const StakingCalculator: React.FC = () => {
                     className=" mr-1"
                     title="Annual Percentage Rate"
                   >
-                    <span className="gray-base">APR </span>
+                    <span className="lg:gray-base gray-base2">APR </span>
                   </Tooltip>
                   {stakingPoolForView!.stakingPool.data ? (
                     <>

@@ -51,6 +51,7 @@ button,
       @apply !bg-[#202025] !text-[#555555] cursor-not-allowed;
     }
   }
+
   .btn-primary-aqua {
     @apply py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-none !bg-aqua1 !text-black1 font-extrabold text-20 4k:text-24 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
 
@@ -64,11 +65,12 @@ button,
   }
 
   .btn-primary-gradient-aqua {
-    @apply bold16  py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
+    @apply bold16 py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
 
     &:hover {
       @apply opacity-80;
     }
+
     &:disabled {
       @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
     }
@@ -79,18 +81,19 @@ button,
   }
 
   .btn-primary-grey {
-    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16  bg-gray4 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray4 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
     }
+
     &:disabled {
       @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
     }
   }
 
   .btn-secondary-grey {
-    @apply flex w-full  py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16  bg-gray12 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray12 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
@@ -106,7 +109,7 @@ button,
   }
 
   .btn-primary-gradient-purple-lg {
-    @apply btn-primary-gradient-purple  py-2 4k:py-2.5 max-lg:text-17 4k:text-20;
+    @apply btn-primary-gradient-purple py-2 4k:py-2.5 max-lg:text-17 4k:text-20;
   }
 
   .btn-secondary-colored {
@@ -115,6 +118,7 @@ button,
     &:hover {
       @apply !opacity-80;
     }
+
     &:disabled {
       @apply !bg-gradientbg !text-gray1 cursor-not-allowed;
     }
@@ -123,8 +127,9 @@ button,
   .btn-filter {
     @apply flex w-fit py-1 4k:py-1.5 px-1.5 lg:px-2 4k:px-2.5 border border-none 4k:text-20 rounded-[8px] items-center bg-white/[14%] cursor-pointer duration-700 ease-in-out;
   }
+
   .btn-secondary-gray {
-    @apply flex w-full py-1.5 lg:py-2 4k:py-2.5 px-1.5 lg:px-2 4k:px-2.5 rounded-full border-[0.35px] border-white text-white items-center bold16  bg-gray4 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full py-1.5 lg:py-2 4k:py-2.5 px-1.5 lg:px-2 4k:px-2.5 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray4 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
@@ -132,7 +137,7 @@ button,
   }
 
   .btn-secondary-gray3 {
-    @apply flex py-1.5 w-full lg:py-5 4k:py-6 px-1.5 lg:px-2 4k:px-2.5 rounded-full border border-white items-center bg-gray12 text-white bold16  cursor-pointer  duration-700 ease-in-out;
+    @apply flex py-1.5 w-full lg:py-5 4k:py-6 px-1.5 lg:px-2 4k:px-2.5 rounded-full border border-white items-center bg-gray12 text-white bold16 cursor-pointer duration-700 ease-in-out;
 
     &:hover {
       @apply !bg-transparent !text-white !border-white;
@@ -142,123 +147,166 @@ button,
   .small-base {
     @apply font-medium text-12 lg:text-13 4k:text-15 leading-5 lg:leading-6 text-white;
   }
+
   .base {
     @apply font-semibold text-12 xs:text-14 lg:text-16 4k:text-20 leading-5 lg:leading-6 text-gray1;
   }
+
   .gray-base {
     @apply font-normal text-12 xs:text-14 lg:text-16 4k:text-20 leading-5 lg:leading-6 text-gray8;
   }
+  .gray-base2 {
+    @apply font-normal text-11 xs:text-14 lg:text-16 4k:text-20 leading-5 lg:leading-6 text-gray8;
+  }
+
   .base-medium {
     @apply font-medium text-11 lg:text-13 4k:text-16 text-white3;
   }
+
   .regular-base {
     @apply font-normal text-12 xs:text-14 lg:text-16 4k:text-20 leading-5 lg:leading-6 text-gray1;
   }
+
   .info-label {
     @apply font-normal text-10 lg:text-12 4k:text-16 leading-3 lg:leading-4 text-gray1;
   }
+
   .body2 {
     @apply font-normal lg:font-medium text-16 lg:text-20 4k:text-24 leading-5 lg:leading-8 text-white1;
   }
+
   .body2-v2 {
     @apply font-light text-16 lg:text-28 4k:text-33 leading-5 lg:leading-10 text-white1 sm:px-17.5;
   }
+
   .body1 {
     @apply font-bold text-16 lg:text-24 4k:text-28 leading-6 lg:leading-8 text-gray1;
   }
+
   .body1-s {
     @apply font-extrabold lg:font-bold text-12 lg:text-16 4k:text-20 leading-6 text-gray1;
   }
+
   .h4 {
     @apply font-bold text-20 xs:text-22 lg:text-26 4k:text-30 leading-8 lg:leading-10 text-white2;
   }
+
   .opacity-hover {
     @apply hover:opacity-70 duration-300 ease-in-out;
   }
+
   .text-22-bold {
     @apply font-bold text-18 lg:text-22 4k:text-26 leading-4 lg:leading-6 text-white2;
   }
+
   .text-26-bold {
     @apply font-bold text-18 lg:text-26 4k:text-30 leading-4 lg:leading-6 text-white2;
   }
+
   .text-12-regular {
-    @apply font-medium text-11 lg:text-12 4k:text-14 lg:leading-4  text-white3;
+    @apply font-medium text-11 lg:text-12 4k:text-14 lg:leading-4 text-white3;
   }
+
   .bold52 {
     @apply font-bold text-22 lg:text-52 4k:text-58 lg:leading-16 text-white;
   }
+
   .bold33 {
     @apply font-bold text-22 lg:text-33 4k:text-38 lg:leading-10 text-white;
   }
+
   .bold26 {
     @apply font-bold text-14 lg:text-26 4k:text-30 lg:leading-7.75;
   }
+
   .bold22 {
     @apply font-bold text-18 lg:text-22 4k:text-28 lg:leading-6.5 text-white;
   }
+
   .bold16 {
     @apply font-bold text-10 lg:text-16 4k:text-20 lg:leading-6.5 text-white;
   }
+
   .bold15 {
     @apply font-bold text-12 lg:text-15 4k:text-18 lg:leading-6.5 text-white;
   }
+
   .bold14 {
     @apply font-bold text-10 lg:text-14 4k:text-16 lg:leading-6.5 text-white;
   }
+
   .bold13 {
     @apply font-bold text-13 4k:text-15 lg:leading-6.5 text-white;
   }
+
   .bold12-s {
     @apply font-bold text-12 4k:text-14 leading-6.5;
   }
+
   .bold12 {
     @apply font-bold text-10 lg:text-12 4k:text-14 lg:leading-6.5 text-white;
   }
+
   .bold10 {
     @apply font-bold text-10 4k:text-12 lg:leading-6.5 text-white;
   }
+
   .semi24 {
     @apply font-semibold text-12 lg:text-24 4k:text-27 lg:leading-6.5 text-gray13;
   }
+
   .semi15 {
     @apply font-semibold text-10 lg:text-15 4k:text-17 lg:leading-6.5 text-white;
   }
+
   .semi14 {
     @apply font-semibold text-10 lg:text-14 4k:text-16 lg:leading-5 text-white;
   }
+
   .semi13 {
     @apply font-semibold text-15 4k:text-17 lg:leading-5 text-white;
   }
+
   .semi11 {
     @apply font-semibold text-10 lg:text-11 4k:text-13 lg:leading-4 text-white;
   }
+
   .medium20 {
     @apply font-medium text-18 lg:text-20 4k:text-24 lg:leading-6.5 text-white;
   }
+
   .medium17 {
-    @apply font-medium text-10 lg:text-17 4k:text-20 lg:leading-5 text-gray8;
+    @apply font-medium text-11 lg:text-17 4k:text-20 lg:leading-5 text-gray8;
   }
+
   .medium16 {
     @apply font-medium text-10 lg:text-16 4k:text-18 lg:leading-5 text-white;
   }
+
   .medium15 {
     @apply font-medium text-10 lg:text-15 4k:text-17 lg:leading-4 text-gray6;
   }
+
   .medium12 {
     @apply font-medium text-10 lg:text-12 4k:text-14 lg:leading-3.5 text-white;
   }
+
   .light26 {
     @apply font-light text-10 lg:text-26 4k:text-33 lg:leading-7.75 text-white;
   }
+
   .light12 {
     @apply font-light text-10 lg:text-12 4k:text-15 lg:leading-3.5 text-white;
   }
+
   .regular15 {
     @apply font-normal text-12 lg:text-15 4k:text-17;
   }
+
   .regular12 {
     @apply font-normal text-10 lg:text-12 4k:text-15 lg:leading-3.5 text-white;
   }
+
   .regular9 {
     @apply font-normal text-10 lg:text-9 4k:text-12 lg:leading-3.5 text-white;
   }
@@ -270,24 +318,30 @@ button,
   animation: gradientAnimation 2s ease infinite;
   border-radius: 10px;
 }
+
 @layer utilities {
   .scrollbar-gradient::-webkit-scrollbar {
     width: 2px;
   }
+
   .scrollbar-gradient::-webkit-scrollbar-thumb {
     @apply bg-aqua1 rounded-lg;
   }
+
   .scrollbar-hidden::-webkit-scrollbar-thumb {
     @apply bg-transparent;
   }
 }
+
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -327,6 +381,7 @@ button,
     border-radius: 10px;
     z-index: 0;
   }
+
   .gradient-bottom-border .content {
     padding: 19.5px 20px 20.5px 20px;
     /* background: linear-gradient(
@@ -338,12 +393,14 @@ button,
     position: relative;
     z-index: 1;
   }
+
   .gradient-bottom-border-hover:hover {
     border-bottom: 1px solid;
     background: linear-gradient(90deg, #00d0c6 0%, #522eff 100%);
     border-radius: 10px;
     position: relative;
   }
+
   .gradient-bottom-border-hover:hover::before {
     content: "";
     position: absolute;
@@ -360,6 +417,7 @@ button,
     position: relative;
     z-index: 1;
   }
+
   .gradient-bottom-border-hover:hover .content-hover:hover {
     /* background: linear-gradient(
       314.92deg,
@@ -381,6 +439,7 @@ button,
     rgba(17, 243, 179, 0.12) 90.65%
   );
 }
+
 .gradient-bg-dark {
   background: linear-gradient(
     314.92deg,
@@ -430,6 +489,16 @@ button,
   );
 }
 
+.border-gradient-3 {
+  border-image-slice: 1;
+  border-image-source: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    #4b4b4b 52%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
 :where(.css-dev-only-do-not-override-1wwf28x).ant-input-affix-wrapper
   .ant-input-prefix {
   margin-right: 0.5rem;
@@ -445,4 +514,8 @@ button,
     bottom: 60px !important;
     right: 10px !important;
   }
+}
+
+.grey-gradient {
+  border-image: "linear-gradient(90deg, #ff7e5f, #feb47b) 1";
 }
