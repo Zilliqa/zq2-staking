@@ -19,6 +19,7 @@ import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
 import FilterBtn from "./filterBtn"
 import FastFadeScroll from "./FastFadeScroll"
+import { showNewMessage } from "@intercom/messenger-js-sdk"
 
 interface UnstakeCardProps {
   available: boolean
@@ -396,6 +397,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
             <Button
               type="primary"
               className="btn-primary-gradient-aqua-lg !w-fit px-11 4k:px-12 group"
+              onClick={() => showNewMessage("")}
             >
               Leave Feedback
             </Button>
