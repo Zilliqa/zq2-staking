@@ -31,7 +31,6 @@ const FastFadeScroll = ({
   }, [])
 
   const isPoolLiquidBool = () => isPoolLiquid === StakingPoolType.LIQUID
-  console.log(isPoolLiquid)
 
   return (
     <div
