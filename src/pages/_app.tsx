@@ -15,9 +15,6 @@ import { useEffect, useState } from "react"
 import { AppConfig } from "./api/config"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import Head from "next/head"
-import TagManager from "react-gtm-module"
-
-const GTM_ID = "G-S4YVQXKJY8"
 
 const queryClient = new QueryClient()
 
@@ -89,12 +86,6 @@ export default function App({ Component, pageProps }: AppProps) {
       return () => clearInterval(easingInterval)
     }
   }, [loadingPercentage])
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      TagManager.initialize({ gtmId: GTM_ID })
-    }
-  }, [])
 
   if (!appConfig) {
     return (
