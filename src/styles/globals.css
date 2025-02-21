@@ -503,7 +503,7 @@ button,
 
 @media (max-width: 1024px) {
   .intercom-lightweight-app-launcher {
-    bottom: 60px !important;
+    bottom: 15px !important;
     right: 10px !important;
   }
 }
