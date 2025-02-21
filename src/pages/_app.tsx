@@ -15,9 +15,9 @@ import { useEffect, useState } from "react"
 import { AppConfig } from "./api/config"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import Head from "next/head"
-import TagManager from "react-gtm-module";
+import TagManager from "react-gtm-module"
 
-const GTM_ID = "G-S4YVQXKJY8";
+const GTM_ID = "G-S4YVQXKJY8"
 
 const queryClient = new QueryClient()
 
@@ -90,6 +90,12 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [loadingPercentage])
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      TagManager.initialize({ gtmId: GTM_ID })
+    }
+  }, [])
+
   if (!appConfig) {
     return (
       <div
@@ -111,12 +117,6 @@ export default function App({ Component, pageProps }: AppProps) {
       </div>
     )
   }
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      TagManager.initialize({ gtmId: GTM_ID });
-    }
-  }, []);
 
   return (
     <AppConfigStorage.Provider initialState={{ appConfig }}>
