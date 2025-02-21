@@ -54,7 +54,7 @@ const ZilGiveaway: React.FC = () => {
     <>
       <Button
         size="small"
-        className="btn-primary-gradient-aqua-lg px-0 lg:btn-primary-gradient-aqua px-3"
+        className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua px-3 max-h-[40px]"
         onClick={() => {
           setShowRequestZilPopup(true)
           requestZil()
