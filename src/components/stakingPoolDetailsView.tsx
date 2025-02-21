@@ -2,7 +2,11 @@ import StakingCalculator from "@/components/stakingCalculator"
 import UnstakingCalculator from "@/components/unstakingCalculator"
 import WithdrawZilPanel from "@/components/withdrawUnstakedZilPanel"
 import { WalletConnector } from "@/contexts/walletConnector"
-import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting"
+import {
+  convertTokenToZil,
+  formatPercentage,
+  formatUnitsToHumanReadable,
+} from "@/misc/formatting"
 import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import {
   UserNonLiquidStakingPoolRewardData,
@@ -16,7 +20,7 @@ import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
 import CloseIcon from "../assets/svgs/close-icon.svg"
 import FastFadeScroll from "@/components/FastFadeScroll"
-import { formatUnits } from "viem"
+import { formatUnits, parseEther } from "viem"
 import arrow from "../assets/svgs/arrow.svg"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import { walletConnectWallet } from "@rainbow-me/rainbowkit/wallets"
@@ -149,9 +153,15 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       greyInfoEntry(
         "",
         <>
-          1 ZIL ~ <br />
-          {stakingPoolData.data.zilToTokenRate.toPrecision(3)}{" "}
-          {stakingPoolData.definition.tokenSymbol}
+          1 {stakingPoolData.definition.tokenSymbol} = ~ <br />
+          {formatUnitsToHumanReadable(
+            convertTokenToZil(
+              parseEther("1"),
+              stakingPoolData.data.zilToTokenRate
+            ),
+            18
+          )}{" "}
+          ZIL
         </>
       ),
   ]
