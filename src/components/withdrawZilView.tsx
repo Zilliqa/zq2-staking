@@ -266,7 +266,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       activeGradient: "bg-aqua5",
     },
     {
-      name: "Non-Liquid",
+      name: "Non-liquid",
       type: StakingPoolType.NORMAL,
       activeGradient: "bg-navyBlue",
     },
