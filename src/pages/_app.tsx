@@ -15,6 +15,7 @@ import { useEffect, useState } from "react"
 import { AppConfig } from "./api/config"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import Head from "next/head"
+import { GoogleTagManager } from "@next/third-parties/google"
 
 const queryClient = new QueryClient()
 
@@ -111,6 +112,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <AppConfigStorage.Provider initialState={{ appConfig }}>
+      <GoogleTagManager gtmId={appConfig.gtmId} />
       <ConfigProvider>
         <WagmiProvider
           config={getWagmiConfig(
