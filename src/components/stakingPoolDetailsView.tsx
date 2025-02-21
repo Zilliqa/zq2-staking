@@ -256,7 +256,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                     : "-"
                 )}
                 {colorInfoEntry(
-                  "Available to claim",
+                  "Available withdrawals",
                   availableToClaim
                     ? `${humanReadableStakingToken(availableToClaim)} ${
                         stakingPoolData.definition.tokenSymbol
@@ -355,7 +355,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                       }
                     >
                       {asideColorInfoEntry(
-                        "Available Withdrawals",
+                        "Available withdrawals",
                         !!availableUnstake?.length
                           ? availableUnstake
                               .map(
@@ -367,7 +367,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                       )}
                       {stakingPoolForView != null &&
                         asideColorInfoEntry(
-                          "Available Rewards",
+                          "Available rewards",
                           stakingPoolForView.userData.reward
                             ? `${parseFloat(formatUnits(stakingPoolForView.userData.reward?.zilRewardAmount ?? "0", 18)).toFixed(5)} ZIL`
                             : "-"
@@ -427,7 +427,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                       : "-"
                   )}
                   {colorInfoEntry(
-                    "Available Withdrawals",
+                    "Available withdrawals",
                     !!availableUnstake?.length
                       ? availableUnstake
                           .map(
@@ -439,7 +439,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   )}
                   {stakingPoolForView != null &&
                     colorInfoEntry(
-                      "Available Rewards",
+                      "Available rewards",
                       stakingPoolForView.userData.reward
                         ? `${parseFloat(formatUnits(stakingPoolForView.userData.reward?.zilRewardAmount ?? "0", 18)).toFixed(5)} ZIL`
                         : "-"
