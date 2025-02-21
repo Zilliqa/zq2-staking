@@ -120,7 +120,12 @@ const StakingCalculator: React.FC = () => {
   }
 
   const onMaxClick = () => {
-    setZilToStake(`${formatUnits(zilAvailable || 0n, 18)}`)
+    const allZil = formatUnits(zilAvailable || 0n, 18)
+    const roundedToNiceNumber = allZil.split(".")[0]
+    const availableMinusFees =
+      parseFloat(roundedToNiceNumber) - stakingTxCostInZill
+
+    setZilToStake(`${availableMinusFees}`)
   }
 
   const isPoolLiquid = () =>
