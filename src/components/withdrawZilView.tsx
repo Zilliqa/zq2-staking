@@ -40,13 +40,17 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
 }) => {
   return (
     <div
-      className="flex gap-2.5 4k:gap-3 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between"
+      className={` ${stakingPool.definition.poolType != StakingPoolType.LIQUID ? "purple-border-bottom" : "aqua-border-bottom"}  flex gap-2.5 4k:gap-3 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between`}
       onClick={() => {
         selectStakingPoolForView(stakingPool.definition.id)
         setViewClaim(true)
       }}
     >
-      <div className="flex lg:flex-col  content-center pl-3 py-6 4k:py-7 lg:pl-9.5 4k:pl-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
+      <div
+        className={
+          "flex lg:flex-col  content-center  max-lg:px-3 py-6 4k:py-7 lg:pl-9.5 4k:pl-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full"
+        }
+      >
         <div className="flex items-center gap-2 4k:gap-2.5">
           <Image
             className="rounded"
@@ -58,7 +62,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
           <div className="semi24">{stakingPool.definition.name}</div>
           <div className="text-gray4 lg:hidden text-20">|</div>
           {stakingPool.definition.poolType != StakingPoolType.LIQUID && (
-            <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
+            <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 flex ">
               <Image
                 className="rounded"
                 src={requests}
@@ -89,12 +93,20 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               </>
             )}
           </div>
-          <div className="medium15 max-lg:mr-2.5 ml-2.5 4k:ml-3 max-lg:order-1">
-            {unstakeInfo.zilAmount} {stakingPool.definition.tokenSymbol}
-          </div>
+          {stakingPool.definition.tokenSymbol &&
+            unstakeInfo.zilAmount &&
+            stakingPool.definition.poolType === StakingPoolType.LIQUID && (
+              <div
+                className={`${stakingPool.definition.tokenSymbol && unstakeInfo.zilAmount ? "max-lg:ml-2.5" : "ml-0"} medium15  lg:ml-2.5 4k:ml-3 max-lg:order-1`}
+              >
+                {unstakeInfo.zilAmount}
+                {stakingPool.definition.poolType === StakingPoolType.LIQUID &&
+                  stakingPool.definition.tokenSymbol}
+              </div>
+            )}
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[218px] w-full px-3 lg:pb-0 pb-4 lg:px-4 4k:px-5">
+      <div className="max-lg:gap-2.5 max-lg:flex  max-lg:justify-center lg:w-1/3  lg:max-w-[218px] w-full pr-3 lg:pb-0 pb-6 lg:pr-9.5 4k:pr-12">
         <div className="max-lg:w-1/2">
           <Button
             className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
@@ -132,13 +144,13 @@ const RewardCard: React.FC<RewardCardProps> = ({
 
   return (
     <div
-      className="flex gap-2.5 4k:gap-4 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between"
+      className={` ${stakingPool.definition.poolType != StakingPoolType.LIQUID ? "purple-border-bottom" : "aqua-border-bottom"}  flex gap-2.5 4k:gap-4 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between`}
       onClick={() => {
         selectStakingPoolForView(stakingPool.definition.id)
         setViewClaim(true)
       }}
     >
-      <div className="flex lg:flex-col  content-center pl-3 py-6 4k:py-7 lg:pl-9.5 4k:pl-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
+      <div className="flex lg:flex-col  content-center max-lg:px-3 py-6 4k:py-7 lg:pl-9.5 4k:pl-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
         <div className="flex items-center gap-2 4k:gap-2.5">
           <Image
             className="rounded"
@@ -150,7 +162,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
           <div className="semi24">{stakingPool.definition.name}</div>
           <div className="text-gray4 lg:hidden text-20">|</div>
           {stakingPool.definition.poolType != StakingPoolType.LIQUID && (
-            <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 lg:flex hidden">
+            <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 flex ">
               <Image
                 className="rounded"
                 src={rewards}
@@ -162,7 +174,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
             </div>
           )}
         </div>
-        <div className="flex lg:mt-3 items-center">
+        <div className="flex lg:mt-3  items-center ">
           <div className="bold33">
             {stakingPool.data ? (
               <>
@@ -174,22 +186,17 @@ const RewardCard: React.FC<RewardCardProps> = ({
               </>
             )}
           </div>
-          <div className="medium15 max-lg:mr-2.5 lg:ml-2.5 4k:ml-3 max-lg:order-1">
-            {rewardInfo.zilRewardAmount}
-          </div>
-          <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 flex items-center gap-2 4k:gap-2.5 medium12 lg:hidden ml-2.5 4k:ml-3">
-            <Image
-              className="rounded"
-              src={rewards}
-              alt="rewards"
-              width={14}
-              height={15}
-            />
-            Rewards
-          </div>
+          {rewardInfo.zilRewardAmount &&
+            stakingPool.definition.poolType === StakingPoolType.LIQUID && (
+              <div
+                className={`${rewardInfo.zilRewardAmount && "max-lg:ml-2.5"} medium15  lg:ml-2.5 4k:ml-3 max-lg:order-1`}
+              >
+                {rewardInfo.zilRewardAmount}
+              </div>
+            )}
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[218px] px-3 lg:pb-0 pb-4 lg:px-4 4k:px-5">
+      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[218px] px-3 lg:pb-0 pb-6 lg:pr-9.5 4k:pr-12">
         <div className="max-lg:w-1/2">
           {stakingPool.definition.minimumStake > rewardInfo.zilRewardAmount ? (
             <Tooltip
@@ -312,58 +319,54 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       )}
 
       {anyItemsAvailable ? (
-        <div className="flex-1 pb-4 mb-16 lg:mb-0 overflow-y-scroll scrollbar-hidden scrollbar-aqua">
-          <FastFadeScroll
-            isPoolLiquid={StakingPoolType.LIQUID}
-            className=" flex-1 overflow-y-scroll 
-           
- "
-          >
-            <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 ">
-              {availableForUnstaking
-                .filter(filterByPoolType)
-                .map((unstakeClaim, claimIdx) => (
-                  <UnstakeCard
-                    key={claimIdx}
-                    available={true}
-                    stakingPool={unstakeClaim.stakingPool}
-                    unstakeInfo={unstakeClaim.unstakeInfo}
-                    claimUnstake={claimUnstake}
-                    selectStakingPoolForView={selectStakingPoolForView}
-                    setViewClaim={setViewClaim}
-                  />
-                ))}
+        <FastFadeScroll
+          isPoolLiquid={StakingPoolType.LIQUID}
+          className=" flex-1 overflow-y-scroll  pb-6 mb-16 lg:mb-0  4k:mr-14 lg:mr-10"
+        >
+          <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 ">
+            {availableForUnstaking
+              .filter(filterByPoolType)
+              .map((unstakeClaim, claimIdx) => (
+                <UnstakeCard
+                  key={claimIdx}
+                  available={true}
+                  stakingPool={unstakeClaim.stakingPool}
+                  unstakeInfo={unstakeClaim.unstakeInfo}
+                  claimUnstake={claimUnstake}
+                  selectStakingPoolForView={selectStakingPoolForView}
+                  setViewClaim={setViewClaim}
+                />
+              ))}
 
-              {nonLiquidRewards
-                .filter(filterByPoolType)
-                .map((reward, rewardIdx) => (
-                  <RewardCard
-                    key={rewardIdx}
-                    rewardInfo={reward.rewardInfo}
-                    stakingPool={reward.stakingPool}
-                    selectStakingPoolForView={selectStakingPoolForView}
-                    claimReward={claimReward}
-                    stakeReward={stakeReward}
-                    setViewClaim={setViewClaim}
-                  />
-                ))}
+            {nonLiquidRewards
+              .filter(filterByPoolType)
+              .map((reward, rewardIdx) => (
+                <RewardCard
+                  key={rewardIdx}
+                  rewardInfo={reward.rewardInfo}
+                  stakingPool={reward.stakingPool}
+                  selectStakingPoolForView={selectStakingPoolForView}
+                  claimReward={claimReward}
+                  stakeReward={stakeReward}
+                  setViewClaim={setViewClaim}
+                />
+              ))}
 
-              {pendingUnstaking
-                .filter(filterByPoolType)
-                .map((pendingUnstakeClaim, claimIdx) => (
-                  <UnstakeCard
-                    key={claimIdx + 1000}
-                    available={false}
-                    stakingPool={pendingUnstakeClaim.stakingPool}
-                    unstakeInfo={pendingUnstakeClaim.unstakeInfo}
-                    claimUnstake={claimUnstake}
-                    selectStakingPoolForView={selectStakingPoolForView}
-                    setViewClaim={setViewClaim}
-                  />
-                ))}
-            </div>
-          </FastFadeScroll>
-        </div>
+            {pendingUnstaking
+              .filter(filterByPoolType)
+              .map((pendingUnstakeClaim, claimIdx) => (
+                <UnstakeCard
+                  key={claimIdx + 1000}
+                  available={false}
+                  stakingPool={pendingUnstakeClaim.stakingPool}
+                  unstakeInfo={pendingUnstakeClaim.unstakeInfo}
+                  claimUnstake={claimUnstake}
+                  selectStakingPoolForView={selectStakingPoolForView}
+                  setViewClaim={setViewClaim}
+                />
+              ))}
+          </div>
+        </FastFadeScroll>
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto lg:my-10">

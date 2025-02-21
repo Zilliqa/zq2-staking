@@ -511,3 +511,14 @@ button,
 .grey-gradient {
   border-image: "linear-gradient(90deg, #ff7e5f, #feb47b) 1";
 }
+.purple-border-bottom {
+  border-bottom: 1px solid #5b6fff;
+  transition: border-color 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.aqua-border-bottom {
+  border-bottom: 1px solid #00d0c6;
+  transition: border-color 0.3s ease-in-out;
+  overflow: hidden;
+}
