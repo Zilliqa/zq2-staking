@@ -237,9 +237,9 @@ const UnstakingCalculator: React.FC = () => {
                 Unbonding Period: {unboudingPeriod}
               </div>
             </div>
-            <div className="flex flex-col justify-between lg:gray-base gray-base2">
-              <div className="flex flex-col max-xl:justify-between  max-lg:items-start xl:gap-3.5 xl:items-end">
-                {isPoolLiquid() && (
+            <div className="flex flex-col lg:gray-base gray-base2 xl:gap-3.5 4k:gap-5 xl:items-end justify-start">
+              {isPoolLiquid() && (
+                <div className="flex flex-col max-xl:justify-between  max-lg:items-start xl:gap-3.5 xl:items-end">
                   <div className="flex   xl:gap-5 4k:gap-6">
                     <div className="lg:gray-base">Rate</div>
                     <div className="text-gray9">
@@ -265,8 +265,8 @@ const UnstakingCalculator: React.FC = () => {
                       ZIL
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
 
               <div className="text-gray9  flex flex-row xl:gap-5 4k:gap-6">
                 <Tooltip

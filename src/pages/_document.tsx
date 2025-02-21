@@ -5,9 +5,12 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-S4YVQXKJY8" />
-        <Script>
+        <Script
+          strategy="afterInteractive"
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-S4YVQXKJY8"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
