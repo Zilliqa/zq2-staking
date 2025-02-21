@@ -2,7 +2,11 @@ import StakingCalculator from "@/components/stakingCalculator"
 import UnstakingCalculator from "@/components/unstakingCalculator"
 import WithdrawZilPanel from "@/components/withdrawUnstakedZilPanel"
 import { WalletConnector } from "@/contexts/walletConnector"
-import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting"
+import {
+  convertTokenToZil,
+  formatPercentage,
+  formatUnitsToHumanReadable,
+} from "@/misc/formatting"
 import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import {
   UserNonLiquidStakingPoolRewardData,
@@ -16,7 +20,7 @@ import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
 import CloseIcon from "../assets/svgs/close-icon.svg"
 import FastFadeScroll from "@/components/FastFadeScroll"
-
+import { formatUnits, parseEther } from "viem"
 import arrow from "../assets/svgs/arrow.svg"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 
@@ -49,7 +53,9 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const isPoolLiquid = () =>
     stakingPoolData.definition.poolType === StakingPoolType.LIQUID
   const colorInfoEntry = (title: string, value: string | null) => (
-    <div className="lg:text-left text-center lg:w-1/4 w-1/2">
+    <div
+      className={`${isPoolLiquid() ? "lg:w-1/4 w-1/2 lg:text-left text-center" : " xl:text-left text-center w-1/3"}`}
+    >
       <div
         className={`semi14 ${isPoolLiquid() ? "text-aqua1" : "text-purple5"}`}
       >
@@ -58,11 +64,22 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       <div className="text-gray8 info-label">{title}</div>
     </div>
   )
-
+  const asideColorInfoEntry = (title: string, value: string | null) => (
+    <div
+      className={`${isPoolLiquid() ? "lg:text-left text-center" : "xl:text-left text-center"} w-2/3 `}
+    >
+      <div
+        className={`semi14  ${isPoolLiquid() ? "text-aqua1" : "text-purple5"}`}
+      >
+        {value}
+      </div>
+      <div className="text-gray8 xl:whitespace-nowrap info-label">{title}</div>
+    </div>
+  )
   const greyInfoEntry = (title: string, value: string | JSX.Element | null) => (
     <div
       key={title}
-      className={`lg:w-1/4  ${isPoolLiquid() ? "w-1/2" : "w-1/3"} `}
+      className={`  ${isPoolLiquid() ? "lg:w-1/4 w-1/2" : "w-1/3"} `}
     >
       {value ? (
         <div className="semi14 text-gray7 xl:whitespace-nowrap">{value}</div>
@@ -135,21 +152,37 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       greyInfoEntry(
         "",
         <>
-          1 ZIL ~ <br />
-          {stakingPoolData.data.zilToTokenRate.toPrecision(3)}{" "}
-          {stakingPoolData.definition.tokenSymbol}
+          1 {stakingPoolData.definition.tokenSymbol} = ~ <br />
+          {parseFloat(
+            formatUnits(
+              convertTokenToZil(
+                parseEther("1"),
+                stakingPoolData.data.zilToTokenRate
+              ),
+              18
+            )
+          ).toFixed(2)}{" "}
+          ZIL
         </>
       ),
   ]
 
   const availableEntries = greyInfoEntries.filter(Boolean)
   const columnCount = availableEntries.length
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(true)
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded)
   }
   const { isWalletConnected } = WalletConnector.useContainer()
+  const { stakingPoolForView } = StakingPoolsStorage.useContainer()
+  const availableUnstake = userUnstakingPoolData
+    ?.filter((claim) => claim.availableAt <= DateTime.now())
+    .toSorted(
+      (claimA, claimB) =>
+        claimA.availableAt.diff(claimB.availableAt).milliseconds
+    )
+
   return (
     <div className="relative pb-2 4k:pb-4  lg:pr-4 4k:pr-6 flex flex-col h-full ">
       <div className="items-center flex justify-between py-1 lg:py-7.5">
@@ -197,75 +230,256 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
           </div>
         </div>
       </div>
-
-      <div className="bg-grey-gradient  flex flex-col gap-2 4k:gap-6 max-lg:mt-5  rounded-xl">
-        <div
-          className={` ${doesUserHoldAnyFundsInThisPool ? "max-lg:pt-6 " : "py-6"} lg:py-6 4k:py-10 4k:px-16 lg:px-9.5 px-5`}
-        >
-          {doesUserHoldAnyFundsInThisPool && isWalletConnected && (
-            <div
-              className={
-                "flex flex-wrap max-lg:gap-y-4  4k:gap-6  4k:pb-6  pb-4 "
-              }
-            >
-              {colorInfoEntry(
-                "Available to stake",
-                `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`
-              )}
-              {colorInfoEntry(
-                "Staked",
-                `${humanReadableStakingToken(
-                  userStakingPoolData?.stakingTokenAmount || 0n
-                )} ${stakingPoolData.definition.tokenSymbol}`
-              )}
-              {colorInfoEntry(
-                "Unstake Requested ",
-                pendingUnstakesValue
-                  ? `${humanReadableStakingToken(
-                      pendingUnstakesValue
-                    )} ${stakingPoolData.definition.tokenSymbol}`
-                  : "-"
-              )}
-              {colorInfoEntry(
-                "Available to claim",
-                availableToClaim
-                  ? `${humanReadableStakingToken(availableToClaim)} ${
-                      stakingPoolData.definition.tokenSymbol
-                    }`
-                  : "-"
-              )}
-            </div>
-          )}
-
+      {isPoolLiquid() ? (
+        <div className="bg-grey-gradient  flex flex-col gap-2  max-lg:mt-5  rounded-xl">
           <div
-            className={`flex flex-wrap justify-center  max-lg:gap-y-4 4k:gap-6 lg:text-left text-center ${doesUserHoldAnyFundsInThisPool && "max-lg:border-t  border-gradient-3 max-lg:pt-4 "}
+            className={` ${doesUserHoldAnyFundsInThisPool ? "max-lg:pt-6 " : "py-6"} lg:py-6 4k:py-10 4k:px-16 lg:px-9.5 px-5`}
+          >
+            {doesUserHoldAnyFundsInThisPool && isWalletConnected && (
+              <div className={"flex flex-wrap max-lg:gap-y-4  4k:pb-6  pb-4 "}>
+                {colorInfoEntry(
+                  "Available to stake",
+                  `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`
+                )}
+                {colorInfoEntry(
+                  "Staked",
+                  `${humanReadableStakingToken(
+                    userStakingPoolData?.stakingTokenAmount || 0n
+                  )} ${stakingPoolData.definition.tokenSymbol}`
+                )}
+                {colorInfoEntry(
+                  "Unstake Requested ",
+                  pendingUnstakesValue
+                    ? `${humanReadableStakingToken(
+                        pendingUnstakesValue
+                      )} ${stakingPoolData.definition.tokenSymbol}`
+                    : "-"
+                )}
+                {colorInfoEntry(
+                  "Available to claim",
+                  availableToClaim
+                    ? `${humanReadableStakingToken(availableToClaim)} ${
+                        stakingPoolData.definition.tokenSymbol
+                      }`
+                    : "-"
+                )}
+              </div>
+            )}
+
+            <div
+              className={`flex flex-wrap justify-center  max-lg:gap-y-4  lg:text-left text-center ${doesUserHoldAnyFundsInThisPool && "max-lg:border-t  border-gradient-3 max-lg:pt-4 "}
                ${!isExpanded || (doesUserHoldAnyFundsInThisPool && "max-lg:hidden")} 
                ${columnCount < 4 && "!text-center"}`}
-          >
-            {availableEntries}
+            >
+              {availableEntries}
+            </div>
           </div>
+          {availableEntries &&
+            availableEntries.length > 0 &&
+            doesUserHoldAnyFundsInThisPool && (
+              <>
+                <button
+                  onClick={toggleExpand}
+                  className="bg-custom-grey-gradient py-1 rounded-b-xl  items-center justify-center w-full mx-auto max-lg:flex hidden"
+                >
+                  <Image
+                    src={arrow}
+                    width={12}
+                    height={6}
+                    alt="Arrow"
+                    className={` w-3 h-2 transform transition-transform duration-300 ${
+                      !isExpanded ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              </>
+            )}
         </div>
-        {availableEntries &&
-          availableEntries.length > 0 &&
-          doesUserHoldAnyFundsInThisPool && (
-            <>
-              <button
-                onClick={toggleExpand}
-                className="bg-custom-grey-gradient py-1 rounded-b-xl  items-center justify-center w-full mx-auto max-lg:flex hidden"
+      ) : (
+        <>
+          <div className={" xl:flex hidden 4k:gap-5 gap-2 "}>
+            <div
+              className={` ${isWalletConnected && !!availableUnstake?.length && stakingPoolForView != null && stakingPoolForView.userData.reward ? "w-2/3 " : "w-full"} bg-grey-gradient flex flex-col justify-center items-center  gap-2 max-xl:mt-5  rounded-xl`}
+            >
+              <div
+                className={`w-full ${doesUserHoldAnyFundsInThisPool ? "max-lg:pt-6 " : "py-6"} lg:py-6 4k:py-10 4k:px-16 lg:px-9.5 px-5`}
               >
-                <Image
-                  src={arrow}
-                  width={12}
-                  height={6}
-                  alt="Arrow"
-                  className={` w-3 h-2 transform transition-transform duration-300 ${
-                    !isExpanded ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-            </>
-          )}
-      </div>
+                {doesUserHoldAnyFundsInThisPool && isWalletConnected && (
+                  <div
+                    className={
+                      "flex flex-wrap justify-center items-center max-lg:gap-y-4 4k:pb-6  pb-4 "
+                    }
+                  >
+                    {colorInfoEntry(
+                      "Available to stake",
+                      `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`
+                    )}
+                    {colorInfoEntry(
+                      "Staked",
+                      `${humanReadableStakingToken(
+                        userStakingPoolData?.stakingTokenAmount || 0n
+                      )} ${stakingPoolData.definition.tokenSymbol}`
+                    )}
+                    {colorInfoEntry(
+                      "Unstaked",
+                      pendingUnstakesValue
+                        ? `${humanReadableStakingToken(
+                            pendingUnstakesValue
+                          )} ${stakingPoolData.definition.tokenSymbol}`
+                        : "-"
+                    )}
+                  </div>
+                )}
+                <div
+                  className={`flex flex-wrap  xl:text-left text-center  justify-center   max-lg:gap-y-4  ${doesUserHoldAnyFundsInThisPool && "max-lg:border-t  border-gradient-3 max-lg:pt-4 "}
+               ${!isExpanded || (doesUserHoldAnyFundsInThisPool && "max-lg:hidden")}
+               ${columnCount < 4 && !isWalletConnected && "!text-center"}`}
+                >
+                  {availableEntries}
+                </div>
+              </div>
+            </div>
+            {isWalletConnected &&
+              !!availableUnstake?.length &&
+              stakingPoolForView != null &&
+              stakingPoolForView.userData.reward && (
+                <div
+                  className={
+                    " flex bg-grey-gradient w-1/3  flex-col gap-2   max-xl:mt-5  rounded-xl"
+                  }
+                >
+                  <div
+                    className={` ${doesUserHoldAnyFundsInThisPool ? "max-xl:pt-6 " : "py-6"} lg:py-6 4k:py-10 4k:px-16 lg:px-9.5 px-5`}
+                  >
+                    {doesUserHoldAnyFundsInThisPool && isWalletConnected && (
+                      <div
+                        className={
+                          "flex  flex-col flex-wrap gap-4 max-lg:gap-y-4     4k:pb-6   "
+                        }
+                      >
+                        {asideColorInfoEntry(
+                          "Available Withdrawals",
+                          !!availableUnstake?.length
+                            ? availableUnstake
+                                .map(
+                                  (item) =>
+                                    `${parseFloat(formatUnits(item.zilAmount, 18)).toFixed(3)} ZIL`
+                                )
+                                .join(", ")
+                            : "-"
+                        )}
+                        {stakingPoolForView != null &&
+                          asideColorInfoEntry(
+                            "Available Rewards",
+                            stakingPoolForView.userData.reward
+                              ? `${parseFloat(formatUnits(stakingPoolForView.userData.reward?.zilRewardAmount ?? "0", 18)).toFixed(5)} ZIL`
+                              : "-"
+                          )}
+                      </div>
+                    )}
+                  </div>
+                  {availableEntries &&
+                    availableEntries.length > 0 &&
+                    doesUserHoldAnyFundsInThisPool && (
+                      <>
+                        <button
+                          onClick={toggleExpand}
+                          className="bg-custom-grey-gradient py-1 rounded-b-xl  items-center justify-center w-full mx-auto max-xl:flex hidden"
+                        >
+                          <Image
+                            src={arrow}
+                            width={12}
+                            height={6}
+                            alt="Arrow"
+                            className={` w-3 h-2 transform transition-transform duration-300 ${
+                              !isExpanded ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
+                      </>
+                    )}
+                </div>
+              )}
+          </div>
+          <div className="bg-grey-gradient xl:hidden flex flex-col  gap-2  max-lg:mt-5  rounded-xl">
+            <div
+              className={` ${doesUserHoldAnyFundsInThisPool ? "max-xl:pt-6 " : "py-6"} xl:py-6 4k:py-10 4k:px-16 lg:px-9.5 px-5`}
+            >
+              {doesUserHoldAnyFundsInThisPool && isWalletConnected && (
+                <div
+                  className={
+                    "flex flex-wrap justify-center items-center max-xl:gap-y-4    4k:pb-6  pb-4 "
+                  }
+                >
+                  {colorInfoEntry(
+                    "Available to stake",
+                    `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`
+                  )}
+                  {colorInfoEntry(
+                    "Staked ",
+                    `${humanReadableStakingToken(
+                      userStakingPoolData?.stakingTokenAmount || 0n
+                    )} ${stakingPoolData.definition.tokenSymbol}`
+                  )}
+                  {colorInfoEntry(
+                    "UnstakeD",
+                    pendingUnstakesValue
+                      ? `${humanReadableStakingToken(
+                          pendingUnstakesValue
+                        )} ${stakingPoolData.definition.tokenSymbol}`
+                      : "-"
+                  )}
+                  {colorInfoEntry(
+                    "Available Withdrawals",
+                    !!availableUnstake?.length
+                      ? availableUnstake
+                          .map(
+                            (item) =>
+                              `${parseFloat(formatUnits(item.zilAmount, 18)).toFixed(3)} ZIL`
+                          )
+                          .join(", ")
+                      : "-"
+                  )}
+                  {stakingPoolForView != null &&
+                    colorInfoEntry(
+                      "Available Rewards",
+                      stakingPoolForView.userData.reward
+                        ? `${parseFloat(formatUnits(stakingPoolForView.userData.reward?.zilRewardAmount ?? "0", 18)).toFixed(5)} ZIL`
+                        : "-"
+                    )}
+                </div>
+              )}
+              <div
+                className={`flex flex-wrap justify-center  max-xl:gap-y-4  xl:text-left text-center ${doesUserHoldAnyFundsInThisPool && "max-xl:border-t  border-gradient-3 max-xl:pt-4 "}
+             ${!isExpanded || (doesUserHoldAnyFundsInThisPool && "max-xl:hidden")}
+             ${columnCount < 4 && !isWalletConnected && "!text-center"}`}
+              >
+                {availableEntries}
+              </div>
+            </div>
+            {availableEntries &&
+              availableEntries.length > 0 &&
+              doesUserHoldAnyFundsInThisPool && (
+                <>
+                  <button
+                    onClick={toggleExpand}
+                    className="bg-custom-grey-gradient py-1 rounded-b-xl  items-center justify-center w-full mx-auto max-xl:flex hidden"
+                  >
+                    <Image
+                      src={arrow}
+                      width={12}
+                      height={6}
+                      alt="Arrow"
+                      className={` w-3 h-2 transform transition-transform duration-300 ${
+                        !isExpanded ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                </>
+              )}
+          </div>
+        </>
+      )}
 
       <div className="lg:mx-10 mx-3 grid grid-cols-3 my-4 lg:gap-20 gap-5">
         {["Stake", "Unstake", "Claim"].map((pane) => (
