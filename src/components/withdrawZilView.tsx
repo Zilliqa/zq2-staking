@@ -321,9 +321,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       {anyItemsAvailable ? (
         <FastFadeScroll
           isPoolLiquid={StakingPoolType.LIQUID}
-          className=" flex-1 overflow-y-scroll  pb-4 mb-16 lg:mb-0  4k:mr-14 lg:mr-10
-           
- "
+          className=" flex-1 overflow-y-scroll  pb-6 mb-16 lg:mb-0  4k:mr-14 lg:mr-10"
         >
           <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 ">
             {availableForUnstaking
