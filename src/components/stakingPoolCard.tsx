@@ -86,36 +86,46 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     %
                   </div>
                 ) : (
-                  <div className="4k:pr-1.5 pr-1 xs:pr-3">
+                  <div className="4k:pr-1.5 pr-1 xs:pr-3 loading-blur">
                     <span className="lg:medium12 regular12">VP</span>
-                    <span className="w-[3em] ml-1 4k:ml-1.5 animated-gradient" />
+                    <span className="mr-1 4k:mr-1.5 ">0%</span>
                   </div>
                 )}
                 <div className="flex medium12 text-gray13 4k:pl-1.5 pl-1 xs:pl-3 border-l-[1px] border-gray4">
-                  Commission{" "}
                   {stakingPoolData.data ? (
-                    <>{Math.floor(stakingPoolData.data.commission * 100)}%</>
+                    <>
+                      {" "}
+                      Commission{" "}
+                      {Math.floor(stakingPoolData.data.commission * 100)}%
+                    </>
                   ) : (
-                    <span className="w-[3em] ml-1 4k:ml-1.5 animated-gradient" />
+                    <span className=" whitespace-nowrap mr-1 4k:mr-1.5 loading-blur">
+                      Commission 0%
+                    </span>
                   )}
                 </div>
               </div>
             </div>
-            <div className="flex bold15 max-md:order-1 4k:ml-2.5 ml-2 xs:ml-6">
-              <Tooltip
-                placement="top"
-                arrow={true}
-                color="#555555"
-                className="mr-1 4k:mr-1.5"
-                title="Annual Percentage Rate"
-              >
-                <span>APR </span>
-              </Tooltip>
 
+            <div className="flex bold15 max-md:order-1 4k:ml-2.5 ml-2 xs:ml-6">
               {stakingPoolData.data ? (
-                <>{formatPercentage(stakingPoolData.data.apr)}</>
+                <>
+                  <Tooltip
+                    placement="top"
+                    arrow={true}
+                    color="#555555"
+                    className="mr-1 4k:mr-1.5"
+                    title="Annual Percentage Rate"
+                  >
+                    <span>APR </span>
+                  </Tooltip>
+
+                  {formatPercentage(stakingPoolData.data.apr)}
+                </>
               ) : (
-                <span className="w-[3em] ml-1 4k:ml-1.5 animated-gradient" />
+                <div className=" whitespace-nowrap mr-1 4k:mr-1.5 loading-blur">
+                  APR 000%
+                </div>
               )}
             </div>
           </div>
