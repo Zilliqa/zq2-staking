@@ -522,3 +522,23 @@ button,
   transition: border-color 0.3s ease-in-out;
   overflow: hidden;
 }
+
+.loading-blur {
+  @apply ml-1 4k:ml-1.5 text-gray-200;
+  animation: blur 1.5s ease-in-out infinite;
+}
+
+@keyframes blur {
+  0% {
+    filter: blur(5px);
+    opacity: 0.5;
+  }
+  50% {
+    filter: blur(8px);
+    opacity: 0.8;
+  }
+  100% {
+    filter: blur(4px);
+    opacity: 0.6;
+  }
+}
