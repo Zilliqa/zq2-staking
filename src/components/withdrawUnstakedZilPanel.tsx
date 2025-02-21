@@ -93,7 +93,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                         : "text-purple5"
                     }`}
                   >
-                    Available Rewards
+                    Available rewards
                   </span>
                 </div>
                 <div>
@@ -169,7 +169,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                           : "text-purple5"
                       }`}
                     >
-                      Available Withdrawals
+                      Available withdrawals
                     </span>
                   </div>
                   <div>
