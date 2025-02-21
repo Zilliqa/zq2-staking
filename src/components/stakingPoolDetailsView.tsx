@@ -248,7 +248,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   )} ${stakingPoolData.definition.tokenSymbol}`
                 )}
                 {colorInfoEntry(
-                  "Unstake Requested ",
+                  "Unstaked ",
                   pendingUnstakesValue
                     ? `${humanReadableStakingToken(
                         pendingUnstakesValue
