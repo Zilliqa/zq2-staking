@@ -292,21 +292,10 @@ const StakingCalculator: React.FC = () => {
                     <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
                   )}
                 </div>
-                <div className="">
-                  Max transaction cost: ~{stakingTxCostInZill} ZIL
-                </div>
-                <div
-                  className={`${
-                    stakingPoolForView?.stakingPool.definition.poolType ===
-                    StakingPoolType.LIQUID
-                      ? "text-aqua1"
-                      : "text-purple3"
-                  } `}
-                >
-                  Unbonding Period: {unboudingPeriod}
-                </div>
+                <div>Max transaction cost: ~{stakingTxCostInZill} ZIL</div>
+                <div>Unbonding Period: {unboudingPeriod}</div>
               </div>
-              <div className="flex flex-col lg:gray-base gray-base2 xl:gap-3.5 4k:gap-5 xl:items-end justify-end ">
+              <div className="flex flex-col lg:gray-base gray-base2 xl:gap-3.5 4k:gap-5 xl:items-end justify-start">
                 {isPoolLiquid() && (
                   <div className="flex  max-lg:gap-2 max-xl:justify-between max-lg:items-start flex-row xl:gap-5 4k:gap-6">
                     <div className=" ">Rate</div>
@@ -315,7 +304,14 @@ const StakingCalculator: React.FC = () => {
                     )}
                   </div>
                 )}
-                <div className="text-aqua1 max-lg:mt-1 flex flex-row max-lg:justify-between max-lg:gap-5 max-lg:items-center xl:gap-5 4k:gap-6">
+                <div
+                  className={`${
+                    stakingPoolForView?.stakingPool.definition.poolType ===
+                    StakingPoolType.LIQUID
+                      ? "text-aqua1"
+                      : "text-purple3"
+                  }  flex flex-row xl:gap-5 4k:gap-6 `}
+                >
                   <Tooltip
                     placement="top"
                     arrow={true}
@@ -323,7 +319,16 @@ const StakingCalculator: React.FC = () => {
                     className=" mr-1"
                     title="Annual Percentage Rate"
                   >
-                    <span className="lg:gray-base gray-base2">APR </span>
+                    <span
+                      className={`${
+                        stakingPoolForView?.stakingPool.definition.poolType ===
+                        StakingPoolType.LIQUID
+                          ? "text-aqua1"
+                          : "text-purple3"
+                      } lg:gray-base gray-base2 `}
+                    >
+                      APR{" "}
+                    </span>
                   </Tooltip>
                   {stakingPoolForView!.stakingPool.data ? (
                     <>
