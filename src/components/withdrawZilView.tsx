@@ -4,7 +4,6 @@ import rewards from "../assets/svgs/rewards.svg"
 import requests from "../assets/svgs/requests.svg"
 
 import {
-  convertTokenToZil,
   formatUnitsToHumanReadable,
   getHumanFormDuration,
 } from "@/misc/formatting"
@@ -35,7 +34,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
   unstakeInfo,
   stakingPool,
   selectStakingPoolForView,
-  claimUnstake: claim,
+  claimUnstake,
   setViewClaim,
 }) => {
   return (
@@ -77,16 +76,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
         <div className="flex lg:mt-3 items-center">
           <div className="bold33">
             {stakingPool.data ? (
-              <>
-                {formatUnitsToHumanReadable(
-                  convertTokenToZil(
-                    unstakeInfo.zilAmount,
-                    stakingPool.data!.zilToTokenRate
-                  ),
-                  18
-                )}{" "}
-                ZIL
-              </>
+              <>{formatUnitsToHumanReadable(unstakeInfo.zilAmount, 18)} ZIL</>
             ) : (
               <>
                 <div className="w-[2em] h-[0.75em] animated-gradient" />
@@ -111,7 +101,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
           <Button
             className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
             disabled={!available}
-            onClick={() => claim(unstakeInfo.address)}
+            onClick={() => claimUnstake(unstakeInfo.address)}
           >
             {available
               ? "Claim"

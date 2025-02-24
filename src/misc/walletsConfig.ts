@@ -35,7 +35,7 @@ export interface DummyWallet {
 
 export const dummyWallets: Array<DummyWallet> = [
   {
-    name: "No Zil, no ZIL staked, no ZIL unstaked",
+    name: "Mocked wallet 1 - empty wallet",
     address: "0xCF671756a8238cBeB19BCB4D77FC9091E2fCe1A3",
     currentZil: 0n,
     stakingTokenAmount: [],
@@ -43,7 +43,7 @@ export const dummyWallets: Array<DummyWallet> = [
     nonLiquidRewards: [],
   },
   {
-    name: "No Zil, No ZIL staked, Some ZIL unstaked",
+    name: "Mocked wallet 2 - 0 ZIL, but some unstakes",
     address: "0xCF671756a8238cBeB19BCB4D77FC9091E2fCeYYY",
     currentZil: 0n,
     stakingTokenAmount: [],
@@ -62,7 +62,7 @@ export const dummyWallets: Array<DummyWallet> = [
     nonLiquidRewards: [],
   },
   {
-    name: "Some Zil, No ZIL staked, No ZIL unstaked",
+    name: "Mocked wallet 3 - only have ZIL",
     address: "0xf0a9953B539f9E7c4953279859F924d9212B2111",
     currentZil: 1000000000000000000n,
     stakingTokenAmount: [],
@@ -70,7 +70,7 @@ export const dummyWallets: Array<DummyWallet> = [
     nonLiquidRewards: [],
   },
   {
-    name: "Some Zil, Some ZIL staked, No ZIL unstaked",
+    name: "Mocked wallet 4 - some liquid stakes",
     address: "0xf0a9953B539f9E7c4953279859F924d9212B9383",
     currentZil: 1000000000000000000n,
     stakingTokenAmount: [
@@ -87,7 +87,7 @@ export const dummyWallets: Array<DummyWallet> = [
     nonLiquidRewards: [],
   },
   {
-    name: "Some Zil, Some ZIL staked, Some ZIL unstaked",
+    name: "Mocked wallet 5 - some liquid stakes and unstakes",
     address: "0xf0a9953B539f9E7c4953279859F924d9212B21A9",
     currentZil: 1000000000000000000000n,
     stakingTokenAmount: [
@@ -130,7 +130,7 @@ export const dummyWallets: Array<DummyWallet> = [
     nonLiquidRewards: [],
   },
   {
-    name: "Some ZIL, some ZIL staked on non-liquid",
+    name: "Mocked wallet 6 - stakes, unstakes, rewards on non-liquid",
     address: "0xee00953B539f9E7c4953279859F924d9212B2000",
     currentZil: parseUnits("822", 18),
     stakingTokenAmount: [
@@ -164,7 +164,7 @@ export const dummyWallets: Array<DummyWallet> = [
     ],
   },
   {
-    name: "No Zil, Some ZIL staked, No ZIL unstaked",
+    name: "Mocked wallet 7 - LOTS of unstakes",
     address: "0xf0a9953B539f9E7c4953279859F924d9212BBBBBB",
     currentZil: 0n,
     stakingTokenAmount: [
@@ -177,13 +177,84 @@ export const dummyWallets: Array<DummyWallet> = [
         stakingTokenAmount: parseUnits("99999", 18),
       },
     ],
-    unstakingEntries: [],
-    nonLiquidRewards: [
+    unstakingEntries: [
+      {
+        address: "0x96525678902345678902345678918278372212",
+        zilAmount: parseUnits("89", 18),
+        availableAt: DateTime.now().minus({ days: 5 }),
+      },
+      {
+        address: "0x96525678902345678902345678918278372212",
+        zilAmount: parseUnits("123", 18),
+        availableAt: DateTime.now().minus({ days: 4 }),
+      },
+      {
+        address: "0x96525678902345678902345678918278372212",
+        zilAmount: parseUnits("1992", 18),
+        availableAt: DateTime.now().minus({ days: 3 }),
+      },
+      {
+        address: "0x96525678902345678902345678918278372212",
+        zilAmount: parseUnits("2311", 18),
+        availableAt: DateTime.now().minus({ days: 2 }),
+      },
+      {
+        address: "0x96525678902345678902345678918278372212",
+        zilAmount: parseUnits("2311", 18),
+        availableAt: DateTime.now().plus({ days: 5 }),
+      },
+      {
+        address: "0x96525678902345678902345678918278372212",
+        zilAmount: parseUnits("122", 18),
+        availableAt: DateTime.now().plus({ days: 15 }),
+      },
       {
         address: "0xe863906941de820bde06701a0d804dd0b8575d67",
-        zilRewardAmount: parseUnits("1000", 18),
+        zilAmount: parseUnits("220.2", 18),
+        availableAt: DateTime.now().minus({ days: 5 }),
+      },
+      {
+        address: "0xe863906941de820bde06701a0d804dd0b8575d67",
+        zilAmount: parseUnits("1111.2", 18),
+        availableAt: DateTime.now().minus({ days: 3 }),
+      },
+      {
+        address: "0xe863906941de820bde06701a0d804dd0b8575d67",
+        zilAmount: parseUnits("220.2", 18),
+        availableAt: DateTime.now().plus({ days: 5 }),
+      },
+      {
+        address: "0xe863906941de820bde06701a0d804dd0b8575d67",
+        zilAmount: parseUnits("440.2", 18),
+        availableAt: DateTime.now().plus({ days: 5 }),
+      },
+      {
+        address: "0x82245678902345678902345678918278372382",
+        zilAmount: parseUnits("1000000", 18),
+        availableAt: DateTime.now().plus({ days: 1 }),
+      },
+      {
+        address: "0x82245678902345678902345678918278372382",
+        zilAmount: parseUnits("1000000", 18),
+        availableAt: DateTime.now().plus({ days: 5 }),
+      },
+      {
+        address: "0x82245678902345678902345678918278372382",
+        zilAmount: parseUnits("1000000", 18),
+        availableAt: DateTime.now().plus({ days: 15 }),
+      },
+      {
+        address: "0x82245678902345678902345678918278372382",
+        zilAmount: parseUnits("1000000", 18),
+        availableAt: DateTime.now().plus({ days: 10 }),
+      },
+      {
+        address: "0x82245678902345678902345678918278372382",
+        zilAmount: parseUnits("1000000", 18),
+        availableAt: DateTime.now().minus({ days: 1 }),
       },
     ],
+    nonLiquidRewards: [],
   },
 ]
 
