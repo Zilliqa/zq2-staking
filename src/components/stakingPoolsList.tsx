@@ -9,13 +9,12 @@ interface StakingPoolsListProps {
   setViewClaim: Dispatch<SetStateAction<boolean>>
   selectedPoolType: StakingPoolType
   setSelectedPoolType: Dispatch<SetStateAction<StakingPoolType>>
-
 }
 
 const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
   setViewClaim,
   selectedPoolType,
-  setSelectedPoolType
+  setSelectedPoolType,
 }) => {
   const {
     combinedStakingPoolsData,
@@ -27,7 +26,6 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
     "APR" | "VP" | "Commission" | null
   >(null)
   const [isAscending, setIsAscending] = useState(true)
-
 
   // Function to get the value to sort by based on the criteria
   const getSortValue = (data: any, criteria: string | null) => {
