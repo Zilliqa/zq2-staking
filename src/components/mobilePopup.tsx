@@ -1,10 +1,10 @@
 import Image from "next/image"
 import React, { useState, useEffect } from "react"
-import close from "../assets/svgs/closeIcon.svg"
+import close from "../assets/svgs/close-icon-small.svg"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import { useRouter } from "next/router"
 import CustomWalletConnect from "./customWalletConnect"
-import ArrowRightWhite from "../assets/svgs/arrowIcon.svg"
+import ArrowRightWhite from "../assets/svgs/arrow-icon.svg"
 interface MobilePopupProps {
   isOpen: boolean
   onClose: () => void
