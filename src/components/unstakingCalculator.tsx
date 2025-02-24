@@ -168,7 +168,11 @@ const UnstakingCalculator: React.FC = () => {
               )}
               <span
                 className={`${
-                  isPoolLiquid() ? "text-aqua1" : "text-purple3"
+                  !isUnstakingAvailable
+                    ? "!text-gray-500"
+                    : isPoolLiquid()
+                      ? "text-aqua1"
+                      : "text-purple3"
                 } medium17 ml-2 `}
               >
                 {unboudingPeriod}
