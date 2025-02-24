@@ -19,6 +19,59 @@ import {
 import { AppConfigStorage } from "./appConfigStorage"
 import { useRouter } from "next/router"
 
+// all available withdraws for one delegator are withdrawn using single tx, so we aggregate them to shoow only one UI entry
+function mergeAvailableWithdrawUnstakeRequests(
+  data: {
+    unstakeInfo: UserUnstakingPoolData
+    stakingPool: StakingPool
+  }[]
+) {
+  return data
+    .reduce(
+      (acc, unstakeData) => {
+        // if not availble then we want to have a separate entry for it
+        if (unstakeData.unstakeInfo.availableAt > DateTime.now()) {
+          acc.push(unstakeData)
+          return acc
+        }
+
+        const existingIdx = acc.findIndex(
+          (entry) =>
+            entry.stakingPool.definition.id ===
+            unstakeData.stakingPool.definition.id
+        )
+
+        if (existingIdx !== -1) {
+          // if we already have an available entry for this pool, we want to aggregate the zilAmount
+          acc[existingIdx] = {
+            stakingPool: unstakeData.stakingPool,
+            unstakeInfo: {
+              availableAt: unstakeData.unstakeInfo.availableAt,
+              address: unstakeData.unstakeInfo.address,
+              zilAmount:
+                unstakeData.unstakeInfo.zilAmount +
+                acc[existingIdx].unstakeInfo.zilAmount,
+            },
+          }
+        } else {
+          // if we don't yet have an available entry for this pool, we want to add it
+          acc.push(unstakeData)
+        }
+
+        return acc
+      },
+      new Array<{
+        unstakeInfo: UserUnstakingPoolData
+        stakingPool: StakingPool
+      }>()
+    )
+    .toSorted(
+      (claimA, claimB) =>
+        claimA.unstakeInfo.availableAt.diff(claimB.unstakeInfo.availableAt)
+          .milliseconds
+    )
+}
+
 const useStakingPoolsStorage = () => {
   const router = useRouter()
 
@@ -197,10 +250,17 @@ const useStakingPoolsStorage = () => {
             (userPoolData) =>
               userPoolData.address === stakingPoolForView.definition.address
           ),
-          unstaked: userUnstakesData.filter(
-            (userPoolData) =>
-              userPoolData.address === stakingPoolForView.definition.address
-          ),
+          unstaked: mergeAvailableWithdrawUnstakeRequests(
+            userUnstakesData
+              .filter(
+                (userPoolData) =>
+                  userPoolData.address === stakingPoolForView.definition.address
+              )
+              .map((unstakeInfo) => ({
+                unstakeInfo,
+                stakingPool: stakingPoolForView,
+              }))
+          ).map((unstakeData) => unstakeData.unstakeInfo),
           reward: userNonLiquidPoolRewards.find(
             (userPoolData) =>
               userPoolData.address === stakingPoolForView.definition.address
@@ -225,12 +285,21 @@ const useStakingPoolsStorage = () => {
       )!,
     })) || []
 
-  const availableForUnstaking = combinedUserUnstakesData.filter(
-    (unstakeData) => unstakeData.unstakeInfo.availableAt <= DateTime.now()
+  const availableForUnstaking = mergeAvailableWithdrawUnstakeRequests(
+    combinedUserUnstakesData.filter(
+      (unstakeData) => unstakeData.unstakeInfo.availableAt <= DateTime.now()
+    )
   )
-  const pendingUnstaking = combinedUserUnstakesData.filter(
-    (unstakeData) => unstakeData.unstakeInfo.availableAt > DateTime.now()
-  )
+
+  const pendingUnstaking = combinedUserUnstakesData
+    .filter(
+      (unstakeData) => unstakeData.unstakeInfo.availableAt > DateTime.now()
+    )
+    .toSorted(
+      (claimA, claimB) =>
+        claimA.unstakeInfo.availableAt.diff(claimB.unstakeInfo.availableAt)
+          .milliseconds
+    )
 
   const getMinimalPoolStakingAmount = (stakinPoolAddress: string) => {
     const stakingPoolData = availableStakingPoolsData.find(
@@ -249,7 +318,6 @@ const useStakingPoolsStorage = () => {
     stakingPoolForView: combinedSelectedStakingPoolForViewData,
     selectStakingPoolForView,
     combinedStakingPoolsData,
-    userUnstakesData,
     availableForUnstaking,
     pendingUnstaking,
     nonLiquidRewards: combinedUserNonLiquidPoolRewards,
