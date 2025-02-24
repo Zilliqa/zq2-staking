@@ -244,8 +244,8 @@ const HomePage = () => {
         }`}
       >
         {/* Header */}
-        <div className="h-[10vh] w-full flex items-center justify-center text-white border-b-[0.5px] border-gray2">
-          <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 4k:px-16 4k:max-w-screen-4k items-center">
+        <div className="w-full flex items-center justify-center text-white border-b-[0.5px] border-gray2">
+          <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 4k:px-16 4k:max-w-screen-4k items-center py-4 lg:py-5">
             <div className="flex items-center">
               <Image
                 //src="https://zil-dev.cdn.prismic.io/zil-dev/f3b97b97-e98b-4767-9b24-9474b9c20a83_Asset+1.svg"
@@ -253,7 +253,7 @@ const HomePage = () => {
                 alt="Zilliqa Logo"
                 width={32}
                 height={32}
-                className="h-10 md:h-12 w-auto"
+                className="h-10 md:h-12 w-auto lg:my-2"
                 onClick={() =>
                   router.push(
                     {
