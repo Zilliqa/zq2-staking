@@ -309,7 +309,7 @@ const HomePage = () => {
         {/* mobile logo */}
         <svg
           viewBox="0 0 88 27"
-          className="h-10 w-auto cursor-pointer lg:hidden"
+          className="h-8 sm:h-10 w-auto cursor-pointer lg:hidden"
           onClick={onClick}
         >
           <defs>
@@ -364,7 +364,7 @@ const HomePage = () => {
               />
             </div>
 
-            <div className="flex gap-1 md:gap-2.5 items-center">
+            <div className="flex gap-2 sm:gap-2.5 items-center">
               {isWalletConnected && <ZilGiveaway />}
               <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 w-full sm:max-w-fit">
                 Connect wallet
