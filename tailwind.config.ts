@@ -154,6 +154,7 @@ const config: Config = {
         "21": "84px",
       },
       screens: {
+        xxs: '380px',
         xs: "450px",
         "4k": "2380px",
       },
