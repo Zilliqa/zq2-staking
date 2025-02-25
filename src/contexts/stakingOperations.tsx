@@ -79,10 +79,10 @@ const useStakingOperations = () => {
         .catch((error) => {
           notification.error({
             message: "Staking failed",
-            description:
-              error?.message || "There was an error while staking ZIL",
+            description: "There was an error while staking ZIL",
             placement: "topRight",
           })
+          console.error(error)
         })
         .finally(() => setPreparingStakingTx(false))
     }
@@ -149,10 +149,10 @@ const useStakingOperations = () => {
         .catch((error) => {
           notification.error({
             message: "Unstaking failed",
-            description:
-              error?.message || "There was an error while unstaking ZIL",
+            description: "There was an error while unstaking ZIL",
             placement: "topRight",
           })
+          console.error(error)
         })
         .finally(() => setPreparingUnstakingTx(false))
     }
@@ -219,10 +219,10 @@ const useStakingOperations = () => {
         .catch((error) => {
           notification.error({
             message: "Claiming failed",
-            description:
-              error?.message || "There was an error while claiming ZIL",
+            description: "There was an error while claiming ZIL",
             placement: "topRight",
           })
+          console.error(error)
         })
         .finally(() => setPreparingClaimUnstakeTx(false))
     }
@@ -289,10 +289,10 @@ const useStakingOperations = () => {
         .catch((error) => {
           notification.error({
             message: "Claiming rewards failed",
-            description:
-              error?.message || "There was an error while claiming reward ZIL",
+            description: "There was an error while claiming reward ZIL",
             placement: "topRight",
           })
+          console.error(error)
         })
         .finally(() => setPreparingClaimRewardTx(false))
     }
@@ -359,10 +359,10 @@ const useStakingOperations = () => {
         .catch((error) => {
           notification.error({
             message: "Staking rewards failed",
-            description:
-              error?.message || "There was an error while staking rewards",
+            description: "There was an error while staking rewards",
             placement: "topRight",
           })
+          console.error(error)
         })
         .finally(() => setPreparingStakeRewardTx(false))
     }
