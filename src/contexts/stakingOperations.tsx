@@ -4,10 +4,11 @@ import { useWaitForTransactionReceipt } from "wagmi"
 import { createContainer } from "./context"
 import { WalletConnector } from "./walletConnector"
 import { StakingPoolsStorage } from "./stakingPoolsStorage"
-import { Address } from "viem"
+import { Address, formatUnits } from "viem"
 import { baseDelegatorAbi, nonLiquidDelegatorAbi } from "@/misc/stakingAbis"
 import { writeContract } from "wagmi/actions"
 import { useConfig } from "wagmi"
+import { useGasPrice } from "wagmi"
 
 const useStakingOperations = () => {
   const { isDummyWalletConnected, updateWalletBalance } =
@@ -25,9 +26,21 @@ const useStakingOperations = () => {
 
   const stakingPoolId = stakingPoolForView?.stakingPool.definition.id
 
+  const { data: reportedGasPrice } = useGasPrice()
+
+  // eth_gasPrice returned by our chain is consistently lower than the actual gas price
+  // so we multiply it by 125% to get a more accurate estimate
+  const uppedGasPrice = ((reportedGasPrice || 0n) * 125n) / 100n
+
+  const getGasCostInZil = (estimatedGas: bigint) => {
+    return Math.ceil(parseFloat(formatUnits(estimatedGas * uppedGasPrice, 18)))
+  }
+
   /**
    * STAKING
    */
+
+  const stakingCallEstimatedGas = 0x1e8480n
 
   const [stakingCallTxHash, setStakingCallTxHash] = useState<
     Address | undefined
@@ -97,6 +110,8 @@ const useStakingOperations = () => {
    * UNSTAKING
    */
 
+  const unstakingCallEstimatedGas = 0x1e8480n
+
   const [unstakingCallTxHash, setUnstakingCallTxHash] = useState<
     Address | undefined
   >(undefined)
@@ -164,6 +179,8 @@ const useStakingOperations = () => {
   /**
    * CLAIMING UNSTAKE
    */
+
+  const claimUnstakingCallEstimatedGas = 0x1e8480n
 
   const [claimUnstakeCallTxHash, setClaimUnstakeCallTxHash] = useState<
     Address | undefined
@@ -233,6 +250,8 @@ const useStakingOperations = () => {
    * CLAIM REWARDS
    */
 
+  const claimRewardCallEstimatedGas = 0x1e8480n
+
   const [claimRewardCallTxHash, setClaimRewardCallTxHash] = useState<
     Address | undefined
   >(undefined)
@@ -300,6 +319,8 @@ const useStakingOperations = () => {
   /**
    * RESTAKE REWARDS
    */
+
+  const stakeRewardCallEstimatedGas = 0x1e8480n
 
   const [stakeRewardCallTxHash, setStakeRewardCallTxHash] = useState<
     Address | undefined
@@ -387,29 +408,34 @@ const useStakingOperations = () => {
     isStakingInProgress: submittingStakingTx || preparingStakingTx,
     stakingCallTxHash,
     stakeContractCallError,
+    stakingCallZilFees: getGasCostInZil(stakingCallEstimatedGas),
 
     unstake,
     isUnstakingInProgress: submittingUnstakingTx || preparingUnstakingTx,
     unstakingCallTxHash,
     unstakeContractCallError,
+    unstakingCallZilFees: getGasCostInZil(unstakingCallEstimatedGas),
 
     claimUnstake,
     isClaimingUnstakeInProgress:
       submittingClaimUnstakeTx || preparingClaimUnstakeTx,
     claimUnstakeCallTxHash,
     claimContractCallError,
+    claimUnstakeCallZilFees: getGasCostInZil(claimUnstakingCallEstimatedGas),
 
     claimReward,
     isClaimingRewardInProgress:
       submittingClaimRewardTx || preparingClaimRewardTx,
     claimRewardCallTxHash,
     claimRewardContractCallError,
+    claimRewardCallZilFees: getGasCostInZil(claimRewardCallEstimatedGas),
 
     stakeReward,
     isStakingRewardInProgress:
       submittingStakeRewardTx || preparingStakeRewardTx,
     stakeRewardCallTxHash,
     stakeRewardContractCallError,
+    stakeRewardCallZilFees: getGasCostInZil(stakeRewardCallEstimatedGas),
   }
 }
 
