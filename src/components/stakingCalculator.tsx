@@ -29,11 +29,10 @@ const StakingCalculator: React.FC = () => {
     isStakingInProgress,
     stakingCallTxHash,
     stakeContractCallError,
+    stakingCallZilFees,
   } = StakingOperations.useContainer()
 
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
-
-  const stakingTxCostInZill = 4
 
   const [zilToStake, setZilToStake] = useState<string>(
     formatUnits(
@@ -91,12 +90,12 @@ const StakingCalculator: React.FC = () => {
         whyCantStake: "Insufficient ZIL balance",
       }
     } else if (
-      zilInWei + parseEther(`${stakingTxCostInZill}`) >
+      zilInWei + parseEther(`${stakingCallZilFees}`) >
       (zilAvailable || 0n)
     ) {
       return {
         canStake: false,
-        whyCantStake: "Insufficient ZIL balance for transaction fee",
+        whyCantStake: `Remaining ZIL balance insufficient for ${stakingCallZilFees} ZIL transaction fee`,
       }
     } else if (
       zilInWei < stakingPoolForView.stakingPool.definition.minimumStake
@@ -123,7 +122,7 @@ const StakingCalculator: React.FC = () => {
     const allZil = formatUnits(zilAvailable || 0n, 18)
     const roundedToNiceNumber = allZil.split(".")[0]
     const availableMinusFees =
-      parseFloat(roundedToNiceNumber) - stakingTxCostInZill
+      parseFloat(roundedToNiceNumber) - stakingCallZilFees
 
     setZilToStake(`${availableMinusFees}`)
   }
@@ -297,7 +296,7 @@ const StakingCalculator: React.FC = () => {
                     <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
                   )}
                 </div>
-                <div>Max transaction cost: ~{stakingTxCostInZill} ZIL</div>
+                <div>Max transaction cost: ~{stakingCallZilFees} ZIL</div>
                 <div>Unbonding Period: {unboudingPeriod}</div>
               </div>
               <div className="flex flex-col lg:gray-base gray-base2 xl:gap-3.5 4k:gap-5 xl:items-end justify-start">
