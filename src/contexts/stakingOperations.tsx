@@ -1,6 +1,6 @@
 import { notification } from "antd"
 import { useEffect, useState } from "react"
-import { useWaitForTransactionReceipt } from "wagmi"
+import { useWaitForTransactionReceipt, useWriteContract } from "wagmi"
 import { createContainer } from "./context"
 import { WalletConnector } from "./walletConnector"
 import { StakingPoolsStorage } from "./stakingPoolsStorage"
@@ -55,6 +55,12 @@ const useStakingOperations = () => {
     hash: stakingCallTxHash,
   })
 
+  const {
+    writeContract: writeContractStake,
+    status: stakingStatus,
+    data: stakeTxHash,
+  } = useWriteContract()
+
   const stake = (delegatorAddress: string, weiToStake: bigint) => {
     setPreparingStakingTx(true)
 
@@ -66,25 +72,24 @@ const useStakingOperations = () => {
       setStakingCallTxHash("0x1234567890234567890234567890234567890" as Address)
       setPreparingStakingTx(false)
     } else {
-      writeContract(wagmiConfig, {
-        address: delegatorAddress as Address,
-        abi: baseDelegatorAbi,
-        functionName: "stake",
-        args: [],
-        value: weiToStake,
-      })
-        .then((txHash) => {
-          setStakingCallTxHash(txHash)
+      try {
+        writeContractStake({
+          address: delegatorAddress as Address,
+          abi: baseDelegatorAbi,
+          functionName: "stake",
+          args: [],
+          value: weiToStake,
         })
-        .catch((error) => {
-          notification.error({
-            message: "Staking failed",
-            description:
-              error?.message || "There was an error while staking ZIL",
-            placement: "topRight",
-          })
+      } catch (error) {
+        notification.error({
+          message: "Staking failed",
+          description: "There was an error while staking ZIL",
+          placement: "topRight",
         })
-        .finally(() => setPreparingStakingTx(false))
+        console.error(error)
+      } finally {
+        setPreparingStakingTx(false)
+      }
     }
   }
 
@@ -97,14 +102,24 @@ const useStakingOperations = () => {
       })
       reloadUserStakingPoolsData()
       updateWalletBalance()
-    } else if (stakingCallReceiptStatus === "error") {
+    }
+  }, [stakingCallReceiptStatus])
+
+  useEffect(() => {
+    if (stakingStatus === "success") {
+      setStakingCallTxHash(stakeTxHash)
+    }
+  }, [stakingStatus, stakeTxHash])
+
+  useEffect(() => {
+    if (stakingCallReceiptStatus === "error" || stakingStatus === "error") {
       notification.error({
         message: "Staking failed",
         description: "There was an error while staking ZIL",
         placement: "topRight",
       })
     }
-  }, [stakingCallReceiptStatus])
+  }, [stakingCallReceiptStatus, stakingStatus])
 
   /**
    * UNSTAKING
@@ -149,10 +164,10 @@ const useStakingOperations = () => {
         .catch((error) => {
           notification.error({
             message: "Unstaking failed",
-            description:
-              error?.message || "There was an error while unstaking ZIL",
+            description: "There was an error while unstaking ZIL",
             placement: "topRight",
           })
+          console.error(error)
         })
         .finally(() => setPreparingUnstakingTx(false))
     }
@@ -219,10 +234,10 @@ const useStakingOperations = () => {
         .catch((error) => {
           notification.error({
             message: "Claiming failed",
-            description:
-              error?.message || "There was an error while claiming ZIL",
+            description: "There was an error while claiming ZIL",
             placement: "topRight",
           })
+          console.error(error)
         })
         .finally(() => setPreparingClaimUnstakeTx(false))
     }
@@ -289,10 +304,10 @@ const useStakingOperations = () => {
         .catch((error) => {
           notification.error({
             message: "Claiming rewards failed",
-            description:
-              error?.message || "There was an error while claiming reward ZIL",
+            description: "There was an error while claiming reward ZIL",
             placement: "topRight",
           })
+          console.error(error)
         })
         .finally(() => setPreparingClaimRewardTx(false))
     }
@@ -359,10 +374,10 @@ const useStakingOperations = () => {
         .catch((error) => {
           notification.error({
             message: "Staking rewards failed",
-            description:
-              error?.message || "There was an error while staking rewards",
+            description: "There was an error while staking rewards",
             placement: "topRight",
           })
+          console.error(error)
         })
         .finally(() => setPreparingStakeRewardTx(false))
     }
