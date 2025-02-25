@@ -220,7 +220,7 @@ const StakingCalculator: React.FC = () => {
             <div className="flex mt-2 mb-3">
               {isWalletConnected ? (
                 <>
-                  {canStake ? (
+                  {canStake || isStakingInProgress ? (
                     <Button
                       type="default"
                       size="large"
