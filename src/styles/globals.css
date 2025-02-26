@@ -528,7 +528,6 @@ button,
   overflow: hidden;
 }
 
-
-:where(.css-dev-only-do-not-override-1wwf28x).ant-input-affix-wrapper::before{
+:where(.css-dev-only-do-not-override-1wwf28x).ant-input-affix-wrapper::before {
   content: none;
 }
