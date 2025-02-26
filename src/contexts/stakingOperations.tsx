@@ -113,7 +113,7 @@ const useTxOperation = (
   }
 
   return {
-    isTxInPreparation,
+    isTxInPreparation: isTxInPreparation || txSubmissionStatus === "pending",
     isTxProcessedByChain,
     txHash,
     txContractError,
@@ -359,18 +359,21 @@ const useStakingOperations = () => {
     setIsDummyWalletPopupOpen,
 
     stake,
+    preparingStakingTx,
     isStakingInProgress: submittingStakingTx || preparingStakingTx,
     stakingCallTxHash,
     stakeContractCallError,
     stakingCallZilFees: getGasCostInZil(stakingCallEstimatedGas),
 
     unstake,
+    preparingUnstakingTx,
     isUnstakingInProgress: submittingUnstakingTx || preparingUnstakingTx,
     unstakingCallTxHash,
     unstakeContractCallError,
     unstakingCallZilFees: getGasCostInZil(unstakingCallEstimatedGas),
 
     claimUnstake,
+    preparingClaimUnstakeTx,
     isClaimingUnstakeInProgress:
       submittingClaimUnstakeTx || preparingClaimUnstakeTx,
     claimUnstakeCallTxHash,
@@ -378,6 +381,7 @@ const useStakingOperations = () => {
     claimUnstakeCallZilFees: getGasCostInZil(claimUnstakingCallEstimatedGas),
 
     claimReward,
+    preparingClaimRewardTx,
     isClaimingRewardInProgress:
       submittingClaimRewardTx || preparingClaimRewardTx,
     claimRewardCallTxHash,
@@ -385,6 +389,7 @@ const useStakingOperations = () => {
     claimRewardCallZilFees: getGasCostInZil(claimRewardCallEstimatedGas),
 
     stakeReward,
+    preparingStakeRewardTx,
     isStakingRewardInProgress:
       submittingStakeRewardTx || preparingStakeRewardTx,
     stakeRewardCallTxHash,

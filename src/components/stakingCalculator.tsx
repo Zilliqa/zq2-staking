@@ -27,6 +27,7 @@ const StakingCalculator: React.FC = () => {
   const { zilAvailable } = WalletConnector.useContainer()
   const {
     stake,
+    preparingStakingTx,
     isStakingInProgress,
     stakingCallTxHash,
     stakeContractCallError,
@@ -279,7 +280,11 @@ ${
                       }
                       loading={isStakingInProgress}
                     >
-                      Stake
+                      {preparingStakingTx
+                        ? "Confirm in wallet"
+                        : isStakingInProgress
+                          ? "Processing"
+                          : "Stake"}
                     </Button>
                   ) : (
                     <Tooltip

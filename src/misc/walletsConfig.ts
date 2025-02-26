@@ -366,9 +366,13 @@ export async function getWalletUnstakingData(
             ...uwd.blockNumberAndAmount.map((bna) => {
               const blocksRemaining = Number(bna[0] - currentBlockNumber)
 
+              const blocksRemainingInSeconds = blocksRemaining * 1 // seconds per block
+
               return {
                 zilAmount: bna[1],
-                availableAt: DateTime.now().plus({ seconds: blocksRemaining }), // we assume block takes a second
+                availableAt: DateTime.now().plus({
+                  seconds: blocksRemainingInSeconds,
+                }),
                 address: uwd.address,
               }
             })
