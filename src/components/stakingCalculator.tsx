@@ -187,8 +187,7 @@ ${
                   value={zilToStake}
                   onChange={handleChange}
                   onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  // prefix="ZIL"
+                  onBlur={handleBlur} 
                   status={!canStake ? "warning" : undefined}
                 />
               </div>

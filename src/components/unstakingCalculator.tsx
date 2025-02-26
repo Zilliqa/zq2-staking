@@ -181,13 +181,6 @@ ${
                 onChange={handleChange}
                 onBlur={handleBlur}
                 onFocus={handleFocus}
-                // prefix={
-                //   <div
-                //     className={`${isUnstakingAvailable ? "!text-white1" : "!text-gray-500"}`}
-                //   >
-                //     {stakingPoolForView.stakingPool.definition.tokenSymbol}
-                //   </div>
-                // }
                 status={!canUnstake ? "error" : undefined}
                 disabled={!isUnstakingAvailable}
               />
