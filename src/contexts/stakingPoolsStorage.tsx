@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { createContainer } from "./context"
 import { WalletConnector } from "./walletConnector"
 import { DateTime } from "luxon"
@@ -97,6 +97,23 @@ const useStakingPoolsStorage = () => {
     useState<StakingPool | null>(null)
 
   const [isUnstakingDataLoading, setIsUnstakingDataLoading] = useState(false)
+
+  /**
+   * This interval forces rerender and state recalculation for subset of items
+   * that have availableAt property. This is done by simply copying such state.
+   * This methid is cheap and does not require any additional API calls.
+   * This makes the frontend to properly display the time left and availability
+   * for such items
+   */
+  const _refreshItemsWithAvailableAt = useMemo(
+    () =>
+      setInterval(() => {
+        console.log("Refreshing unstakings")
+        setUserUnstakesData((current) => [...current])
+        setUserNonLiquidPoolRewards((current) => [...current])
+      }, 5000),
+    []
+  )
 
   const reloadUserStakingPoolsData = () => {
     if (!walletAddress) {
