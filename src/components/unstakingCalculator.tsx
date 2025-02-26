@@ -121,8 +121,6 @@ const UnstakingCalculator: React.FC = () => {
     }
   })()
 
-  console.log(isUnstakingAvailable)
-
   return (
     stakingPoolForView && (
       <FastFadeScroll

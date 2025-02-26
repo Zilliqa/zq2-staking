@@ -4,14 +4,126 @@ import { useWaitForTransactionReceipt, useWriteContract } from "wagmi"
 import { createContainer } from "./context"
 import { WalletConnector } from "./walletConnector"
 import { StakingPoolsStorage } from "./stakingPoolsStorage"
-import { Address, formatUnits } from "viem"
+import { Address, formatUnits, WriteContractParameters } from "viem"
 import { baseDelegatorAbi, nonLiquidDelegatorAbi } from "@/misc/stakingAbis"
-import { writeContract } from "wagmi/actions"
 import { useConfig } from "wagmi"
 import { useGasPrice } from "wagmi"
 
+const useTxOperation = (
+  isDummyWalletConnected: boolean,
+  setDummyWalletPopupContent: (content: string) => void,
+  setIsDummyWalletPopupOpen: (isOpen: boolean) => void,
+  reloadAppUserData: () => void,
+  successMessage: string,
+  successDescription: string,
+  errorMessage: string,
+  errorDescription: string
+) => {
+  const [txHash, setTxHash] = useState<Address | undefined>(undefined)
+
+  const [isTxInPreparation, setIsTxInPreparation] = useState(false)
+
+  const {
+    isLoading: isTxProcessedByChain,
+    error: txContractError,
+    status: txReceiptStatus,
+  } = useWaitForTransactionReceipt({
+    hash: txHash,
+  })
+
+  const {
+    writeContract,
+    status: txSubmissionStatus,
+    error: txSubmissionError,
+    data: currentTxData,
+  } = useWriteContract()
+
+  const callContract = (txCallParams: WriteContractParameters) => {
+    setIsTxInPreparation(true)
+
+    if (isDummyWalletConnected) {
+      setDummyWalletPopupContent(
+        `Now User gonna approve the wallet transaction, and then shown notification with ${successMessage}`
+      )
+      setIsDummyWalletPopupOpen(true)
+      setTxHash("0x1234567890234567890234567890234567890" as Address)
+      setIsTxInPreparation(false)
+    } else {
+      try {
+        writeContract(txCallParams)
+      } catch (error) {
+        notification.error({
+          message: errorMessage,
+          description:
+            errorDescription + "\nError while submitting transaction to chain",
+          placement: "topRight",
+        })
+        console.error(error)
+      } finally {
+        setIsTxInPreparation(false)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (txReceiptStatus === "success") {
+      notification.success({
+        message: successMessage,
+        description: successDescription,
+        placement: "topRight",
+      })
+      reloadAppUserData()
+    }
+  }, [txReceiptStatus])
+
+  useEffect(() => {
+    if (txSubmissionStatus === "success") {
+      setTxHash(currentTxData)
+    }
+  }, [txSubmissionStatus, currentTxData])
+
+  useEffect(() => {
+    if (txSubmissionStatus === "error") {
+      notification.error({
+        message: errorMessage,
+        description:
+          errorDescription + "\nError while submitting transaction to chain",
+        placement: "topRight",
+      })
+
+      console.error({ txSubmissionStatus, txSubmissionError })
+    }
+  }, [txSubmissionStatus])
+
+  useEffect(() => {
+    if (txReceiptStatus === "error") {
+      notification.error({
+        message: errorMessage,
+        description:
+          errorMessage + "\nError while processing transaction on chain",
+        placement: "topRight",
+      })
+
+      console.error({ txReceiptStatus, txContractError })
+    }
+  }, [txReceiptStatus, txSubmissionStatus])
+
+  const clearState = () => {
+    setTxHash(undefined)
+  }
+
+  return {
+    isTxInPreparation,
+    isTxProcessedByChain,
+    txHash,
+    txContractError,
+    callContract,
+    clearState,
+  }
+}
+
 const useStakingOperations = () => {
-  const { isDummyWalletConnected, updateWalletBalance } =
+  const { isDummyWalletConnected, updateWalletBalance, walletAddress } =
     WalletConnector.useContainer()
 
   const { reloadUserStakingPoolsData, stakingPoolForView } =
@@ -41,85 +153,38 @@ const useStakingOperations = () => {
    */
 
   const stakingCallEstimatedGas = 0x1e8480n
-
-  const [stakingCallTxHash, setStakingCallTxHash] = useState<
-    Address | undefined
-  >(undefined)
-  const [preparingStakingTx, setPreparingStakingTx] = useState(false)
-
   const {
-    isLoading: submittingStakingTx,
-    error: stakeContractCallError,
-    status: stakingCallReceiptStatus,
-  } = useWaitForTransactionReceipt({
-    hash: stakingCallTxHash,
-  })
-
-  const {
-    writeContract: writeContractStake,
-    status: stakingStatus,
-    data: stakeTxHash,
-  } = useWriteContract()
-
-  const stake = (delegatorAddress: string, weiToStake: bigint) => {
-    setPreparingStakingTx(true)
-
-    if (isDummyWalletConnected) {
-      setDummyWalletPopupContent(
-        "Now User gonna approve the wallet transaction for staking ZIL"
-      )
-      setIsDummyWalletPopupOpen(true)
-      setStakingCallTxHash("0x1234567890234567890234567890234567890" as Address)
-      setPreparingStakingTx(false)
-    } else {
-      try {
-        writeContractStake({
-          address: delegatorAddress as Address,
-          abi: baseDelegatorAbi,
-          functionName: "stake",
-          args: [],
-          value: weiToStake,
-        })
-      } catch (error) {
-        notification.error({
-          message: "Staking failed",
-          description: "There was an error while staking ZIL",
-          placement: "topRight",
-        })
-        console.error(error)
-      } finally {
-        setPreparingStakingTx(false)
-      }
-    }
-  }
-
-  useEffect(() => {
-    if (stakingCallReceiptStatus === "success") {
-      notification.success({
-        message: "Staking successful",
-        description: "You have successfully staked ZIL",
-        placement: "topRight",
-      })
+    isTxInPreparation: preparingStakingTx,
+    isTxProcessedByChain: submittingStakingTx,
+    txHash: stakingCallTxHash,
+    callContract: callContractStakeRaw,
+    clearState: clearStakingState,
+    txContractError: stakeContractCallError,
+  } = useTxOperation(
+    isDummyWalletConnected,
+    setDummyWalletPopupContent,
+    setIsDummyWalletPopupOpen,
+    () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
-    }
-  }, [stakingCallReceiptStatus])
+    },
+    "Staking successful",
+    "You have successfully staked ZIL",
+    "Staking failed",
+    "There was an error while staking ZIL"
+  )
 
-  useEffect(() => {
-    if (stakingStatus === "success") {
-      setStakingCallTxHash(stakeTxHash)
-    }
-  }, [stakingStatus, stakeTxHash])
-
-  useEffect(() => {
-    if (stakingCallReceiptStatus === "error" || stakingStatus === "error") {
-      notification.error({
-        message: "Staking failed",
-        description: "There was an error while staking ZIL",
-        placement: "topRight",
-      })
-    }
-  }, [stakingCallReceiptStatus, stakingStatus])
+  const stake = (delegatorAddress: string, weiToStake: bigint) => {
+    callContractStakeRaw({
+      address: delegatorAddress as Address,
+      abi: baseDelegatorAbi,
+      functionName: "stake",
+      args: [],
+      value: weiToStake,
+      chain: wagmiConfig.chains[0], // we always have only one chain defined
+      account: walletAddress as Address,
+    })
+  }
 
   /**
    * UNSTAKING
@@ -127,69 +192,37 @@ const useStakingOperations = () => {
 
   const unstakingCallEstimatedGas = 0x1e8480n
 
-  const [unstakingCallTxHash, setUnstakingCallTxHash] = useState<
-    Address | undefined
-  >(undefined)
-  const [preparingUnstakingTx, setPreparingUnstakingTx] = useState(false)
-
   const {
-    isLoading: submittingUnstakingTx,
-    error: unstakeContractCallError,
-    status: unstakeCallReceiptStatus,
-  } = useWaitForTransactionReceipt({
-    hash: unstakingCallTxHash,
-  })
-
-  const unstake = (delegatorAddress: string, tokensToUnstake: bigint) => {
-    setPreparingUnstakingTx(true)
-    if (isDummyWalletConnected) {
-      setDummyWalletPopupContent(
-        `Now User gonna approve the wallet transaction for unstaking ${tokensToUnstake} staked tokens`
-      )
-      setIsDummyWalletPopupOpen(true)
-      setUnstakingCallTxHash(
-        "0x1234567890234567890234567890234567890" as Address
-      )
-      setPreparingUnstakingTx(false)
-    } else {
-      writeContract(wagmiConfig, {
-        address: delegatorAddress as Address,
-        abi: baseDelegatorAbi,
-        functionName: "unstake",
-        args: [tokensToUnstake],
-      })
-        .then((txHash) => {
-          setUnstakingCallTxHash(txHash)
-        })
-        .catch((error) => {
-          notification.error({
-            message: "Unstaking failed",
-            description: "There was an error while unstaking ZIL",
-            placement: "topRight",
-          })
-          console.error(error)
-        })
-        .finally(() => setPreparingUnstakingTx(false))
-    }
-  }
-
-  useEffect(() => {
-    if (unstakeCallReceiptStatus === "success") {
-      notification.success({
-        message: "Unstaking successful",
-        description: "You have successfully unstaked ZIL",
-        placement: "topRight",
-      })
+    isTxInPreparation: preparingUnstakingTx,
+    isTxProcessedByChain: submittingUnstakingTx,
+    txHash: unstakingCallTxHash,
+    txContractError: unstakeContractCallError,
+    callContract: callContractUnstakeRaw,
+    clearState: clearUnstakingState,
+  } = useTxOperation(
+    isDummyWalletConnected,
+    setDummyWalletPopupContent,
+    setIsDummyWalletPopupOpen,
+    () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
-    } else if (unstakeCallReceiptStatus === "error") {
-      notification.error({
-        message: "Unstaking failed",
-        description: "There was an error while unstaking ZIL",
-        placement: "topRight",
-      })
-    }
-  }, [unstakeCallReceiptStatus])
+    },
+    "Unstaking successful",
+    "You have successfully unstaked ZIL",
+    "Unstaking failed",
+    "There was an error while unstaking ZIL"
+  )
+
+  const unstake = (delegatorAddress: string, tokensToUnstake: bigint) => {
+    callContractUnstakeRaw({
+      address: delegatorAddress as Address,
+      abi: baseDelegatorAbi,
+      functionName: "unstake",
+      args: [tokensToUnstake],
+      chain: wagmiConfig.chains[0], // we always have only one chain defined
+      account: walletAddress as Address,
+    })
+  }
 
   /**
    * CLAIMING UNSTAKE
@@ -197,69 +230,37 @@ const useStakingOperations = () => {
 
   const claimUnstakingCallEstimatedGas = 0x1e8480n
 
-  const [claimUnstakeCallTxHash, setClaimUnstakeCallTxHash] = useState<
-    Address | undefined
-  >(undefined)
-  const [preparingClaimUnstakeTx, setPreparingClaimUnstakeTx] = useState(false)
-
   const {
-    isLoading: submittingClaimUnstakeTx,
-    error: claimContractCallError,
-    status: claimCallReceiptStatus,
-  } = useWaitForTransactionReceipt({
-    hash: claimUnstakeCallTxHash,
-  })
-
-  const claimUnstake = (delegatorAddress: string) => {
-    setPreparingClaimUnstakeTx(true)
-    if (isDummyWalletConnected) {
-      setDummyWalletPopupContent(
-        "Now User gonna approve the wallet transaction for withdrawing/claiming ZIL"
-      )
-      setIsDummyWalletPopupOpen(true)
-      setClaimUnstakeCallTxHash(
-        "0x1234567890234567890234567890234567890" as Address
-      )
-      setPreparingClaimUnstakeTx(false)
-    } else {
-      writeContract(wagmiConfig, {
-        address: delegatorAddress as Address,
-        abi: baseDelegatorAbi,
-        functionName: "claim",
-        args: [],
-      })
-        .then((txHash) => {
-          setClaimUnstakeCallTxHash(txHash)
-        })
-        .catch((error) => {
-          notification.error({
-            message: "Claiming failed",
-            description: "There was an error while claiming ZIL",
-            placement: "topRight",
-          })
-          console.error(error)
-        })
-        .finally(() => setPreparingClaimUnstakeTx(false))
-    }
-  }
-
-  useEffect(() => {
-    if (claimCallReceiptStatus === "success") {
-      notification.success({
-        message: "Claiming successful",
-        description: "You have successfully claimed ZIL",
-        placement: "topRight",
-      })
+    isTxInPreparation: preparingClaimUnstakeTx,
+    isTxProcessedByChain: submittingClaimUnstakeTx,
+    txHash: claimUnstakeCallTxHash,
+    txContractError: claimContractCallError,
+    callContract: callContractClaimUnstakeRaw,
+    clearState: clearClaimUnstakeState,
+  } = useTxOperation(
+    isDummyWalletConnected,
+    setDummyWalletPopupContent,
+    setIsDummyWalletPopupOpen,
+    () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
-    } else if (claimCallReceiptStatus === "error") {
-      notification.error({
-        message: "Claiming failed",
-        description: "There was an error while claiming ZIL",
-        placement: "topRight",
-      })
-    }
-  }, [claimCallReceiptStatus])
+    },
+    "Claiming successful",
+    "You have successfully claimed ZIL",
+    "Claiming failed",
+    "There was an error while claiming ZIL"
+  )
+
+  const claimUnstake = (delegatorAddress: string) => {
+    callContractClaimUnstakeRaw({
+      address: delegatorAddress as Address,
+      abi: baseDelegatorAbi,
+      functionName: "claim",
+      args: [],
+      chain: wagmiConfig.chains[0], // we always have only one chain defined
+      account: walletAddress as Address,
+    })
+  }
 
   /**
    * CLAIM REWARDS
@@ -267,69 +268,37 @@ const useStakingOperations = () => {
 
   const claimRewardCallEstimatedGas = 0x1e8480n
 
-  const [claimRewardCallTxHash, setClaimRewardCallTxHash] = useState<
-    Address | undefined
-  >(undefined)
-  const [preparingClaimRewardTx, setPreparingClaimRewardTx] = useState(false)
-
   const {
-    isLoading: submittingClaimRewardTx,
-    error: claimRewardContractCallError,
-    status: claimRewardCallReceiptStatus,
-  } = useWaitForTransactionReceipt({
-    hash: claimRewardCallTxHash,
-  })
-
-  const claimReward = (delegatorAddress: string) => {
-    setPreparingClaimRewardTx(true)
-    if (isDummyWalletConnected) {
-      setDummyWalletPopupContent(
-        "Now User gonna approve the wallet transaction for claiming rewards"
-      )
-      setIsDummyWalletPopupOpen(true)
-      setClaimRewardCallTxHash(
-        "0x1234567890234567890234567890234567890" as Address
-      )
-      setPreparingClaimRewardTx(false)
-    } else {
-      writeContract(wagmiConfig, {
-        address: delegatorAddress as Address,
-        abi: nonLiquidDelegatorAbi,
-        functionName: "withdrawAllRewards",
-        args: [],
-      })
-        .then((txHash) => {
-          setClaimRewardCallTxHash(txHash)
-        })
-        .catch((error) => {
-          notification.error({
-            message: "Claiming rewards failed",
-            description: "There was an error while claiming reward ZIL",
-            placement: "topRight",
-          })
-          console.error(error)
-        })
-        .finally(() => setPreparingClaimRewardTx(false))
-    }
-  }
-
-  useEffect(() => {
-    if (claimRewardCallReceiptStatus === "success") {
-      notification.success({
-        message: "Claiming rewards successful",
-        description: "You have successfully claimed rewards",
-        placement: "topRight",
-      })
+    isTxInPreparation: preparingClaimRewardTx,
+    isTxProcessedByChain: submittingClaimRewardTx,
+    txHash: claimRewardCallTxHash,
+    txContractError: claimRewardContractCallError,
+    callContract: callContractClaimRewardRaw,
+    clearState: clearClaimRewardState,
+  } = useTxOperation(
+    isDummyWalletConnected,
+    setDummyWalletPopupContent,
+    setIsDummyWalletPopupOpen,
+    () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
-    } else if (claimRewardCallReceiptStatus === "error") {
-      notification.error({
-        message: "Claiming rewards failed",
-        description: "There was an error while claiming rewards",
-        placement: "topRight",
-      })
-    }
-  }, [claimRewardCallReceiptStatus])
+    },
+    "Claiming rewards successful",
+    "You have successfully claimed rewards",
+    "Claiming rewards failed",
+    "There was an error while claiming rewards"
+  )
+
+  const claimReward = (delegatorAddress: string) => {
+    callContractClaimRewardRaw({
+      address: delegatorAddress as Address,
+      abi: nonLiquidDelegatorAbi,
+      functionName: "withdrawAllRewards",
+      args: [],
+      chain: wagmiConfig.chains[0], // we always have only one chain defined
+      account: walletAddress as Address,
+    })
+  }
 
   /**
    * RESTAKE REWARDS
@@ -337,69 +306,37 @@ const useStakingOperations = () => {
 
   const stakeRewardCallEstimatedGas = 0x1e8480n
 
-  const [stakeRewardCallTxHash, setStakeRewardCallTxHash] = useState<
-    Address | undefined
-  >(undefined)
-  const [preparingStakeRewardTx, setPreparingStakeRewardTx] = useState(false)
-
   const {
-    isLoading: submittingStakeRewardTx,
-    error: stakeRewardContractCallError,
-    status: stakeRewardCallReceiptStatus,
-  } = useWaitForTransactionReceipt({
-    hash: stakeRewardCallTxHash,
-  })
-
-  const stakeReward = (delegatorAddress: string) => {
-    setPreparingStakeRewardTx(true)
-    if (isDummyWalletConnected) {
-      setDummyWalletPopupContent(
-        "Now User gonna approve the wallet transaction for staking rewards"
-      )
-      setIsDummyWalletPopupOpen(true)
-      setStakeRewardCallTxHash(
-        "0x1234567890234567890234567890234567890" as Address
-      )
-      setPreparingStakeRewardTx(false)
-    } else {
-      writeContract(wagmiConfig, {
-        address: delegatorAddress as Address,
-        abi: nonLiquidDelegatorAbi,
-        functionName: "stakeRewards",
-        args: [],
-      })
-        .then((txHash) => {
-          setStakeRewardCallTxHash(txHash)
-        })
-        .catch((error) => {
-          notification.error({
-            message: "Staking rewards failed",
-            description: "There was an error while staking rewards",
-            placement: "topRight",
-          })
-          console.error(error)
-        })
-        .finally(() => setPreparingStakeRewardTx(false))
-    }
-  }
-
-  useEffect(() => {
-    if (stakeRewardCallReceiptStatus === "success") {
-      notification.success({
-        message: "Staking rewards successful",
-        description: "You have successfully staked rewards",
-        placement: "topRight",
-      })
+    isTxInPreparation: preparingStakeRewardTx,
+    isTxProcessedByChain: submittingStakeRewardTx,
+    txHash: stakeRewardCallTxHash,
+    txContractError: stakeRewardContractCallError,
+    callContract: callContractStakeRewardRaw,
+    clearState: clearStakeRewardState,
+  } = useTxOperation(
+    isDummyWalletConnected,
+    setDummyWalletPopupContent,
+    setIsDummyWalletPopupOpen,
+    () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
-    } else if (stakeRewardCallReceiptStatus === "error") {
-      notification.error({
-        message: "Staking rewards failed",
-        description: "There was an error while staking rewards",
-        placement: "topRight",
-      })
-    }
-  }, [stakeRewardCallReceiptStatus])
+    },
+    "Staking rewards successful",
+    "You have successfully staked rewards",
+    "Staking rewards failed",
+    "There was an error while staking rewards"
+  )
+
+  const stakeReward = (delegatorAddress: string) => {
+    callContractStakeRewardRaw({
+      address: delegatorAddress as Address,
+      abi: nonLiquidDelegatorAbi,
+      functionName: "stakeRewards",
+      args: [],
+      chain: wagmiConfig.chains[0], // we always have only one chain defined
+      account: walletAddress as Address,
+    })
+  }
 
   /**
    * OTHER
@@ -407,9 +344,11 @@ const useStakingOperations = () => {
 
   useEffect(
     function clearStateOnDelegatorChange() {
-      setStakingCallTxHash(undefined)
-      setUnstakingCallTxHash(undefined)
-      setClaimUnstakeCallTxHash(undefined)
+      clearStakingState()
+      clearUnstakingState()
+      clearClaimUnstakeState()
+      clearClaimRewardState()
+      clearStakeRewardState()
     },
     [stakingPoolId]
   )

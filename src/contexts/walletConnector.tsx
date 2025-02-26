@@ -5,7 +5,6 @@ import { createContainer } from "./context"
 import { DummyWallet } from "@/misc/walletsConfig"
 import { useBalance, useWalletClient } from "wagmi"
 import { Address } from "viem"
-import { AppConfigStorage } from "./appConfigStorage"
 
 export enum ConnectedWalletType {
   None,
@@ -14,8 +13,6 @@ export enum ConnectedWalletType {
 }
 
 const useWalletConnector = () => {
-  const { appConfig } = AppConfigStorage.useContainer()
-
   /**
    * Dummy Wallet section
    */
