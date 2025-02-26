@@ -84,7 +84,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       {value ? (
         <div className="semi14 text-gray7 xl:whitespace-nowrap">{value}</div>
       ) : (
-        <div className="animated-gradient h-[1.5em] w-[4em]"></div>
+        <div className="loading-blur">0000</div>
       )}
       <div className="text-gray8 info-label xl:whitespace-nowrap">{title}</div>
     </div>

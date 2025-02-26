@@ -79,7 +79,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               <>{formatUnitsToHumanReadable(unstakeInfo.zilAmount, 18)} ZIL</>
             ) : (
               <>
-                <div className="w-[2em] h-[0.75em] animated-gradient" />
+                <div className=" loading-blur">00 ZIL </div>
               </>
             )}
           </div>
@@ -172,7 +172,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
               </>
             ) : (
               <>
-                <div className="w-[2em] h-[0.75em] animated-gradient" />
+                <div className="loading-blur">00 ZIL</div>
               </>
             )}
           </div>
@@ -396,9 +396,6 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
             </Button>
           </div>
         )
-      )}
-      {isUnstakingDataLoading && (
-        <div className="animated-gradient h-[2em] mx-auto w-1/4"></div>
       )}
     </div>
   )
