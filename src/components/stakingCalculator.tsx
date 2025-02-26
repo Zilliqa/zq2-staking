@@ -160,7 +160,7 @@ ${
     : "hover:!border-purple5 hover:shadow-[inset_0_0_7px_3px_rgba(91,111,255,0.3),inset_0_0_15px_8px_rgba(91,111,255,0.15)]"
 }
           ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"}
-           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
+           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
           >
             <div className="h-fit self-center">
               <div className=" flex items-center gap-2">
@@ -338,7 +338,17 @@ ${
                   )}
                 </div>
                 <div>Max transaction cost: ~{stakingCallZilFees} ZIL</div>
-                <div>Unbonding Period: {unboudingPeriod}</div>
+                <div>
+                  <Tooltip
+                    placement="top"
+                    arrow={true}
+                    color="#555555"
+                    className=""
+                    title="How long before you can claim your ZIL after unstaking."
+                  >
+                    Unbonding Period: {unboudingPeriod}{" "}
+                  </Tooltip>{" "}
+                </div>
               </div>
               <div className="flex flex-col lg:gray-base gray-base2 xl:gap-3.5 4k:gap-5 xl:items-end justify-start">
                 {isPoolLiquid() && (

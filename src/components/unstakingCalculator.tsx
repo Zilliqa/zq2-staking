@@ -151,7 +151,7 @@ ${
   }
           ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"} `
 }
-           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
+           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
         >
           <div className="h-fit self-center">
             <div className=" flex items-center gap-2">
@@ -205,17 +205,25 @@ ${
                   ZIL
                 </span>
               )}
-              <span
-                className={`${
-                  !isUnstakingAvailable
-                    ? "!text-gray-500"
-                    : isPoolLiquid()
-                      ? "text-aqua1"
-                      : "text-purple3"
-                } medium17 ml-2 `}
+              <Tooltip
+                placement="top"
+                arrow={true}
+                color="#555555"
+                className=""
+                title="How long before you can claim your ZIL after unstaking."
               >
-                {unboudingPeriod}
-              </span>
+                <span
+                  className={`${
+                    !isUnstakingAvailable
+                      ? "!text-gray-500"
+                      : isPoolLiquid()
+                        ? "text-aqua1"
+                        : "text-purple3"
+                  } medium17 ml-2 `}
+                >
+                  {unboudingPeriod}
+                </span>
+              </Tooltip>
             </div>
           </div>
           <div className="flex flex-col gap-3">
@@ -310,7 +318,15 @@ ${
               <div
                 className={`${isPoolLiquid() ? "text-aqua1" : "text-purple3"} `}
               >
-                Unbonding Period: {unboudingPeriod}
+                <Tooltip
+                  placement="top"
+                  arrow={true}
+                  color="#555555"
+                  className=""
+                  title="How long before you can claim your ZIL after unstaking."
+                >
+                  <span>Unbonding Period: {unboudingPeriod}</span>
+                </Tooltip>
               </div>
             </div>
             <div className="flex flex-col lg:gray-base gray-base2 xl:gap-3.5 4k:gap-5 xl:items-end justify-start">

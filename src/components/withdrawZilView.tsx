@@ -283,7 +283,9 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
           <>
             <h1 className="bold52 text-white">My Claims</h1>
             <p className="mt-2 body2-v2 text-white4">
-              Help us Empower and secure <br /> the Zilliqa Chain{" "}
+              Stake ZIL.
+              <br /> Earn Rewards.
+              <br /> Secure the Network.
             </p>
           </>
         ) : (
