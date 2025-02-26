@@ -21,37 +21,20 @@ const queryClient = new QueryClient()
 
 export default function App({ Component, pageProps }: AppProps) {
   const [appConfig, setAppConfig] = useState<AppConfig | null>(null)
-  const [loadingPercentage, setLoadingPercentage] = useState(0)
-  const [displayedPercentage, setDisplayedPercentage] = useState(0)
-  const [fadeOut, setFadeOut] = useState(false)
 
-  useEffect(() => {
+  const [loadingSplashVisible, setLoadingSplashVisible] =
+    useState<boolean>(true)
+  const [loadingPercentage, setLoadingPercentage] = useState<number>(0)
+  const [pageLoadStartTime] = useState<number>(Date.now())
+  const intervalRateMiliseconds = 16
+  const minimalLoadingTime = 1500
+
+  useEffect(function loadAppConfig() {
     const fetchConfig = async () => {
-      const startTime = Date.now()
-      let progress = 0
-
-      const interval = setInterval(() => {
-        progress += 10
-        setLoadingPercentage(progress)
-        if (progress >= 100) {
-          clearInterval(interval)
-        }
-      }, 50)
-
       try {
         const res = await fetch("/api/config")
         const data = await res.json()
-        const elapsedTime = Date.now() - startTime
-
-        const remainingTime = Math.max(1000 - elapsedTime, 0)
-        setTimeout(() => {
-          clearInterval(interval)
-          setLoadingPercentage(100)
-          setTimeout(() => {
-            setAppConfig(data)
-          }, 500)
-          setFadeOut(true)
-        }, remainingTime)
+        setAppConfig(data)
       } catch (error) {
         console.error("Error loading config:", error)
       }
@@ -60,97 +43,102 @@ export default function App({ Component, pageProps }: AppProps) {
     fetchConfig()
   }, [])
 
-  useEffect(() => {
-    const duration = 500
-    const frameRate = 16
-    const totalFrames = duration / frameRate
-    const increment = (loadingPercentage - displayedPercentage) / totalFrames
+  const [loadingInterval] = useState<NodeJS.Timeout>(
+    setInterval(function updateLoadingProgressState() {
+      let newProgressValue = Math.min(
+        (Date.now() - pageLoadStartTime) / minimalLoadingTime,
+        1
+      )
 
-    if (increment !== 0) {
-      let currentFrame = 0
-      const easingInterval = setInterval(() => {
-        setDisplayedPercentage((prev) => {
-          currentFrame += 1
-          const next = prev + increment
-          if (
-            currentFrame >= totalFrames ||
-            (increment > 0 && next >= loadingPercentage) ||
-            (increment < 0 && next <= loadingPercentage)
-          ) {
-            clearInterval(easingInterval)
-            return loadingPercentage
-          }
-          return next
-        })
-      }, frameRate)
+      if (newProgressValue >= 1) {
+        newProgressValue = 1
+        clearInterval(loadingInterval)
+      }
 
-      return () => clearInterval(easingInterval)
-    }
-  }, [loadingPercentage])
+      setLoadingPercentage(Math.round(newProgressValue * 100))
+    }, intervalRateMiliseconds)
+  )
 
-  if (!appConfig) {
-    return (
-      <div
-        className={`h-screen bg-black text-white transition-opacity duration-500 ${
-          fadeOut ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        <div className="w-full h-10 ">
-          <div
-            className="h-full bg-colorful-gradient"
-            style={{
-              width: `${displayedPercentage}%`,
-            }}
-          ></div>
-        </div>
-        <div className="absolute self-end text-80 lg:text-114 font-extrabold right-5 bottom-0">
-          {Math.round(displayedPercentage)}%
-        </div>
-      </div>
-    )
-  }
+  const fadeOut = loadingPercentage >= 100 && appConfig
+
+  useEffect(
+    function fadeOutLoadingScreen() {
+      if (fadeOut) {
+        setTimeout(() => {
+          setLoadingSplashVisible(false)
+        }, 500)
+      }
+    },
+    [fadeOut]
+  )
 
   return (
-    <AppConfigStorage.Provider initialState={{ appConfig }}>
-      <GoogleTagManager gtmId={appConfig.gtmId} />
-      <ConfigProvider>
-        <WagmiProvider
-          config={getWagmiConfig(
-            appConfig.chainId,
-            appConfig.walletConnectPrivateKey,
-            appConfig.appUrl
-          )}
-          reconnectOnMount={true}
+    <div className="relative">
+      <Head>
+        <title>Zilliqa Staking</title>
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.ico"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.ico"
+        />
+      </Head>
+
+      {loadingSplashVisible && (
+        <div
+          className={`absolute left-0 top-0 !z-[100] h-screen w-screen bg-black text-white transition-opacity duration-500 ${
+            fadeOut ? "opacity-0" : "opacity-100"
+          }`}
         >
-          <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider showRecentTransactions={true}>
-              <WalletConnector.Provider>
-                <StakingPoolsStorage.Provider>
-                  <StakingOperations.Provider>
-                    <Head>
-                      <title>Zilliqa Staking</title>
-                      <link
-                        rel="icon"
-                        type="image/png"
-                        sizes="16x16"
-                        href="/favicon-16x16.ico"
-                      />
-                      <link
-                        rel="icon"
-                        type="image/png"
-                        sizes="32x32"
-                        href="/favicon-32x32.ico"
-                      />
-                    </Head>
-                    <Component {...pageProps} />
-                    <DummyWalletSelector />
-                  </StakingOperations.Provider>
-                </StakingPoolsStorage.Provider>
-              </WalletConnector.Provider>
-            </RainbowKitProvider>
-          </QueryClientProvider>
-        </WagmiProvider>
-      </ConfigProvider>
-    </AppConfigStorage.Provider>
+          <div className="w-full h-10 ">
+            <div
+              className="h-full bg-colorful-gradient"
+              style={{
+                width: `${loadingPercentage}%`,
+              }}
+            ></div>
+          </div>
+
+          <div className="absolute self-end text-80 lg:text-114 font-extrabold right-5 bottom-0">
+            {Math.round(loadingPercentage / 10) * 10}%
+          </div>
+        </div>
+      )}
+
+      {appConfig && (
+        <AppConfigStorage.Provider initialState={{ appConfig }}>
+          <GoogleTagManager gtmId={appConfig.gtmId} />
+          <ConfigProvider>
+            <WagmiProvider
+              config={getWagmiConfig(
+                appConfig.chainId,
+                appConfig.walletConnectPrivateKey,
+                appConfig.appUrl
+              )}
+              reconnectOnMount={true}
+            >
+              <QueryClientProvider client={queryClient}>
+                <RainbowKitProvider showRecentTransactions={true}>
+                  <WalletConnector.Provider>
+                    <StakingPoolsStorage.Provider>
+                      <StakingOperations.Provider>
+                        <Component {...pageProps} />
+                        <DummyWalletSelector />
+                      </StakingOperations.Provider>
+                    </StakingPoolsStorage.Provider>
+                  </WalletConnector.Provider>
+                </RainbowKitProvider>
+              </QueryClientProvider>
+            </WagmiProvider>
+          </ConfigProvider>
+        </AppConfigStorage.Provider>
+      )}
+    </div>
   )
 }
