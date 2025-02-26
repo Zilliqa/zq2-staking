@@ -33,12 +33,15 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
     claimUnstake,
     isClaimingUnstakeInProgress,
     claimUnstakeCallTxHash,
+    preparingClaimUnstakeTx,
     claimReward,
     isClaimingRewardInProgress,
     claimRewardCallTxHash,
+    preparingClaimRewardTx,
     stakeReward,
     isStakingRewardInProgress,
     stakeRewardCallTxHash,
+    preparingStakeRewardTx,
   } = StakingOperations.useContainer()
 
   const { appConfig } = AppConfigStorage.useContainer()
@@ -134,7 +137,11 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                   onClick={() => stakeReward(reward.address)}
                   loading={isStakingRewardInProgress}
                 >
-                  Stake Reward
+                  {preparingStakeRewardTx
+                    ? "Confirm in wallet"
+                    : isStakingRewardInProgress
+                      ? "Processing"
+                      : "Stake Reward"}
                 </Button>
               )}
 
@@ -143,7 +150,11 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                 onClick={() => claimReward(reward.address)}
                 loading={isClaimingRewardInProgress}
               >
-                Claim Reward
+                {preparingClaimRewardTx
+                  ? "Confirm in wallet"
+                  : isClaimingRewardInProgress
+                    ? "Processing"
+                    : "Claim Reward"}
               </Button>
             </div>
           </div>
@@ -185,7 +196,11 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                   onClick={() => claimUnstake(item.address)}
                   loading={isClaimingUnstakeInProgress}
                 >
-                  Claim
+                  {preparingClaimUnstakeTx
+                    ? "Confirm in wallet"
+                    : isClaimingUnstakeInProgress
+                      ? "Processing"
+                      : "Claim"}
                 </Button>
               </div>
             </div>

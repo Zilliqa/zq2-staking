@@ -37,6 +37,9 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
   claimUnstake,
   setViewClaim,
 }) => {
+  const { preparingClaimUnstakeTx, isClaimingUnstakeInProgress } =
+    StakingOperations.useContainer()
+
   return (
     <div
       className={` ${stakingPool.definition.poolType != StakingPoolType.LIQUID ? "purple-border-bottom" : "aqua-border-bottom"}  flex gap-2.5 4k:gap-3 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between`}
@@ -102,9 +105,14 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
             className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
             disabled={!available}
             onClick={() => claimUnstake(unstakeInfo.address)}
+            loading={isClaimingUnstakeInProgress}
           >
             {available
-              ? "Claim"
+              ? preparingClaimUnstakeTx
+                ? "Confirm in wallet"
+                : isClaimingUnstakeInProgress
+                  ? "Processing"
+                  : "Claim"
               : getHumanFormDuration(unstakeInfo.availableAt) + " left"}
           </Button>
         </div>
@@ -130,7 +138,12 @@ const RewardCard: React.FC<RewardCardProps> = ({
   stakeReward,
   setViewClaim,
 }) => {
-  const { isStakingRewardInProgress } = StakingOperations.useContainer()
+  const {
+    isStakingRewardInProgress,
+    preparingStakeRewardTx,
+    isClaimingRewardInProgress,
+    preparingClaimRewardTx,
+  } = StakingOperations.useContainer()
 
   return (
     <div
@@ -213,16 +226,25 @@ const RewardCard: React.FC<RewardCardProps> = ({
               onClick={() => stakeReward(rewardInfo.address)}
               loading={isStakingRewardInProgress}
             >
-              Stake Reward
+              {preparingStakeRewardTx
+                ? "Confirm in wallet"
+                : isStakingRewardInProgress
+                  ? "Processing"
+                  : "Stake Reward"}
             </Button>
           )}
         </div>
         <div className="max-lg:w-1/2 lg:mt-2.5">
           <Button
             className="btn-secondary-grey 4k:py-6 lg:py-5 py-4"
+            loading={isClaimingRewardInProgress}
             onClick={() => claimReward(rewardInfo.address)}
           >
-            Claim Reward
+            {preparingClaimRewardTx
+              ? "Confirm in wallet"
+              : isClaimingRewardInProgress
+                ? "Processing"
+                : "Claim Reward"}
           </Button>
         </div>
       </div>
