@@ -33,6 +33,7 @@ const UnstakingCalculator: React.FC = () => {
     isUnstakingInProgress,
     unstakingCallTxHash,
     unstakeContractCallError,
+    unstakingCallZilFees,
   } = StakingOperations.useContainer()
 
   const [tokensToUnstake, setZilToUnstake] = useState<string>("0")
@@ -43,7 +44,7 @@ const UnstakingCalculator: React.FC = () => {
     stakingPoolForView?.stakingPool.definition.tokenDecimals || 18
 
   const onMaxClick = () => {
-    setZilToUnstake(`${formatUnits(stakedTokenAvailable, poolTokenDecimals)}`)
+    setZilToUnstake(formatUnits(stakedTokenAvailable, poolTokenDecimals))
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -310,7 +311,9 @@ ${
                   <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
                 )}
               </div>
-              <div className="">Max transaction cost: 3 ZIL</div>
+              <div className="">
+                Max transaction cost: ~{unstakingCallZilFees} ZIL
+              </div>
               <div
                 className={`${isPoolLiquid() ? "text-aqua1" : "text-purple3"} `}
               >
