@@ -1,6 +1,6 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
-import { useEffect, useState } from "react"
-import { Button, Input, Tooltip } from "antd"
+import { useEffect, useRef, useState } from "react"
+import { Button, Input, InputRef, Tooltip } from "antd"
 import { WalletConnector } from "@/contexts/walletConnector"
 
 import {
@@ -19,6 +19,7 @@ import CustomWalletConnect from "./customWalletConnect"
 import { DateTime } from "luxon"
 
 const StakingCalculator: React.FC = () => {
+  const inputRef = useRef<InputRef | null>(null)
   const { appConfig } = AppConfigStorage.useContainer()
 
   const { isWalletConnected } = WalletConnector.useContainer()
@@ -52,9 +53,11 @@ const StakingCalculator: React.FC = () => {
       setZilToStake(inputValue)
     }
   }
+  const [isFocused, setIsFocused] = useState(true)
 
   const handleFocus = () => {
     if (zilToStake === "") onMinClick()
+    setIsFocused(true)
   }
 
   const handleBlur = () => {
@@ -68,6 +71,7 @@ const StakingCalculator: React.FC = () => {
     setZilToStake(valueTemp.replace(/0*(\d+)/, "$1"))
 
     if (zilToStake === "") onMinClick()
+    setIsFocused(false)
   }
 
   const zilToStakeNumber = parseFloat(zilToStake)
@@ -138,21 +142,55 @@ const StakingCalculator: React.FC = () => {
     })
   )
 
+  useEffect(() => {
+    if (isFocused && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [isFocused])
+
   return (
     stakingPoolForView && (
       <>
         <div className="">
-          <div className="flex justify-between lg:gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center">
+          <div
+            className={`transition-all duration-300 border-transparent
+${
+  isPoolLiquid()
+    ? "hover:!border-aqua1 hover:shadow-[inset_0_0_7px_3px_rgba(0,208,198,0.3),inset_0_0_15px_8px_rgba(0,208,198,0.15)]"
+    : "hover:!border-purple5 hover:shadow-[inset_0_0_7px_3px_rgba(91,111,255,0.3),inset_0_0_15px_8px_rgba(91,111,255,0.15)]"
+}
+          ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"}
+           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
+          >
             <div className="h-fit self-center">
-              <Input
-                className="flex items-baseline !bg-transparent !border-transparent !text-white1 bold33 px-0"
-                value={zilToStake}
-                onChange={handleChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                prefix="ZIL"
-                status={!canStake ? "warning" : undefined}
-              />
+              <div className=" flex items-center gap-2">
+                <div
+                  className={`${
+                    zilToStake === "0" || zilToStake === ""
+                      ? "text-gray8"
+                      : !canStake && isWalletConnected
+                        ? "text-red1"
+                        : "text-white1"
+                  } bold33`}
+                >
+                  ZIL
+                </div>
+                <Input
+                  ref={inputRef}
+                  className={` ${
+                    zilToStake === "0" || zilToStake === ""
+                      ? "text-gray8"
+                      : !canStake && isWalletConnected
+                        ? "text-red1"
+                        : "text-white1"
+                  } flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
+                  value={zilToStake}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  status={!canStake ? "warning" : undefined}
+                />
+              </div>
               <span className="flex items-center whitespace-nowrap ">
                 {stakingPoolForView!.stakingPool.data ? (
                   <>

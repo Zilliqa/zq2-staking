@@ -1,6 +1,6 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
-import { useEffect, useState } from "react"
-import { Button, Input, Tooltip } from "antd"
+import { useEffect, useRef, useState } from "react"
+import { Button, Input, InputRef, Tooltip } from "antd"
 import {
   formatPercentage,
   convertTokenToZil,
@@ -20,9 +20,13 @@ import Link from "next/link"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
 
 const UnstakingCalculator: React.FC = () => {
+  const inputRef = useRef<InputRef | null>(null)
+
   const { appConfig } = AppConfigStorage.useContainer()
   const { isWalletConnected } = WalletConnector.useContainer()
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
+
+  const [isFocused, setIsFocused] = useState(true)
 
   const {
     unstake,
@@ -53,6 +57,7 @@ const UnstakingCalculator: React.FC = () => {
 
   const handleFocus = () => {
     if (tokensToUnstake === "") onMaxClick()
+    setIsFocused(true)
   }
 
   const handleBlur = () => {
@@ -65,6 +70,8 @@ const UnstakingCalculator: React.FC = () => {
     }
     setZilToUnstake(valueTemp.replace(/0*(\d+)/, "$1"))
     if (tokensToUnstake === "") onMaxClick()
+
+    setIsFocused(false)
   }
 
   useEffect(() => {
@@ -84,6 +91,12 @@ const UnstakingCalculator: React.FC = () => {
         stakingPoolForView?.stakingPool.definition.withdrawPeriodInMinutes || 0,
     })
   )
+
+  useEffect(() => {
+    if (isFocused && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [isFocused])
 
   const isPoolLiquid = () =>
     stakingPoolForView?.stakingPool.definition.poolType ===
@@ -127,24 +140,51 @@ const UnstakingCalculator: React.FC = () => {
         isPoolLiquid={stakingPoolForView?.stakingPool.definition.poolType}
         className={"flex-1 overflow-y-scroll"}
       >
-        <div className="flex justify-between gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center">
+        <div
+          className={`transition-all duration-300 border-transparent
+${
+  isUnstakingAvailable &&
+  ` ${
+    isPoolLiquid()
+      ? "hover:border-aqua1 hover:shadow-[inset_0_0_7px_3px_rgba(0,208,198,0.3),inset_0_0_15px_8px_rgba(0,208,198,0.15)]"
+      : "hover:border-purple5 hover:shadow-[inset_0_0_7px_3px_rgba(91,111,255,0.3),inset_0_0_15px_8px_rgba(91,111,255,0.15)]"
+  }
+          ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"} `
+}
+           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
+        >
           <div className="h-fit self-center">
-            <Input
-              className={`flex items-baseline !bg-transparent !border-transparent bold33 px-0 ${isUnstakingAvailable ? "!text-white1" : "!text-gray-500"}`}
-              value={tokensToUnstake}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-              prefix={
-                <div
-                  className={`${isUnstakingAvailable ? "!text-white1" : "!text-gray-500"}`}
-                >
-                  {stakingPoolForView.stakingPool.definition.tokenSymbol}
-                </div>
-              }
-              status={!canUnstake ? "error" : undefined}
-              disabled={!isUnstakingAvailable}
-            />
+            <div className=" flex items-center gap-2">
+              <div
+                className={`${
+                  tokensToUnstake === "0" || tokensToUnstake === ""
+                    ? "text-gray8"
+                    : !canUnstake && isWalletConnected
+                      ? "text-red1"
+                      : "text-white1"
+                } bold33`}
+              >
+                {" "}
+                {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
+              </div>
+
+              <Input
+                ref={inputRef}
+                className={`${
+                  tokensToUnstake === "0" || tokensToUnstake === ""
+                    ? "text-gray8"
+                    : !canUnstake && isWalletConnected
+                      ? "text-red1"
+                      : "text-white1"
+                }  flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
+                value={tokensToUnstake}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                status={!canUnstake ? "error" : undefined}
+                disabled={!isUnstakingAvailable}
+              />
+            </div>
             <div className="flex items-center ">
               {isPoolLiquid() && (
                 <span className="medium17">
