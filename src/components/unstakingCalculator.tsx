@@ -34,6 +34,7 @@ const UnstakingCalculator: React.FC = () => {
     unstakingCallTxHash,
     unstakeContractCallError,
     unstakingCallZilFees,
+    preparingUnstakingTx,
   } = StakingOperations.useContainer()
 
   const [tokensToUnstake, setZilToUnstake] = useState<string>("0")
@@ -262,7 +263,11 @@ ${
                   }
                   loading={isUnstakingInProgress}
                 >
-                  Unstake
+                  {preparingUnstakingTx
+                    ? "Confirm in wallet"
+                    : isUnstakingInProgress
+                      ? "Processing"
+                      : "Unstake"}
                 </Button>
               </Tooltip>
             ) : (
