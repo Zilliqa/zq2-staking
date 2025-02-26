@@ -89,7 +89,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               </>
             ) : (
               <>
-                <div className=" animated-gradient">00 ZIL </div>
+                <div className=" loading-blur">00 ZIL </div>
               </>
             )}
           </div>

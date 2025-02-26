@@ -99,7 +99,7 @@ const ZilGiveaway: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="animated-gradient h-[1.5em] "></div>
+            <div className="loading-blur"> Loading...</div>
           )}
         </div>
       </Modal>
