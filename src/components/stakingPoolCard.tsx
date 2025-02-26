@@ -113,7 +113,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   <Tooltip
                     placement="top"
                     arrow={true}
-                    color="#555555"
+                    overlayClassName="custom-tooltip"
                     className="mr-1 4k:mr-1.5"
                     title="Annual Percentage Rate"
                   >

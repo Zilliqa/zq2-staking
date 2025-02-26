@@ -192,7 +192,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
             <Tooltip
               placement="top"
               arrow={true}
-              color="#555555"
+              overlayClassName="custom-tooltip"
               title={`Reward is less than the minimal staking amount of ${formatUnitsToHumanReadable(
                 stakingPool.definition.minimumStake,
                 18

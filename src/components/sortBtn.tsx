@@ -17,8 +17,7 @@ const SortBtn: React.FC<SortBtnProps> = ({
     <Tooltip
       placement="top"
       arrow={true}
-      color="#555555"
-      className=" mr-1"
+      overlayClassName="custom-tooltip"
       title={tooltip}
     >
       <div className="btn-filter group" onClick={onClick}>

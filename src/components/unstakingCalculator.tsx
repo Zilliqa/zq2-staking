@@ -208,7 +208,7 @@ ${
               <Tooltip
                 placement="top"
                 arrow={true}
-                color="#555555"
+                overlayClassName="custom-tooltip"
                 className=""
                 title="How long before you can claim your ZIL after unstaking."
               >
@@ -250,7 +250,7 @@ ${
               <Tooltip
                 placement="top"
                 arrow={true}
-                color="#555555"
+                overlayClassName="custom-tooltip"
                 title={whyCantUnstake}
               >
                 <Button
@@ -321,7 +321,7 @@ ${
                 <Tooltip
                   placement="top"
                   arrow={true}
-                  color="#555555"
+                  overlayClassName="custom-tooltip"
                   className=""
                   title="How long before you can claim your ZIL after unstaking."
                 >
@@ -364,7 +364,7 @@ ${
                 <Tooltip
                   placement="top"
                   arrow={true}
-                  color="#555555"
+                  overlayClassName="custom-tooltip"
                   className=" mr-1"
                   title="Annual Percentage Rate"
                 >

@@ -95,7 +95,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
           <Tooltip
             placement="top"
             arrow={true}
-            color="#555555"
+            overlayClassName="custom-tooltip"
             className=" mr-1"
             title={tab.tooltip}
             key={index}

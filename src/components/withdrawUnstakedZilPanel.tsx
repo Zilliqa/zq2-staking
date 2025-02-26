@@ -112,7 +112,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                 <Tooltip
                   placement="top"
                   arrow={true}
-                  color="#555555"
+                  overlayClassName="custom-tooltip"
                   className="mr-1"
                   title={`Reward is less than the minimal staking amount of ${formatUnitsToHumanReadable(
                     getMinimalPoolStakingAmount(reward.address),

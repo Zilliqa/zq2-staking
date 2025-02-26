@@ -61,7 +61,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     <Tooltip
       placement="top"
       arrow={true}
-      color="#555555"
+      overlayClassName="custom-tooltip"
       className=""
       title={tooltip}
     >
@@ -86,7 +86,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     <Tooltip
       placement="top"
       arrow={true}
-      color="#555555"
+      overlayClassName="custom-tooltip"
       className=""
       title={tooltip}
     >
@@ -113,7 +113,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     <Tooltip
       placement="top"
       arrow={true}
-      color="#555555"
+      overlayClassName="custom-tooltip"
       className=""
       title={tooltip}
     >
