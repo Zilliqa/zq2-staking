@@ -130,7 +130,7 @@ const UnstakingCalculator: React.FC = () => {
                       )}
                     </>
                   ) : (
-                    <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
+                    <div className="loading-blur ">00</div>
                   )}
                   ZIL
                 </span>
@@ -222,7 +222,7 @@ const UnstakingCalculator: React.FC = () => {
                     )}{" "}
                   </>
                 ) : (
-                  <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
+                  <div className="loading-blur">1.1% </div>
                 )}
               </div>
               <div className="">Max transaction cost: 3 ZIL</div>
@@ -260,7 +260,7 @@ const UnstakingCalculator: React.FC = () => {
                           )}
                         </>
                       ) : (
-                        <div className="animated-gradient mr-1 h-[1.5em] w-[3em]"></div>
+                        <div className="loading-blur "> 1Zil =~ 1zil</div>
                       )}
                       ZIL
                     </div>
@@ -285,7 +285,7 @@ const UnstakingCalculator: React.FC = () => {
                     {formatPercentage(stakingPoolForView!.stakingPool.data.apr)}
                   </>
                 ) : (
-                  <div className="animated-gradient ml-1 h-[1em] w-[2em]"></div>
+                  <div className="loading-blur  "> ~11%</div>
                 )}
               </div>
             </div>

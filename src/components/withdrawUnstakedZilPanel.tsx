@@ -104,7 +104,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                 </div>
               </div>
             ) : (
-              <div className="w-[4em] h-[1em] animated-gradient" />
+              <div className="loading-blur"> 00000 zil</div>
             )}
             <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full">
               {getMinimalPoolStakingAmount(reward.address) >
@@ -177,7 +177,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                   </div>
                 </div>
               ) : (
-                <div className="w-[4em] h-[1em] animated-gradient" />
+                <div className="loading-blur">000.000 ZIL</div>
               )}
               <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[218px] w-full">
                 <Button
@@ -210,7 +210,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                 ZIL
               </div>
             ) : (
-              <div className="w-[4em] h-[1em] animated-gradient" />
+              <div className="loading-blur">00.000</div>
             )}
           </div>
         </div>
@@ -239,7 +239,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                   </div>
                 </div>
               ) : (
-                <div className="w-[4em] h-[1em] animated-gradient" />
+                <div className="loading-blur">00.000 ZIL</div>
               )}
               <div className="regular-base text-white1">
                 {getHumanFormDuration(claim.availableAt)}
