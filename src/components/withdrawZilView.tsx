@@ -101,7 +101,11 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
           <Button
             className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
             disabled={!available}
-            onClick={() => claimUnstake(unstakeInfo.address)}
+            onClick={(e) => {
+              e.stopPropagation()
+              claimUnstake(unstakeInfo.address)
+              setViewClaim(false)
+            }}
           >
             {available
               ? "Claim"
@@ -200,7 +204,11 @@ const RewardCard: React.FC<RewardCardProps> = ({
             >
               <Button
                 className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
-                onClick={() => stakeReward(rewardInfo.address)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  stakeReward(rewardInfo.address)
+                  setViewClaim(false)
+                }}
                 loading={isStakingRewardInProgress}
                 disabled={true}
               >
@@ -210,7 +218,11 @@ const RewardCard: React.FC<RewardCardProps> = ({
           ) : (
             <Button
               className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
-              onClick={() => stakeReward(rewardInfo.address)}
+              onClick={(e) => {
+                e.stopPropagation()
+                stakeReward(rewardInfo.address)
+                setViewClaim(false)
+              }}
               loading={isStakingRewardInProgress}
             >
               Stake Reward
@@ -220,7 +232,11 @@ const RewardCard: React.FC<RewardCardProps> = ({
         <div className="max-lg:w-1/2 lg:mt-2.5">
           <Button
             className="btn-secondary-grey 4k:py-6 lg:py-5 py-4"
-            onClick={() => claimReward(rewardInfo.address)}
+            onClick={(e) => {
+              e.stopPropagation()
+              claimReward(rewardInfo.address)
+              setViewClaim(false)
+            }}
           >
             Claim Reward
           </Button>
