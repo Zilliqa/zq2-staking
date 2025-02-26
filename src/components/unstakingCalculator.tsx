@@ -133,8 +133,6 @@ const UnstakingCalculator: React.FC = () => {
     }
   })()
 
-  console.log(isUnstakingAvailable)
-
   return (
     stakingPoolForView && (
       <FastFadeScroll
@@ -142,23 +140,14 @@ const UnstakingCalculator: React.FC = () => {
         className={"flex-1 overflow-y-scroll"}
       >
         <div
-          className={`
-    transition-all 
-    duration-300 
-    ant-input-affix-wrapper css-dev-only-do-not-override-1wwf28x ant-input-outlined 
-    border-transparent
-${
-  isUnstakingAvailable &&
+          className={`transition-all duration-300 border-transparent
+${isUnstakingAvailable &&
   ` ${
     isPoolLiquid()
       ? "hover:border-aqua1 hover:shadow-[inset_0_0_7px_3px_rgba(0,208,198,0.3),inset_0_0_15px_8px_rgba(0,208,198,0.15)]"
       : "hover:border-purple5 hover:shadow-[inset_0_0_7px_3px_rgba(91,111,255,0.3),inset_0_0_15px_8px_rgba(91,111,255,0.15)]"
   }
-
-          ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"} 
-          
-          `
-}
+          ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"} `}
            !bg-transparent flex justify-between lg:gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
         >
           <div className="h-fit self-center">

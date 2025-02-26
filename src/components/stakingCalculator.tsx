@@ -154,7 +154,7 @@ const StakingCalculator: React.FC = () => {
       <>
         <div className="">
           <div
-            className={`transition-all duration-300 ant-input-affix-wrapper css-dev-only-do-not-override-1wwf28x ant-input-outlined border-transparent
+            className={`transition-all duration-300 border-transparent
 ${
   isPoolLiquid()
     ? "hover:!border-aqua1 hover:shadow-[inset_0_0_7px_3px_rgba(0,208,198,0.3),inset_0_0_15px_8px_rgba(0,208,198,0.15)]"
