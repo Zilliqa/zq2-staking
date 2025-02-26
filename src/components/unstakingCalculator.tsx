@@ -129,7 +129,7 @@ const UnstakingCalculator: React.FC = () => {
         isPoolLiquid={stakingPoolForView?.stakingPool.definition.poolType}
         className={"flex-1 overflow-y-scroll"}
       >
-        <div className="flex justify-between gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center">
+        <div className="flex justify-between gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center">
           <div className="h-fit self-center">
             <Input
               className={`flex items-baseline !bg-transparent !border-transparent bold33 px-0 ${isUnstakingAvailable ? "!text-white1" : "!text-gray-500"}`}
