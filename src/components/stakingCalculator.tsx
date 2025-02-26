@@ -166,7 +166,7 @@ ${
           ${isFocused &&
   `ant-input-affix-wrapper-focused ${
     isPoolLiquid() 
-      ? "!border-aqua1 hover:!shadow-[inset_0_0_7px_3px_rgba(0,208,198,0.3),inset_0_0_15px_8px_rgba(0,208,198,0.15)]" 
+      ? "!border-gray7 hover:!shadow-[inset_0_0_7px_3px_rgba(0,208,198,0.3),inset_0_0_15px_8px_rgba(0,208,198,0.15)]" 
       : "!border-purple5 hover:!shadow-[inset_0_0_7px_3px_rgba(91,111,255,0.3),inset_0_0_15px_8px_rgba(91,111,255,0.15)]"
   }` 
   
