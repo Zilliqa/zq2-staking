@@ -37,7 +37,11 @@ export function getHumanFormDuration(availableAt: DateTime) {
       return acc
     }, "")
 
-  return `~${mostSignificantUnit || "< 1 minute"}`
+  if (mostSignificantUnit === "") {
+    return "< 1 minute"
+  } else {
+    return `~${mostSignificantUnit}`
+  }
 }
 
 export function convertTokenToZil(
