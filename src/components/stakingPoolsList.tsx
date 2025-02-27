@@ -4,6 +4,7 @@ import SortBtn from "./sortBtn"
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "@/components/FastFadeScroll"
+import { Tooltip } from "antd"
 
 interface StakingPoolsListProps {
   setViewClaim: Dispatch<SetStateAction<boolean>>
@@ -73,10 +74,14 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
     {
       name: "Liquid",
       type: StakingPoolType.LIQUID,
+      tooltip:
+        "Liquid Staking grants you Liquid Staking Tokens (LSTs) that represent your staked ZIL. Rewards are automatically reinvested.",
     },
     {
-      name: "Non-liquid ",
+      name: "Non-Liquid ",
       type: StakingPoolType.NORMAL,
+      tooltip:
+        "Non-Liquid Staking lets you withdraw rewards or reinvest them automatically.",
     },
   ]
 
@@ -87,18 +92,26 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
         className="border-b-[0.5px] border-b-gray2 w-full flex "
       >
         {tabs.map((tab, index) => (
-          <button
+          <Tooltip
+            placement="top"
+            arrow={true}
+            overlayClassName="custom-tooltip"
+            className=" mr-1"
+            title={tab.tooltip}
             key={index}
-            className={`w-1/2 whitespace-nowrap border-b-[0.5px] py-3 4k:py-4
+          >
+            <button
+              className={`w-1/2 whitespace-nowrap border-b-[0.5px] py-3 4k:py-4
               ${selectedPoolType === tab.type ? `bold33 ${tab.type === StakingPoolType.LIQUID ? "border-aqua1" : "border-purple4"}` : "bold26 text-gray8 border-transparent"}
             `}
-            onClick={() => {
-              setSelectedPoolType(tab.type)
-              selectStakingPoolForView(null)
-            }}
-          >
-            {tab.name}
-          </button>
+              onClick={() => {
+                setSelectedPoolType(tab.type)
+                selectStakingPoolForView(null)
+              }}
+            >
+              {tab.name}
+            </button>
+          </Tooltip>
         ))}
       </nav>
 
@@ -108,16 +121,19 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
             variable="APR"
             isClicked={isAscending && sortCriteria == "APR"}
             onClick={() => handleSortClick("APR")}
+            tooltip="Annual Percentage Rate - Projected yearly rewards as a percentage of staked amount."
           />
           <SortBtn
             variable="VP"
             isClicked={isAscending && sortCriteria == "VP"}
             onClick={() => handleSortClick("VP")}
+            tooltip="Voting Power - Share of total staked ZIL controlled by the validator."
           />
           <SortBtn
             variable="Commission"
             isClicked={isAscending && sortCriteria == "Commission"}
             onClick={() => handleSortClick("Commission")}
+            tooltip="Percentage of your staking rewards paid to the validator."
           />
         </div>
 
