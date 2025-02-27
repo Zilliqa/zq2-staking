@@ -227,7 +227,7 @@ ${
                             .poolType === StakingPoolType.LIQUID
                             ? "text-aqua1"
                             : "text-purple3"
-                        } medium17 ml-2 mr-1`}
+                        } medium17 ml-3 mr-1`}
                       >
                         ~
                         {formatPercentage(

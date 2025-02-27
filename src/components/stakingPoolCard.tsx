@@ -1,4 +1,8 @@
-import { formatPercentage, formatUnitsToHumanReadable } from "@/misc/formatting"
+import {
+  convertTokenToZil,
+  formatPercentage,
+  formatUnitsToHumanReadable,
+} from "@/misc/formatting"
 import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import { UserStakingPoolData } from "@/misc/walletsConfig"
 import { Tooltip } from "antd"
@@ -56,15 +60,49 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
             <div>
               {userStakingPoolData &&
                 userStakingPoolData.stakingTokenAmount && (
-                  <span
-                    className={`${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-aqua1" : "text-purple3"} regular15 `}
+                  <Tooltip
+                    placement="top"
+                    arrow={true}
+                    overlayClassName="custom-tooltip"
+                    className="mr-1 4k:mr-1.5"
+                    title={
+                      stakingPoolData.data ? (
+                        <>
+                          <div>
+                            Your staked tokens:{" "}
+                            {formatUnitsToHumanReadable(
+                              userStakingPoolData.stakingTokenAmount,
+                              stakingPoolData.definition.tokenDecimals
+                            )}{" "}
+                            {stakingPoolData.definition.tokenSymbol}
+                          </div>
+                          <div className="mt-1">
+                            ≈{" "}
+                            {formatUnitsToHumanReadable(
+                              convertTokenToZil(
+                                userStakingPoolData.stakingTokenAmount,
+                                stakingPoolData.data.zilToTokenRate
+                              ),
+                              18
+                            )}{" "}
+                            ZIL
+                          </div>
+                        </>
+                      ) : (
+                        "Loading value..."
+                      )
+                    }
                   >
-                    {userStakingPoolData &&
-                      `${formatUnitsToHumanReadable(
-                        userStakingPoolData.stakingTokenAmount,
-                        stakingPoolData.definition.tokenDecimals
-                      )} ${stakingPoolData.definition.tokenSymbol}`}
-                  </span>
+                    <span
+                      className={`${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-aqua1" : "text-purple3"} regular15 `}
+                    >
+                      {userStakingPoolData &&
+                        `${formatUnitsToHumanReadable(
+                          userStakingPoolData.stakingTokenAmount,
+                          stakingPoolData.definition.tokenDecimals
+                        )} ${stakingPoolData.definition.tokenSymbol}`}
+                    </span>
+                  </Tooltip>
                 )}
             </div>
           </div>

@@ -140,8 +140,15 @@ const UnstakingCalculator: React.FC = () => {
         isPoolLiquid={stakingPoolForView?.stakingPool.definition.poolType}
         className={"flex-1 overflow-y-scroll"}
       >
-        <div
-          className={`transition-all duration-300 border-transparent
+        <Tooltip
+          placement="bottomLeft"
+          arrow={true}
+          overlayClassName="custom-tooltip"
+          className=""
+          title="Enter amount to request unstake."
+        >
+          <div
+            className={`transition-all duration-300 border-transparent
 ${
   isUnstakingAvailable &&
   ` ${
@@ -152,66 +159,61 @@ ${
           ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"} `
 }
            !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
-        >
-          <div className="h-fit self-center">
-            <div className=" flex items-center gap-2">
-              <div
-                className={`${
-                  tokensToUnstake === "0" || tokensToUnstake === ""
-                    ? "text-gray8"
-                    : !canUnstake && isWalletConnected
-                      ? "text-red1"
-                      : "text-white1"
-                } bold33`}
-              >
-                {" "}
-                {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
-              </div>
+          >
+            <div className="h-fit self-center">
+              <div className=" flex items-center gap-2">
+                <div
+                  className={`${
+                    tokensToUnstake === "0" || tokensToUnstake === ""
+                      ? "text-gray8"
+                      : !canUnstake && isWalletConnected
+                        ? "text-red1"
+                        : "text-white1"
+                  } bold33`}
+                >
+                  {" "}
+                  {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
+                </div>
 
-              <Input
-                ref={inputRef}
-                className={`${
-                  tokensToUnstake === "0" || tokensToUnstake === ""
-                    ? "text-gray8"
-                    : !canUnstake && isWalletConnected
-                      ? "text-red1"
-                      : "text-white1"
-                }  flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
-                value={tokensToUnstake}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
-                status={!canUnstake ? "error" : undefined}
-                disabled={!isUnstakingAvailable}
-              />
-            </div>
-            <div className="flex items-center ">
-              {isPoolLiquid() && (
-                <span className="medium17">
-                  {stakingPoolForView!.stakingPool.data ? (
-                    <>
-                      ~
-                      {formatUnitsToHumanReadable(
-                        convertTokenToZil(
-                          tokenToUnstakeInBaseUnit,
-                          stakingPoolForView.stakingPool.data.zilToTokenRate
-                        ),
-                        18
-                      )}
-                    </>
-                  ) : (
-                    <div className="loading-blur ">00</div>
-                  )}
-                  ZIL
-                </span>
-              )}
-              <Tooltip
-                placement="top"
-                arrow={true}
-                overlayClassName="custom-tooltip"
-                className=""
-                title="How long before you can claim your ZIL after unstaking."
-              >
+                <Input
+                  ref={inputRef}
+                  className={`${
+                    tokensToUnstake === "0" || tokensToUnstake === ""
+                      ? "text-gray8"
+                      : !canUnstake && isWalletConnected
+                        ? "text-red1"
+                        : "text-white1"
+                  }  flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
+                  value={tokensToUnstake}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  onFocus={handleFocus}
+                  status={!canUnstake ? "error" : undefined}
+                  disabled={!isUnstakingAvailable}
+                />
+              </div>
+              <div className="flex items-center ">
+                {isPoolLiquid() && (
+                  <span className="medium17">
+                    {stakingPoolForView!.stakingPool.data ? (
+                      <>
+                        {" "}
+                        ~
+                        {formatUnitsToHumanReadable(
+                          convertTokenToZil(
+                            tokenToUnstakeInBaseUnit,
+                            stakingPoolForView.stakingPool.data.zilToTokenRate
+                          ),
+                          18
+                        )}
+                      </>
+                    ) : (
+                      <div className="loading-blur ">00</div>
+                    )}{" "}
+                    ZIL
+                  </span>
+                )}
+
                 <span
                   className={`${
                     !isUnstakingAvailable
@@ -219,31 +221,30 @@ ${
                       : isPoolLiquid()
                         ? "text-aqua1"
                         : "text-purple3"
-                  } medium17 ml-2 `}
+                  } medium17 ml-3 `}
                 >
                   {unboudingPeriod}
                 </span>
-              </Tooltip>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3">
+              <Button
+                className="btn-secondary-colored text-aqua1 hover:!text-aqua1 border-0 bg-tealDark hover:!bg-tealDark"
+                onClick={onMaxClick}
+                disabled={!isUnstakingAvailable}
+              >
+                MAX
+              </Button>
+              <Button
+                className="btn-secondary-colored text-purple3 hover:!text-purple1 border-0 bg-PurpleDarker hover:!bg-PurpleDarker"
+                onClick={() => setZilToUnstake("1")}
+                disabled={!isUnstakingAvailable}
+              >
+                MIN
+              </Button>
             </div>
           </div>
-          <div className="flex flex-col gap-3">
-            <Button
-              className="btn-secondary-colored text-aqua1 hover:!text-aqua1 border-0 bg-tealDark hover:!bg-tealDark"
-              onClick={onMaxClick}
-              disabled={!isUnstakingAvailable}
-            >
-              MAX
-            </Button>
-            <Button
-              className="btn-secondary-colored text-purple3 hover:!text-purple1 border-0 bg-PurpleDarker hover:!bg-PurpleDarker"
-              onClick={() => setZilToUnstake("1")}
-              disabled={!isUnstakingAvailable}
-            >
-              MIN
-            </Button>
-          </div>
-        </div>
-
+        </Tooltip>
         <div className="flex flex-col justify-between">
           <div className="flex mt-2 mb-3">
             {isWalletConnected ? (
@@ -342,7 +343,7 @@ ${
                             stakingPoolForView.stakingPool.definition
                               .tokenSymbol
                           }{" "}
-                          = ~
+                          =~
                           {formatUnitsToHumanReadable(
                             convertTokenToZil(
                               parseEther("1"),
