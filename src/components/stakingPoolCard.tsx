@@ -69,7 +69,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                       stakingPoolData.data ? (
                         <>
                           <div>
-                            Your staked tokens:{" "}
+                            You have{" "}
                             {formatUnitsToHumanReadable(
                               userStakingPoolData.stakingTokenAmount,
                               stakingPoolData.definition.tokenDecimals
@@ -77,7 +77,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                             {stakingPoolData.definition.tokenSymbol}
                           </div>
                           <div className="mt-1">
-                            ≈{" "}
+                            ( ~
                             {formatUnitsToHumanReadable(
                               convertTokenToZil(
                                 userStakingPoolData.stakingTokenAmount,
@@ -85,7 +85,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                               ),
                               18
                             )}{" "}
-                            ZIL
+                            ZIL ) staked
                           </div>
                         </>
                       ) : (
