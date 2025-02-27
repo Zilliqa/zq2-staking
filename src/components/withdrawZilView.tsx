@@ -99,10 +99,14 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
             )}
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex  max-lg:justify-center lg:w-1/3  lg:max-w-[218px] w-full pr-3 lg:pb-0 pb-6 lg:pr-9.5 4k:pr-12">
+      <div className="max-lg:gap-2.5 max-lg:flex max-lg:justify-center lg:w-1/3 lg:max-w-[218px] w-full pr-3 lg:pb-0 pb-6 lg:pr-9.5 4k:pr-12">
         <div className="max-lg:w-1/2">
           <Button
-            className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
+            className={` 
+              ${ isClaimingUnstakeInProgress && 
+                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" 
+              }
+              ${stakingPool.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover":" non-liquid-hover"} btn-primary-grey 4k:py-6 lg:py-5 py-4`}
             disabled={!available}
             onClick={(e) => {
               e.stopPropagation()
@@ -203,7 +207,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
             )}
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[218px] px-3 lg:pb-0 pb-6 lg:pr-9.5 4k:pr-12">
+      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[218px] lg:pb-0 pb-6 lg:pr-9.5 4k:pr-12">
         <div className="max-lg:w-1/2">
           {stakingPool.definition.minimumStake > rewardInfo.zilRewardAmount ? (
             <Tooltip
@@ -216,7 +220,11 @@ const RewardCard: React.FC<RewardCardProps> = ({
               )} ZIL`}
             >
               <Button
-                className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
+                className={`
+                ${ isStakingRewardInProgress && 
+                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" 
+                }
+                ${stakingPool.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover":" non-liquid-hover"} btn-primary-grey 4k:py-6 lg:py-5 py-4`}
                 onClick={(e) => {
                   e.stopPropagation()
                   stakeReward(rewardInfo.address)
@@ -230,7 +238,11 @@ const RewardCard: React.FC<RewardCardProps> = ({
             </Tooltip>
           ) : (
             <Button
-              className="btn-primary-grey 4k:py-6 lg:py-5 py-4"
+              className={` 
+                ${ isStakingRewardInProgress && 
+                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" 
+                }
+                ${stakingPool.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover":" non-liquid-hover"} btn-primary-grey 4k:py-6 lg:py-5 py-4`}
               onClick={(e) => {
                 e.stopPropagation()
                 stakeReward(rewardInfo.address)
@@ -248,7 +260,12 @@ const RewardCard: React.FC<RewardCardProps> = ({
         </div>
         <div className="max-lg:w-1/2 lg:mt-2.5">
           <Button
-            className="btn-secondary-grey 4k:py-6 lg:py-5 py-4"
+            className={`
+               ${ isClaimingRewardInProgress && 
+                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" 
+                }
+               ${stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-hover":" non-liquid-hover"} 
+               btn-primary-grey 4k:py-6 lg:py-5 py-4`}
             onClick={(e) => {
               e.stopPropagation()
               claimReward(rewardInfo.address)

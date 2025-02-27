@@ -81,15 +81,29 @@ button,
   }
 
   .btn-primary-grey {
-    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray4 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[1px] border-white text-white items-center bold16 bg-gray8 cursor-pointer duration-700 ease-in-out;
 
-    &:hover {
+    &:hover:not(:disabled) {
       @apply !bg-transparent !text-white !border-white;
     }
 
     &:disabled {
       @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
     }
+  }
+
+  .btn-primary-grey:not(:disabled).liquid-hover:hover {
+    @apply !bg-tealDark !border-transparent shadow-[0px_0px_8.2px_1.5px_#00FFF3];
+  }
+  .btn-primary-grey:not(:disabled).non-liquid-hover:hover { 
+    @apply !bg-blackpurple !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
+  }
+
+  .btn-primary-grey:not(:disabled).liquid-loading {
+    @apply !bg-blackTeal !border-aqua1;
+  }
+  .btn-primary-grey:not(:disabled).non-liquid-loading { 
+    @apply !bg-blackpurple !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
   }
 
   .btn-secondary-grey {
