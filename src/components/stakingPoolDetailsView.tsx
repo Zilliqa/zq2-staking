@@ -247,15 +247,21 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                 <span className="medium20 text-gray6 lg:ml-6 ml-2">
                   {stakingPoolData.definition.tokenSymbol}
                 </span>
-
-                <Image
-                  onClick={handleClickAaddToken}
-                  className="h-[28px] w-[28px] ml-4 cursor-pointer"
-                  src={PlusIcon}
-                  alt="arrow icon"
-                  width={28}
-                  height={28}
-                />
+                <Tooltip
+                  placement="top"
+                  arrow={true}
+                  overlayClassName="custom-tooltip"
+                  title="Add token to wallet"
+                >
+                  <Image
+                    onClick={handleClickAaddToken}
+                    className="h-[28px] w-[28px] ml-4 cursor-pointer"
+                    src={PlusIcon}
+                    alt="arrow icon"
+                    width={28}
+                    height={28}
+                  />
+                </Tooltip>
               </>
             )}
           </div>
