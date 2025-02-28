@@ -43,7 +43,7 @@ button,
   .btn-primary-cyan {
     @apply py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 !bg-[#00D0C6] !text-black font-semibold rounded-lg border-0 cursor-pointer;
 
-    &:hover {
+    &:hover:not(:disabled) {
       @apply !bg-white;
     }
 
@@ -55,7 +55,7 @@ button,
   .btn-primary-aqua {
     @apply py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-none !bg-aqua1 !text-black1 font-extrabold text-20 4k:text-24 leading-6 border-0 cursor-pointer duration-500 ease-in-out;
 
-    &:hover {
+    &:hover:not(:disabled) {
       @apply opacity-80;
     }
 
@@ -67,7 +67,7 @@ button,
   .btn-primary-teal {
     @apply bold16 py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
 
-    &:hover {
+    &:hover:not(:disabled) {
       @apply !bg-tealDark !border-transparent shadow-[0px_0px_8.2px_1.5px_#00FFF3];
     }
 
@@ -79,7 +79,7 @@ button,
   .btn-primary-purple {
     @apply btn-primary-teal !bg-blackpurple border-purple4;
 
-    &:hover {
+    &:hover:not(:disabled) {
       @apply !bg-blackpurple !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
     }
   }
@@ -113,7 +113,7 @@ button,
   .btn-secondary-grey {
     @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray12 cursor-pointer duration-700 ease-in-out;
 
-    &:hover {
+    &:hover:not(:disabled) {
       @apply !bg-transparent !text-white !border-white;
     }
 
@@ -130,14 +130,27 @@ button,
     @apply btn-primary-purple py-2 4k:py-2.5 max-lg:text-17 4k:text-20;
   }
 
-  .btn-secondary-colored {
-    @apply !gap-0 !whitespace-normal py-1 lg:py-1.5 4k:py-2 px-5 4k:px-8 w-full font-bold text-13 4k:text-17 leading-6 tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full;
+
+  .btn-secondary-teal {
+    @apply !gap-0 !whitespace-normal py-1 lg:py-1.5 4k:py-2 px-5 4k:px-8 w-full font-bold text-13 4k:text-17 leading-6 tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full text-aqua1 border-[1px] border-transparent bg-tealDark ;
+
+    &:hover:not(:disabled) {
+      @apply !text-aqua1 !shadow-[0px_0px_10.8px_0px_#00FFF3] !bg-tealDark ;
+    }
 
     &:disabled {
-      @apply !bg-gradientbg !text-gray1 cursor-not-allowed;
+      @apply !bg-gradientbg !text-gray1 cursor-not-allowed ;
     }
   }
 
+  .btn-secondary-purple {
+    @apply btn-secondary-teal !text-white5 !bg-PurpleDarker border-purple4;
+
+    &:hover:not(:disabled)  {
+      @apply !bg-PurpleDarker !shadow-[0px_0px_12.0px_0px_#87A1FF] !text-purple3;
+    }
+  }
+ 
   .btn-filter {
     @apply flex w-fit py-1 4k:py-1.5 px-1.5 lg:px-2 4k:px-2.5 border border-none 4k:text-20 rounded-[8px] items-center bg-white/[14%] cursor-pointer duration-700 ease-in-out;
   }
@@ -145,7 +158,7 @@ button,
   .btn-secondary-gray {
     @apply flex w-full py-1.5 lg:py-2 4k:py-2.5 px-1.5 lg:px-2 4k:px-2.5 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray4 cursor-pointer duration-700 ease-in-out;
 
-    &:hover {
+    &:hover:not(:disabled) {
       @apply !bg-transparent !text-white !border-white;
     }
   }
@@ -153,7 +166,7 @@ button,
   .btn-secondary-gray3 {
     @apply flex py-1.5 w-full lg:py-5 4k:py-6 px-1.5 lg:px-2 4k:px-2.5 rounded-full border border-white items-center bg-gray12 text-white bold16 cursor-pointer duration-700 ease-in-out;
 
-    &:hover {
+    &:hover:not(:disabled) {
       @apply !bg-transparent !text-white !border-white;
     }
   }

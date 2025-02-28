@@ -46,23 +46,22 @@ const StakingCalculator: React.FC = () => {
   const [isMinValue, setIsMinValue] = useState(false)
   const [isMaxValue, setIsMaxValue] = useState(false)
 
+  const minValue = formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18);
+  const allZil = formatUnits(zilAvailable || 0n, 18)
+  const roundedToNiceNumber = allZil.split(".")[0]
+  const maxValue =
+    parseFloat(roundedToNiceNumber) - stakingCallZilFees
+
   const onMinClick = () => {
     setIsMaxValue(false)
     setIsMinValue(true)
-    setZilToStake(
-      `${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18)}`
-    )
+    setZilToStake(`${minValue}`)
   }
 
   const onMaxClick = () => {
     setIsMaxValue(true)
     setIsMinValue(false)
-    const allZil = formatUnits(zilAvailable || 0n, 18)
-    const roundedToNiceNumber = allZil.split(".")[0]
-    const availableMinusFees =
-      parseFloat(roundedToNiceNumber) - stakingCallZilFees
-
-    setZilToStake(`${availableMinusFees}`)
+    setZilToStake(`${maxValue}`)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,11 +72,11 @@ const StakingCalculator: React.FC = () => {
 
       setIsMinValue(
         inputValue ===
-          `${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18)}`
+          `${minValue}`
       )
       setIsMaxValue(
         inputValue ===
-          `${parseFloat(formatUnits(zilAvailable || 0n, 18).split(".")[0]) - stakingCallZilFees}`
+          `${maxValue}`
       )
     }
   }
@@ -257,15 +256,13 @@ ${
 
             <div className="flex flex-col gap-3 ">
               <Button
-                className={`btn-secondary-colored text-aqua1 hover:!text-aqua1 border-[1px] border-transparent bg-tealDark hover:!bg-tealDark hover:shadow-[0px_0px_10.8px_0px_#00FFF3]"
-                ${isMaxValue && "!border-aqua1"}`}
+                className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
                 onClick={onMaxClick}
               >
                 MAX
               </Button>
               <Button
-                className={`btn-secondary-colored text-white5 hover:!text-purple3 border-[1px] border-transparent bg-PurpleDarker hover:!bg-PurpleDarker hover:!shadow-[0px_0px_12.0px_0px_#87A1FF]
-                   ${isMinValue && "!border-purple4"}`}
+                className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
                 onClick={onMinClick}
               >
                 MIN

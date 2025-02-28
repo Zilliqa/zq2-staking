@@ -44,8 +44,10 @@ const UnstakingCalculator: React.FC = () => {
   const poolTokenDecimals =
     stakingPoolForView?.stakingPool.definition.tokenDecimals || 18
 
+
+    const maxValue = formatUnits(stakedTokenAvailable, poolTokenDecimals);
   const onMaxClick = () => {
-    setZilToUnstake(formatUnits(stakedTokenAvailable, poolTokenDecimals))
+    setZilToUnstake(maxValue)
 
     setIsMaxValue(true)
     setIsMinValue(false)
@@ -60,7 +62,7 @@ const UnstakingCalculator: React.FC = () => {
     if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
       setIsMinValue(inputValue === "1")
       setIsMaxValue(
-        inputValue === formatUnits(stakedTokenAvailable, poolTokenDecimals)
+        inputValue === maxValue
       )
 
       setZilToUnstake(inputValue)
@@ -232,16 +234,14 @@ ${
           </div>
           <div className="flex flex-col gap-3">
             <Button
-              className={`btn-secondary-colored text-aqua1 hover:!text-aqua1 border-[1px] border-transparent bg-tealDark hover:!bg-tealDark hover:shadow-[0px_0px_10.8px_0px_#00FFF3]
-                ${isMaxValue && "!border-aqua1"}`}
+              className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
               onClick={onMaxClick}
               disabled={!isUnstakingAvailable}
             >
               MAX
             </Button>
             <Button
-              className={`btn-secondary-colored text-white5 hover:!text-purple3 border-[1px] border-transparent bg-PurpleDarker hover:!bg-PurpleDarker hover:!shadow-[0px_0px_12.0px_0px_#87A1FF]
-                   ${isMinValue && "!border-purple4"}`}
+              className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
               onClick={() => setZilToUnstake("1")}
               disabled={!isUnstakingAvailable}
             >
