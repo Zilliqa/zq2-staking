@@ -366,7 +366,7 @@ const HomePage = () => {
 
             <div className="flex gap-2 sm:gap-2.5 items-center">
               {isWalletConnected && <ZilGiveaway />}
-              <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 w-full sm:max-w-fit">
+              <CustomWalletConnect notConnectedClassName="btn-primary-teal sm:px-10 w-full sm:max-w-fit">
                 Connect wallet
               </CustomWalletConnect>
             </div>

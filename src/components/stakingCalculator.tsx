@@ -43,15 +43,37 @@ const StakingCalculator: React.FC = () => {
     )
   )
 
-  useEffect(() => {
-    onMinClick()
-  }, [stakingPoolForView])
+  const [isMinValue, setIsMinValue] = useState(false)
+  const [isMaxValue, setIsMaxValue] = useState(false)
+
+  const minValue = formatUnits(
+    stakingPoolForView?.stakingPool.definition.minimumStake || 0n,
+    18
+  )
+  const allZil = formatUnits(zilAvailable || 0n, 18)
+  const roundedToNiceNumber = allZil.split(".")[0]
+  const maxValue = parseFloat(roundedToNiceNumber) - stakingCallZilFees
+
+  const onMinClick = () => {
+    setIsMaxValue(false)
+    setIsMinValue(true)
+    setZilToStake(`${minValue}`)
+  }
+
+  const onMaxClick = () => {
+    setIsMaxValue(true)
+    setIsMinValue(false)
+    setZilToStake(`${maxValue}`)
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target
     const reg = /^-?\d*(\.\d*)?$/
     if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
       setZilToStake(inputValue)
+
+      setIsMinValue(inputValue === `${minValue}`)
+      setIsMaxValue(inputValue === `${maxValue}`)
     }
   }
   const [isFocused, setIsFocused] = useState(true)
@@ -116,21 +138,6 @@ const StakingCalculator: React.FC = () => {
       }
     }
   })()
-
-  const onMinClick = () => {
-    setZilToStake(
-      `${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18)}`
-    )
-  }
-
-  const onMaxClick = () => {
-    const allZil = formatUnits(zilAvailable || 0n, 18)
-    const roundedToNiceNumber = allZil.split(".")[0]
-    const availableMinusFees =
-      parseFloat(roundedToNiceNumber) - stakingCallZilFees
-
-    setZilToStake(`${availableMinusFees}`)
-  }
 
   const isPoolLiquid = () =>
     stakingPoolForView?.stakingPool.definition.poolType ===
@@ -257,13 +264,13 @@ ${
 
               <div className="flex flex-col gap-3 ">
                 <Button
-                  className="btn-secondary-colored text-aqua1 hover:!text-aqua1 border-0 bg-tealDark hover:!bg-tealDark"
+                  className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
                   onClick={onMaxClick}
                 >
                   MAX
                 </Button>
                 <Button
-                  className="btn-secondary-colored text-purple3 hover:!text-purple1 border-0 bg-PurpleDarker hover:!bg-PurpleDarker"
+                  className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
                   onClick={onMinClick}
                 >
                   MIN
@@ -282,8 +289,8 @@ ${
                       className={`${
                         stakingPoolForView?.stakingPool.definition.poolType ===
                         StakingPoolType.LIQUID
-                          ? "btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua "
-                          : "btn-primary-gradient-purple-lg lg:btn-primary-gradient-purple "
+                          ? "btn-primary-teal-lg lg:btn-primary-teal "
+                          : "btn-primary-purple-lg lg:btn-primary-purple "
                       } mx-auto lg:w-1/2 w-2/3 `}
                       onClick={() =>
                         stake(
@@ -309,7 +316,7 @@ ${
                       <Button
                         type="default"
                         size="large"
-                        className="btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua  mx-auto lg:w-1/2 w-2/3"
+                        className="btn-primary-teal-lg lg:btn-primary-teal  mx-auto lg:w-1/2 w-2/3"
                         disabled={true}
                       >
                         Stake
@@ -318,7 +325,7 @@ ${
                   )}
                 </>
               ) : (
-                <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit mx-auto lg:w-1/2 w-2/3">
+                <CustomWalletConnect notConnectedClassName="btn-primary-teal sm:px-10 sm:max-w-fit mx-auto lg:w-1/2 w-2/3">
                   Connect wallet
                 </CustomWalletConnect>
               )}

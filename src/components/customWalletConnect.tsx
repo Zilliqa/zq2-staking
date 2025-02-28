@@ -45,7 +45,7 @@ const CustomWalletConnect: React.FC<CustomWalletConnectProps> = ({
       return (
         <Button
           type="primary"
-          className="group relative btn-primary-gradient-aqua max-lg:px-5 max-lg:w-fit lg:min-w-[160px]"
+          className="group relative btn-primary-teal max-lg:px-5 max-lg:w-fit lg:min-w-[160px]"
           onClick={disconnectDummyWallet}
         >
           <div className=" group-hover:hidden transition-opacity flex items-center justify-center">
