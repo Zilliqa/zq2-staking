@@ -43,29 +43,27 @@ const StakingCalculator: React.FC = () => {
     )
   )
 
-  const [isMinValue, setIsMinValue] = useState(false);
-  const [isMaxValue, setIsMaxValue] = useState(false);
-  
-    const onMinClick = () => {
-      setIsMaxValue(false)
-      setIsMinValue(true)
-      setZilToStake(
-        `${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18)}`
-      )
-    }
-  
-    const onMaxClick = () => {
-      setIsMaxValue(true)
-      setIsMinValue(false) 
-      const allZil = formatUnits(zilAvailable || 0n, 18)
-      const roundedToNiceNumber = allZil.split(".")[0]
-      const availableMinusFees =
-        parseFloat(roundedToNiceNumber) - stakingCallZilFees
-  
-      setZilToStake(`${availableMinusFees}`)
-  
-    }
+  const [isMinValue, setIsMinValue] = useState(false)
+  const [isMaxValue, setIsMaxValue] = useState(false)
 
+  const onMinClick = () => {
+    setIsMaxValue(false)
+    setIsMinValue(true)
+    setZilToStake(
+      `${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18)}`
+    )
+  }
+
+  const onMaxClick = () => {
+    setIsMaxValue(true)
+    setIsMinValue(false)
+    const allZil = formatUnits(zilAvailable || 0n, 18)
+    const roundedToNiceNumber = allZil.split(".")[0]
+    const availableMinusFees =
+      parseFloat(roundedToNiceNumber) - stakingCallZilFees
+
+    setZilToStake(`${availableMinusFees}`)
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target
@@ -73,9 +71,14 @@ const StakingCalculator: React.FC = () => {
     if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
       setZilToStake(inputValue)
 
-      setIsMinValue(inputValue === `${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18)}`);
-      setIsMaxValue(inputValue ===`${parseFloat(formatUnits(zilAvailable || 0n, 18).split(".")[0]) - stakingCallZilFees}`);
-
+      setIsMinValue(
+        inputValue ===
+          `${formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18)}`
+      )
+      setIsMaxValue(
+        inputValue ===
+          `${parseFloat(formatUnits(zilAvailable || 0n, 18).split(".")[0]) - stakingCallZilFees}`
+      )
     }
   }
   const [isFocused, setIsFocused] = useState(true)
@@ -141,7 +144,6 @@ const StakingCalculator: React.FC = () => {
     }
   })()
 
- 
   const isPoolLiquid = () =>
     stakingPoolForView?.stakingPool.definition.poolType ===
     StakingPoolType.LIQUID
@@ -254,7 +256,7 @@ ${
             </div>
 
             <div className="flex flex-col gap-3 ">
-              <Button 
+              <Button
                 className={`btn-secondary-colored text-aqua1 hover:!text-aqua1 border-[1px] border-transparent bg-tealDark hover:!bg-tealDark hover:shadow-[0px_0px_10.8px_0px_#00FFF3]"
                 ${isMaxValue && "!border-aqua1"}`}
                 onClick={onMaxClick}

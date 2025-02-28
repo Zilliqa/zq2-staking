@@ -99,14 +99,14 @@ button,
   .btn-primary-grey:not(:disabled).liquid-hover:hover {
     @apply !bg-tealDark !border-transparent shadow-[0px_0px_8.2px_1.5px_#00FFF3];
   }
-  .btn-primary-grey:not(:disabled).non-liquid-hover:hover { 
+  .btn-primary-grey:not(:disabled).non-liquid-hover:hover {
     @apply !bg-blackpurple !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
   }
 
   .btn-primary-grey:not(:disabled).liquid-loading {
     @apply !bg-blackTeal !border-aqua1;
   }
-  .btn-primary-grey:not(:disabled).non-liquid-loading { 
+  .btn-primary-grey:not(:disabled).non-liquid-loading {
     @apply !bg-blackpurple !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
   }
 

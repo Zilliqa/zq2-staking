@@ -124,10 +124,15 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                 >
                   <Button
                     className={` 
-                      ${ isStakingRewardInProgress ? 
-                         stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" : "" 
+                      ${
+                        isStakingRewardInProgress
+                          ? stakingPoolData.definition.poolType ===
+                            StakingPoolType.LIQUID
+                            ? "liquid-loading"
+                            : "non-liquid-loading"
+                          : ""
                       }
-                      ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover":" non-liquid-hover"} btn-primary-grey lg:py-5 py-4 mb-2.5`}
+                      ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"} btn-primary-grey lg:py-5 py-4 mb-2.5`}
                     onClick={() => stakeReward(reward.address)}
                     loading={isStakingRewardInProgress}
                     disabled={true}
@@ -138,10 +143,15 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               ) : (
                 <Button
                   className={` 
-                    ${ isStakingRewardInProgress ? 
-                       stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" : ""
+                    ${
+                      isStakingRewardInProgress
+                        ? stakingPoolData.definition.poolType ===
+                          StakingPoolType.LIQUID
+                          ? "liquid-loading"
+                          : "non-liquid-loading"
+                        : ""
                     }
-                    ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover":" non-liquid-hover"} btn-primary-grey lg:py-5 py-4 mb-2.5`}
+                    ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"} btn-primary-grey lg:py-5 py-4 mb-2.5`}
                   onClick={() => stakeReward(reward.address)}
                   loading={isStakingRewardInProgress}
                 >
@@ -155,10 +165,15 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
 
               <Button
                 className={` 
-                  ${ isClaimingRewardInProgress ?
-                     stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" : ""
+                  ${
+                    isClaimingRewardInProgress
+                      ? stakingPoolData.definition.poolType ===
+                        StakingPoolType.LIQUID
+                        ? "liquid-loading"
+                        : "non-liquid-loading"
+                      : ""
                   }
-                  ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover":" non-liquid-hover"} btn-primary-grey lg:py-5 py-4`}
+                  ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"} btn-primary-grey lg:py-5 py-4`}
                 onClick={() => claimReward(reward.address)}
                 loading={isClaimingRewardInProgress}
               >
@@ -205,10 +220,15 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[218px] w-full">
                 <Button
                   className={` 
-                    ${ isClaimingUnstakeInProgress ?
-                       stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" :""
+                    ${
+                      isClaimingUnstakeInProgress
+                        ? stakingPoolData.definition.poolType ===
+                          StakingPoolType.LIQUID
+                          ? "liquid-loading"
+                          : "non-liquid-loading"
+                        : ""
                     }
-                    ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover":" non-liquid-hover"} btn-primary-grey lg:py-5 py-4`}
+                    ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"} btn-primary-grey lg:py-5 py-4`}
                   onClick={() => claimUnstake(item.address)}
                   loading={isClaimingUnstakeInProgress}
                 >

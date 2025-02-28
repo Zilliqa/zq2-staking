@@ -69,7 +69,7 @@ const config: Config = {
         aqua4: "#00D0C633",
         aqua5: "#00D0C699",
         tealDark: "#173C3F",
-        blackTeal:"#051B1D",
+        blackTeal: "#051B1D",
 
         purple1: "#7839FF",
         purple2: "#B9A9FB",
@@ -78,7 +78,7 @@ const config: Config = {
         purple4: "#522EFF",
         purple5: "#5B6FFF",
         purpleDark: "#522EFF33",
-        blackpurple:"#19152D",
+        blackpurple: "#19152D",
 
         orange1: "#FE9950",
 
