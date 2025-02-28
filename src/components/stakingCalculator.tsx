@@ -160,95 +160,107 @@ const StakingCalculator: React.FC = () => {
     stakingPoolForView && (
       <>
         <div className="">
-          <div
-            className={`transition-all duration-300 border-transparent
+          <Tooltip
+            placement="bottomLeft"
+            arrow={true}
+            overlayClassName="custom-tooltip"
+            className=""
+            title={`Earning ${stakingPoolForView!.stakingPool.data ? formatPercentage(stakingPoolForView?.stakingPool.data.apr) : 0}`}
+          >
+            <div
+              className={`transition-all duration-300 border-transparent
 ${
   isPoolLiquid()
     ? "hover:!border-aqua1 hover:shadow-[inset_0_0_7px_3px_rgba(0,208,198,0.3),inset_0_0_15px_8px_rgba(0,208,198,0.15)]"
     : "hover:!border-purple5 hover:shadow-[inset_0_0_7px_3px_rgba(91,111,255,0.3),inset_0_0_15px_8px_rgba(91,111,255,0.15)]"
 }
           ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"}
-           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 my-2.5 lg:my-4 4k:my-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
-          >
-            <div className="h-fit self-center">
-              <div className=" flex items-center gap-2">
-                <div
-                  className={`${
-                    zilToStake === "0" || zilToStake === ""
-                      ? "text-gray8"
-                      : !canStake && isWalletConnected
-                        ? "text-red1"
-                        : "text-white1"
-                  } bold33`}
-                >
-                  ZIL
-                </div>
-                <Input
-                  ref={inputRef}
-                  className={` ${
-                    zilToStake === "0" || zilToStake === ""
-                      ? "text-gray8"
-                      : !canStake && isWalletConnected
-                        ? "text-red1"
-                        : "text-white1"
-                  } flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
-                  value={zilToStake}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  status={!canStake ? "warning" : undefined}
-                />
-              </div>
-              <span className="flex items-center whitespace-nowrap ">
-                {stakingPoolForView!.stakingPool.data ? (
-                  <>
-                    {isPoolLiquid() && (
-                      <span className="medium17">
-                        ~
-                        {!isNaN(zilToStakeNumber) &&
-                        !isNaN(
-                          stakingPoolForView.stakingPool.data.zilToTokenRate
-                        )
-                          ? convertZilValueInToken(
-                              zilToStakeNumber,
-                              stakingPoolForView.stakingPool.data.zilToTokenRate
-                            )
-                          : ""}{" "}
-                        {stakingPoolForView.stakingPool.definition.tokenSymbol}{" "}
-                      </span>
-                    )}
-                    <span
-                      className={`${
-                        stakingPoolForView?.stakingPool.definition.poolType ===
-                        StakingPoolType.LIQUID
-                          ? "text-aqua1"
-                          : "text-purple3"
-                      } medium17 ml-2 mr-1`}
-                    >
-                      ~
-                      {formatPercentage(
-                        stakingPoolForView!.stakingPool.data.apr
-                      )}
-                    </span>
-                  </>
-                ) : (
-                  <div className="loading-blur mr-1  ">
-                    {" "}
-                    ~ formatPercentage{" "}
+           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
+            >
+              <div className="h-fit self-center">
+                <div className=" flex items-center gap-2">
+                  <div
+                    className={`${
+                      zilToStake === "0" || zilToStake === ""
+                        ? "text-gray8"
+                        : !canStake && isWalletConnected
+                          ? "text-red1"
+                          : "text-white1"
+                    } bold33`}
+                  >
+                    ZIL
                   </div>
-                )}
-                <span
-                  className={`${
-                    stakingPoolForView?.stakingPool.definition.poolType ===
-                    StakingPoolType.LIQUID
-                      ? "text-aqua1"
-                      : "text-purple3"
-                  } medium17`}
-                >
-                  APR
+                  <Input
+                    ref={inputRef}
+                    className={` ${
+                      zilToStake === "0" || zilToStake === ""
+                        ? "text-gray8"
+                        : !canStake && isWalletConnected
+                          ? "text-red1"
+                          : "text-white1"
+                    } flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
+                    value={zilToStake}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    status={!canStake ? "warning" : undefined}
+                  />
+                </div>
+
+                <span className="flex items-center whitespace-nowrap ">
+                  {stakingPoolForView!.stakingPool.data ? (
+                    <>
+                      {isPoolLiquid() && (
+                        <span className="medium17">
+                          ~
+                          {!isNaN(zilToStakeNumber) &&
+                          !isNaN(
+                            stakingPoolForView.stakingPool.data.zilToTokenRate
+                          )
+                            ? convertZilValueInToken(
+                                zilToStakeNumber,
+                                stakingPoolForView.stakingPool.data
+                                  .zilToTokenRate
+                              )
+                            : ""}{" "}
+                          {
+                            stakingPoolForView.stakingPool.definition
+                              .tokenSymbol
+                          }{" "}
+                        </span>
+                      )}
+                      <span
+                        className={`${
+                          stakingPoolForView?.stakingPool.definition
+                            .poolType === StakingPoolType.LIQUID
+                            ? "text-aqua1"
+                            : "text-purple3"
+                        } medium17 ml-3 mr-1`}
+                      >
+                        ~
+                        {formatPercentage(
+                          stakingPoolForView!.stakingPool.data.apr
+                        )}
+                      </span>
+                    </>
+                  ) : (
+                    <div className="loading-blur mr-1  ">
+                      {" "}
+                      ~ formatPercentage{" "}
+                    </div>
+                  )}
+                  <span
+                    className={`${
+                      stakingPoolForView?.stakingPool.definition.poolType ===
+                      StakingPoolType.LIQUID
+                        ? "text-aqua1"
+                        : "text-purple3"
+                    } medium17`}
+                  >
+                    APR
+                  </span>
                 </span>
-              </span>
-            </div>
+              </div>
 
             <div className="flex flex-col gap-3 ">
               <Button
@@ -264,7 +276,7 @@ ${
                 MIN
               </Button>
             </div>
-          </div>
+          </Tooltip>
           <div className="flex flex-col">
             <div className="flex mt-2 mb-3">
               {isWalletConnected ? (
@@ -297,7 +309,7 @@ ${
                     <Tooltip
                       placement="top"
                       arrow={true}
-                      color="#555555"
+                      overlayClassName="custom-tooltip"
                       title={whyCantStake}
                     >
                       <Button
@@ -350,7 +362,17 @@ ${
                   )}
                 </div>
                 <div>Max transaction cost: ~{stakingCallZilFees} ZIL</div>
-                <div>Unbonding Period: {unboudingPeriod}</div>
+                <div>
+                  <Tooltip
+                    placement="top"
+                    arrow={true}
+                    overlayClassName="custom-tooltip"
+                    className=""
+                    title="How long before you can claim your ZIL after unstaking."
+                  >
+                    Unbonding Period: {unboudingPeriod}{" "}
+                  </Tooltip>{" "}
+                </div>
               </div>
               <div className="flex flex-col lg:gray-base gray-base2 xl:gap-3.5 4k:gap-5 xl:items-end justify-start">
                 {isPoolLiquid() && (
@@ -374,7 +396,7 @@ ${
                   <Tooltip
                     placement="top"
                     arrow={true}
-                    color="#555555"
+                    overlayClassName="custom-tooltip"
                     className=" mr-1"
                     title="Annual Percentage Rate"
                   >
