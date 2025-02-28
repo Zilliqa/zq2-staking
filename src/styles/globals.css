@@ -29,8 +29,9 @@ body {
 
 input,
 button,
+.ant-btn span,
 :where(.css-dev-only-do-not-override-1wwf28x).ant-btn {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif !important;
 }
 
 @layer utilities {
@@ -560,4 +561,8 @@ button,
     filter: blur(4px);
     opacity: 0.6;
   }
+}
+
+.ant-btn span {
+  font-family: "YourCustomFont", sans-serif !important;
 }
