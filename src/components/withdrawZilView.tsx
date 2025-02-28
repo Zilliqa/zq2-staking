@@ -103,8 +103,8 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
         <div className="max-lg:w-1/2">
           <Button
             className={` 
-              ${ isClaimingUnstakeInProgress && 
-                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" 
+              ${ isClaimingUnstakeInProgress ?
+                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" : ""
               }
               ${stakingPool.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover":" non-liquid-hover"} btn-primary-grey 4k:py-6 lg:py-5 py-4`}
             disabled={!available}
@@ -221,8 +221,8 @@ const RewardCard: React.FC<RewardCardProps> = ({
             >
               <Button
                 className={`
-                ${ isStakingRewardInProgress && 
-                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" 
+                ${ isStakingRewardInProgress ? 
+                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" :""
                 }
                 ${stakingPool.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover":" non-liquid-hover"} btn-primary-grey 4k:py-6 lg:py-5 py-4`}
                 onClick={(e) => {
@@ -239,8 +239,8 @@ const RewardCard: React.FC<RewardCardProps> = ({
           ) : (
             <Button
               className={` 
-                ${ isStakingRewardInProgress && 
-                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" 
+                ${ isStakingRewardInProgress ?
+                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" :""
                 }
                 ${stakingPool.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover":" non-liquid-hover"} btn-primary-grey 4k:py-6 lg:py-5 py-4`}
               onClick={(e) => {
@@ -261,8 +261,8 @@ const RewardCard: React.FC<RewardCardProps> = ({
         <div className="max-lg:w-1/2 lg:mt-2.5">
           <Button
             className={`
-               ${ isClaimingRewardInProgress && 
-                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" 
+               ${ isClaimingRewardInProgress ?
+                 stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-loading" : "non-liquid-loading" :""
                 }
                ${stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-hover":" non-liquid-hover"} 
                btn-primary-grey 4k:py-6 lg:py-5 py-4`}
