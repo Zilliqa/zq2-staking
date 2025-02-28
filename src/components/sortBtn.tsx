@@ -32,7 +32,7 @@ const SortBtn: React.FC<SortBtnProps> = ({
           viewBox="0 0 14 12"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className={`duration-700 stroke-gray1 group-hover:stroke-white ease-in-out ${
+          className={`duration-300 stroke-gray1 group-hover:stroke-white ease-in-out ${
             isClicked ? "scale-y-[-1]" : ""
           }`}
         >
@@ -66,7 +66,7 @@ const SortBtn: React.FC<SortBtnProps> = ({
           />
         </svg>
 
-        <div className="small-base ml-1 duration-700 group-hover:text-white ease-in-out">
+        <div className="small-base ml-1 duration-300 group-hover:text-white ease-in-out">
           {variable}
         </div>
       </div>

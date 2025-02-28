@@ -152,7 +152,7 @@ button,
   }
 
   .btn-filter {
-    @apply flex w-fit py-1 4k:py-1.5 px-1.5 lg:px-2 4k:px-2.5 border border-none 4k:text-20 rounded-[8px] items-center bg-gray4/80 text-white3 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-fit py-1 4k:py-1.5 px-1.5 lg:px-2 4k:px-2.5 border border-none 4k:text-20 rounded-[8px] items-center bg-gray4/80 text-white3 cursor-pointer duration-300 ease-in-out;
 
     &:hover {
       @apply !bg-gray13/80 !text-white;
