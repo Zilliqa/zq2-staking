@@ -58,6 +58,7 @@ const config: Config = {
         white2: "#F7FBFA",
         white3: "#E1E2E2",
         white4: "#D7D8D8",
+        white5: "#DCD5FF",
 
         blue1: "#1966F7",
         navyBlue: "#391EBCB2",

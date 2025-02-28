@@ -46,12 +46,24 @@ const UnstakingCalculator: React.FC = () => {
 
   const onMaxClick = () => {
     setZilToUnstake(formatUnits(stakedTokenAvailable, poolTokenDecimals))
+
+    setIsMaxValue(true)
+    setIsMinValue(false)
   }
+
+  
+  const [isMinValue, setIsMinValue] = useState(false);
+const [isMaxValue, setIsMaxValue] = useState(false);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = e.target
     const reg = /^-?\d*(\.\d*)?$/
     if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
+
+      setIsMinValue(inputValue === "1");
+      setIsMaxValue(inputValue === formatUnits(stakedTokenAvailable, poolTokenDecimals));
+
       setZilToUnstake(inputValue)
     }
   }
@@ -221,15 +233,17 @@ ${
           </div>
           <div className="flex flex-col gap-3">
             <Button
-              className="btn-secondary-colored text-aqua1 hover:!text-aqua1 border-0 bg-tealDark hover:!bg-tealDark"
-              onClick={onMaxClick}
+                className={`btn-secondary-colored text-aqua1 hover:!text-aqua1 border-[1px] border-transparent bg-tealDark hover:!bg-tealDark hover:shadow-[0px_0px_10.8px_0px_#00FFF3]
+                ${isMaxValue && "!border-aqua1"}`}
+                onClick={onMaxClick}
               disabled={!isUnstakingAvailable}
             >
               MAX
             </Button>
             <Button
-              className="btn-secondary-colored text-purple3 hover:!text-purple1 border-0 bg-PurpleDarker hover:!bg-PurpleDarker"
-              onClick={() => setZilToUnstake("1")}
+                className={`btn-secondary-colored text-white5 hover:!text-purple3 border-[1px] border-transparent bg-PurpleDarker hover:!bg-PurpleDarker hover:!shadow-[0px_0px_12.0px_0px_#87A1FF]
+                   ${isMinValue && "!border-purple4"}`}
+                onClick={() => setZilToUnstake("1")}
               disabled={!isUnstakingAvailable}
             >
               MIN
@@ -251,8 +265,8 @@ ${
                   size="large"
                   className={`${
                     isPoolLiquid()
-                      ? "btn-primary-gradient-aqua-lg lg:btn-primary-gradient-aqua"
-                      : "btn-primary-gradient-purple-lg lg:btn-primary-gradient-purple"
+                      ? "btn-primary-teal-lg lg:btn-primary-teal"
+                      : "btn-primary-purple-lg lg:btn-primary-purple"
                   }  mx-auto lg:w-1/2 w-2/3`}
                   disabled={!canUnstake}
                   onClick={() =>
@@ -271,7 +285,7 @@ ${
                 </Button>
               </Tooltip>
             ) : (
-              <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3">
+              <CustomWalletConnect notConnectedClassName="btn-primary-teal sm:px-10 sm:max-w-fit  mx-auto lg:w-1/2 w-2/3">
                 Connect wallet
               </CustomWalletConnect>
             )}

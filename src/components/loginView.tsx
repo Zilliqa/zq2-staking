@@ -13,7 +13,7 @@ const LoginView: React.FC = () => {
       </div>
 
       <div className="flex flex-col items-center mt-12.5 ">
-        <CustomWalletConnect notConnectedClassName="btn-primary-gradient-aqua !w-fit px-14 group flex items-center">
+        <CustomWalletConnect notConnectedClassName="btn-primary-teal !w-fit px-14 group flex items-center">
           <div className="flex">
             Connect wallet
             <Image

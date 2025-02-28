@@ -444,7 +444,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
             </div>
             <Button
               type="primary"
-              className="btn-primary-gradient-aqua-lg !w-fit px-11 4k:px-12 group"
+              className="btn-primary-teal-lg !w-fit px-11 4k:px-12 group"
               onClick={() => showNewMessage("")}
             >
               Leave Feedback

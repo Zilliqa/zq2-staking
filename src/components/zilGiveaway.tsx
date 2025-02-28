@@ -54,7 +54,7 @@ const ZilGiveaway: React.FC = () => {
     <>
       <Button
         size="small"
-        className="btn-primary-gradient-aqua px-2 md:px-3 max-lg:min-h-[39px] "
+        className="btn-primary-teal px-2 md:px-3 max-lg:min-h-[39px] "
         onClick={() => {
           setShowRequestZilPopup(true)
           requestZil()
@@ -91,7 +91,7 @@ const ZilGiveaway: React.FC = () => {
               </div>
               <div className="flex justify-end">
                 <Button
-                  className="btn-primary-gradient-aqua-lg mt-5"
+                  className="btn-primary-teal-lg mt-5"
                   onClick={closePopup}
                 >
                   Ok
