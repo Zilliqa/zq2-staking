@@ -46,11 +46,13 @@ const StakingCalculator: React.FC = () => {
   const [isMinValue, setIsMinValue] = useState(false)
   const [isMaxValue, setIsMaxValue] = useState(false)
 
-  const minValue = formatUnits(stakingPoolForView?.stakingPool.definition.minimumStake || 0n, 18);
+  const minValue = formatUnits(
+    stakingPoolForView?.stakingPool.definition.minimumStake || 0n,
+    18
+  )
   const allZil = formatUnits(zilAvailable || 0n, 18)
   const roundedToNiceNumber = allZil.split(".")[0]
-  const maxValue =
-    parseFloat(roundedToNiceNumber) - stakingCallZilFees
+  const maxValue = parseFloat(roundedToNiceNumber) - stakingCallZilFees
 
   const onMinClick = () => {
     setIsMaxValue(false)
@@ -70,14 +72,8 @@ const StakingCalculator: React.FC = () => {
     if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
       setZilToStake(inputValue)
 
-      setIsMinValue(
-        inputValue ===
-          `${minValue}`
-      )
-      setIsMaxValue(
-        inputValue ===
-          `${maxValue}`
-      )
+      setIsMinValue(inputValue === `${minValue}`)
+      setIsMaxValue(inputValue === `${maxValue}`)
     }
   }
   const [isFocused, setIsFocused] = useState(true)

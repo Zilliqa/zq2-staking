@@ -44,8 +44,7 @@ const UnstakingCalculator: React.FC = () => {
   const poolTokenDecimals =
     stakingPoolForView?.stakingPool.definition.tokenDecimals || 18
 
-
-    const maxValue = formatUnits(stakedTokenAvailable, poolTokenDecimals);
+  const maxValue = formatUnits(stakedTokenAvailable, poolTokenDecimals)
   const onMaxClick = () => {
     setZilToUnstake(maxValue)
 
@@ -61,9 +60,7 @@ const UnstakingCalculator: React.FC = () => {
     const reg = /^-?\d*(\.\d*)?$/
     if (reg.test(inputValue) || inputValue === "" || inputValue === "-") {
       setIsMinValue(inputValue === "1")
-      setIsMaxValue(
-        inputValue === maxValue
-      )
+      setIsMaxValue(inputValue === maxValue)
 
       setZilToUnstake(inputValue)
     }

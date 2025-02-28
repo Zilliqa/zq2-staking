@@ -131,27 +131,26 @@ button,
     @apply btn-primary-purple py-2 4k:py-2.5 max-lg:text-17 4k:text-20;
   }
 
-
   .btn-secondary-teal {
-    @apply !gap-0 !whitespace-normal py-1 lg:py-1.5 4k:py-2 px-5 4k:px-8 w-full font-bold text-13 4k:text-17 leading-6 tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full text-aqua1 border-[1px] border-transparent bg-tealDark ;
+    @apply !gap-0 !whitespace-normal py-1 lg:py-1.5 4k:py-2 px-5 4k:px-8 w-full font-bold text-13 4k:text-17 leading-6 tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full text-aqua1 border-[1px] border-transparent bg-tealDark;
 
     &:hover:not(:disabled) {
-      @apply !text-aqua1 !shadow-[0px_0px_10.8px_0px_#00FFF3] !bg-tealDark ;
+      @apply !text-aqua1 !shadow-[0px_0px_10.8px_0px_#00FFF3] !bg-tealDark;
     }
 
     &:disabled {
-      @apply !bg-gradientbg !text-gray1 cursor-not-allowed ;
+      @apply !bg-gradientbg !text-gray1 cursor-not-allowed;
     }
   }
 
   .btn-secondary-purple {
     @apply btn-secondary-teal !text-white5 !bg-PurpleDarker border-purple4;
 
-    &:hover:not(:disabled)  {
+    &:hover:not(:disabled) {
       @apply !bg-PurpleDarker !shadow-[0px_0px_12.0px_0px_#87A1FF] !text-purple3;
     }
   }
- 
+
   .btn-filter {
     @apply flex w-fit py-1 4k:py-1.5 px-1.5 lg:px-2 4k:px-2.5 border border-none 4k:text-20 rounded-[8px] items-center bg-white/[14%] cursor-pointer duration-700 ease-in-out;
   }
