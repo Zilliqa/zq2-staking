@@ -253,14 +253,29 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   overlayClassName="custom-tooltip"
                   title="Add token to wallet"
                 >
+                  {/* <div className=" ml-4 btn-primary-purple p-2 border-purple4 border-[1px]">
                   <Image
                     onClick={handleClickAaddToken}
-                    className="h-[28px] w-[28px] ml-4 cursor-pointer"
+                    className="h-[28px] w-[28px] cursor-pointer"
                     src={PlusIcon}
                     alt="arrow icon"
                     width={28}
                     height={28}
-                  />
+                  /></div> */}
+                  <div className="group ml-4 btn-primary-purple p-2 border-purple4 border-[1px] flex items-center justify-center w-fit transition-all duration-300 overflow-hidden">
+  <Image
+    onClick={handleClickAaddToken}
+    className="h-[28px] w-[28px] cursor-pointer transition-all duration-300"
+    src={PlusIcon}
+    alt="plus icon"
+    width={28}
+    height={28}
+  />
+  <span className="ml-2 text-white opacity-0 hidden w-0 group-hover:w-fit group-hover:opacity-100 group-hover:block transition-all duration-500 whitespace-nowrap">
+    Add Token
+  </span>
+</div>
+
                 </Tooltip>
               </>
             )}
