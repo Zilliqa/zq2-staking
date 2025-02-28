@@ -555,10 +555,10 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
           {["Stake", "Unstake", "Claim"].map((pane) => (
             <div
               key={pane}
-              className={`semi13 text-center py-2 4k:py-6 cursor-pointer border-solid border-b ${
+              className={`semi13 text-center py-2 4k:py-6 cursor-pointer border-solid border-b transition-all duration-400 ease-in-out ${
                 selectedPane === pane
                   ? "text-white1 border-gradient-1"
-                  : "text-gray1 border-black2"
+                  : "text-gray1 border-black2 hover:text-white hover:border-white"
               } `}
               onClick={() => setSelectedPane(pane)}
             >
