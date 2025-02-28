@@ -262,19 +262,20 @@ ${
                 </span>
               </div>
 
-            <div className="flex flex-col gap-3 ">
-              <Button
-                className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
-                onClick={onMaxClick}
-              >
-                MAX
-              </Button>
-              <Button
-                className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
-                onClick={onMinClick}
-              >
-                MIN
-              </Button>
+              <div className="flex flex-col gap-3 ">
+                <Button
+                  className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
+                  onClick={onMaxClick}
+                >
+                  MAX
+                </Button>
+                <Button
+                  className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
+                  onClick={onMinClick}
+                >
+                  MIN
+                </Button>
+              </div>
             </div>
           </Tooltip>
           <div className="flex flex-col">

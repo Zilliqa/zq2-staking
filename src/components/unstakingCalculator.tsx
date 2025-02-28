@@ -238,24 +238,24 @@ ${
                 </span>
               </div>
             </div>
-          <div className="flex flex-col gap-3">
-            <Button
-              className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
-              onClick={onMaxClick}
-              disabled={!isUnstakingAvailable}
-            >
-              MAX
-            </Button>
-            <Button
-              className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
-              onClick={() => setZilToUnstake("1")}
-              disabled={!isUnstakingAvailable}
-            >
-              MIN
-            </Button>
+            <div className="flex flex-col gap-3">
+              <Button
+                className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
+                onClick={onMaxClick}
+                disabled={!isUnstakingAvailable}
+              >
+                MAX
+              </Button>
+              <Button
+                className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
+                onClick={() => setZilToUnstake("1")}
+                disabled={!isUnstakingAvailable}
+              >
+                MIN
+              </Button>
+            </div>
           </div>
-        </div>
-        </Tooltip> 
+        </Tooltip>
         <div className="flex flex-col justify-between">
           <div className="flex mt-2 mb-3">
             {isWalletConnected ? (
