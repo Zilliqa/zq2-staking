@@ -118,18 +118,21 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
       <>
         <div className="flex gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6">
           <SortBtn
+            liquidType={selectedPoolType === StakingPoolType.LIQUID}
             variable="APR"
             isClicked={isAscending && sortCriteria == "APR"}
             onClick={() => handleSortClick("APR")}
             tooltip="Annual Percentage Rate - Projected yearly rewards as a percentage of staked amount."
           />
           <SortBtn
+            liquidType={selectedPoolType === StakingPoolType.LIQUID}
             variable="VP"
             isClicked={isAscending && sortCriteria == "VP"}
             onClick={() => handleSortClick("VP")}
             tooltip="Voting Power - Share of total staked ZIL controlled by the validator."
           />
           <SortBtn
+            liquidType={selectedPoolType === StakingPoolType.LIQUID}
             variable="Commission"
             isClicked={isAscending && sortCriteria == "Commission"}
             onClick={() => handleSortClick("Commission")}

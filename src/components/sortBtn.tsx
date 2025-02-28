@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Tooltip } from "antd"
 interface SortBtnProps {
+  liquidType: Boolean
   variable: String
   isClicked: Boolean
   onClick: () => void
@@ -8,6 +9,7 @@ interface SortBtnProps {
 }
 
 const SortBtn: React.FC<SortBtnProps> = ({
+  liquidType,
   variable,
   isClicked,
   onClick,
@@ -20,11 +22,14 @@ const SortBtn: React.FC<SortBtnProps> = ({
       overlayClassName="custom-tooltip"
       title={tooltip}
     >
-      <div className="btn-filter group" onClick={onClick}>
+      <div
+        className={`btn-filter group  ${isClicked ? (liquidType ? "bg-aqua6" : "bg-purple4") : ""}`}
+        onClick={onClick}
+      >
         <svg
-          width="13"
-          height="10"
-          viewBox="0 0 13 10"
+          width="14"
+          height="12"
+          viewBox="0 0 14 12"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className={`duration-700 stroke-gray1 group-hover:stroke-white ease-in-out ${
@@ -32,30 +37,30 @@ const SortBtn: React.FC<SortBtnProps> = ({
           }`}
         >
           <path
-            d="M8.95428 1L8.95429 8.84943"
+            d="M9.625 10.9487L9.625 0.999985"
             stroke="white"
-            strokeWidth="0.535854"
+            strokeMiterlimit="10"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
-            d="M5.9953 5.8905L8.95425 8.84945L11.9132 5.8905"
+            d="M12.8945 7.68873L9.62453 10.9487L6.35453 7.68873"
             stroke="white"
-            strokeWidth="0.535854"
+            strokeMiterlimit="10"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
-            d="M0.999878 1.9657H6.91777"
+            d="M1 1L7.5 0.999999"
             stroke="white"
-            strokeWidth="0.535854"
+            strokeMiterlimit="10"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
-            d="M2.97247 3.93835H6.91773"
+            d="M3.5 3.375L7.5 3.375"
             stroke="white"
-            strokeWidth="0.535854"
+            strokeMiterlimit="10"
             strokeLinecap="round"
             strokeLinejoin="round"
           />

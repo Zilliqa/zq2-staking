@@ -332,12 +332,12 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
     {
       name: "Liquid",
       type: StakingPoolType.LIQUID,
-      activeGradient: "bg-aqua5",
+      activeGradient: "bg-aqua6",
     },
     {
       name: "Non-liquid",
       type: StakingPoolType.NORMAL,
-      activeGradient: "bg-navyBlue",
+      activeGradient: "bg-purple4",
     },
   ]
   const filterByPoolType = (item: any) => {
