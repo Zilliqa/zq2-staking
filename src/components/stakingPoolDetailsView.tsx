@@ -274,7 +274,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   title="Add token to wallet"
                 >
                   <div
-                    className={` ml-4 rounded-160 border-[1px] border-transparent ${isClicked && " hover:!border-purple4"} `}
+                    className={`ml-4 rounded-160 border-[1px] border-transparent ${isClicked && "hover:!border-purple4"}`}
                   >
                     <div
                       onMouseDown={handleMouseDown}
@@ -282,7 +282,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                       onClick={handleClickAaddToken}
                       onMouseLeave={handleMouseUp}
                       className={`group btn-primary-purple p-2 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
-               ${isClicked && "hover:!shadow-[0px_0px_0px_0px_#522EFF]"}  `}
+                        ${isClicked && "hover:!shadow-[0px_0px_0px_0px_#522EFF]"}`}
                     >
                       <Image
                         className="h-[28px] w-[28px] transition-all duration-300 flex-shrink-0"
@@ -291,8 +291,8 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                         width={28}
                         height={28}
                       />
-                      <div className="overflow-hidden transition-all duration-300 w-0 group-hover:w-auto">
-                        <span className="mx-2 text-white whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 delay-75 opacity-0 group-hover:opacity-100">
+                      <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-28">
+                        <span className="mx-2 text-white whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                           add token
                         </span>
                       </div>
@@ -303,6 +303,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             )}
           </div>
           <div className="flex items-center">
+            ``{" "}
             <div
               onMouseDown={handleMouseDownClose}
               onMouseUp={handleMouseUpClose}
@@ -310,21 +311,21 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
               onClick={() => {
                 selectStakingPoolForView(null)
               }}
-              className={`group rounded-160 bg-gray12 text-white cursor-pointer duration-500 ease-in-out h-8 min-w-8 p-2.5 flex items-center justify-center transition-all
-                ${isClickedClose && "bg-gray8"} `}
+              className={`group rounded-160 bg-gray12 text-white cursor-pointer duration-500 ease-in-out h-8 p-2.5 flex flex-row-reverse items-center justify-center transition-all
+                ${isClickedClose && "bg-gray8"}`}
             >
-              <div className="overflow-hidden transition-all duration-300 w-0 group-hover:w-auto">
-                <span className="mx-2 text-white whitespace-nowrap block transform translate-x-[100%] group-hover:-translate-x-0 transition-transform duration-300 delay-75 opacity-0 group-hover:opacity-100">
-                  Close
-                </span>
-              </div>
               <Image
-                className=""
+                className="flex-shrink-0 ml-0"
                 src={CloseIcon}
                 alt={"close icon"}
                 width={12}
                 height={12}
               />
+              <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-20">
+                <span className="mx-2 text-white whitespace-nowrap block transform translate-x-full group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                  Close
+                </span>
+              </div>
             </div>
           </div>
         </div>
