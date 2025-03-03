@@ -174,16 +174,18 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const greyInfoEntries = [
     stakingPoolData.data &&
       greyInfoEntry(
-        "Voting power",
+        "Voting Power",
         formatPercentage(stakingPoolData.data.votingPower),
         "The share of total staked ZIL controlled by the validator."
       ),
 
     stakingPoolData.data &&
       greyInfoEntry(
-        "Total supply",
+        isPoolLiquid() ? "Total Supply" : "Total Deligated",
         `${humanReadableStakingToken(stakingPoolData.data.tvl)} ${stakingPoolData.definition.tokenSymbol}`,
-        "The total supply of a Liquid Staking validator’s Liquid Staking Token (LST)."
+        isPoolLiquid()
+          ? "The total supply of a Liquid Staking validator’s Liquid Staking Token (LST)."
+          : "The total deligated ZIL value"
       ),
 
     stakingPoolData.data &&
@@ -297,7 +299,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   className={"flex flex-wrap max-lg:gap-y-4  4k:pb-6  pb-4 "}
                 >
                   {colorInfoEntry(
-                    "Available to stake",
+                    "Available to Stake",
                     `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`,
                     "The maximum amount of ZIL you can stake with this validator."
                   )}
