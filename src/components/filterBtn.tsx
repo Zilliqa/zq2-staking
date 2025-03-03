@@ -18,7 +18,7 @@ const FilterBtn: React.FC<FilterBtnProps> = ({
       className={`btn-filter group ${isActive ? activeGradient : ""}`}
       onClick={onClick}
     >
-      <div className="small-base px-2 duration-700 group-hover:text-white ease-in-out">
+      <div className="small-base px-2 duration-300 group-hover:text-white ease-in-out">
         {variable}
       </div>
     </div>

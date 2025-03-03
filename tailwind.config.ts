@@ -61,13 +61,13 @@ const config: Config = {
         white5: "#DCD5FF",
 
         blue1: "#1966F7",
-        navyBlue: "#391EBCB2",
 
         aqua1: "#00D0C6",
         aqua2: "#6DD3C2",
         aqua3: "#BCE6EC",
         aqua4: "#00D0C633",
         aqua5: "#00D0C699",
+        aqua6: "#1EC8C0",
         tealDark: "#173C3F",
         blackTeal: "#051B1D",
 
