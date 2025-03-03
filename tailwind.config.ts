@@ -11,8 +11,7 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         aquaBlue:
-          "linear-gradient(270deg, rgba(6, 187, 179, 0.8) -13.46%, rgba(57, 30, 188, 0.8) 140.38%)",
-
+          "linear-gradient(270deg, rgba(0, 208, 198, 0.80) -10.58%, rgba(82, 46, 255, 0.80) 158.65%)",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "primary-gradient":
