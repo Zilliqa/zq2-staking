@@ -303,7 +303,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             )}
           </div>
           <div className="flex items-center">
-            ``{" "}
+          
             <div
               onMouseDown={handleMouseDownClose}
               onMouseUp={handleMouseUpClose}
@@ -321,8 +321,8 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                 width={12}
                 height={12}
               />
-              <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-20">
-                <span className="mx-2 text-white whitespace-nowrap block transform translate-x-full group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+              <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-16">
+                <span className="mr-2 text-white whitespace-nowrap block transform translate-x-full group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                   Close
                 </span>
               </div>
