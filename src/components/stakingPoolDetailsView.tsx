@@ -181,9 +181,10 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
     stakingPoolData.data &&
       greyInfoEntry(
-        "Total supply",
+        isPoolLiquid() ? "Total Supply" : "Total Deligated",
         `${humanReadableStakingToken(stakingPoolData.data.tvl)} ${stakingPoolData.definition.tokenSymbol}`,
-        "The total supply of a Liquid Staking validator’s Liquid Staking Token (LST)."
+        isPoolLiquid() ? "The total supply of a Liquid Staking validator’s Liquid Staking Token (LST)." : "The total deligated ZIL value",
+        
       ),
 
     stakingPoolData.data &&
