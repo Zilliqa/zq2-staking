@@ -230,28 +230,25 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         claimA.availableAt.diff(claimB.availableAt).milliseconds
     )
 
+  const [isClicked, setIsClicked] = useState(false)
 
+  const handleMouseDown = () => {
+    setIsClicked(true)
+  }
 
-    const [isClicked, setIsClicked] = useState(false);
-  
-    const handleMouseDown = () => {
-      setIsClicked(true);
-    };
-    
-    const handleMouseUp = () => {
-      setIsClicked(false);
-    };
+  const handleMouseUp = () => {
+    setIsClicked(false)
+  }
 
-    const [isClickedClose, setIsClickedClose] = useState(false);
-  
-    const handleMouseDownClose = () => {
-      setIsClickedClose(true);
-    };
-    
-    const handleMouseUpClose = () => {
-      setIsClickedClose(false);
-    };
-    
+  const [isClickedClose, setIsClickedClose] = useState(false)
+
+  const handleMouseDownClose = () => {
+    setIsClickedClose(true)
+  }
+
+  const handleMouseUpClose = () => {
+    setIsClickedClose(false)
+  }
 
   return (
     <div className="relative pb-2 4k:pb-4  lg:pr-4 4k:pr-6 flex flex-col h-full ">
@@ -276,48 +273,51 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   overlayClassName="custom-tooltip"
                   title="Add token to wallet"
                 >
-<div className={` ml-4 rounded-160 border-[1px] border-transparent ${isClicked && ' hover:!border-purple4' } `}>
-              <div
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              onClick={handleClickAaddToken}
-              onMouseLeave={handleMouseUp}
-              className={`group btn-primary-purple p-2 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
-               ${isClicked && 'hover:!shadow-[0px_0px_0px_0px_#522EFF]' }  `}>
-                <Image
-                  className="h-[28px] w-[28px] transition-all duration-300 flex-shrink-0"
-                  src={PlusIcon}
-                  alt="plus icon"
-                  width={28}
-                  height={28}
-                />
-                <div className="overflow-hidden transition-all duration-300 w-0 group-hover:w-auto">
-                  <span className="mx-2 text-white whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 delay-75 opacity-0 group-hover:opacity-100">
-                    add token
-                  </span>
-                </div>
-              </div>
-              </div>
+                  <div
+                    className={` ml-4 rounded-160 border-[1px] border-transparent ${isClicked && " hover:!border-purple4"} `}
+                  >
+                    <div
+                      onMouseDown={handleMouseDown}
+                      onMouseUp={handleMouseUp}
+                      onClick={handleClickAaddToken}
+                      onMouseLeave={handleMouseUp}
+                      className={`group btn-primary-purple p-2 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
+               ${isClicked && "hover:!shadow-[0px_0px_0px_0px_#522EFF]"}  `}
+                    >
+                      <Image
+                        className="h-[28px] w-[28px] transition-all duration-300 flex-shrink-0"
+                        src={PlusIcon}
+                        alt="plus icon"
+                        width={28}
+                        height={28}
+                      />
+                      <div className="overflow-hidden transition-all duration-300 w-0 group-hover:w-auto">
+                        <span className="mx-2 text-white whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 delay-75 opacity-0 group-hover:opacity-100">
+                          add token
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </Tooltip>
               </>
             )}
           </div>
           <div className="flex items-center">
-            <div     
+            <div
               onMouseDown={handleMouseDownClose}
-              onMouseUp={handleMouseUpClose} 
+              onMouseUp={handleMouseUpClose}
               onMouseLeave={handleMouseUpClose}
-                onClick={() => {
-                              selectStakingPoolForView(null)
-                            }}
+              onClick={() => {
+                selectStakingPoolForView(null)
+              }}
               className={`group rounded-160 bg-gray12 text-white cursor-pointer duration-500 ease-in-out h-8 min-w-8 p-2.5 flex items-center justify-center transition-all
-                ${isClickedClose && 'bg-gray8' } `}
-              > 
+                ${isClickedClose && "bg-gray8"} `}
+            >
               <div className="overflow-hidden transition-all duration-300 w-0 group-hover:w-auto">
-                  <span className="mx-2 text-white whitespace-nowrap block transform translate-x-[100%] group-hover:-translate-x-0 transition-transform duration-300 delay-75 opacity-0 group-hover:opacity-100">
-                    Close
-                  </span>
-                </div>
+                <span className="mx-2 text-white whitespace-nowrap block transform translate-x-[100%] group-hover:-translate-x-0 transition-transform duration-300 delay-75 opacity-0 group-hover:opacity-100">
+                  Close
+                </span>
+              </div>
               <Image
                 className=""
                 src={CloseIcon}
