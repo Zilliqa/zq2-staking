@@ -292,7 +292,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                         height={28}
                       />
                       <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-28">
-                        <span className="mx-2 text-white whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                        <span className="ml-2 text-white whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                           add token
                         </span>
                       </div>
@@ -303,7 +303,6 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             )}
           </div>
           <div className="flex items-center">
-          
             <div
               onMouseDown={handleMouseDownClose}
               onMouseUp={handleMouseUpClose}
