@@ -23,7 +23,7 @@ const SortBtn: React.FC<SortBtnProps> = ({
       title={tooltip}
     >
       <div
-        className={`btn-filter group  ${isClicked ? (liquidType ? "bg-aqua6" : "bg-purple4") : ""}`}
+        className={`btn-filter group  ${isClicked ? (liquidType ? "bg-aqua6" : "bg-purple4") : "not-active"}`}
         onClick={onClick}
       >
         <svg
