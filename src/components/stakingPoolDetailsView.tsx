@@ -262,7 +262,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                     width={28}
                     height={28}
                   /></div> */}
-                  <div className="group ml-4 btn-primary-purple p-2 border-purple4 border-[1px] flex items-center justify-center w-fit transition-all duration-300 overflow-hidden">
+                  {/* <div className="group ml-4 btn-primary-purple p-2 border-purple4 border-[1px] flex items-center justify-center w-fit transition-all duration-300 overflow-hidden">
   <Image
     onClick={handleClickAaddToken}
     className="h-[28px] w-[28px] cursor-pointer transition-all duration-300"
@@ -274,6 +274,38 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   <span className="ml-2 text-white opacity-0 hidden w-0 group-hover:w-fit group-hover:opacity-100 group-hover:block transition-all duration-500 whitespace-nowrap">
     Add Token
   </span>
+</div> */}
+
+{/* <div className="group ml-4 btn-primary-purple p-2 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden">
+  <Image
+    onClick={handleClickAaddToken}
+    className="h-[28px] w-[28px] transition-all duration-300 flex-shrink-0"
+    src={PlusIcon}
+    alt="plus icon"
+    width={28}
+    height={28}
+  />
+  <div className="overflow-hidden transition-all duration-300 w-0 group-hover:w-auto">
+    <span className="ml-2 text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+      Add Token
+    </span>
+  </div>
+</div> */}
+
+<div className="group ml-4 btn-primary-purple p-2 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden">
+  <Image
+    onClick={handleClickAaddToken}
+    className="h-[28px] w-[28px] transition-all duration-300 flex-shrink-0"
+    src={PlusIcon}
+    alt="plus icon"
+    width={28}
+    height={28}
+  />
+  <div className="overflow-hidden transition-all duration-300 w-0 group-hover:w-auto">
+    <span className="mx-2 text-white whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 delay-75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+      Add Token
+    </span>
+  </div>
 </div>
 
                 </Tooltip>
