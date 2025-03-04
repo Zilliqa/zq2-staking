@@ -165,7 +165,7 @@ const StakingCalculator: React.FC = () => {
             arrow={true}
             overlayClassName="custom-tooltip"
             className=""
-            title={`Earning ${stakingPoolForView!.stakingPool.data ? formatPercentage(stakingPoolForView?.stakingPool.data.apr) : 0}`}
+            title={`Stake ZIL with ${stakingPoolForView!.stakingPool.data ? formatPercentage(stakingPoolForView?.stakingPool.data.apr) : 0} APR`}
           >
             <div
               className={`transition-all duration-300 border-transparent

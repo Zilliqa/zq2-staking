@@ -69,7 +69,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                       stakingPoolData.data ? (
                         <>
                           <div>
-                            You have{" "}
+                            {" "}
                             {formatUnitsToHumanReadable(
                               userStakingPoolData.stakingTokenAmount,
                               stakingPoolData.definition.tokenDecimals

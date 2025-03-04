@@ -75,13 +75,13 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
       name: "Liquid",
       type: StakingPoolType.LIQUID,
       tooltip:
-        "Liquid Staking grants you Liquid Staking Tokens (LSTs) that represent your staked ZIL. Rewards are automatically reinvested.",
+        "Stake ZIL and get Liquid Staking Tokens (LSTs).",
     },
     {
       name: "Non-Liquid ",
       type: StakingPoolType.NORMAL,
       tooltip:
-        "Non-Liquid Staking lets you withdraw rewards or reinvest them automatically.",
+        "Claim or reinvest regular ZIL rewards.",
     },
   ]
 
@@ -122,7 +122,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
             variable="APR"
             isClicked={isAscending && sortCriteria == "APR"}
             onClick={() => handleSortClick("APR")}
-            tooltip="Annual Percentage Rate - Projected yearly rewards as a percentage of staked amount."
+            tooltip="Annual Percentage Rate"
           />
           <SortBtn
             liquidType={selectedPoolType === StakingPoolType.LIQUID}

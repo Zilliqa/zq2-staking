@@ -217,7 +217,7 @@ const useStakingOperations = () => {
     "Staking successful",
     "You have successfully staked ZIL",
     "Staking failed",
-    "There was an error while staking ZIL"
+    "Please try again later or contact support."
   )
 
   const stake = (delegatorAddress: string, weiToStake: bigint) => {
@@ -255,9 +255,9 @@ const useStakingOperations = () => {
       updateWalletBalance()
     },
     "Unstaking successful",
-    "You have successfully unstaked ZIL",
+    "You ZIL will be ready to claim in [unbonding time]",
     "Unstaking failed",
-    "There was an error while unstaking ZIL"
+    "Please try again later or contact support."
   )
 
   const unstake = (delegatorAddress: string, tokensToUnstake: bigint) => {
