@@ -151,6 +151,14 @@ button,
     }
   }
 
+  .btn-small-purple {
+    @apply p-2 lg:p-1.5 4k:p-2 w-fit font-bold text-10 leading-[1.2] tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full text-aqua1 border-[1px] border-transparent bg-tealDark;
+
+    &:hover:not(:disabled) {
+      @apply !text-aqua1 !shadow-[0px_0px_10.8px_0px_#00FFF3] !bg-tealDark;
+    }
+  }
+
   .btn-filter {
     @apply flex w-fit py-1 4k:py-1.5 px-1.5 lg:px-2 4k:px-2.5 border border-none 4k:text-20 rounded-[8px] items-center bg-gray4/80 text-white3 cursor-pointer duration-300 ease-in-out;
 
@@ -610,4 +618,34 @@ button,
   border: 1px solid #333;
   top: 8px;
   z-index: 100;
+}
+
+.hover-from-left::after,
+.hover-from-right::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  background: white;
+  bottom: 0;
+  transition: width 0.3s;
+}
+
+.hover-from-left::after {
+  left: 0;
+  right: auto;
+  width: 0;
+}
+
+.hover-from-left:hover::after {
+  width: 100%;
+}
+
+.hover-from-right::after {
+  right: 0;
+  left: auto;
+  width: 0;
+}
+
+.hover-from-right:hover::after {
+  width: 100%;
 }

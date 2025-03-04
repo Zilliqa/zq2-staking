@@ -232,6 +232,26 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         claimA.availableAt.diff(claimB.availableAt).milliseconds
     )
 
+  const [isClicked, setIsClicked] = useState(false)
+
+  const handleMouseDown = () => {
+    setIsClicked(true)
+  }
+
+  const handleMouseUp = () => {
+    setIsClicked(false)
+  }
+
+  const [isClickedClose, setIsClickedClose] = useState(false)
+
+  const handleMouseDownClose = () => {
+    setIsClickedClose(true)
+  }
+
+  const handleMouseUpClose = () => {
+    setIsClickedClose(false)
+  }
+
   return (
     <div className="relative pb-2 4k:pb-4  lg:pr-4 4k:pr-6 flex flex-col h-full ">
       <div className="items-center flex justify-between py-1 lg:py-7.5">
@@ -255,32 +275,58 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   overlayClassName="custom-tooltip"
                   title="Add token to wallet"
                 >
-                  <Image
-                    onClick={handleClickAaddToken}
-                    className="h-[28px] w-[28px] ml-4 cursor-pointer"
-                    src={PlusIcon}
-                    alt="arrow icon"
-                    width={28}
-                    height={28}
-                  />
+                  <div
+                    className={`ml-4 rounded-160 border-[1px] border-transparent ${isClicked && "hover:!border-purple4"}`}
+                  >
+                    <div
+                      onMouseDown={handleMouseDown}
+                      onMouseUp={handleMouseUp}
+                      onClick={handleClickAaddToken}
+                      onMouseLeave={handleMouseUp}
+                      className={`group btn-primary-purple px-2 py-1.5 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
+                        ${isClicked && "hover:!shadow-[0px_0px_0px_0px_#522EFF]"}`}
+                    >
+                      <Image
+                        className="transition-all duration-300 flex-shrink-0 p-1"
+                        src={PlusIcon}
+                        alt="plus icon"
+                        width={20}
+                        height={20}
+                      />
+                      <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-28">
+                        <span className="ml-1.5 mr-1 text-10 font-medium tracking-normal text-white3 whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                          Add Token
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </Tooltip>
               </>
             )}
           </div>
           <div className="flex items-center">
             <div
-              className="hover:cursor-pointer hover:opacity-80"
+              onMouseDown={handleMouseDownClose}
+              onMouseUp={handleMouseUpClose}
+              onMouseLeave={handleMouseUpClose}
               onClick={() => {
                 selectStakingPoolForView(null)
               }}
+              className={`group rounded-160 bg-gray12 text-white cursor-pointer duration-500 ease-in-out h-8 p-2.5 flex flex-row-reverse items-center justify-center transition-all
+                ${isClickedClose && "bg-gray8"}`}
             >
               <Image
-                className=""
+                className="flex-shrink-0 ml-0"
                 src={CloseIcon}
                 alt={"close icon"}
-                width={26}
-                height={26}
+                width={12}
+                height={12}
               />
+              <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-16">
+                <span className="ml-0.5 mr-2 text-13 text-white font-medium whitespace-nowrap block transform translate-x-full group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                  Close
+                </span>
+              </div>
             </div>
           </div>
         </div>
