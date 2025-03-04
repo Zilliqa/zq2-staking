@@ -403,10 +403,12 @@ const HomePage = () => {
           title="User Wallet Interaction"
           open={isDummyWalletPopupOpen}
           okButtonProps={{ className: "btn-primary-cyan" }}
-          onOk={() => setIsDummyWalletPopupOpen(false)}
-          onCancel={() => setIsDummyWalletPopupOpen(false)}
+          okText="Confirm tx"
+          cancelText="Cancel"
+          onOk={dummyWalletPopupContent?.onOk}
+          onCancel={dummyWalletPopupContent?.onCancel}
         >
-          <div>{dummyWalletPopupContent}</div>
+          <div>{dummyWalletPopupContent?.content}</div>
         </Modal>
       </div>
     </>

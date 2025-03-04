@@ -11,7 +11,15 @@ import { useGasPrice } from "wagmi"
 
 const useTxOperation = (
   isDummyWalletConnected: boolean,
-  setDummyWalletPopupContent: (content: string) => void,
+  setDummyWalletPopupContent: ({
+    content,
+    onOk,
+    onCancel,
+  }: {
+    content: string
+    onOk: () => void
+    onCancel: () => void
+  }) => void,
   setIsDummyWalletPopupOpen: (isOpen: boolean) => void,
   reloadAppUserData: () => void,
   successMessage: string,
@@ -22,6 +30,9 @@ const useTxOperation = (
   const [txHash, setTxHash] = useState<Address | undefined>(undefined)
 
   const [isTxInPreparation, setIsTxInPreparation] = useState(false)
+
+  const [dummyTxSuccess, setDummyTxSuccess] = useState(false)
+  const [dummyTxError, setDummyTxError] = useState(false)
 
   const {
     isLoading: isTxProcessedByChain,
@@ -38,16 +49,34 @@ const useTxOperation = (
     data: currentTxData,
   } = useWriteContract()
 
+  const onDummyWalletOperationPopupOk = () => {
+    setDummyTxSuccess(true)
+    setIsDummyWalletPopupOpen(false)
+    setIsTxInPreparation(false)
+    reloadAppUserData()
+  }
+
+  const onDummyWalletOperationPopupCancel = () => {
+    setDummyTxError(true)
+    setIsDummyWalletPopupOpen(false)
+    setIsTxInPreparation(false)
+    reloadAppUserData()
+  }
+
   const callContract = (txCallParams: WriteContractParameters) => {
     setIsTxInPreparation(true)
+    setDummyTxSuccess(false)
+    setDummyTxError(false)
+    setTxHash(undefined)
 
     if (isDummyWalletConnected) {
-      setDummyWalletPopupContent(
-        `Now User gonna approve the wallet transaction, and then shown notification with ${successMessage}`
-      )
+      setDummyWalletPopupContent({
+        content: `Now User gonna approve the wallet transaction, and then shown notification with ${successMessage}`,
+        onOk: onDummyWalletOperationPopupOk,
+        onCancel: onDummyWalletOperationPopupCancel,
+      })
       setIsDummyWalletPopupOpen(true)
       setTxHash("0x1234567890234567890234567890234567890" as Address)
-      setIsTxInPreparation(false)
     } else {
       try {
         writeContract(txCallParams)
@@ -66,7 +95,7 @@ const useTxOperation = (
   }
 
   useEffect(() => {
-    if (txReceiptStatus === "success") {
+    if (txReceiptStatus === "success" || dummyTxSuccess) {
       notification.success({
         message: successMessage,
         description: successDescription,
@@ -74,7 +103,7 @@ const useTxOperation = (
       })
       reloadAppUserData()
     }
-  }, [txReceiptStatus])
+  }, [txReceiptStatus, dummyTxSuccess])
 
   useEffect(() => {
     if (txSubmissionStatus === "success") {
@@ -83,7 +112,7 @@ const useTxOperation = (
   }, [txSubmissionStatus, currentTxData])
 
   useEffect(() => {
-    if (txSubmissionStatus === "error") {
+    if (txSubmissionStatus === "error" || dummyTxError) {
       notification.error({
         message: errorMessage,
         description:
@@ -93,7 +122,7 @@ const useTxOperation = (
 
       console.error({ txSubmissionStatus, txSubmissionError })
     }
-  }, [txSubmissionStatus])
+  }, [txSubmissionStatus, dummyTxError])
 
   useEffect(() => {
     if (txReceiptStatus === "error") {
@@ -114,7 +143,7 @@ const useTxOperation = (
 
   return {
     isTxInPreparation: isTxInPreparation || txSubmissionStatus === "pending",
-    isTxProcessedByChain,
+    isTxProcessedByChain: isTxProcessedByChain && !isDummyWalletConnected,
     txHash,
     txContractError,
     callContract,
@@ -126,15 +155,25 @@ const useStakingOperations = () => {
   const { isDummyWalletConnected, updateWalletBalance, walletAddress } =
     WalletConnector.useContainer()
 
-  const { reloadUserStakingPoolsData, stakingPoolForView } =
-    StakingPoolsStorage.useContainer()
+  const {
+    reloadUserStakingPoolsData,
+    stakingPoolForView,
+    availableStakingPools,
+  } = StakingPoolsStorage.useContainer()
 
   const wagmiConfig = useConfig()
 
   const [isDummyWalletPopupOpen, setIsDummyWalletPopupOpen] = useState(false)
-  const [dummyWalletPopupContent, setDummyWalletPopupContent] = useState<
-    string | null
-  >(null)
+  const [dummyWalletPopupContent, setDummyWalletPopupContent] = useState<{
+    content: string
+    onOk: () => void
+    onCancel: () => void
+  } | null>(null)
+
+  const [
+    stakingPoolIdForInProgressOperation,
+    setStakingPoolIdForInProgressOperation,
+  ] = useState<string | null>(null)
 
   const stakingPoolId = stakingPoolForView?.stakingPool.definition.id
 
@@ -146,6 +185,13 @@ const useStakingOperations = () => {
 
   const getGasCostInZil = (estimatedGas: bigint) => {
     return Math.ceil(parseFloat(formatUnits(estimatedGas * uppedGasPrice, 18)))
+  }
+
+  const setStakingPoolIdForInProgressOperationByAddress = (address: string) => {
+    const pool = availableStakingPools.find(
+      (pool) => pool.definition.address === address
+    )
+    setStakingPoolIdForInProgressOperation(pool?.definition.id || null)
   }
 
   /**
@@ -175,6 +221,7 @@ const useStakingOperations = () => {
   )
 
   const stake = (delegatorAddress: string, weiToStake: bigint) => {
+    setStakingPoolIdForInProgressOperationByAddress(delegatorAddress)
     callContractStakeRaw({
       address: delegatorAddress as Address,
       abi: baseDelegatorAbi,
@@ -214,6 +261,7 @@ const useStakingOperations = () => {
   )
 
   const unstake = (delegatorAddress: string, tokensToUnstake: bigint) => {
+    setStakingPoolIdForInProgressOperationByAddress(delegatorAddress)
     callContractUnstakeRaw({
       address: delegatorAddress as Address,
       abi: baseDelegatorAbi,
@@ -252,6 +300,7 @@ const useStakingOperations = () => {
   )
 
   const claimUnstake = (delegatorAddress: string) => {
+    setStakingPoolIdForInProgressOperationByAddress(delegatorAddress)
     callContractClaimUnstakeRaw({
       address: delegatorAddress as Address,
       abi: baseDelegatorAbi,
@@ -290,6 +339,7 @@ const useStakingOperations = () => {
   )
 
   const claimReward = (delegatorAddress: string) => {
+    setStakingPoolIdForInProgressOperationByAddress(delegatorAddress)
     callContractClaimRewardRaw({
       address: delegatorAddress as Address,
       abi: nonLiquidDelegatorAbi,
@@ -328,6 +378,7 @@ const useStakingOperations = () => {
   )
 
   const stakeReward = (delegatorAddress: string) => {
+    setStakingPoolIdForInProgressOperationByAddress(delegatorAddress)
     callContractStakeRewardRaw({
       address: delegatorAddress as Address,
       abi: nonLiquidDelegatorAbi,
@@ -353,45 +404,61 @@ const useStakingOperations = () => {
     [stakingPoolId]
   )
 
+  const isStakingInProgress = submittingStakingTx || preparingStakingTx
+  const isUnstakingInProgress = submittingUnstakingTx || preparingUnstakingTx
+  const isClaimingUnstakeInProgress =
+    submittingClaimUnstakeTx || preparingClaimUnstakeTx
+  const isClaimingRewardInProgress =
+    submittingClaimRewardTx || preparingClaimRewardTx
+  const isStakingRewardInProgress =
+    submittingStakeRewardTx || preparingStakeRewardTx
+
+  const isAnyWalletOperationInProgress =
+    isStakingInProgress ||
+    isUnstakingInProgress ||
+    isClaimingUnstakeInProgress ||
+    isClaimingRewardInProgress ||
+    isStakingRewardInProgress
+
   return {
     isDummyWalletPopupOpen,
     dummyWalletPopupContent,
     setIsDummyWalletPopupOpen,
 
+    isAnyWalletOperationInProgress,
+    stakingPoolIdForInProgressOperation,
+
     stake,
     preparingStakingTx,
-    isStakingInProgress: submittingStakingTx || preparingStakingTx,
+    isStakingInProgress,
     stakingCallTxHash,
     stakeContractCallError,
     stakingCallZilFees: getGasCostInZil(stakingCallEstimatedGas),
 
     unstake,
     preparingUnstakingTx,
-    isUnstakingInProgress: submittingUnstakingTx || preparingUnstakingTx,
+    isUnstakingInProgress,
     unstakingCallTxHash,
     unstakeContractCallError,
     unstakingCallZilFees: getGasCostInZil(unstakingCallEstimatedGas),
 
     claimUnstake,
     preparingClaimUnstakeTx,
-    isClaimingUnstakeInProgress:
-      submittingClaimUnstakeTx || preparingClaimUnstakeTx,
+    isClaimingUnstakeInProgress,
     claimUnstakeCallTxHash,
     claimContractCallError,
     claimUnstakeCallZilFees: getGasCostInZil(claimUnstakingCallEstimatedGas),
 
     claimReward,
     preparingClaimRewardTx,
-    isClaimingRewardInProgress:
-      submittingClaimRewardTx || preparingClaimRewardTx,
+    isClaimingRewardInProgress,
     claimRewardCallTxHash,
     claimRewardContractCallError,
     claimRewardCallZilFees: getGasCostInZil(claimRewardCallEstimatedGas),
 
     stakeReward,
     preparingStakeRewardTx,
-    isStakingRewardInProgress:
-      submittingStakeRewardTx || preparingStakeRewardTx,
+    isStakingRewardInProgress,
     stakeRewardCallTxHash,
     stakeRewardContractCallError,
     stakeRewardCallZilFees: getGasCostInZil(stakeRewardCallEstimatedGas),
