@@ -217,7 +217,7 @@ button,
   }
 
   .body2-v2 {
-    @apply font-light text-16 lg:text-28 4k:text-33 leading-5 lg:leading-10 text-white1 sm:px-17.5;
+    @apply font-light text-16 lg:text-20 4k:text-28 text-white1 sm:px-17.5;
   }
 
   .body1 {
