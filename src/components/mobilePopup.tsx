@@ -48,7 +48,8 @@ const MobilePopup = ({
             Start earning ZIL
           </h2>
           <p className="text-gray14 text-16 font-medium leading-tight mt-3 ">
-          Stake ZIL. <br /> Earn Rewards.<br /> Secure the Network.
+            Stake ZIL. <br /> Earn Rewards.
+            <br /> Secure the Network.
           </p>
           <div className="flex items-center space-x-4 mt-6">
             <CustomWalletConnect notConnectedClassName="capitalize text-16  font-bold btn-primary-teal !w-fit  group flex items-center justify-center">

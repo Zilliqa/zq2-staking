@@ -8,7 +8,8 @@ const LoginView: React.FC = () => {
       <div className="text-center p-4">
         <h1 className="bold52 text-white">Staking Portal</h1>
         <p className="mt-6 body2-v2 text-white4">
-        Stake ZIL. <br /> Earn Rewards.<br /> Secure the Network.{" "}
+          Stake ZIL. <br /> Earn Rewards.
+          <br /> Secure the Network.{" "}
         </p>
       </div>
 

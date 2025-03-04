@@ -68,9 +68,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     title={
                       stakingPoolData.data ? (
                         <>
-                          <div>
-                          Your staked value {" "} 
-                          </div>
+                          <div>Your staked value </div>
                           <div className="mt-1">
                             ( ~
                             {formatUnitsToHumanReadable(
