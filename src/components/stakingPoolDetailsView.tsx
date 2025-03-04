@@ -281,18 +281,18 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                       onMouseUp={handleMouseUp}
                       onClick={handleClickAaddToken}
                       onMouseLeave={handleMouseUp}
-                      className={`group btn-primary-purple p-2 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
+                      className={`group btn-primary-purple px-2 py-1.5 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
                         ${isClicked && "hover:!shadow-[0px_0px_0px_0px_#522EFF]"}`}
                     >
                       <Image
-                        className="h-[28px] w-[28px] transition-all duration-300 flex-shrink-0"
+                        className="transition-all duration-300 flex-shrink-0 p-1"
                         src={PlusIcon}
                         alt="plus icon"
-                        width={28}
-                        height={28}
+                        width={20}
+                        height={20}
                       />
                       <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-28">
-                        <span className="ml-2 text-white whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                        <span className="ml-2 text-10 text-white whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                           add token
                         </span>
                       </div>
@@ -321,7 +321,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                 height={12}
               />
               <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-16">
-                <span className="mr-2 text-white whitespace-nowrap block transform translate-x-full group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                <span className="ml-0.5 mr-2 text-white whitespace-nowrap block transform translate-x-full group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                   Close
                 </span>
               </div>
