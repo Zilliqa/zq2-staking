@@ -492,6 +492,19 @@ button,
   );
 }
 
+@keyframes grow-width {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.after\:animate-grow-width::after {
+  animation: grow-width 0.5s forwards;
+}
+
 .border-gradient-2 {
   border-image-slice: 1;
   border-image-source: linear-gradient(
