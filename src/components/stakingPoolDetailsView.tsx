@@ -292,8 +292,8 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                         height={20}
                       />
                       <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-28">
-                        <span className="ml-2 text-10 text-white whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
-                          add token
+                        <span className="ml-1.5 mr-1 text-10 font-medium tracking-normal text-white3 whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                          Add Token
                         </span>
                       </div>
                     </div>
@@ -321,7 +321,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                 height={12}
               />
               <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-16">
-                <span className="ml-0.5 mr-2 text-white whitespace-nowrap block transform translate-x-full group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                <span className="ml-0.5 mr-2 text-14 text-white font-semibold whitespace-nowrap block transform translate-x-full group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                   Close
                 </span>
               </div>
