@@ -144,7 +144,7 @@ button,
   }
 
   .btn-secondary-purple {
-    @apply btn-secondary-teal !text-white5 !bg-PurpleDarker border-purple4;
+    @apply btn-secondary-teal !text-white5 !bg-PurpleDarker border-transparent;
 
     &:hover:not(:disabled) {
       @apply !bg-PurpleDarker !shadow-[0px_0px_12.0px_0px_#87A1FF] !text-purple3;
