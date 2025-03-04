@@ -321,7 +321,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                 height={12}
               />
               <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-16">
-                <span className="ml-0.5 mr-2 text-14 text-white font-semibold whitespace-nowrap block transform translate-x-full group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                <span className="ml-0.5 mr-2 text-13 text-white font-medium whitespace-nowrap block transform translate-x-full group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                   Close
                 </span>
               </div>
