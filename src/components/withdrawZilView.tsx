@@ -118,7 +118,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               claimUnstake(unstakeInfo.address)
               setViewClaim(false)
             }}
-            loading={isInProgress}
+            loading={isInProgress && available}
           >
             {available
               ? preparingClaimUnstakeTx && isCurrentWalletOperationAboutThisPool
