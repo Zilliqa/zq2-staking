@@ -140,7 +140,7 @@ const UnstakingCalculator: React.FC = () => {
     } else {
       return {
         canUnstake: true,
-        whyCantUnstake: "Unstake and prepare to claim in [unbonding time]",
+        whyCantUnstake: "You first need to stake ZIL.",
       }
     }
   })()
