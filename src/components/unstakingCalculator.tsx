@@ -167,6 +167,9 @@ ${
               <div className=" flex items-center gap-2">
                 <div
                   className={`${
+                      !isWalletConnected
+                        ? "text-gray4" 
+                   :
                     tokensToUnstake === "0" || tokensToUnstake === ""
                       ? "text-gray8"
                       : !canUnstake && isWalletConnected
@@ -186,7 +189,11 @@ ${
                       : !canUnstake && isWalletConnected
                         ? "text-red1"
                         : "text-white1"
-                  } placeholder-gray8 flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
+                  }   ${
+                            !isWalletConnected
+                              ? "placeholder-gray4":"placeholder-gray8 "
+                          }
+flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
                   value={tokensToUnstake !== "0" ? tokensToUnstake || "" : ""}
                   placeholder="0"
                   onChange={handleChange}
@@ -198,7 +205,10 @@ ${
               </div>
               <div className="flex items-center ">
                 {isPoolLiquid() && (
-                  <span className="medium17">
+                  <span className= {` ${
+                    !isWalletConnected
+                      && "text-gray4" 
+                  } medium17`}>
                     {stakingPoolForView!.stakingPool.data ? (
                       <>
                         {" "}
@@ -220,6 +230,9 @@ ${
 
                 <span
                   className={`${
+                      !isWalletConnected
+                        ?"text-gray4" 
+                    :
                     !isUnstakingAvailable
                       ? "!text-gray-500"
                       : isPoolLiquid()

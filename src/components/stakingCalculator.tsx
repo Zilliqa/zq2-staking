@@ -171,7 +171,7 @@ ${ isWalletConnected &&
     ${isMaxHovered && "!bg-teal-gradient"}
     ${isMinValue && "!bg-purple-gradient"}
     ${isMinHovered && "!bg-purple-gradient"}
-    ${!canStake && zilToStake != "0" &&  "!bg-red-gradient"}`
+    ${!canStake && zilToStake != "0" && zilToStake != "" &&  "!bg-red-gradient"}`
 }
            !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
             >
@@ -179,8 +179,8 @@ ${ isWalletConnected &&
                 <div className=" flex items-center gap-2">
                   <div
                     className={`${
-                      zilToStake === "0" || zilToStake === ""
-                        ? "text-gray8"
+                      !isWalletConnected
+                        ? "text-gray4"
                         : "text-white1"
                     } bold33`}
                   >
@@ -190,10 +190,18 @@ ${ isWalletConnected &&
                     ref={inputRef}
                     placeholder="0"
                     className={` ${
+                      
                       zilToStake === "0" || zilToStake === ""
                         ? "text-gray8"
                         : "text-white1"
-                    } placeholder-gray8 flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
+                    } 
+                        
+                    ${
+                      !isWalletConnected
+                        ? "placeholder-gray4"
+                        : "placeholder-gray8"
+                    }
+                         flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
                     value={zilToStake !== "0" ? zilToStake || "" : ""}
                     onChange={handleChange}
                     onFocus={handleFocus}
@@ -207,7 +215,11 @@ ${ isWalletConnected &&
                   {stakingPoolForView!.stakingPool.data ? (
                     <>
                       {isPoolLiquid() && (
-                        <span className="medium17">
+                        <span className=
+                        {` ${
+                      !isWalletConnected
+                        && "text-gray4" 
+                    } medium17`}>
                           ~
                           {!isNaN(zilToStakeNumber) &&
                           !isNaN(
@@ -226,7 +238,12 @@ ${ isWalletConnected &&
                         </span>
                       )}
                       <span
-                        className={`${
+                        className={`
+                         ${
+                            !isWalletConnected
+                              && "text-gray4" 
+                          }
+                          ${
                           stakingPoolForView?.stakingPool.definition
                             .poolType === StakingPoolType.LIQUID
                             ? "text-aqua1"
@@ -246,7 +263,12 @@ ${ isWalletConnected &&
                     </div>
                   )}
                   <span
-                    className={`${
+                    className={`
+                        ${
+                          !isWalletConnected
+                            && "text-gray4" 
+                          }
+                        ${
                       stakingPoolForView?.stakingPool.definition.poolType ===
                       StakingPoolType.LIQUID
                         ? "text-aqua1"
