@@ -171,7 +171,7 @@ ${ isWalletConnected &&
     ${isMaxHovered && "!bg-teal-gradient"}
     ${isMinValue && "!bg-purple-gradient"}
     ${isMinHovered && "!bg-purple-gradient"}
-    ${!canStake &&  "!bg-red-gradient"}`
+    ${!canStake && zilToStake != "0" &&  "!bg-red-gradient"}`
 }
            !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
             >
