@@ -84,6 +84,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     tooltip: string | JSX.Element | null
   ) => (
     <Tooltip
+      key={title}
       placement="top"
       arrow={true}
       overlayClassName="custom-tooltip"
@@ -111,16 +112,14 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     tooltip: string | JSX.Element | null
   ) => (
     <Tooltip
+      key={title}
       placement="top"
       arrow={true}
       overlayClassName="custom-tooltip"
       className=""
       title={tooltip}
     >
-      <div
-        key={title}
-        className={`  ${isPoolLiquid() ? "lg:w-1/4 w-1/2" : "w-1/3"} `}
-      >
+      <div className={`  ${isPoolLiquid() ? "lg:w-1/4 w-1/2" : "w-1/3"} `}>
         {value ? (
           <div className="semi14 text-gray7 xl:whitespace-nowrap">{value}</div>
         ) : (
