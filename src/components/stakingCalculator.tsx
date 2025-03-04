@@ -36,12 +36,7 @@ const StakingCalculator: React.FC = () => {
 
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
 
-  const [zilToStake, setZilToStake] = useState<string>(
-    formatUnits(
-      stakingPoolForView?.stakingPool.definition.minimumStake || 0n,
-      18
-    )
-  )
+  const [zilToStake, setZilToStake] = useState<string>("0")
 
   const [isMinValue, setIsMinValue] = useState(false)
   const [isMaxValue, setIsMaxValue] = useState(false)
@@ -79,7 +74,6 @@ const StakingCalculator: React.FC = () => {
   const [isFocused, setIsFocused] = useState(true)
 
   const handleFocus = () => {
-    if (zilToStake === "") onMinClick()
     setIsFocused(true)
   }
 
@@ -92,8 +86,6 @@ const StakingCalculator: React.FC = () => {
       valueTemp = zilToStake.slice(0, -1)
     }
     setZilToStake(valueTemp.replace(/0*(\d+)/, "$1"))
-
-    if (zilToStake === "") onMinClick()
     setIsFocused(false)
   }
 
@@ -192,14 +184,15 @@ ${
                   </div>
                   <Input
                     ref={inputRef}
+                    placeholder="0"
                     className={` ${
                       zilToStake === "0" || zilToStake === ""
                         ? "text-gray8"
                         : !canStake && isWalletConnected
                           ? "text-red1"
                           : "text-white1"
-                    } flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
-                    value={zilToStake}
+                    } placeholder-gray8 flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
+                    value={zilToStake !== "0" ? zilToStake || "" : ""}
                     onChange={handleChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}

@@ -62,12 +62,12 @@ const UnstakingCalculator: React.FC = () => {
       setIsMinValue(inputValue === "1")
       setIsMaxValue(inputValue === maxValue)
 
+      console.log(isMinValue, "min and ", isMaxValue, "max")
       setZilToUnstake(inputValue)
     }
   }
 
   const handleFocus = () => {
-    if (tokensToUnstake === "") onMaxClick()
     setIsFocused(true)
   }
 
@@ -80,16 +80,8 @@ const UnstakingCalculator: React.FC = () => {
       valueTemp = tokensToUnstake.slice(0, -1)
     }
     setZilToUnstake(valueTemp.replace(/0*(\d+)/, "$1"))
-    if (tokensToUnstake === "") onMaxClick()
-
     setIsFocused(false)
   }
-
-  useEffect(() => {
-    if (stakingPoolForView?.userData) {
-      onMaxClick()
-    }
-  }, [stakingPoolForView?.userData])
 
   const tokenToUnstakeInBaseUnit = parseUnits(
     tokensToUnstake,
@@ -194,8 +186,9 @@ ${
                       : !canUnstake && isWalletConnected
                         ? "text-red1"
                         : "text-white1"
-                  }  flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
-                  value={tokensToUnstake}
+                  } placeholder-gray8 flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
+                  value={tokensToUnstake !== "0" ? tokensToUnstake || "" : ""}
+                  placeholder="0"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onFocus={handleFocus}
@@ -248,7 +241,11 @@ ${
               </Button>
               <Button
                 className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
-                onClick={() => setZilToUnstake("1")}
+                onClick={() => {
+                  setZilToUnstake("1")
+                  setIsMinValue(true)
+                  setIsMaxValue(false)
+                }}
                 disabled={!isUnstakingAvailable}
               >
                 MIN
