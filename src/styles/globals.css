@@ -139,7 +139,8 @@ button,
     }
 
     &:disabled {
-      @apply !bg-gradientbg !text-gray1 cursor-not-allowed;
+      @apply !text-gray4 border-gray4;
+      background-image: none !important;
     }
   }
 
@@ -148,6 +149,11 @@ button,
 
     &:hover:not(:disabled) {
       @apply !bg-PurpleDarker !shadow-[0px_0px_12.0px_0px_#87A1FF] !text-purple3;
+    }
+
+    &:disabled {
+      @apply !text-gray4 !bg-[#0000000A] border-gray4;
+      background-image: none !important;
     }
   }
 

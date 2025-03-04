@@ -160,14 +160,14 @@ const StakingCalculator: React.FC = () => {
             title={`Earning ${stakingPoolForView!.stakingPool.data ? formatPercentage(stakingPoolForView?.stakingPool.data.apr) : 0}`}
           >
             <div
-              className={`transition-all duration-300 border-transparent
-${
-  isPoolLiquid()
-    ? "hover:!border-aqua1 hover:shadow-[inset_0_0_7px_3px_rgba(0,208,198,0.3),inset_0_0_15px_8px_rgba(0,208,198,0.15)]"
-    : "hover:!border-purple5 hover:shadow-[inset_0_0_7px_3px_rgba(91,111,255,0.3),inset_0_0_15px_8px_rgba(91,111,255,0.15)]"
+              className={`transition-all duration-300 border-transparent bg-gray-gradient
+${ isWalletConnected &&
+ `  ${isFocused && "ant-input-affix-wrapper-focused !border-transparent !bg-focus-gradient "}
+    ${isMaxValue && "!bg-teal-gradient"}
+    ${isMinValue && "!bg-purple-gradient"}
+    ${!canStake &&  "!bg-red-gradient"}`
 }
-          ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"}
-           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
+           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
             >
               <div className="h-fit self-center">
                 <div className=" flex items-center gap-2">
@@ -175,9 +175,7 @@ ${
                     className={`${
                       zilToStake === "0" || zilToStake === ""
                         ? "text-gray8"
-                        : !canStake && isWalletConnected
-                          ? "text-red1"
-                          : "text-white1"
+                        : "text-white1"
                     } bold33`}
                   >
                     ZIL
@@ -188,15 +186,14 @@ ${
                     className={` ${
                       zilToStake === "0" || zilToStake === ""
                         ? "text-gray8"
-                        : !canStake && isWalletConnected
-                          ? "text-red1"
-                          : "text-white1"
+                        : "text-white1"
                     } placeholder-gray8 flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
                     value={zilToStake !== "0" ? zilToStake || "" : ""}
                     onChange={handleChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     status={!canStake ? "warning" : undefined}
+                    disabled={!isWalletConnected}
                   />
                 </div>
 
@@ -259,12 +256,14 @@ ${
                 <Button
                   className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
                   onClick={onMaxClick}
+                  disabled={!isWalletConnected}
                 >
                   MAX
                 </Button>
                 <Button
                   className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
                   onClick={onMinClick}
+                  disabled={!isWalletConnected}
                 >
                   MIN
                 </Button>
