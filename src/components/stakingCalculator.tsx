@@ -148,9 +148,8 @@ const StakingCalculator: React.FC = () => {
     }
   }, [isFocused])
 
-  const [isMinHovered, setIsMinHovered] = useState(false);
-  const [isMaxHovered, setIsMaxHovered] = useState(false);
-
+  const [isMinHovered, setIsMinHovered] = useState(false)
+  const [isMaxHovered, setIsMaxHovered] = useState(false)
 
   return (
     stakingPoolForView && (
@@ -165,23 +164,21 @@ const StakingCalculator: React.FC = () => {
           >
             <div
               className={`transition-all duration-300 border-transparent bg-gray-gradient
-${ isWalletConnected &&
- `  ${isFocused && "ant-input-affix-wrapper-focused !border-transparent !bg-focus-gradient "}
-    ${isMaxValue && "!bg-teal-gradient"}
-    ${isMaxHovered && "!bg-teal-gradient"}
-    ${isMinValue && "!bg-purple-gradient"}
-    ${isMinHovered && "!bg-purple-gradient"}
-    ${!canStake && zilToStake != "0" && zilToStake != "" &&  "!bg-red-gradient"}`
-}
-           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
+              ${
+                isWalletConnected &&
+                `  ${isFocused && "ant-input-affix-wrapper-focused !border-transparent !bg-focus-gradient "}
+                  ${isMaxValue && "!bg-teal-gradient !border-teal"}
+                  ${isMaxHovered && "!bg-teal-gradient"}
+                  ${isMinValue && "!bg-purple-gradient"}
+                  ${isMinHovered && "!bg-purple-gradient"}
+                  ${!canStake && zilToStake != "0" && zilToStake != "" && "!bg-red-gradient"}`
+              } flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
             >
               <div className="h-fit self-center">
                 <div className=" flex items-center gap-2">
                   <div
                     className={`${
-                      !isWalletConnected
-                        ? "text-gray4"
-                        : "text-white1"
+                      !isWalletConnected ? "text-gray4" : "text-white1"
                     } bold33`}
                   >
                     ZIL
@@ -190,7 +187,6 @@ ${ isWalletConnected &&
                     ref={inputRef}
                     placeholder="0"
                     className={` ${
-                      
                       zilToStake === "0" || zilToStake === ""
                         ? "text-gray8"
                         : "text-white1"
@@ -215,11 +211,11 @@ ${ isWalletConnected &&
                   {stakingPoolForView!.stakingPool.data ? (
                     <>
                       {isPoolLiquid() && (
-                        <span className=
-                        {` ${
-                      !isWalletConnected
-                        && "text-gray4" 
-                    } medium17`}>
+                        <span
+                          className={` ${
+                            !isWalletConnected && "text-gray4"
+                          } medium17`}
+                        >
                           ~
                           {!isNaN(zilToStakeNumber) &&
                           !isNaN(
@@ -239,16 +235,13 @@ ${ isWalletConnected &&
                       )}
                       <span
                         className={`
-                         ${
-                            !isWalletConnected
-                              && "text-gray4" 
-                          }
+                         ${!isWalletConnected && "text-gray4"}
                           ${
-                          stakingPoolForView?.stakingPool.definition
-                            .poolType === StakingPoolType.LIQUID
-                            ? "text-aqua1"
-                            : "text-purple3"
-                        } medium17 ml-3 mr-1`}
+                            stakingPoolForView?.stakingPool.definition
+                              .poolType === StakingPoolType.LIQUID
+                              ? "text-aqua1"
+                              : "text-purple3"
+                          } medium17 ml-3 mr-1`}
                       >
                         ~
                         {formatPercentage(
@@ -264,16 +257,13 @@ ${ isWalletConnected &&
                   )}
                   <span
                     className={`
+                        ${!isWalletConnected && "text-gray4"}
                         ${
-                          !isWalletConnected
-                            && "text-gray4" 
-                          }
-                        ${
-                      stakingPoolForView?.stakingPool.definition.poolType ===
-                      StakingPoolType.LIQUID
-                        ? "text-aqua1"
-                        : "text-purple3"
-                    } medium17`}
+                          stakingPoolForView?.stakingPool.definition
+                            .poolType === StakingPoolType.LIQUID
+                            ? "text-aqua1"
+                            : "text-purple3"
+                        } medium17`}
                   >
                     APR
                   </span>

@@ -167,14 +167,13 @@ ${
               <div className=" flex items-center gap-2">
                 <div
                   className={`${
-                      !isWalletConnected
-                        ? "text-gray4" 
-                   :
-                    tokensToUnstake === "0" || tokensToUnstake === ""
-                      ? "text-gray8"
-                      : !canUnstake && isWalletConnected
-                        ? "text-red1"
-                        : "text-white1"
+                    !isWalletConnected
+                      ? "text-gray4"
+                      : tokensToUnstake === "0" || tokensToUnstake === ""
+                        ? "text-gray8"
+                        : !canUnstake && isWalletConnected
+                          ? "text-red1"
+                          : "text-white1"
                   } bold33`}
                 >
                   {" "}
@@ -190,9 +189,10 @@ ${
                         ? "text-red1"
                         : "text-white1"
                   }   ${
-                            !isWalletConnected
-                              ? "placeholder-gray4":"placeholder-gray8 "
-                          }
+                    !isWalletConnected
+                      ? "placeholder-gray4"
+                      : "placeholder-gray8 "
+                  }
 flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
                   value={tokensToUnstake !== "0" ? tokensToUnstake || "" : ""}
                   placeholder="0"
@@ -205,10 +205,11 @@ flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0
               </div>
               <div className="flex items-center ">
                 {isPoolLiquid() && (
-                  <span className= {` ${
-                    !isWalletConnected
-                      && "text-gray4" 
-                  } medium17`}>
+                  <span
+                    className={` ${
+                      !isWalletConnected && "text-gray4"
+                    } medium17`}
+                  >
                     {stakingPoolForView!.stakingPool.data ? (
                       <>
                         {" "}
@@ -230,14 +231,13 @@ flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0
 
                 <span
                   className={`${
-                      !isWalletConnected
-                        ?"text-gray4" 
-                    :
-                    !isUnstakingAvailable
-                      ? "!text-gray-500"
-                      : isPoolLiquid()
-                        ? "text-aqua1"
-                        : "text-purple3"
+                    !isWalletConnected
+                      ? "text-gray4"
+                      : !isUnstakingAvailable
+                        ? "!text-gray-500"
+                        : isPoolLiquid()
+                          ? "text-aqua1"
+                          : "text-purple3"
                   } medium17 ml-3 `}
                 >
                   {unboudingPeriod}
