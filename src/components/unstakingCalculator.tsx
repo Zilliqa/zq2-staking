@@ -137,6 +137,9 @@ const UnstakingCalculator: React.FC = () => {
     }
   })()
 
+  const [isMinHovered, setIsMinHovered] = useState(false)
+  const [isMaxHovered, setIsMaxHovered] = useState(false)
+  
   return (
     stakingPoolForView && (
       <FastFadeScroll
@@ -151,29 +154,26 @@ const UnstakingCalculator: React.FC = () => {
           title="Enter amount to request unstake."
         >
           <div
-            className={`transition-all duration-300 border-transparent
+            className={`transition-all duration-300 border-transparent bg-gray-gradient
 ${
   isUnstakingAvailable &&
-  ` ${
-    isPoolLiquid()
-      ? "hover:border-aqua1 hover:shadow-[inset_0_0_7px_3px_rgba(0,208,198,0.3),inset_0_0_15px_8px_rgba(0,208,198,0.15)]"
-      : "hover:border-purple5 hover:shadow-[inset_0_0_7px_3px_rgba(91,111,255,0.3),inset_0_0_15px_8px_rgba(91,111,255,0.15)]"
-  }
-          ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"} `
-}
-           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
+  ` 
+
+  ${isFocused && "ant-input-affix-wrapper-focused !border-transparent !bg-focus-gradient "}
+                  ${isMaxValue && "!bg-teal-gradient !border-teal"}
+                  ${isMaxHovered && "!bg-teal-gradient"}
+                  ${isMinValue && "!bg-purple-gradient"}
+                  ${isMinHovered && "!bg-purple-gradient"}
+                  ${!canUnstake && tokensToUnstake != "0" && tokensToUnstake != "" && "!bg-red-gradient"}`
+              } flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
           >
             <div className="h-fit self-center">
               <div className=" flex items-center gap-2">
                 <div
                   className={`${
                     !isWalletConnected
-                      ? "text-gray4"
-                      : tokensToUnstake === "0" || tokensToUnstake === ""
-                        ? "text-gray8"
-                        : !canUnstake && isWalletConnected
-                          ? "text-red1"
-                          : "text-white1"
+                      ? "text-gray4" 
+                      : "text-white1"
                   } bold33`}
                 >
                   {" "}
@@ -185,8 +185,6 @@ ${
                   className={`${
                     tokensToUnstake === "0" || tokensToUnstake === ""
                       ? "text-gray8"
-                      : !canUnstake && isWalletConnected
-                        ? "text-red1"
                         : "text-white1"
                   }   ${
                     !isWalletConnected
@@ -248,6 +246,8 @@ flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0
               <Button
                 className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
                 onClick={onMaxClick}
+                onMouseEnter={() => setIsMaxHovered(true)}
+                onMouseLeave={() => setIsMaxHovered(false)}
                 disabled={!isUnstakingAvailable}
               >
                 MAX
@@ -259,6 +259,8 @@ flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0
                   setIsMinValue(true)
                   setIsMaxValue(false)
                 }}
+                onMouseEnter={() => setIsMinHovered(true)}
+                onMouseLeave={() => setIsMinHovered(false)}
                 disabled={!isUnstakingAvailable}
               >
                 MIN
