@@ -165,11 +165,11 @@ const StakingCalculator: React.FC = () => {
             <div
               className={`transition-all duration-300 border-transparent bg-gray-gradient
               ${
-                isWalletConnected &&
+                isWalletConnected || parseEther(minValue) < (zilAvailable || 0n)  &&
                 `  ${isFocused && "ant-input-affix-wrapper-focused !border-transparent !bg-focus-gradient "}
-                  ${isMaxValue && "!bg-teal-gradient !border-teal"}
+                  ${isMaxValue && "bg-teal-gradient !border-teal"}
                   ${isMaxHovered && "!bg-teal-gradient"}
-                  ${isMinValue && "!bg-purple-gradient"}
+                  ${isMinValue && "bg-purple-gradient"}
                   ${isMinHovered && "!bg-purple-gradient"}
                   ${!canStake && zilToStake != "0" && zilToStake != "" && "!bg-red-gradient"}`
               } flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
@@ -178,7 +178,7 @@ const StakingCalculator: React.FC = () => {
                 <div className=" flex items-center gap-2">
                   <div
                     className={`${
-                      !isWalletConnected ? "text-gray4" : "text-white1"
+                      !isWalletConnected || parseEther(minValue) > (zilAvailable || 0n) ? "text-gray4" : "text-white1"
                     } bold33`}
                   >
                     ZIL
@@ -193,7 +193,7 @@ const StakingCalculator: React.FC = () => {
                     } 
                         
                     ${
-                      !isWalletConnected
+                      !isWalletConnected || parseEther(minValue) > (zilAvailable || 0n) 
                         ? "placeholder-gray4"
                         : "placeholder-gray8"
                     }
@@ -203,7 +203,7 @@ const StakingCalculator: React.FC = () => {
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     status={!canStake ? "warning" : undefined}
-                    disabled={!isWalletConnected}
+                    disabled={!isWalletConnected || parseEther(minValue) > (zilAvailable || 0n) }
                   />
                 </div>
 
@@ -213,7 +213,7 @@ const StakingCalculator: React.FC = () => {
                       {isPoolLiquid() && (
                         <span
                           className={` ${
-                            !isWalletConnected && "text-gray4"
+                            !isWalletConnected || parseEther(minValue) > (zilAvailable || 0n) && "text-gray4"
                           } medium17`}
                         >
                           ~
@@ -235,8 +235,7 @@ const StakingCalculator: React.FC = () => {
                       )}
                       <span
                         className={`
-                         ${!isWalletConnected && "text-gray4"}
-                          ${
+                         ${!isWalletConnected || parseEther(minValue) > (zilAvailable || 0n) ? "text-gray4":
                             stakingPoolForView?.stakingPool.definition
                               .poolType === StakingPoolType.LIQUID
                               ? "text-aqua1"
@@ -257,8 +256,7 @@ const StakingCalculator: React.FC = () => {
                   )}
                   <span
                     className={`
-                        ${!isWalletConnected && "text-gray4"}
-                        ${
+                        ${!isWalletConnected || parseEther(minValue) > (zilAvailable || 0n) ? "text-gray4":
                           stakingPoolForView?.stakingPool.definition
                             .poolType === StakingPoolType.LIQUID
                             ? "text-aqua1"
@@ -276,7 +274,7 @@ const StakingCalculator: React.FC = () => {
                   onClick={onMaxClick}
                   onMouseEnter={() => setIsMaxHovered(true)}
                   onMouseLeave={() => setIsMaxHovered(false)}
-                  disabled={!isWalletConnected}
+                  disabled={!isWalletConnected || parseEther(minValue) > (zilAvailable || 0n)}
                 >
                   MAX
                 </Button>
@@ -285,7 +283,7 @@ const StakingCalculator: React.FC = () => {
                   onClick={onMinClick}
                   onMouseEnter={() => setIsMinHovered(true)}
                   onMouseLeave={() => setIsMinHovered(false)}
-                  disabled={!isWalletConnected}
+                  disabled={!isWalletConnected || parseEther(minValue) > (zilAvailable || 0n)}
                 >
                   MIN
                 </Button>
@@ -294,7 +292,7 @@ const StakingCalculator: React.FC = () => {
           </Tooltip>
           <div className="flex flex-col">
             <div className="flex mt-2 mb-3">
-              {isWalletConnected ? (
+              {isWalletConnected || parseEther(minValue) < (zilAvailable || 0n) ? (
                 <>
                   {canStake || isStakingInProgress ? (
                     <Button
