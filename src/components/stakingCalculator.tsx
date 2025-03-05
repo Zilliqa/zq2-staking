@@ -124,6 +124,12 @@ const StakingCalculator: React.FC = () => {
         canStake: false,
         whyCantStake: `Amount ${zilToStakeNumber} ZIL is below minimum stake ${formatUnits(stakingPoolForView.stakingPool.definition.minimumStake, 18)} ZIL`,
       }
+    } else if (!isWalletConnected
+    ) {
+      return {
+        canStake: false,
+        whyCantStake: "Please connect your wallet first.",
+      }
     } else {
       return {
         canStake: true,
@@ -361,7 +367,7 @@ const StakingCalculator: React.FC = () => {
             )}
 
             <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 mt-2.5 lg:mt-4 4k:mt-6 border-t border-black2 lg:pb-10">
-              <div className="flex flex-col lg:gap-3.5 gap-1 4k:gap-4 regular-base">
+              <div className="flex flex-col lg:gap-2.5 gap-1 4k:gap-4 regular-base">
                 <div className=" flex ">
                   Commission Fee:{" "}
                   {stakingPoolForView!.stakingPool.data ? (
@@ -387,7 +393,7 @@ const StakingCalculator: React.FC = () => {
                   </Tooltip>{" "}
                 </div>
               </div>
-              <div className="flex flex-col lg:gray-base gray-base2 xl:gap-3.5 4k:gap-5 xl:items-end justify-start">
+              <div className="flex flex-col lg:gray-base gray-base2 xl:gap-2.5 4k:gap-5 xl:items-end justify-start">
                 {isPoolLiquid() && (
                   <div className="flex  max-lg:gap-2 max-xl:justify-between max-lg:items-start flex-row xl:gap-5 4k:gap-6">
                     <div className=" ">Rate</div>
