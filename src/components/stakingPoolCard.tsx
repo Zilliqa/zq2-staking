@@ -67,20 +67,27 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     className="mr-1 4k:mr-1.5"
                     title={
                       stakingPoolData.data ? (
-                        <>
-                          <div>Your staked value </div>
-                          <div className="mt-1">
-                            ( ~
-                            {formatUnitsToHumanReadable(
-                              convertTokenToZil(
-                                userStakingPoolData.stakingTokenAmount,
-                                stakingPoolData.data.zilToTokenRate
-                              ),
-                              18
-                            )}{" "}
-                            ZIL )
-                          </div>
-                        </>
+                        stakingPoolData.definition.poolType ===
+                        StakingPoolType.LIQUID ? (
+                          <>
+                            <div>Your staked value</div>
+                            <div className="mt-1">
+                              ( ~
+                              {formatUnitsToHumanReadable(
+                                convertTokenToZil(
+                                  userStakingPoolData.stakingTokenAmount,
+                                  stakingPoolData.data.zilToTokenRate
+                                ),
+                                18
+                              )}{" "}
+                              ZIL )
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div>Your staked value</div>
+                          </>
+                        )
                       ) : (
                         "Loading value..."
                       )
