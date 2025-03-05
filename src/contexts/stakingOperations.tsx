@@ -239,10 +239,12 @@ const useStakingOperations = () => {
    * UNSTAKING
    */
 
-  const unboudingPeriod = stakingPoolForView?.stakingPool.definition.withdrawPeriodInMinutes
+  const unboudingPeriod = stakingPoolForView?.stakingPool.definition
+    .withdrawPeriodInMinutes
     ? getHumanFormDuration(
         DateTime.now().plus({
-          minutes: stakingPoolForView.stakingPool.definition.withdrawPeriodInMinutes,
+          minutes:
+            stakingPoolForView.stakingPool.definition.withdrawPeriodInMinutes,
         })
       )
     : "the unbonding period"
