@@ -8,6 +8,8 @@ import { Address, formatUnits, WriteContractParameters } from "viem"
 import { baseDelegatorAbi, nonLiquidDelegatorAbi } from "@/misc/stakingAbis"
 import { useConfig } from "wagmi"
 import { useGasPrice } from "wagmi"
+import { DateTime } from "luxon"
+import { getHumanFormDuration } from "@/misc/formatting"
 
 const useTxOperation = (
   isDummyWalletConnected: boolean,
@@ -217,7 +219,7 @@ const useStakingOperations = () => {
     "Staking successful",
     "You have successfully staked ZIL",
     "Staking failed",
-    "There was an error while staking ZIL"
+    "Please try again later or contact support."
   )
 
   const stake = (delegatorAddress: string, weiToStake: bigint) => {
@@ -237,6 +239,16 @@ const useStakingOperations = () => {
    * UNSTAKING
    */
 
+  const unboudingPeriod = stakingPoolForView?.stakingPool.definition
+    .withdrawPeriodInMinutes
+    ? getHumanFormDuration(
+        DateTime.now().plus({
+          minutes:
+            stakingPoolForView.stakingPool.definition.withdrawPeriodInMinutes,
+        })
+      )
+    : "the unbonding period"
+
   const unstakingCallEstimatedGas = 0x1e8480n
 
   const {
@@ -254,10 +266,10 @@ const useStakingOperations = () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
     },
-    "Unstaking successful",
-    "You have successfully unstaked ZIL",
+    "Unstaking Requested",
+    `You ZIL will be ready to claim in ${unboudingPeriod}`,
     "Unstaking failed",
-    "There was an error while unstaking ZIL"
+    "Please try again later or contact support."
   )
 
   const unstake = (delegatorAddress: string, tokensToUnstake: bigint) => {

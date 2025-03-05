@@ -132,7 +132,7 @@ const UnstakingCalculator: React.FC = () => {
     } else {
       return {
         canUnstake: true,
-        whyCantUnstake: "Send an unstake transaction",
+        whyCantUnstake: "You first need to stake ZIL.",
       }
     }
   })()
@@ -148,7 +148,7 @@ const UnstakingCalculator: React.FC = () => {
           arrow={true}
           overlayClassName="custom-tooltip"
           className=""
-          title="Enter amount to request unstake."
+          title="Enter amount to unstake."
         >
           <div
             className={`transition-all duration-300 border-transparent

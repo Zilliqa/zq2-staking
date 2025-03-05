@@ -364,9 +364,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
           <>
             <h1 className="bold52 text-white">My Claims</h1>
             <p className="mt-2 body2-v2 text-white4">
-              Stake ZIL.
-              <br /> Earn Rewards.
-              <br /> Secure the Network.
+              Here is a list of your current <br /> and upcoming claims.
             </p>
           </>
         ) : (
