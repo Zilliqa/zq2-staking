@@ -37,8 +37,16 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
   claimUnstake,
   setViewClaim,
 }) => {
-  const { preparingClaimUnstakeTx, isClaimingUnstakeInProgress } =
-    StakingOperations.useContainer()
+  const {
+    preparingClaimUnstakeTx,
+    isClaimingUnstakeInProgress,
+    stakingPoolIdForInProgressOperation,
+  } = StakingOperations.useContainer()
+
+  const isCurrentWalletOperationAboutThisPool =
+    stakingPoolIdForInProgressOperation === stakingPool.definition.id
+  const isInProgress =
+    isClaimingUnstakeInProgress && isCurrentWalletOperationAboutThisPool
 
   return (
     <div
@@ -103,13 +111,6 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
         <div className="max-lg:w-1/2">
           <Button
             className={` 
-              ${
-                isClaimingUnstakeInProgress
-                  ? stakingPool.definition.poolType === StakingPoolType.LIQUID
-                    ? "liquid-loading"
-                    : "non-liquid-loading"
-                  : ""
-              }
               ${stakingPool.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"} btn-primary-grey 4k:py-6 lg:py-5 py-4`}
             disabled={!available}
             onClick={(e) => {
@@ -117,12 +118,12 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
               claimUnstake(unstakeInfo.address)
               setViewClaim(false)
             }}
-            loading={isClaimingUnstakeInProgress}
+            loading={isInProgress && available}
           >
             {available
-              ? preparingClaimUnstakeTx
+              ? preparingClaimUnstakeTx && isCurrentWalletOperationAboutThisPool
                 ? "Confirm in wallet"
-                : isClaimingUnstakeInProgress
+                : isInProgress
                   ? "Processing"
                   : "Claim"
               : getHumanFormDuration(unstakeInfo.availableAt) + " left"}
@@ -155,7 +156,16 @@ const RewardCard: React.FC<RewardCardProps> = ({
     preparingStakeRewardTx,
     isClaimingRewardInProgress,
     preparingClaimRewardTx,
+    stakingPoolIdForInProgressOperation,
   } = StakingOperations.useContainer()
+
+  const isCurrentWalletOperationAboutThisPool =
+    stakingPoolIdForInProgressOperation === stakingPool.definition.id
+
+  const isClaimRewardInProgress =
+    isClaimingRewardInProgress && isCurrentWalletOperationAboutThisPool
+  const isStakeRewardInProgress =
+    isStakingRewardInProgress && isCurrentWalletOperationAboutThisPool
 
   return (
     <div
@@ -248,7 +258,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
             <Button
               className={` 
                 ${
-                  isStakingRewardInProgress
+                  isStakeRewardInProgress
                     ? stakingPool.definition.poolType === StakingPoolType.LIQUID
                       ? "liquid-loading"
                       : "non-liquid-loading"
@@ -260,11 +270,11 @@ const RewardCard: React.FC<RewardCardProps> = ({
                 stakeReward(rewardInfo.address)
                 setViewClaim(false)
               }}
-              loading={isStakingRewardInProgress}
+              loading={isStakeRewardInProgress}
             >
               {preparingStakeRewardTx
                 ? "Confirm in wallet"
-                : isStakingRewardInProgress
+                : isStakeRewardInProgress
                   ? "Processing"
                   : "Stake Reward"}
             </Button>
@@ -274,7 +284,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
           <Button
             className={`
                ${
-                 isClaimingRewardInProgress
+                 isClaimRewardInProgress
                    ? stakingPool.definition.poolType === StakingPoolType.LIQUID
                      ? "liquid-loading"
                      : "non-liquid-loading"
@@ -287,11 +297,11 @@ const RewardCard: React.FC<RewardCardProps> = ({
               claimReward(rewardInfo.address)
               setViewClaim(false)
             }}
-            loading={isClaimingRewardInProgress}
+            loading={isClaimRewardInProgress}
           >
             {preparingClaimRewardTx
               ? "Confirm in wallet"
-              : isClaimingRewardInProgress
+              : isClaimRewardInProgress
                 ? "Processing"
                 : "Claim Reward"}
           </Button>
@@ -354,9 +364,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
           <>
             <h1 className="bold52 text-white">My Claims</h1>
             <p className="mt-2 body2-v2 text-white4">
-              Stake ZIL.
-              <br /> Earn Rewards.
-              <br /> Secure the Network.
+              Here is a list of your current <br /> and upcoming claims.
             </p>
           </>
         ) : (

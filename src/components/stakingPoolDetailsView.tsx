@@ -6,6 +6,7 @@ import {
   convertTokenToZil,
   formatPercentage,
   formatUnitsToHumanReadable,
+  getHumanFormDuration,
 } from "@/misc/formatting"
 import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import {
@@ -84,6 +85,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     tooltip: string | JSX.Element | null
   ) => (
     <Tooltip
+      key={title}
       placement="top"
       arrow={true}
       overlayClassName="custom-tooltip"
@@ -111,16 +113,14 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     tooltip: string | JSX.Element | null
   ) => (
     <Tooltip
+      key={title}
       placement="top"
       arrow={true}
       overlayClassName="custom-tooltip"
       className=""
       title={tooltip}
     >
-      <div
-        key={title}
-        className={`  ${isPoolLiquid() ? "lg:w-1/4 w-1/2" : "w-1/3"} `}
-      >
+      <div className={`  ${isPoolLiquid() ? "lg:w-1/4 w-1/2" : "w-1/3"} `}>
         {value ? (
           <div className="semi14 text-gray7 xl:whitespace-nowrap">{value}</div>
         ) : (
@@ -176,16 +176,16 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       greyInfoEntry(
         "Voting Power",
         formatPercentage(stakingPoolData.data.votingPower),
-        "The share of total staked ZIL controlled by the validator."
+        "Share of total staked ZIL controlled by the validator."
       ),
 
     stakingPoolData.data &&
       greyInfoEntry(
-        isPoolLiquid() ? "Total Supply" : "Total Deligated",
+        isPoolLiquid() ? "Total Supply" : "Total Delegated",
         `${humanReadableStakingToken(stakingPoolData.data.tvl)} ${stakingPoolData.definition.tokenSymbol}`,
         isPoolLiquid()
-          ? "The total supply of a Liquid Staking validator’s Liquid Staking Token (LST)."
-          : "The total deligated ZIL value"
+          ? "The total supply of validator's Liquid Staking Token (LST)."
+          : "Total ZIL staked through validator"
       ),
 
     stakingPoolData.data &&
@@ -347,14 +347,14 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   {colorInfoEntry(
                     "Available to Stake",
                     `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`,
-                    "The maximum amount of ZIL you can stake with this validator."
+                    "Your ZIL balance"
                   )}
                   {colorInfoEntry(
                     "Staked",
                     `${humanReadableStakingToken(
                       userStakingPoolData?.stakingTokenAmount || 0n
                     )} ${stakingPoolData.definition.tokenSymbol}`,
-                    "The amount of ZIL you have currently staked with this validator."
+                    "Amount of ZIL currently staked"
                   )}
                   {colorInfoEntry(
                     "Unstaked ",
@@ -363,7 +363,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                           pendingUnstakesValue
                         )} ${stakingPoolData.definition.tokenSymbol}`
                       : "-",
-                    "The amount of ZIL you have unstaked from this validator."
+                    "Amount of ZIL requested"
                   )}
                   {colorInfoEntry(
                     "Claimable Withdrawals",
@@ -372,7 +372,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                           stakingPoolData.definition.tokenSymbol
                         }`
                       : "-",
-                    "The amount of unstaked ZIL available to claim."
+                    "Unstaked ZIL available to claim"
                   )}
                 </div>
               )}
@@ -424,14 +424,14 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                       {colorInfoEntry(
                         "Available to stake",
                         `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`,
-                        "The maximum amount of ZIL you can stake with this validator."
+                        "Your ZIL balance"
                       )}
                       {colorInfoEntry(
                         "Staked",
                         `${humanReadableStakingToken(
                           userStakingPoolData?.stakingTokenAmount || 0n
                         )} ${stakingPoolData.definition.tokenSymbol}`,
-                        "The amount of ZIL you have currently staked with this validator."
+                        "Amount of ZIL currently staked"
                       )}
                       {colorInfoEntry(
                         "Unstaked",
@@ -440,7 +440,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                               pendingUnstakesValue
                             )} ${stakingPoolData.definition.tokenSymbol}`
                           : "-",
-                        "The amount of ZIL you have unstaked from this validator."
+                        "Amount of ZIL requested"
                       )}
                     </div>
                   )}
@@ -478,7 +478,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                                 )
                                 .join(", ")
                             : "-",
-                          "The amount of unstaked ZIL available to claim."
+                          "Unstaked ZIL available to claim"
                         )}
                         {stakingPoolForView != null &&
                           asideColorInfoEntry(
@@ -486,7 +486,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                             stakingPoolForView.userData.reward
                               ? `${parseFloat(formatUnits(stakingPoolForView.userData.reward?.zilRewardAmount ?? "0", 18)).toFixed(5)} ZIL`
                               : "-",
-                            "The amount of earned ZIL available to claim."
+                            "Earned ZIL available to claim"
                           )}
                       </div>
                     )}
@@ -526,15 +526,15 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   >
                     {colorInfoEntry(
                       "Available to stake",
-                      `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL`,
-                      "The maximum amount of ZIL you can stake with this validator."
+                      `${formatUnitsToHumanReadable(zilAvailable || 0n, 18)} ZIL staked`,
+                      "Your ZIL balance"
                     )}
                     {colorInfoEntry(
-                      "Staked ",
+                      "Staked",
                       `${humanReadableStakingToken(
                         userStakingPoolData?.stakingTokenAmount || 0n
                       )} ${stakingPoolData.definition.tokenSymbol}`,
-                      "The amount of ZIL you have currently staked with this validator."
+                      "Amount of ZIL currently staked"
                     )}
                     {colorInfoEntry(
                       "Unstaked",
@@ -543,19 +543,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                             pendingUnstakesValue
                           )} ${stakingPoolData.definition.tokenSymbol}`
                         : "-",
-                      "The amount of ZIL you have unstaked from this validator."
-                    )}
-                    {colorInfoEntry(
-                      "Claimable Withdrawals",
-                      !!availableUnstake?.length
-                        ? availableUnstake
-                            .map(
-                              (item) =>
-                                `${parseFloat(formatUnits(item.zilAmount, 18)).toFixed(3)} ZIL`
-                            )
-                            .join(", ")
-                        : "-",
-                      "The amount of unstaked ZIL available to claim."
+                      "Amount of ZIL requested"
                     )}
                     {stakingPoolForView != null &&
                       colorInfoEntry(
@@ -563,7 +551,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                         stakingPoolForView.userData.reward
                           ? `${parseFloat(formatUnits(stakingPoolForView.userData.reward?.zilRewardAmount ?? "0", 18)).toFixed(5)} ZIL`
                           : "-",
-                        "The amount of earned ZIL available to claim."
+                        "Earned ZIL available to claim"
                       )}
                   </div>
                 )}

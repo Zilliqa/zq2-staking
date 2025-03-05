@@ -132,7 +132,7 @@ const UnstakingCalculator: React.FC = () => {
     } else {
       return {
         canUnstake: true,
-        whyCantUnstake: "Send an unstake transaction",
+        whyCantUnstake: "You first need to stake ZIL.",
       }
     }
   })()
@@ -151,7 +151,7 @@ const UnstakingCalculator: React.FC = () => {
           arrow={true}
           overlayClassName="custom-tooltip"
           className=""
-          title="Enter amount to request unstake."
+          title="Enter amount to unstake."
         >
           <div
             className={`transition-all duration-300 border-transparent bg-gray-gradient
@@ -190,8 +190,7 @@ ${
                     !isWalletConnected || !isUnstakingAvailable
                       ? "placeholder-gray4"
                       : "placeholder-gray8 "
-                  }
-flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
+                  } flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
                   value={tokensToUnstake !== "0" ? tokensToUnstake || "" : ""}
                   placeholder="0"
                   onChange={handleChange}

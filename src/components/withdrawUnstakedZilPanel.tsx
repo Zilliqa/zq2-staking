@@ -248,9 +248,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
          mb-2.5 lg:mb-4 4k:mb-6 py-2 lg:py-6 xl:py-8 4k:py-10 
          px-3 lg:px-7.5 xl:px-10 4k:px-14 bg-grey-gradient rounded-xl w-full"
         >
-          <div className="body2 text-gray1">
-            You will be able to claim your unstaked ZIL in:
-          </div>
+          <div className="body2 text-gray1">Claim your unstaked ZIL in:</div>
           <div className="h4 mt-2 w-full flex justify-between text-white1">
             <div>{getHumanFormDuration(pendingUnstake[0].availableAt)}</div>
             {stakingPoolData.data ? (

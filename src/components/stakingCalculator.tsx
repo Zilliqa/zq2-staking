@@ -75,6 +75,7 @@ const StakingCalculator: React.FC = () => {
 
   const handleFocus = () => {
     if (parseEther(minValue) < (zilAvailable || 0n)) setIsFocused(true)
+    setIsFocused(true)
   }
 
   const handleBlur = () => {
@@ -167,7 +168,7 @@ const StakingCalculator: React.FC = () => {
             className=""
             title={
               canStake
-                ? `Earning ${stakingPoolForView!.stakingPool.data ? formatPercentage(stakingPoolForView?.stakingPool.data.apr) : 0}`
+                ? `Stake ZIL with ${stakingPoolForView!.stakingPool.data ? formatPercentage(stakingPoolForView?.stakingPool.data.apr) : 0} APR`
                 : whyCantStake
             }
           >

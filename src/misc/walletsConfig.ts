@@ -254,7 +254,12 @@ export const dummyWallets: Array<DummyWallet> = [
         availableAt: DateTime.now().minus({ days: 1 }),
       },
     ],
-    nonLiquidRewards: [],
+    nonLiquidRewards: [
+      {
+        address: "0xe863906941de820bde06701a0d804dd0b8575d67",
+        zilRewardAmount: parseUnits("1000.2", 18),
+      },
+    ],
   },
 ]
 
