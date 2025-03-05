@@ -99,7 +99,15 @@ const StakingCalculator: React.FC = () => {
         canStake: false,
         whyCantStake: "Loading staking pool data",
       }
-    } else if (zilToStakeNumber <= 0 || isNaN(zilToStakeNumber)) {
+    } 
+    else if (!isWalletConnected
+    ) {
+      return {
+        canStake: false,
+        whyCantStake: "Please connect your wallet first.",
+      }
+    }
+    else if (zilToStakeNumber <= 0 || isNaN(zilToStakeNumber)) {
       return {
         canStake: false,
         whyCantStake: "Please enter a valid amount",
@@ -124,13 +132,7 @@ const StakingCalculator: React.FC = () => {
         canStake: false,
         whyCantStake: `Amount ${zilToStakeNumber} ZIL is below minimum stake ${formatUnits(stakingPoolForView.stakingPool.definition.minimumStake, 18)} ZIL`,
       }
-    } else if (!isWalletConnected
-    ) {
-      return {
-        canStake: false,
-        whyCantStake: "Please connect your wallet first.",
-      }
-    } else {
+    }  else {
       return {
         canStake: true,
         whyCantStake: "",
