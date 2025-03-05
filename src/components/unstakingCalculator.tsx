@@ -139,7 +139,7 @@ const UnstakingCalculator: React.FC = () => {
 
   const [isMinHovered, setIsMinHovered] = useState(false)
   const [isMaxHovered, setIsMaxHovered] = useState(false)
-  
+
   return (
     stakingPoolForView && (
       <FastFadeScroll
@@ -165,14 +165,14 @@ ${
                   ${isMinValue && "bg-purple-gradient"}
                   ${isMinHovered && "!bg-purple-gradient"}
                   ${!canUnstake && tokensToUnstake != "0" && tokensToUnstake != "" && "!bg-red-gradient"}`
-              } flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
+} flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
           >
             <div className="h-fit self-center">
               <div className=" flex items-center gap-2">
                 <div
                   className={`${
                     !isWalletConnected || !isUnstakingAvailable
-                      ? "text-gray4" 
+                      ? "text-gray4"
                       : "text-white1"
                   } bold33`}
                 >
@@ -185,7 +185,7 @@ ${
                   className={`${
                     tokensToUnstake === "0" || tokensToUnstake === ""
                       ? "text-gray8"
-                        : "text-white1"
+                      : "text-white1"
                   }   ${
                     !isWalletConnected || !isUnstakingAvailable
                       ? "placeholder-gray4"
@@ -205,7 +205,8 @@ flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0
                 {isPoolLiquid() && (
                   <span
                     className={` ${
-                      !isWalletConnected || !isUnstakingAvailable && "text-gray4"
+                      !isWalletConnected ||
+                      (!isUnstakingAvailable && "text-gray4")
                     } medium17`}
                   >
                     {stakingPoolForView!.stakingPool.data ? (

@@ -74,8 +74,7 @@ const StakingCalculator: React.FC = () => {
   const [isFocused, setIsFocused] = useState(true)
 
   const handleFocus = () => {
-    if( parseEther(minValue) < (zilAvailable || 0n) )
-    setIsFocused(true)
+    if (parseEther(minValue) < (zilAvailable || 0n)) setIsFocused(true)
   }
 
   const handleBlur = () => {
@@ -99,15 +98,12 @@ const StakingCalculator: React.FC = () => {
         canStake: false,
         whyCantStake: "Loading staking pool data",
       }
-    } 
-    else if (!isWalletConnected
-    ) {
+    } else if (!isWalletConnected) {
       return {
         canStake: false,
         whyCantStake: "Please connect your wallet first.",
       }
-    }
-    else if (zilToStakeNumber <= 0 || isNaN(zilToStakeNumber)) {
+    } else if (zilToStakeNumber <= 0 || isNaN(zilToStakeNumber)) {
       return {
         canStake: false,
         whyCantStake: "Please enter a valid amount",
@@ -132,7 +128,7 @@ const StakingCalculator: React.FC = () => {
         canStake: false,
         whyCantStake: `Amount ${zilToStakeNumber} ZIL is below minimum stake ${formatUnits(stakingPoolForView.stakingPool.definition.minimumStake, 18)} ZIL`,
       }
-    }  else {
+    } else {
       return {
         canStake: true,
         whyCantStake: "",
@@ -169,11 +165,16 @@ const StakingCalculator: React.FC = () => {
             arrow={true}
             overlayClassName="custom-tooltip"
             className=""
-            title= {canStake ? `Earning ${stakingPoolForView!.stakingPool.data ? formatPercentage(stakingPoolForView?.stakingPool.data.apr) : 0}` : whyCantStake}
+            title={
+              canStake
+                ? `Earning ${stakingPoolForView!.stakingPool.data ? formatPercentage(stakingPoolForView?.stakingPool.data.apr) : 0}`
+                : whyCantStake
+            }
           >
             <div
               className={`transition-all duration-300 border-transparent bg-gray-gradient
-              ${  isWalletConnected &&
+              ${
+                isWalletConnected &&
                 ` ${isFocused && "ant-input-affix-wrapper-focused !border-transparent !bg-focus-gradient "}
                   ${isMaxValue && "bg-teal-gradient !border-teal"}
                   ${isMaxHovered && "!bg-teal-gradient"}
@@ -243,12 +244,14 @@ const StakingCalculator: React.FC = () => {
                       )}
                       <span
                         className={`
-                         ${!isWalletConnected ? "text-gray4":
-                            stakingPoolForView?.stakingPool.definition
-                              .poolType === StakingPoolType.LIQUID
-                              ? "text-aqua1"
-                              : "text-purple3"
-                          } medium17 ml-3 mr-1`}
+                         ${
+                           !isWalletConnected
+                             ? "text-gray4"
+                             : stakingPoolForView?.stakingPool.definition
+                                   .poolType === StakingPoolType.LIQUID
+                               ? "text-aqua1"
+                               : "text-purple3"
+                         } medium17 ml-3 mr-1`}
                       >
                         ~
                         {formatPercentage(
@@ -264,11 +267,13 @@ const StakingCalculator: React.FC = () => {
                   )}
                   <span
                     className={`
-                        ${!isWalletConnected ? "text-gray4":
-                          stakingPoolForView?.stakingPool.definition
-                            .poolType === StakingPoolType.LIQUID
-                            ? "text-aqua1"
-                            : "text-purple3"
+                        ${
+                          !isWalletConnected
+                            ? "text-gray4"
+                            : stakingPoolForView?.stakingPool.definition
+                                  .poolType === StakingPoolType.LIQUID
+                              ? "text-aqua1"
+                              : "text-purple3"
                         } medium17`}
                   >
                     APR
@@ -282,7 +287,10 @@ const StakingCalculator: React.FC = () => {
                   onClick={onMaxClick}
                   onMouseEnter={() => setIsMaxHovered(true)}
                   onMouseLeave={() => setIsMaxHovered(false)}
-                  disabled={!isWalletConnected  || parseEther(minValue) > (zilAvailable || 0n)}
+                  disabled={
+                    !isWalletConnected ||
+                    parseEther(minValue) > (zilAvailable || 0n)
+                  }
                 >
                   MAX
                 </Button>
