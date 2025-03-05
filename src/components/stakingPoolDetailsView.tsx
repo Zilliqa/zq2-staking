@@ -354,15 +354,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                     `${humanReadableStakingToken(
                       userStakingPoolData?.stakingTokenAmount || 0n
                     )} ${stakingPoolData.definition.tokenSymbol}`,
-                    stakingPoolData.data
-                      ? ` ~${formatUnitsToHumanReadable(
-                          convertTokenToZil(
-                            userStakingPoolData?.stakingTokenAmount || 0n,
-                            stakingPoolData.data.zilToTokenRate
-                          ),
-                          18
-                        )}  ZIL`
-                      : "Amount of ZIL currently staked"
+                    "Amount of ZIL currently staked"
                   )}
                   {colorInfoEntry(
                     "Unstaked ",
@@ -439,9 +431,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                         `${humanReadableStakingToken(
                           userStakingPoolData?.stakingTokenAmount || 0n
                         )} ${stakingPoolData.definition.tokenSymbol}`,
-                        stakingPoolData.data
-                          ? "Amount of ZIL currently staked "
-                          : "Amount of ZIL currently staked"
+                        "Amount of ZIL currently staked"
                       )}
                       {colorInfoEntry(
                         "Unstaked",
@@ -540,13 +530,11 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                       "Your ZIL balance"
                     )}
                     {colorInfoEntry(
-                      "Staked ",
+                      "Staked",
                       `${humanReadableStakingToken(
                         userStakingPoolData?.stakingTokenAmount || 0n
                       )} ${stakingPoolData.definition.tokenSymbol}`,
-                      stakingPoolData.data
-                        ? "Amount of ZIL currently staked"
-                        : "Amount of ZIL currently staked"
+                      "Amount of ZIL currently staked"
                     )}
                     {colorInfoEntry(
                       "Unstaked",
