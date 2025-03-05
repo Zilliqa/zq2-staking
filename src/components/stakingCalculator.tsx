@@ -74,6 +74,7 @@ const StakingCalculator: React.FC = () => {
   const [isFocused, setIsFocused] = useState(true)
 
   const handleFocus = () => {
+    if( parseEther(minValue) < (zilAvailable || 0n) )
     setIsFocused(true)
   }
 
@@ -160,12 +161,12 @@ const StakingCalculator: React.FC = () => {
             arrow={true}
             overlayClassName="custom-tooltip"
             className=""
-            title={`Earning ${stakingPoolForView!.stakingPool.data ? formatPercentage(stakingPoolForView?.stakingPool.data.apr) : 0}`}
+            title= {canStake ? `Earning ${stakingPoolForView!.stakingPool.data ? formatPercentage(stakingPoolForView?.stakingPool.data.apr) : 0}` : whyCantStake}
           >
             <div
               className={`transition-all duration-300 border-transparent bg-gray-gradient
               ${
-                isWalletConnected || parseEther(minValue) < (zilAvailable || 0n)  &&
+              (  isWalletConnected || parseEther(minValue) < (zilAvailable || 0n) ) &&
                 `  ${isFocused && "ant-input-affix-wrapper-focused !border-transparent !bg-focus-gradient "}
                   ${isMaxValue && "bg-teal-gradient !border-teal"}
                   ${isMaxHovered && "!bg-teal-gradient"}

@@ -171,7 +171,7 @@ ${
               <div className=" flex items-center gap-2">
                 <div
                   className={`${
-                    !isWalletConnected
+                    !isWalletConnected || !isUnstakingAvailable
                       ? "text-gray4" 
                       : "text-white1"
                   } bold33`}
@@ -187,7 +187,7 @@ ${
                       ? "text-gray8"
                         : "text-white1"
                   }   ${
-                    !isWalletConnected
+                    !isWalletConnected || !isUnstakingAvailable
                       ? "placeholder-gray4"
                       : "placeholder-gray8 "
                   }
@@ -205,7 +205,7 @@ flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0
                 {isPoolLiquid() && (
                   <span
                     className={` ${
-                      !isWalletConnected && "text-gray4"
+                      !isWalletConnected || !isUnstakingAvailable && "text-gray4"
                     } medium17`}
                   >
                     {stakingPoolForView!.stakingPool.data ? (
@@ -229,7 +229,7 @@ flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0
 
                 <span
                   className={`${
-                    !isWalletConnected
+                    !isWalletConnected || !isUnstakingAvailable
                       ? "text-gray4"
                       : !isUnstakingAvailable
                         ? "!text-gray-500"
