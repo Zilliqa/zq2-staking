@@ -74,12 +74,12 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
     {
       name: "Liquid",
       type: StakingPoolType.LIQUID,
-      tooltip: "Stake ZIL and get Liquid Staking Tokens (LSTs).",
+      tooltip: "Stake and keep liquidity",
     },
     {
       name: "Non-Liquid ",
       type: StakingPoolType.NORMAL,
-      tooltip: "Claim or reinvest regular ZIL rewards.",
+      tooltip: "Lock assets and claim rewards",
     },
   ]
 
