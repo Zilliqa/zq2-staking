@@ -368,9 +368,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   {colorInfoEntry(
                     "Claimable Withdrawals",
                     availableToClaim
-                      ? `${humanReadableStakingToken(availableToClaim)} ${
-                          stakingPoolData.definition.tokenSymbol
-                        }`
+                      ? `${humanReadableStakingToken(availableToClaim)} ZIL`
                       : "-",
                     "Unstaked ZIL available to claim"
                   )}
