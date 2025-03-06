@@ -85,10 +85,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
 
   return (
     <>
-      <nav
-        aria-label="Tabs"
-        className="border-b-[0.5px] border-b-gray2 w-full flex "
-      >
+      <nav aria-label="Tabs" className="w-full flex ">
         {tabs.map((tab, index) => (
           <Tooltip
             placement="top"
@@ -99,9 +96,18 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
             key={index}
           >
             <button
-              className={`w-1/2 whitespace-nowrap border-b-[0.5px] py-3 4k:py-4
-              ${selectedPoolType === tab.type ? `bold33 ${tab.type === StakingPoolType.LIQUID ? "border-aqua1" : "border-purple4"}` : "bold26 text-gray8 border-transparent"}
-            `}
+              className={`w-1/2 whitespace-nowrap py-3 4k:py-4 border-solid border-b transition-all duration-400 ease-in-out relative min-h-[60px] lg:min-h-[65px] 
+                after:transition-all after:duration-300 after:bottom-0 after:absolute border-black2
+                ${tab.type === StakingPoolType.LIQUID ? "after:bg-aqua1 after:right-0" : "after:bg-purple4 after:left-0"}
+          ${
+            selectedPoolType === tab.type
+              ? "bold33 text-white1 after:h-[1px] after:w-full "
+              : `bold22 text-gray1 hover:text-white after:h-[1px] after:w-0 hover:after:w-full  ${
+                  tab.type === StakingPoolType.LIQUID
+                    ? "after:right-0"
+                    : "after:left-0"
+                }`
+          } `}
               onClick={() => {
                 setSelectedPoolType(tab.type)
                 selectStakingPoolForView(null)
