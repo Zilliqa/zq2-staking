@@ -216,9 +216,9 @@ const useStakingOperations = () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
     },
-    "Staking successful",
+    "✅\u00A0 Staking successful",
     "You have successfully staked ZIL",
-    "Staking failed",
+    "❌\u00A0 Staking failed",
     "Please try again later or contact support."
   )
 
@@ -266,9 +266,9 @@ const useStakingOperations = () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
     },
-    "Unstaking Requested",
+    "✅\u00A0 Unstaking Requested",
     `You ZIL will be ready to claim in ${unboudingPeriod}`,
-    "Unstaking failed",
+    "❌\u00A0 Unstaking failed",
     "Please try again later or contact support."
   )
 
@@ -305,10 +305,10 @@ const useStakingOperations = () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
     },
-    "Claiming successful",
-    "You have successfully claimed ZIL",
-    "Claiming failed",
-    "There was an error while claiming ZIL"
+    "🎉\u00A0 Claiming successful",
+    "You have successfully claimed your ZIL withdrawals.",
+    "❌\u00A0 Claiming failed",
+    "There was an error while claiming your ZIL withdrawals."
   )
 
   const claimUnstake = (delegatorAddress: string) => {
@@ -344,10 +344,10 @@ const useStakingOperations = () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
     },
-    "Claiming rewards successful",
-    "You have successfully claimed rewards",
-    "Claiming rewards failed",
-    "There was an error while claiming rewards"
+    "🎉\u00A0 Claiming rewards successful",
+    "You have successfully claimed your ZIL rewards.",
+    "❌\u00A0 Claiming rewards failed",
+    "There was an error while claiming your ZIL rewards."
   )
 
   const claimReward = (delegatorAddress: string) => {
@@ -383,9 +383,9 @@ const useStakingOperations = () => {
       reloadUserStakingPoolsData()
       updateWalletBalance()
     },
-    "Staking rewards successful",
+    "✅\u00A0 Staking rewards successful",
     "You have successfully staked rewards",
-    "Staking rewards failed",
+    "❌\u00A0 Staking rewards failed",
     "There was an error while staking rewards"
   )
 
