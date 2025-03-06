@@ -44,7 +44,6 @@ const config: Config = {
           "linear-gradient(90deg, rgba(83, 57, 211, 0.30) -17.49%, rgba(83, 57, 211, 0.15) 90.6%)",
         "red-gradient":
           "linear-gradient(90deg, rgba(255, 74, 74, 0.30) -12.7%, rgba(255, 74, 74, 0.20) 66.28%)",
-
       },
       colors: {
         black1: "#010101",
