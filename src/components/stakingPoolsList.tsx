@@ -96,10 +96,10 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
             key={index}
           >
             <button
-              className={`w-1/2 whitespace-nowrap py-3 4k:py-4 border-solid border-b transition-all duration-400 ease-in-out relative bold33 ${
+              className={`w-1/2 whitespace-nowrap py-3 4k:py-4 border-solid border-b transition-all duration-400 ease-in-out relative  ${
                 selectedPoolType === tab.type
-                  ? ` text-white1 border-black2${tab.type === StakingPoolType.LIQUID ? " after:bg-aqua1" : " after:bg-purple4"} after:absolute after:h-[1px] after:w-0 after:bottom-0 after:left-0 after:animate-grow-width after:transition-all after:duration-300 before:bg-white before:absolute before:h-[1px] before:w-full before:bottom-0 before:left-0`
-                  : "text-gray1 border-black2 hover:text-white after:bg-white after:absolute after:h-[1px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300"
+                  ? `bold33 text-white1 border-black2${tab.type === StakingPoolType.LIQUID ? " after:bg-aqua1" : " after:bg-purple4"} after:absolute after:h-[1px] after:w-0 after:bottom-0 after:left-0 after:animate-grow-width after:transition-all after:duration-300 before:bg-white before:absolute before:h-[1px] before:w-full before:bottom-0 before:left-0`
+                  : "bold22 text-gray1 border-black2 hover:text-white after:bg-white after:absolute after:h-[1px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300"
               } `}
               onClick={() => {
                 setSelectedPoolType(tab.type)
