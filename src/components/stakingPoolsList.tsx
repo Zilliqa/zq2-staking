@@ -97,12 +97,17 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
           >
             <button
               className={`w-1/2 whitespace-nowrap py-3 4k:py-4 border-solid border-b transition-all duration-400 ease-in-out relative min-h-[60px] lg:min-h-[65px] 
-                ${tab.type === StakingPoolType.LIQUID ? " after:bg-aqua1" : " after:bg-purple4"}
-                ${
-                selectedPoolType === tab.type
-                  ? `bold33 text-white1 border-black2  after:absolute after:h-[1px] after:w-full after:bottom-0 after:left-0   after:transition-all after:duration-300`
-                  : "bold22 text-gray1 border-black2 hover:text-white  after:absolute after:h-[1px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300"
-              } `}
+                after:transition-all after:duration-300 after:bottom-0 after:absolute border-black2
+                ${tab.type === StakingPoolType.LIQUID ? "after:bg-aqua1 after:right-0" : "after:bg-purple4 after:left-0"}
+          ${
+            selectedPoolType === tab.type
+              ? "bold33 text-white1 after:h-[1px] after:w-full "
+              : `bold22 text-gray1 hover:text-white after:h-[1px] after:w-0 hover:after:w-full  ${
+                  tab.type === StakingPoolType.LIQUID
+                    ? "after:right-0"
+                    : "after:left-0"
+                }`
+          } `}
               onClick={() => {
                 setSelectedPoolType(tab.type)
                 selectStakingPoolForView(null)
