@@ -31,6 +31,17 @@ const config: Config = {
 
         "custom-grey-gradient":
           "linear-gradient(90deg, rgba(78, 78, 78, 0.30) 0%, rgba(32, 40, 50, 0.25) 49%, rgba(78, 78, 78, 0.30) 92%)",
+
+        "gray-gradient":
+          "linear-gradient(90deg, rgba(78, 78, 78, 0.30) 0%, rgba(32, 40, 50, 0.25) 50%, rgba(78, 78, 78, 0.30) 92%)",
+        "focus-gradient":
+          "linear-gradient(90deg, rgba(57, 35, 162, 0.20) 0%, rgba(19, 136, 130, 0.20) 100%)",
+        "teal-gradient":
+          "linear-gradient(90deg, rgba(23, 60, 63, 0.40) -2.48%, rgba(23, 60, 63, 0.25) 99.35%)",
+        "purple-gradient":
+          "linear-gradient(90deg, rgba(83, 57, 211, 0.30) -17.49%, rgba(83, 57, 211, 0.15) 90.6%)",
+        "red-gradient":
+          "linear-gradient(90deg, rgba(255, 74, 74, 0.30) -12.7%, rgba(255, 74, 74, 0.20) 66.28%)",
       },
       colors: {
         black1: "#010101",

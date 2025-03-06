@@ -74,7 +74,7 @@ const HomePage = () => {
       {!isWalletConnected && !stakingPoolForView ? (
         <LoginView />
       ) : stakingPoolForView ? (
-        <div className="bg-black4/[68%] 4k:rounded-2.5xl rounded-t-2.5xl xs:px-5 lg:px-7.5 4k:px-10 h-full">
+        <div className="bg-black4/[68%] 4k:rounded-2.5xl rounded-tl-2.5xl xs:px-5 lg:px-7.5 4k:px-10 h-full">
           <StakingPoolDetailsView
             stakingPoolData={stakingPoolForView.stakingPool}
             userStakingPoolData={stakingPoolForView.userData.staked}
@@ -376,7 +376,7 @@ const HomePage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 4k:gap-14 h-full max-lg:pb-16">
             {/* Left column */}
             <div
-              className={`lg:bg-white/[9%] p-4 xs:p-6 4k:p-10 max-4k:rounded-s-none rounded-t-2.5xl ${mobileOverlayContent && "max-lg:hidden"} overflow-hidden h-full flex flex-col `}
+              className={`lg:bg-white/[9%] p-4 xs:p-6 4k:p-10 max-4k:rounded-s-none rounded-tr-2.5xl ${mobileOverlayContent && "max-lg:hidden"} overflow-hidden h-full flex flex-col `}
             >
               <StakingPoolsList
                 selectedPoolType={selectedPoolType}
