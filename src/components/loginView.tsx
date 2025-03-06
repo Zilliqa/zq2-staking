@@ -6,8 +6,10 @@ const LoginView: React.FC = () => {
   return (
     <div className="relative">
       <div className="text-center p-4">
-        <h1 className="bold33 text-white lg:mt-20 4k:mt-56">Stake ZIL. <br /> Earn Rewards.
-        <br /> Secure the Network.</h1>
+        <h1 className="bold33 text-white lg:mt-20 4k:mt-56">
+          Stake ZIL. <br /> Earn Rewards.
+          <br /> Secure the Network.
+        </h1>
         <p className="mt-6 body2-v2 text-white4">
           Give it a try, and give us your feedback !
         </p>

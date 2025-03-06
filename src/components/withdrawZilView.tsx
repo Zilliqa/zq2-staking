@@ -369,11 +369,12 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
           </>
         ) : (
           <h1 className="bold33 text-white">
-            <span className="hidden lg:block lg:mt-20 4k:mt-56">Stake ZIL. <br /> Earn Rewards.
-            <br /> Secure the Network.</span>
+            <span className="hidden lg:block lg:mt-20 4k:mt-56">
+              Stake ZIL. <br /> Earn Rewards.
+              <br /> Secure the Network.
+            </span>
             <span className="block lg:hidden">Your Claims</span>
           </h1>
-          
         )}
       </div>
       {anyItemsAvailable && (
@@ -443,9 +444,9 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto">
-            
             <div className="mb-8 body2-v2 text-white4 ">
-            Seems like you have nothing to claim yet. <br />Start staking and give us your thoughts !
+              Seems like you have nothing to claim yet. <br />
+              Start staking and give us your thoughts !
             </div>
             <Button
               type="primary"
