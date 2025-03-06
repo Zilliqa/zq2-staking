@@ -99,7 +99,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             ) : (
               <div className="loading-blur"> 00000 zil</div>
             )}
-            <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[218px] w-full">
+            <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[250px] w-full">
               {getMinimalPoolStakingAmount(reward.address) >
               reward.zilRewardAmount ? (
                 <Tooltip
@@ -207,7 +207,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               ) : (
                 <div className="loading-blur">000.000 ZIL</div>
               )}
-              <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[218px] w-full">
+              <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[250px] w-full">
                 <Button
                   className={` 
                     ${

@@ -138,6 +138,9 @@ const UnstakingCalculator: React.FC = () => {
     }
   })()
 
+  const [isMinHovered, setIsMinHovered] = useState(false)
+  const [isMaxHovered, setIsMaxHovered] = useState(false)
+
   return (
     stakingPoolForView && (
       <FastFadeScroll
@@ -149,30 +152,35 @@ const UnstakingCalculator: React.FC = () => {
           arrow={true}
           overlayClassName="custom-tooltip"
           className=""
-          title="Enter amount to unstake."
+          title={
+            !isWalletConnected
+              ? "Please connect your wallet first."
+              : isUnstakingAvailable
+                ? "Enter amount to unstake."
+                : "You'll need to stake first."
+          }
         >
           <div
-            className={`transition-all duration-300 border-transparent
-${
-  isUnstakingAvailable &&
-  ` ${
-    isPoolLiquid()
-      ? "hover:border-aqua1 hover:shadow-[inset_0_0_7px_3px_rgba(0,208,198,0.3),inset_0_0_15px_8px_rgba(0,208,198,0.15)]"
-      : "hover:border-purple5 hover:shadow-[inset_0_0_7px_3px_rgba(91,111,255,0.3),inset_0_0_15px_8px_rgba(91,111,255,0.15)]"
-  }
-          ${isFocused && "ant-input-affix-wrapper-focused !border-transparent"} `
-}
-           !bg-transparent flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl items-center`}
+            className={`transition-all duration-300 border-transparent bg-gray-gradient 
+              ${
+                isUnstakingAvailable &&
+                ` 
+                  ${isFocused && "ant-input-affix-wrapper-focused !border-transparent !bg-focus-gradient "}
+                  ${isMaxValue && "bg-teal-gradient !border-teal"}
+                  ${isMaxHovered && "!bg-teal-gradient"}
+                  ${isMinValue && "bg-purple-gradient"}
+                  ${isMinHovered && "!bg-purple-gradient"}
+                  ${!canUnstake && tokensToUnstake != "0" && tokensToUnstake != "" && "!bg-red-gradient"}`
+              }
+              flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
           >
             <div className="h-fit self-center">
               <div className=" flex items-center gap-2">
                 <div
                   className={`${
-                    tokensToUnstake === "0" || tokensToUnstake === ""
-                      ? "text-gray8"
-                      : !canUnstake && isWalletConnected
-                        ? "text-red1"
-                        : "text-white1"
+                    !isWalletConnected || !isUnstakingAvailable
+                      ? "text-gray4"
+                      : "text-white1"
                   } bold33`}
                 >
                   {" "}
@@ -184,10 +192,12 @@ ${
                   className={`${
                     tokensToUnstake === "0" || tokensToUnstake === ""
                       ? "text-gray8"
-                      : !canUnstake && isWalletConnected
-                        ? "text-red1"
-                        : "text-white1"
-                  } placeholder-gray8 flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
+                      : "text-white1"
+                  }   ${
+                    !isWalletConnected || !isUnstakingAvailable
+                      ? "placeholder-gray4"
+                      : "placeholder-gray8 "
+                  } flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
                   value={tokensToUnstake !== "0" ? tokensToUnstake || "" : ""}
                   placeholder="0"
                   onChange={handleChange}
@@ -199,7 +209,12 @@ ${
               </div>
               <div className="flex items-center ">
                 {isPoolLiquid() && (
-                  <span className="medium17">
+                  <span
+                    className={` ${
+                      !isWalletConnected ||
+                      (!isUnstakingAvailable && "text-gray4")
+                    } medium17`}
+                  >
                     {stakingPoolForView!.stakingPool.data ? (
                       <>
                         {" "}
@@ -221,11 +236,13 @@ ${
 
                 <span
                   className={`${
-                    !isUnstakingAvailable
-                      ? "!text-gray-500"
-                      : isPoolLiquid()
-                        ? "text-aqua1"
-                        : "text-purple3"
+                    !isWalletConnected || !isUnstakingAvailable
+                      ? "text-gray4"
+                      : !isUnstakingAvailable
+                        ? "!text-gray-500"
+                        : isPoolLiquid()
+                          ? "text-aqua1"
+                          : "text-purple3"
                   } medium17 ml-3 `}
                 >
                   {unboudingPeriod}
@@ -236,6 +253,8 @@ ${
               <Button
                 className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
                 onClick={onMaxClick}
+                onMouseEnter={() => setIsMaxHovered(true)}
+                onMouseLeave={() => setIsMaxHovered(false)}
                 disabled={!isUnstakingAvailable}
               >
                 MAX
@@ -247,6 +266,8 @@ ${
                   setIsMinValue(true)
                   setIsMaxValue(false)
                 }}
+                onMouseEnter={() => setIsMinHovered(true)}
+                onMouseLeave={() => setIsMinHovered(false)}
                 disabled={!isUnstakingAvailable}
               >
                 MIN
@@ -296,8 +317,8 @@ ${
 
           <LastTransaction />
 
-          <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 lg:pb-10">
-            <div className="flex flex-col lg:gap-3.5 gap-1 regular-base">
+          <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 mt-2.5 lg:mt-4 4k:mt-6 border-t border-black2 lg:pb-10">
+            <div className="flex flex-col lg:gap-2.5 gap-1 regular-base">
               <div className=" ">
                 Commission Fee:{" "}
                 {stakingPoolForView!.stakingPool.data ? (
@@ -328,7 +349,7 @@ ${
                 </Tooltip>
               </div>
             </div>
-            <div className="flex flex-col lg:gray-base gray-base2 xl:gap-3.5 4k:gap-5 xl:items-end justify-start">
+            <div className="flex flex-col lg:gray-base gray-base2 xl:gap-2.5 4k:gap-5 xl:items-end justify-start">
               {isPoolLiquid() && (
                 <div className="flex flex-col max-xl:justify-between  max-lg:items-start xl:gap-3.5 xl:items-end">
                   <div className="flex   xl:gap-5 4k:gap-6">
