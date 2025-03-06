@@ -93,7 +93,7 @@ button,
     }
 
     &:disabled {
-      @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
+      @apply !bg-black4 border-gray4 !text-gray8 cursor-not-allowed;
     }
   }
 

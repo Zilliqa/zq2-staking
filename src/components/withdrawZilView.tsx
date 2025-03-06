@@ -291,7 +291,8 @@ const RewardCard: React.FC<RewardCardProps> = ({
                    : ""
                }
                ${stakingPool.definition.poolType === StakingPoolType.LIQUID ? "liquid-hover" : " non-liquid-hover"} 
-               btn-primary-grey 4k:py-6 lg:py-5 py-4`}
+               ${stakingPool.definition.minimumStake > rewardInfo.zilRewardAmount ? "btn-primary-grey " : "btn-secondary-grey "}
+               4k:py-6 lg:py-5 py-4`}
             onClick={(e) => {
               e.stopPropagation()
               claimReward(rewardInfo.address)
