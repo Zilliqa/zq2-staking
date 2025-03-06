@@ -358,20 +358,22 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
   }
 
   return (
-    <div className="relative flex flex-col gap-2 4k:gap-2.5 4k:mt-52 h-full max-lg:pb-16">
+    <div className="relative flex flex-col gap-2 4k:gap-2.5 h-full max-lg:pb-16">
       <div className=" text-center p-4">
         {anyItemsAvailable ? (
           <>
-            <h1 className="bold52 text-white">My Claims</h1>
+            <h1 className="bold33 text-white">Your Claims</h1>
             <p className="mt-2 body2-v2 text-white4">
               Here is a list of your current <br /> and upcoming claims.
             </p>
           </>
         ) : (
-          <h1 className="bold52 text-white">
-            <span className="hidden lg:block">Staking Portal</span>
-            <span className="block lg:hidden">Claims</span>
+          <h1 className="bold33 text-white">
+            <span className="hidden lg:block lg:mt-20 4k:mt-56">Stake ZIL. <br /> Earn Rewards.
+            <br /> Secure the Network.</span>
+            <span className="block lg:hidden">Your Claims</span>
           </h1>
+          
         )}
       </div>
       {anyItemsAvailable && (
@@ -440,37 +442,14 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
         </FastFadeScroll>
       ) : (
         !isUnstakingDataLoading && (
-          <div className="text-center text-white mx-auto lg:my-10">
-            <div className="flex justify-center mb-9.5">
-              <Image
-                className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-                src={FeedbackIcon}
-                alt="star icon"
-                width={56}
-                height={56}
-              />
-              <Image
-                className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-                src={FeedbackIcon}
-                alt="star icon"
-                width={56}
-                height={56}
-              />
-              <Image
-                className="ml-3 4k:ml-4 h-[56px] w-[56px] transform transition-transform ease-out duration-500 group-hover:translate-x-2"
-                src={FeedbackIcon}
-                alt="star icon"
-                width={56}
-                height={56}
-              />
-            </div>
-            <div className="mb-15 body2-v2 text-white4">
-              No claims? We&apos;d love to hear
-              <br /> your feedback !
+          <div className="text-center text-white mx-auto">
+            
+            <div className="mb-8 body2-v2 text-white4 ">
+            Seems like you have nothing to claim yet. <br />Start staking and give us your thoughts !
             </div>
             <Button
               type="primary"
-              className="btn-primary-teal-lg !w-fit px-11 4k:px-12 group"
+              className="btn-primary-teal-lg !w-fit px-11 4k:px-12 group mt-8"
               onClick={() => showNewMessage("")}
             >
               Leave Feedback
