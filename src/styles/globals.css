@@ -624,3 +624,98 @@ button,
 .hover-from-right:hover::after {
   width: 100%;
 }
+
+/* Ant Design Notification Styling */
+.ant-notification {
+  z-index: 9999 !important;
+}
+
+.ant-notification .ant-notification-notice,
+.ant-notification-notice {
+  border: 1px solid var(--grey-333, #333) !important;
+  border-radius: 12px !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(20px) !important;
+  box-shadow: none !important;
+  animation-name: antMoveRightIn, antFadeIn !important;
+  animation-duration: 0.3s, 0.5s !important;
+  animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1), ease !important;
+  animation-fill-mode: both, both !important;
+}
+
+.ant-notification-notice-message {
+  color: white !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  margin-bottom: 8px !important;
+}
+
+.ant-notification-notice-description {
+  color: #b5b5b5 !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+/* Red border for error notifications */
+.ant-notification-notice-error,
+.ant-notification .ant-notification-notice-error {
+  background: rgb(64, 0, 0, 0.5) !important;
+}
+
+/* Add fade-in keyframes */
+@keyframes antFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Success notification */
+.ant-notification-notice-success .ant-notification-notice-icon {
+  color: #00d0c6 !important;
+}
+
+/* Error notification */
+.ant-notification-notice-error .ant-notification-notice-icon {
+  color: #ff4d4f !important;
+}
+
+.ant-notification-notice-close {
+  color: #b5b5b5 !important;
+}
+
+.ant-notification-notice-close:hover {
+  color: white !important;
+}
+
+/* Nuclear approach to remove all backgrounds */
+.ant-notification *,
+.ant-notification *::before,
+.ant-notification *::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Only apply the background to the main container */
+.ant-notification-notice {
+  background: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(20px) !important;
+}
+/* Hide all notification icons */
+.ant-notification-notice-icon {
+  display: none !important;
+}
+
+/* Fix padding when icon is hidden */
+.ant-notification-notice-with-icon .ant-notification-notice-message,
+.ant-notification-notice-with-icon .ant-notification-notice-description {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
