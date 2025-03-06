@@ -17,6 +17,7 @@ import Link from "next/link"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import CustomWalletConnect from "./customWalletConnect"
 import { DateTime } from "luxon"
+import LastTransaction from "./LastTransaction"
 
 const StakingCalculator: React.FC = () => {
   const inputRef = useRef<InputRef | null>(null)
@@ -324,22 +325,7 @@ ${
               )}
             </div>
 
-            {stakingCallTxHash !== undefined && (
-              <div className="text-center mb-3 regular-base ">
-                <Link
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  href={getTxExplorerUrl(stakingCallTxHash, appConfig.chainId)}
-                  passHref={true}
-                >
-                  Last staking transaction:{" "}
-                  <span className="text-white underline">
-                    {" "}
-                    {formatAddress(stakingCallTxHash)}
-                  </span>
-                </Link>
-              </div>
-            )}
+            <LastTransaction/>
 
             <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 lg:pb-10">
               <div className="flex flex-col lg:gap-3.5 gap-1 4k:gap-4 regular-base">

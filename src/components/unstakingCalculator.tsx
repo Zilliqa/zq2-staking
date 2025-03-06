@@ -18,6 +18,7 @@ import { WalletConnector } from "@/contexts/walletConnector"
 import CustomWalletConnect from "./customWalletConnect"
 import Link from "next/link"
 import { AppConfigStorage } from "@/contexts/appConfigStorage"
+import LastTransaction from "./LastTransaction"
 
 const UnstakingCalculator: React.FC = () => {
   const inputRef = useRef<InputRef | null>(null)
@@ -293,22 +294,7 @@ ${
             )}
           </div>
 
-          {unstakingCallTxHash !== undefined && (
-            <div className="text-center mb-3 regular-base ">
-              <Link
-                rel="noopener noreferrer"
-                target="_blank"
-                href={getTxExplorerUrl(unstakingCallTxHash, appConfig.chainId)}
-                passHref={true}
-              >
-                Last staking transaction:{" "}
-                <span className="text-white underline">
-                  {" "}
-                  {formatAddress(unstakingCallTxHash)}
-                </span>
-              </Link>
-            </div>
-          )}
+          <LastTransaction/>
 
           <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 lg:pb-10">
             <div className="flex flex-col lg:gap-3.5 gap-1 regular-base">

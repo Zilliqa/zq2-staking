@@ -17,6 +17,7 @@ import { Button, Tooltip } from "antd"
 import { DateTime } from "luxon"
 import Link from "next/link"
 import { formatUnits } from "viem"
+import LastTransaction from "./LastTransaction"
 
 interface WithdrawZilPanelProps {
   stakingPoolData: StakingPool
@@ -66,18 +67,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
 
   return (
     <div className="h-full">
-      {hashToShow !== undefined && (
-        <div className="text-center gradient-bg-1 py-2 regular-base">
-          <Link
-            rel="noopener noreferrer"
-            target="_blank"
-            href={getTxExplorerUrl(hashToShow, appConfig.chainId)}
-            passHref={true}
-          >
-            Last staking transaction: {formatAddress(hashToShow)}
-          </Link>
-        </div>
-      )}
+      <LastTransaction/>
 
       {reward && (
         <div
