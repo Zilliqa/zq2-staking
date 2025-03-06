@@ -163,7 +163,14 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                         : "non-liquid-loading"
                       : ""
                   }
-                  ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"} btn-primary-grey lg:py-5 py-4`}
+                  ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"}
+                   ${
+                     getMinimalPoolStakingAmount(reward.address) >
+                     reward.zilRewardAmount
+                       ? " btn-primary-grey "
+                       : " btn-secondary-grey "
+                   }
+                 lg:py-5 py-4`}
                 onClick={() => claimReward(reward.address)}
                 loading={isClaimingRewardInProgress}
               >
