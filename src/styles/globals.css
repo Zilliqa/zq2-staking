@@ -665,7 +665,6 @@ button,
   background: rgb(64, 0, 0, 0.5) !important;
 }
 
-
 /* Add fade-in keyframes */
 @keyframes antFadeIn {
   0% {
@@ -678,7 +677,7 @@ button,
 
 /* Success notification */
 .ant-notification-notice-success .ant-notification-notice-icon {
-  color: #00D0C6 !important;
+  color: #00d0c6 !important;
 }
 
 /* Error notification */
