@@ -151,21 +151,27 @@ const UnstakingCalculator: React.FC = () => {
           arrow={true}
           overlayClassName="custom-tooltip"
           className=""
-          title="Enter amount to unstake."
+          title={
+            !isWalletConnected
+              ? "Please connect your wallet first."
+              : isUnstakingAvailable
+                ? "Enter amount to unstake."
+                : "You'll need to stake first."
+          }
         >
           <div
-            className={`transition-all duration-300 border-transparent bg-gray-gradient
-${
-  isUnstakingAvailable &&
-  ` 
-
-  ${isFocused && "ant-input-affix-wrapper-focused !border-transparent !bg-focus-gradient "}
+            className={`transition-all duration-300 border-transparent bg-gray-gradient 
+              ${
+                isUnstakingAvailable &&
+                ` 
+                  ${isFocused && "ant-input-affix-wrapper-focused !border-transparent !bg-focus-gradient "}
                   ${isMaxValue && "bg-teal-gradient !border-teal"}
                   ${isMaxHovered && "!bg-teal-gradient"}
                   ${isMinValue && "bg-purple-gradient"}
                   ${isMinHovered && "!bg-purple-gradient"}
                   ${!canUnstake && tokensToUnstake != "0" && tokensToUnstake != "" && "!bg-red-gradient"}`
-} flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
+              }
+              flex justify-between lg:gap-10 4k:gap-14 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 rounded-xl items-center`}
           >
             <div className="h-fit self-center">
               <div className=" flex items-center gap-2">
