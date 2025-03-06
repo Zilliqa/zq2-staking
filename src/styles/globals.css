@@ -414,58 +414,14 @@ button,
     left: 0px;
     right: 0px;
     bottom: 1px;
-    /* background: black; */
     background: linear-gradient(90deg, #212020 0%, #2d2c2c 100%);
-    /* border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px; */
     border-radius: 10px;
     z-index: 0;
   }
 
   .gradient-bottom-border .content {
     padding: 19.5px 20px 20.5px 20px;
-    /* background: linear-gradient(
-      129.93deg,
-      rgba(175, 175, 175, 0.12) 16.6%,
-      rgba(17, 243, 179, 0.12) 90.65%
-    ); */
     border-radius: 10px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .gradient-bottom-border-hover:hover {
-    background: linear-gradient(90deg, #00d0c6 0%, #522eff 100%);
-    border-radius: 10px;
-    position: relative;
-  }
-
-  .gradient-bottom-border-hover:hover::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 1px;
-    background: linear-gradient(90deg, #212020 0%, #2d2c2c 100%);
-    border-radius: 10px;
-    z-index: 0;
-  }
-
-  .gradient-bottom-border-hover:hover .content-hover {
-    position: relative;
-    z-index: 1;
-  }
-
-  .gradient-bottom-border-hover:hover .content-hover:hover {
-    /* background: linear-gradient(
-      314.92deg,
-      rgba(12, 34, 49, 0.4) 2.58%,
-      rgba(17, 39, 49, 0.4) 47.47%,
-      rgba(12, 22, 31, 0.4) 97.04%
-    ); */
-    border-radius: 10px;
-    padding: 20px 20px 20px 20px;
     position: relative;
     z-index: 1;
   }

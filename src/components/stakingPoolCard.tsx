@@ -23,11 +23,12 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
 }) => {
   return (
     <div
-      className={`${
-        isStakingPoolSelected
-          ? "gradient-bottom-border "
-          : "border-b-[1.5px] border-black2 rounded-10 gradient-bottom-border-hover "
-      } ${isStakingPoolSelected && "bg-black"} hover:cursor-pointer`}
+      className={`
+        ${
+          isStakingPoolSelected
+            ? "gradient-bottom-border "
+            : "border-b-[1.5px] border-black2 rounded-10 hover:bg-gray-grad hover:border-black3  "
+        } ${isStakingPoolSelected && "bg-black"} hover:cursor-pointer`}
       onClick={onClick}
     >
       <div

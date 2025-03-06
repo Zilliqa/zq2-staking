@@ -32,6 +32,8 @@ const config: Config = {
         "custom-grey-gradient":
           "linear-gradient(90deg, rgba(78, 78, 78, 0.30) 0%, rgba(32, 40, 50, 0.25) 49%, rgba(78, 78, 78, 0.30) 92%)",
 
+        "gray-grad": "linear-gradient(90deg, #212020 0%, #2d2c2c 100%)",
+
         "gray-gradient":
           "linear-gradient(90deg, rgba(78, 78, 78, 0.30) 0%, rgba(32, 40, 50, 0.25) 50%, rgba(78, 78, 78, 0.30) 92%)",
         "focus-gradient":
