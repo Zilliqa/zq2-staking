@@ -294,7 +294,7 @@ ${
             )}
           </div>
 
-          <LastTransaction/>
+          <LastTransaction />
 
           <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 border-t border-black2 lg:pb-10">
             <div className="flex flex-col lg:gap-3.5 gap-1 regular-base">

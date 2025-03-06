@@ -67,7 +67,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
 
   return (
     <div className="h-full">
-      <LastTransaction/>
+      <LastTransaction />
 
       {reward && (
         <div

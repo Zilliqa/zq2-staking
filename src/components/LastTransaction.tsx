@@ -4,9 +4,9 @@ import { formatAddress, getTxExplorerUrl } from "@/misc/formatting"
 import Link from "next/link"
 import React from "react"
 
-const LastTransaction: React.FC = ( ) => {
+const LastTransaction: React.FC = () => {
   const { appConfig } = AppConfigStorage.useContainer()
-    
+
   const { stakingCallTxHash } = StakingOperations.useContainer()
   return stakingCallTxHash !== undefined ? (
     <div className="text-center mb-3 info-label">
