@@ -85,7 +85,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
 
   return (
     <>
-      <nav aria-label="Tabs" className="w-full flex ">
+      <nav aria-label="Tabs" className="w-full flex  px-4 xs:px-6 4k:px-10">
         {tabs.map((tab, index) => (
           <Tooltip
             placement="top"
@@ -120,7 +120,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
       </nav>
 
       <>
-        <div className="flex gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6">
+        <div className="flex gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6  px-4 xs:px-6 4k:px-10">
           <SortBtn
             liquidType={selectedPoolType === StakingPoolType.LIQUID}
             variable="APR"
@@ -146,9 +146,9 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
 
         <FastFadeScroll
           isPoolLiquid={stakingPoolForView?.stakingPool.definition.poolType}
-          className="flex-1 pb-8 lg:pb-4 mb-16 md:mb-0 overflow-y-scroll"
+          className="flex-1 pb-8 lg:pb-4 mb-16 md:mb-0 overflow-y-scroll  mx-2 xs:mx-3 4k:mx-5"
         >
-          <div className="grid grid-cols-1 gap-2.5 lg:gap-4 4k:gap-5">
+          <div className="grid grid-cols-1 gap-2.5 lg:gap-4 4k:gap-5 px-2 xs:px-3 4k:px-5">
             {sortedLiquidStakingPoolsData.map(({ stakingPool, userData }) => (
               <StakingPoolCard
                 key={stakingPool.definition.id}

@@ -360,7 +360,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
 
   return (
     <div className="relative flex flex-col gap-2 4k:gap-2.5 h-full max-lg:pb-16">
-      <div className=" text-center p-4">
+      <div className=" text-center mx-4 p-4">
         {anyItemsAvailable ? (
           <>
             <h1 className="bold33 text-white">Your Claims</h1>
@@ -379,7 +379,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
         )}
       </div>
       {anyItemsAvailable && (
-        <div className="flex justify-center items-center gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6">
+        <div className="flex justify-center items-center gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6 px-4">
           <div className="text-14 text-gray14">Filter by</div>
           {filters.map((filter, index) => (
             <FilterBtn
@@ -396,7 +396,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       {anyItemsAvailable ? (
         <FastFadeScroll
           isPoolLiquid={StakingPoolType.LIQUID}
-          className=" flex-1 overflow-y-scroll  pb-6 mb-16 lg:mb-0  4k:mr-14 lg:mr-10"
+          className=" flex-1 overflow-y-scroll  pb-6 mb-16 lg:mb-0 px-2 mx-2 4k:mr-7 lg:mr-5 4k:pr-7 lg:pr-5"
         >
           <div className="grid grid-cols-1 gap-4 lg:gap-5 4k:gap-6 lg:pb-10 ">
             {availableForUnstaking

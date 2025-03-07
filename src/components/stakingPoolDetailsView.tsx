@@ -253,8 +253,8 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   }
 
   return (
-    <div className="relative pb-2 4k:pb-4  lg:pr-4 4k:pr-6 flex flex-col h-full ">
-      <div className="items-center flex justify-between py-1 lg:py-7.5">
+    <div className="relative pb-2 4k:pb-4 flex flex-col h-full ">
+      <div className="items-center flex justify-between py-1 lg:py-7.5 px-4 lg:pr-2.5 4k:pr-6 ">
         <div className="max-lg:ms-1 items-center w-full flex justify-between mb-5">
           <div className="flex items-center">
             <span className="text-white1 bold33 lg:mr-6 mr-2">
@@ -333,10 +333,10 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       </div>
       <FastFadeScroll
         isPoolLiquid={stakingPoolData.definition.poolType}
-        className="overflow-y-scroll"
+        className="overflow-y-scroll max-lg:mx-2 lg:pr-2.5 4k:pr-6 "
       >
         {isPoolLiquid() ? (
-          <div className="bg-grey-gradient  flex flex-col gap-2  max-lg:mt-5  rounded-xl">
+          <div className="bg-grey-gradient  flex flex-col gap-2 px-2  max-lg:mt-5  rounded-xl">
             <div
               className={` ${doesUserHoldAnyFundsInThisPool ? "max-lg:pt-6 " : "py-6"} lg:py-6 4k:py-10 4k:px-16 lg:px-9.5 px-5`}
             >
@@ -354,7 +354,26 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                     `${humanReadableStakingToken(
                       userStakingPoolData?.stakingTokenAmount || 0n
                     )} ${stakingPoolData.definition.tokenSymbol}`,
-                    "Amount of ZIL currently staked"
+                    <>
+                      <div>Amount of ZIL currently staked</div>
+                      {isPoolLiquid() &&
+                        userStakingPoolData &&
+                        userStakingPoolData.stakingTokenAmount &&
+                        stakingPoolData.data != null && (
+                          <div className="mt-1">
+                            {`                    
+                      ( ~
+                          ${formatUnitsToHumanReadable(
+                            convertTokenToZil(
+                              userStakingPoolData.stakingTokenAmount,
+                              stakingPoolData.data.zilToTokenRate
+                            ),
+                            18
+                          )} 
+                      ZIL )`}
+                          </div>
+                        )}
+                    </>
                   )}
                   {colorInfoEntry(
                     "Unstaked ",
@@ -363,7 +382,26 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                           pendingUnstakesValue
                         )} ${stakingPoolData.definition.tokenSymbol}`
                       : "-",
-                    "Amount of ZIL requested"
+                    <>
+                      <div>Amount of ZIL requested</div>
+                      {isPoolLiquid() &&
+                        userStakingPoolData &&
+                        pendingUnstakesValue &&
+                        stakingPoolData.data != null && (
+                          <div className="mt-1">
+                            {`                    
+                      ( ~
+                          ${formatUnitsToHumanReadable(
+                            convertTokenToZil(
+                              pendingUnstakesValue,
+                              stakingPoolData.data.zilToTokenRate
+                            ),
+                            18
+                          )} 
+                      ZIL )`}
+                          </div>
+                        )}
+                    </>
                   )}
                   {colorInfoEntry(
                     "Claimable Withdrawals",

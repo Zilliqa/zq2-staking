@@ -59,8 +59,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }, intervalRateMiliseconds)
   )
 
-  //const fadeOut = loadingPercentage >= 100 && appConfig
-  const fadeOut = false
+  const fadeOut = loadingPercentage >= 100 && appConfig
   useEffect(
     function fadeOutLoadingScreen() {
       if (fadeOut) {
