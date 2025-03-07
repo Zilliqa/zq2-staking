@@ -64,7 +64,7 @@ const HomePage = () => {
   }, [router.query.claims])
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 p-5 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
+    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 py-5 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
       {children}
     </div>
   )
@@ -74,7 +74,7 @@ const HomePage = () => {
       {!isWalletConnected && !stakingPoolForView ? (
         <LoginView />
       ) : stakingPoolForView ? (
-        <div className="bg-black4/[68%] 4k:rounded-2.5xl rounded-tl-2.5xl xs:px-5 lg:px-7.5 4k:px-10 h-full">
+        <div className="bg-black4/[68%] 4k:rounded-2.5xl rounded-tl-2.5xl h-full">
           <StakingPoolDetailsView
             stakingPoolData={stakingPoolForView.stakingPool}
             userStakingPoolData={stakingPoolForView.userData.staked}
@@ -376,7 +376,7 @@ const HomePage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 4k:gap-14 h-full max-lg:pb-16">
             {/* Left column */}
             <div
-              className={`lg:bg-white/[9%] p-4 xs:p-6 4k:p-10 max-4k:rounded-s-none rounded-tr-2.5xl ${mobileOverlayContent && "max-lg:hidden"} overflow-hidden h-full flex flex-col `}
+              className={`lg:bg-white/[9%] py-4 xs:py-6 4k:py-10 max-4k:rounded-s-none rounded-tr-2.5xl ${mobileOverlayContent && "max-lg:hidden"} overflow-hidden h-full flex flex-col `}
             >
               <StakingPoolsList
                 selectedPoolType={selectedPoolType}
