@@ -66,7 +66,7 @@ button,
   }
 
   .btn-primary-teal {
-    @apply bold16 py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 tracking-widest !h-auto cursor-pointer duration-500 ease-in-out;
+    @apply bold16 py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-160 !bg-tealDark border-aqua1 !text-white leading-6 !h-auto cursor-pointer duration-500 ease-in-out;
 
     &:hover:not(:disabled) {
       @apply !bg-tealDark !border-transparent shadow-[0px_0px_8.2px_1.5px_#00FFF3];
@@ -128,7 +128,7 @@ button,
   }
 
   .btn-secondary-teal {
-    @apply !gap-0 !whitespace-normal py-1 lg:py-1.5 4k:py-2 px-5 4k:px-8 w-full font-bold text-13 4k:text-17 leading-6 tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full text-aqua1 border-[1px] border-transparent bg-tealDark;
+    @apply !gap-0 !whitespace-normal py-1 lg:py-1.5 4k:py-2 px-5 4k:px-8 w-full font-bold text-13 4k:text-17 leading-6 !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full text-aqua1 border-[1px] border-transparent bg-tealDark;
 
     &:hover:not(:disabled) {
       @apply !text-aqua1 !shadow-[0px_0px_10.8px_0px_#00FFF3] !bg-tealDark;
@@ -154,7 +154,7 @@ button,
   }
 
   .btn-small-purple {
-    @apply p-2 lg:p-1.5 4k:p-2 w-fit font-bold text-10 leading-[1.2] tracking-widest !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full text-aqua1 border-[1px] border-transparent bg-tealDark;
+    @apply p-2 lg:p-1.5 4k:p-2 w-fit font-bold text-10 leading-[1.2] !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full text-aqua1 border-[1px] border-transparent bg-tealDark;
 
     &:hover:not(:disabled) {
       @apply !text-aqua1 !shadow-[0px_0px_10.8px_0px_#00FFF3] !bg-tealDark;
