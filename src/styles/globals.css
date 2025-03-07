@@ -688,7 +688,7 @@ button,
 
 /* Nuclear approach to remove all backgrounds */
 .ant-notification *,
-.ant-notification *::befor e,
+.ant-notification *::before,
 .ant-notification *::after {
   background: transparent !important;
   background-color: transparent !important;
