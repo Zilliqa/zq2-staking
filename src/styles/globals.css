@@ -717,7 +717,9 @@ button,
 }
 
 @supports (-webkit-touch-callout: none) {
-  .fix-mobile-height {
-    height: -webkit-fill-available;
+  @media (max-width: 450px) {
+    .fix-mobile-height {
+      height: -webkit-fill-available;
+    }
   }
 }

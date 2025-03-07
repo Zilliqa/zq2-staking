@@ -92,7 +92,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
       {loadingSplashVisible && (
         <div
-          className={`absolute left-0 top-0 !z-[100] fix-mobile-height w-screen bg-black text-white transition-opacity duration-500 flex flex-col ${
+          className={`absolute left-0 top-0 !z-[100] fix-mobile-height xs:h-screen w-screen bg-black text-white transition-opacity duration-500 flex flex-col ${
             fadeOut ? "opacity-0" : "opacity-100"
           }`}
         >
