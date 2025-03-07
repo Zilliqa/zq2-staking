@@ -60,7 +60,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     tooltip: string | JSX.Element | null
   ) => (
     <Tooltip
-      placement="top"
+      placement="topLeft"
       arrow={true}
       overlayClassName="custom-tooltip"
       className=""
@@ -114,7 +114,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   ) => (
     <Tooltip
       key={title}
-      placement="top"
+      placement="topLeft"
       arrow={true}
       overlayClassName="custom-tooltip"
       className=""

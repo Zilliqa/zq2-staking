@@ -715,11 +715,3 @@ button,
   margin-left: 0 !important;
   padding-left: 0 !important;
 }
-
-@supports (-webkit-touch-callout: none) {
-  @media (max-width: 450px) {
-    .fix-mobile-height {
-      height: -webkit-fill-available;
-    }
-  }
-}

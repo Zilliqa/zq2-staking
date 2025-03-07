@@ -59,8 +59,8 @@ export default function App({ Component, pageProps }: AppProps) {
     }, intervalRateMiliseconds)
   )
 
-  const fadeOut = loadingPercentage >= 100 && appConfig
-
+  //const fadeOut = loadingPercentage >= 100 && appConfig
+  const fadeOut = false
   useEffect(
     function fadeOutLoadingScreen() {
       if (fadeOut) {
@@ -92,21 +92,21 @@ export default function App({ Component, pageProps }: AppProps) {
 
       {loadingSplashVisible && (
         <div
-          className={`absolute left-0 top-0 !z-[100] fix-mobile-height xs:h-screen w-screen bg-black text-white transition-opacity duration-500 flex flex-col ${
+          className={`absolute left-0 top-0 !z-[100] h-screen w-screen bg-black text-white transition-opacity duration-500 ${
             fadeOut ? "opacity-0" : "opacity-100"
           }`}
         >
-          <div className="w-full h-10 ">
+          <div className=" text-end text-24 lg:text-27 font-extrabold sm:mr-10 sm:mt-9 sm:mb-2 mr-5 mt-5 mb-1">
+            {Math.round(loadingPercentage / 10) * 10}%
+          </div>
+
+          <div className="w-full h-[2px] ">
             <div
               className="h-full bg-colorful-gradient"
               style={{
                 width: `${loadingPercentage}%`,
               }}
             ></div>
-          </div>
-
-          <div className="mt-auto self-end text-80 lg:text-114 font-extrabold right-5 bottom-0">
-            {Math.round(loadingPercentage / 10) * 10}%
           </div>
         </div>
       )}
