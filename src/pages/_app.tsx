@@ -92,7 +92,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
       {loadingSplashVisible && (
         <div
-          className={`absolute left-0 top-0 !z-[100] h-screen w-screen bg-black text-white transition-opacity duration-500 ${
+          className={`absolute left-0 top-0 !z-[100] fix-mobile-height xs:h-screen w-screen bg-black text-white transition-opacity duration-500 flex flex-col ${
             fadeOut ? "opacity-0" : "opacity-100"
           }`}
         >
@@ -105,7 +105,7 @@ export default function App({ Component, pageProps }: AppProps) {
             ></div>
           </div>
 
-          <div className="absolute self-end text-80 lg:text-114 font-extrabold right-5 bottom-0">
+          <div className="mt-auto self-end text-80 lg:text-114 font-extrabold right-5 bottom-0">
             {Math.round(loadingPercentage / 10) * 10}%
           </div>
         </div>

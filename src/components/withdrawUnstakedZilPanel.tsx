@@ -99,7 +99,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             ) : (
               <div className="loading-blur"> 00000 zil</div>
             )}
-            <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 lg:max-w-[250px] w-full">
+            <div className=" lg:w-1/3 max-w-[150px] sm:max-w-[250px] w-full">
               {getMinimalPoolStakingAmount(reward.address) >
               reward.zilRewardAmount ? (
                 <Tooltip
@@ -163,7 +163,14 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                         : "non-liquid-loading"
                       : ""
                   }
-                  ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"} btn-primary-grey lg:py-5 py-4`}
+                  ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"}
+                   ${
+                     getMinimalPoolStakingAmount(reward.address) >
+                     reward.zilRewardAmount
+                       ? " btn-primary-grey "
+                       : " btn-secondary-grey "
+                   }
+                 lg:py-5 py-4`}
                 onClick={() => claimReward(reward.address)}
                 loading={isClaimingRewardInProgress}
               >
@@ -207,7 +214,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               ) : (
                 <div className="loading-blur">000.000 ZIL</div>
               )}
-              <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[250px] w-full">
+              <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[150px] sm:max-w-[250px] w-full">
                 <Button
                   className={` 
                     ${
