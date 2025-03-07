@@ -2,13 +2,12 @@ import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import { useEffect, useRef, useState } from "react"
 import { Button, Input, InputRef, Tooltip } from "antd"
 import { WalletConnector } from "@/contexts/walletConnector"
-
 import {
   formatPercentage,
   convertZilValueInToken,
-  getTxExplorerUrl,
-  formatAddress,
   getHumanFormDuration,
+  formatUnitsToHumanReadable,
+  convertTokenToZil,
 } from "@/misc/formatting"
 import { formatUnits, parseEther } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
@@ -395,7 +394,24 @@ const StakingCalculator: React.FC = () => {
                   <div className="flex  max-lg:gap-2 max-xl:justify-between max-lg:items-start flex-row xl:gap-5 4k:gap-6">
                     <div className=" ">Rate</div>
                     {stakingPoolForView!.stakingPool.data ? (
-                      <div className="text-gray9">{`1 ZIL = ~${stakingPoolForView.stakingPool.data.zilToTokenRate.toPrecision(3)} ${stakingPoolForView.stakingPool.definition.tokenSymbol}`}</div>
+                      <div className="text-gray9">
+                        <>
+                          1{" "}
+                          {
+                            stakingPoolForView.stakingPool.definition
+                              .tokenSymbol
+                          }{" "}
+                          =~
+                          {formatUnitsToHumanReadable(
+                            convertTokenToZil(
+                              parseEther("1"),
+                              stakingPoolForView.stakingPool.data.zilToTokenRate
+                            ),
+                            18
+                          )}
+                        </>{" "}
+                        ZIL
+                      </div>
                     ) : (
                       <div className="loading-blur ml-1 "> 1 ZIL = ~00%</div>
                     )}
