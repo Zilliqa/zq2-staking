@@ -112,11 +112,7 @@ button,
   }
 
   .btn-secondary-grey {
-    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[0.35px] border-white text-white items-center bold16 bg-gray12 cursor-pointer duration-700 ease-in-out;
-
-    &:hover:not(:disabled) {
-      @apply !bg-transparent !text-white !border-white;
-    }
+    @apply btn-primary-grey bg-gray12;
 
     &:disabled {
       @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
