@@ -369,12 +369,12 @@ const UnstakingCalculator: React.FC = () => {
                               stakingPoolForView.stakingPool.data.zilToTokenRate
                             ),
                             18
-                          )}
+                          )}{" "}
+                          ZIL
                         </>
                       ) : (
                         <div className="loading-blur "> 1Zil =~ 1zil</div>
                       )}
-                      ZIL
                     </div>
                   </div>
                 </div>
