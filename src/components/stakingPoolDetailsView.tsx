@@ -254,7 +254,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   return (
     <div className="relative pb-2 4k:pb-4 flex flex-col h-full ">
-      <div className="items-center flex justify-between py-1 lg:py-7.5 px-4 lg:pr-2.5 4k:pr-6 ">
+      <div className="items-center flex justify-between py-1 lg:py-7.5 px-4 lg:pr-2.5 4k:pr-6 xs:mx-5 lg:mx-7.5 4k:mx-10 ">
         <div className="max-lg:ms-1 items-center w-full flex justify-between mb-5">
           <div className="flex items-center">
             <span className="text-white1 bold33 lg:mr-6 mr-2">
@@ -333,7 +333,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       </div>
       <FastFadeScroll
         isPoolLiquid={stakingPoolData.definition.poolType}
-        className="overflow-y-scroll max-lg:mx-2 lg:pr-2.5 4k:pr-6 "
+        className="overflow-y-scroll max-lg:mx-2 lg:pr-5 4k:pr-6 xs:mx-5 lg:ml-7.5 lg:mr-5 4k:ml-12 4k:mr-6 "
       >
         {isPoolLiquid() ? (
           <div className="bg-grey-gradient  flex flex-col gap-2 px-2  max-lg:mt-5  rounded-xl">

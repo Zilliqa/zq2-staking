@@ -358,6 +358,13 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
     return item.stakingPool.definition.poolType === selectedPoolType
   }
 
+  const hasLiquid = availableForUnstaking.some(
+    (item) => item.stakingPool.definition.poolType === StakingPoolType.LIQUID
+  )
+  const hasNormal = availableForUnstaking.some(
+    (item) => item.stakingPool.definition.poolType === StakingPoolType.NORMAL
+  )
+
   return (
     <div className="relative flex flex-col gap-2 4k:gap-2.5 h-full max-lg:pb-16">
       <div className=" text-center mx-4 p-4">
@@ -378,7 +385,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
           </h1>
         )}
       </div>
-      {anyItemsAvailable && (
+      {anyItemsAvailable && hasLiquid && hasNormal && (
         <div className="flex justify-center items-center gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6 px-4">
           <div className="text-14 text-gray14">Filter by</div>
           {filters.map((filter, index) => (
