@@ -410,7 +410,7 @@ export const stakingPoolsConfigForChainId: Record<
         tokenDecimals: 18,
         tokenSymbol: "xZIL",
         minimumStake: 10000000000000000000n,
-        withdrawPeriodInMinutes: 20160,
+        withdrawPeriodInMinutes: fiveMinutesInMinutes,
       },
       delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
