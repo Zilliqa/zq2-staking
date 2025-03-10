@@ -6,7 +6,7 @@ import {
   convertTokenToZil,
   formatPercentage,
   formatUnitsToHumanReadable,
-  getHumanFormDuration,
+  formatUnitsWithMaxPrecision,
 } from "@/misc/formatting"
 import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import {
@@ -201,15 +201,14 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         "",
         <>
           1 {stakingPoolData.definition.tokenSymbol} = ~ <br />
-          {parseFloat(
-            formatUnits(
-              convertTokenToZil(
-                parseEther("1"),
-                stakingPoolData.data.zilToTokenRate
-              ),
-              18
-            )
-          ).toFixed(2)}{" "}
+          {formatUnitsWithMaxPrecision(
+            convertTokenToZil(
+              parseEther("1"),
+              stakingPoolData.data.zilToTokenRate
+            ),
+            18,
+            3
+          )}{" "}
           ZIL
         </>,
         ""

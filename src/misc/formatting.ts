@@ -60,6 +60,12 @@ export function convertZilValueInToken(
   return `${(zilAmount * zilToTokenRate).toFixed(2)}`
 }
 
+/**
+ * returns @param value formatted to a string that is using the most appropriate unit
+ * e.g., 1,000,000 ZIL will be formatted as 1M ZIL
+ *
+ * @note this function is useful for displaying large values
+ */
 export function formatUnitsToHumanReadable(
   value: bigint,
   decimals: number
@@ -72,6 +78,22 @@ export function formatUnitsToHumanReadable(
   })
 
   return formatter.format(raw)
+}
+
+/**
+ * returns @param value formatted to a string with a maximum precision of @param maxPrecision
+ * trailing zeros are removed
+ *
+ * @note this function is useful for displaying small values
+ */
+export function formatUnitsWithMaxPrecision(
+  value: bigint,
+  decimals: number,
+  maxPrecision: number
+): string {
+  const raw = parseFloat(formatUnits(value, decimals))
+
+  return raw.toPrecision(maxPrecision).replace(/\.?0+$/, "")
 }
 
 export function getTxExplorerUrl(txHash: string, chainId: number) {

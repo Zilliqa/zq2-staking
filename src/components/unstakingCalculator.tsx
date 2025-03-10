@@ -6,8 +6,7 @@ import {
   convertTokenToZil,
   formatUnitsToHumanReadable,
   getHumanFormDuration,
-  getTxExplorerUrl,
-  formatAddress,
+  formatUnitsWithMaxPrecision,
 } from "@/misc/formatting"
 import { formatUnits, parseEther, parseUnits } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
@@ -16,14 +15,11 @@ import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "@/components/FastFadeScroll"
 import { WalletConnector } from "@/contexts/walletConnector"
 import CustomWalletConnect from "./customWalletConnect"
-import Link from "next/link"
-import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import LastTransaction from "./LastTransaction"
 
 const UnstakingCalculator: React.FC = () => {
   const inputRef = useRef<InputRef | null>(null)
 
-  const { appConfig } = AppConfigStorage.useContainer()
   const { isWalletConnected } = WalletConnector.useContainer()
   const { stakingPoolForView } = StakingPoolsStorage.useContainer()
 
@@ -315,7 +311,7 @@ const UnstakingCalculator: React.FC = () => {
             )}
           </div>
 
-          <LastTransaction />
+          <LastTransaction txHash={unstakingCallTxHash} />
 
           <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 mt-2.5 lg:mt-4 4k:mt-6 border-t border-black2 lg:pb-10">
             <div className="flex flex-col lg:gap-2.5 gap-1 regular-base">
@@ -363,12 +359,13 @@ const UnstakingCalculator: React.FC = () => {
                               .tokenSymbol
                           }{" "}
                           =~
-                          {formatUnitsToHumanReadable(
+                          {formatUnitsWithMaxPrecision(
                             convertTokenToZil(
                               parseEther("1"),
                               stakingPoolForView.stakingPool.data.zilToTokenRate
                             ),
-                            18
+                            18,
+                            5
                           )}{" "}
                           ZIL
                         </>
