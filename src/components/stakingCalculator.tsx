@@ -6,13 +6,11 @@ import {
   formatPercentage,
   convertZilValueInToken,
   getHumanFormDuration,
-  formatUnitsToHumanReadable,
   convertTokenToZil,
+  formatUnitsWithMaxPrecision,
 } from "@/misc/formatting"
 import { formatUnits, parseEther } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
-import { AppConfigStorage } from "@/contexts/appConfigStorage"
-import Link from "next/link"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import CustomWalletConnect from "./customWalletConnect"
 import { DateTime } from "luxon"
@@ -20,7 +18,6 @@ import LastTransaction from "./LastTransaction"
 
 const StakingCalculator: React.FC = () => {
   const inputRef = useRef<InputRef | null>(null)
-  const { appConfig } = AppConfigStorage.useContainer()
 
   const { isWalletConnected } = WalletConnector.useContainer()
 
@@ -360,7 +357,7 @@ const StakingCalculator: React.FC = () => {
               )}
             </div>
 
-            <LastTransaction />
+            <LastTransaction txHash={stakingCallTxHash} />
 
             <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 mt-2.5 lg:mt-4 4k:mt-6 border-t border-black2 lg:pb-10">
               <div className="flex flex-col lg:gap-2.5 gap-1 4k:gap-4 regular-base">
@@ -402,12 +399,13 @@ const StakingCalculator: React.FC = () => {
                               .tokenSymbol
                           }{" "}
                           =~
-                          {formatUnitsToHumanReadable(
+                          {formatUnitsWithMaxPrecision(
                             convertTokenToZil(
                               parseEther("1"),
                               stakingPoolForView.stakingPool.data.zilToTokenRate
                             ),
-                            18
+                            18,
+                            5
                           )}
                         </>{" "}
                         ZIL

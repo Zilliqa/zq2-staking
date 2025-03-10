@@ -260,7 +260,7 @@ export const stakingPoolsConfigForChainId: Record<
           apr: 0.135,
           commission: 0.1,
           votingPower: 0.3,
-          zilToTokenRate: 1.2,
+          zilToTokenRate: 0.156374848922222,
         },
         2000
       ),
@@ -285,7 +285,7 @@ export const stakingPoolsConfigForChainId: Record<
           apr: 0.21,
           commission: 0.011,
           votingPower: 0.5,
-          zilToTokenRate: 1.1,
+          zilToTokenRate: 0.7723232322,
         },
         1000
       ),
@@ -310,7 +310,7 @@ export const stakingPoolsConfigForChainId: Record<
           apr: 1.1,
           commission: 0.05,
           votingPower: 0.2,
-          zilToTokenRate: 1.3,
+          zilToTokenRate: 0.9392382873,
         },
         5000
       ),
@@ -335,7 +335,7 @@ export const stakingPoolsConfigForChainId: Record<
           apr: 0.13,
           commission: 0.01,
           votingPower: 0.01,
-          zilToTokenRate: 1,
+          zilToTokenRate: 1.5,
         },
         500
       ),
@@ -360,7 +360,7 @@ export const stakingPoolsConfigForChainId: Record<
           apr: 0.13,
           commission: 0.01,
           votingPower: 0.05,
-          zilToTokenRate: 1,
+          zilToTokenRate: 0.111112323232313,
         },
         100
       ),

@@ -1,12 +1,9 @@
-import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 
 import {
-  formatAddress,
   formatUnitsToHumanReadable,
   getHumanFormDuration,
-  getTxExplorerUrl,
 } from "@/misc/formatting"
 import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import {
@@ -15,7 +12,6 @@ import {
 } from "@/misc/walletsConfig"
 import { Button, Tooltip } from "antd"
 import { DateTime } from "luxon"
-import Link from "next/link"
 import { formatUnits } from "viem"
 import LastTransaction from "./LastTransaction"
 
@@ -45,7 +41,6 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
     preparingStakeRewardTx,
   } = StakingOperations.useContainer()
 
-  const { appConfig } = AppConfigStorage.useContainer()
   const { getMinimalPoolStakingAmount } = StakingPoolsStorage.useContainer()
 
   const pendingUnstake = userUnstakingPoolData
@@ -67,7 +62,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
 
   return (
     <div className="h-full">
-      <LastTransaction />
+      <LastTransaction txHash={hashToShow} />
 
       {reward && (
         <div
