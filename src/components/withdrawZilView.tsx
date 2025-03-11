@@ -221,7 +221,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
             )}
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[250px] lg:pb-0 pb-6 lg:pr-9.5 4k:pr-12">
+      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[250px] lg:pb-0 pb-6 lg:pr-9.5 4k:pr-12 max-lg:px-3">
         <div className="max-lg:w-1/2">
           {stakingPool.definition.minimumStake > rewardInfo.zilRewardAmount ? (
             <Tooltip
@@ -381,7 +381,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
     )
 
   return (
-    <div className="relative flex flex-col gap-2 4k:gap-2.5 h-full max-lg:pb-16">
+    <div className="relative flex flex-col gap-2 4k:gap-2.5 h-full max-lg:pb-10">
       <div className=" text-center mx-4 p-4">
         {anyItemsAvailable ? (
           <>

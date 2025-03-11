@@ -64,7 +64,7 @@ const HomePage = () => {
   }, [router.query.claims])
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 py-5 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
+    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 max-lg:pb-12 py-5 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
       {children}
     </div>
   )
@@ -345,6 +345,9 @@ const HomePage = () => {
     StakingPoolType.LIQUID
   )
 
+  //change this to true to show the alert when having issues in the site
+  const [showAlert] = useState(false)
+
   return (
     <>
       <div
@@ -353,7 +356,7 @@ const HomePage = () => {
         }`}
       >
         {/* Header */}
-        <div className="w-full flex items-center justify-center text-white border-b-[0.5px] border-gray2">
+        <div className="w-full flex flex-col items-center justify-center text-white border-b-[0.5px] border-gray2">
           <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 4k:px-16 4k:max-w-screen-4k items-center py-4 lg:py-5">
             <div className="flex items-center">
               <Logo
@@ -371,6 +374,12 @@ const HomePage = () => {
               </CustomWalletConnect>
             </div>
           </div>
+          {showAlert && (
+            <div className="w-full bg-red2 px-4 text-center text-13 font-bold leading-[1.2] py-2">
+              We’re experiencing issues with chain, platform might not be
+              responsive.
+            </div>
+          )}
         </div>
         <div className="grow relative mx-auto overflow-y-hidden max-w-screen-4k w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 4k:gap-14 h-full max-lg:pb-16">
