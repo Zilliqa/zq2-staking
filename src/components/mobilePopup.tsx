@@ -33,7 +33,7 @@ const MobilePopup = ({
       onClick={onClose}
     >
       <div
-        className={`absolute bottom-0 left-0 right-0 rounded-t-15 border-t border-r border-l border-gray14 
+        className={`absolute bottom-0 left-0 right-0 rounded-t-15 border-t border-r border-l border-gray3 
                  bg-aqua-grey-gradient backdrop-blur-17 p-5 transform transition-transform duration-300 ease-out
                  ${isOpen ? "translate-y-0" : "translate-y-full"}`}
         onClick={(e) => e.stopPropagation()}
@@ -47,7 +47,7 @@ const MobilePopup = ({
           <h2 className="text-white2 text-26 leading-tight font-bold">
             Start earning ZIL
           </h2>
-          <p className="text-gray14 text-16 font-medium leading-tight mt-3 ">
+          <p className="text-gray3 text-16 font-medium leading-tight mt-3 ">
             Stake ZIL. <br /> Earn Rewards.
             <br /> Secure the Network.
           </p>

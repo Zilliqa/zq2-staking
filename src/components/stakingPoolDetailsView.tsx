@@ -70,7 +70,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         className={`${isPoolLiquid() ? "lg:w-1/4 w-1/2 lg:text-left text-center" : " xl:text-left text-center w-1/3"}`}
       >
         <div
-          className={`semi14 ${isPoolLiquid() ? "text-aqua1" : "text-purple5"}`}
+          className={`semi14 ${isPoolLiquid() ? "text-teal1" : "text-purple3"}`}
         >
           {value}
         </div>
@@ -96,7 +96,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         className={`${isPoolLiquid() ? "lg:text-left text-center" : "xl:text-left text-center"} w-2/3 `}
       >
         <div
-          className={`semi14  ${isPoolLiquid() ? "text-aqua1" : "text-purple5"}`}
+          className={`semi14  ${isPoolLiquid() ? "text-teal1" : "text-purple3"}`}
         >
           {value}
         </div>
@@ -262,7 +262,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
             {isPoolLiquid() && (
               <>
-                <span className="lg:text-38 text-20 lg:h4 text-black3  font-light">
+                <span className="lg:text-38 text-20 lg:h4 text-black2  font-light">
                   |
                 </span>
                 <span className="medium20 text-gray6 lg:ml-6 ml-2">
@@ -275,14 +275,14 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   title="Add token to wallet"
                 >
                   <div
-                    className={`ml-0.5 xxs:ml-4 rounded-160 border-[1px] border-transparent ${isClicked && "hover:!border-purple4"}`}
+                    className={`ml-0.5 xxs:ml-4 rounded-160 border-[1px] border-transparent ${isClicked && "hover:!border-purple2"}`}
                   >
                     <div
                       onMouseDown={handleMouseDown}
                       onMouseUp={handleMouseUp}
                       onClick={handleClickAaddToken}
                       onMouseLeave={handleMouseUp}
-                      className={`group btn-primary-purple px-0.5 xxs:px-2 py-0.5 xxs:py-1.5 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
+                      className={`group btn-primary-purple px-0.5 xxs:px-2 py-0.5 xxs:py-1.5 border-purple2 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
                         ${isClicked && "hover:!shadow-[0px_0px_0px_0px_#522EFF]"}`}
                     >
                       <Image
@@ -631,8 +631,8 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
               key={pane}
               className={`semi13 text-center py-2 4k:py-6 cursor-pointer border-solid border-b transition-all duration-400 ease-in-out relative ${
                 selectedPane === pane
-                  ? "text-white1 border-black2 after:bg-colorful-gradient after:absolute after:h-[1px] after:w-0 after:bottom-0 after:left-0 after:animate-grow-width after:transition-all after:duration-300 before:bg-white before:absolute before:h-[1px] before:w-full before:bottom-0 before:left-0"
-                  : "text-gray1 border-black2 hover:text-white after:bg-white after:absolute after:h-[1px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300"
+                  ? "text-white1 border-black1 after:bg-colorful-gradient after:absolute after:h-[1px] after:w-0 after:bottom-0 after:left-0 after:animate-grow-width after:transition-all after:duration-300 before:bg-white before:absolute before:h-[1px] before:w-full before:bottom-0 before:left-0"
+                  : "text-gray1 border-black1 hover:text-white after:bg-white after:absolute after:h-[1px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300"
               } `}
               onClick={() => setSelectedPane(pane)}
             >

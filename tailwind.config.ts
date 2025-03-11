@@ -10,22 +10,22 @@ const config: Config = {
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        aquaBlue:
+
+        "aqua-blue":
           "linear-gradient(270deg, rgba(0, 208, 198, 0.80) -10.58%, rgba(82, 46, 255, 0.80) 158.65%)",
+
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "primary-gradient":
-          "radial-gradient(120.62% 683.52% at 110.84% 156.15%, #C5FFFD 6.84%, rgba(111, 255, 194, 0.760784) 48.36%, #00DABA 100%)",
-        gradientbg:
-          "linear-gradient(129.93deg, rgba(175, 175, 175, 0.12) 16.6%, rgba(17, 243, 179, 0.12) 90.65%)",
-        darkbg:
-          "linear-gradient(314.92deg, rgba(17, 39, 49, 0.4) 28.08%, rgba(9, 9, 9, 0.4) 97.04%)",
+
         "colorful-gradient":
           "linear-gradient(270deg, #00DABA 8%, #4AA1A3 23%, #8A7191 36%, #B15485 46%, #C14981 51%, #A73993 62%, #8726AA 78%, #741BB7 91%, #6D17BD 100%)",
+
         "grey-gradient":
           " linear-gradient(90deg, rgba(78, 78, 78, 0.3) -11.22%, rgba(32, 40, 50, 0.25) 47.4%, rgba(78, 78, 78, 0.3) 98.85%)",
+
         "aqua-gradient":
           "linear-gradient(90deg, rgba(124, 125, 126, 0.18) -11.22%, rgba(122, 131, 166, 0.15) 47.4%, rgba(124, 125, 126, 0.18) 98.85%)",
+
         "aqua-grey-gradient":
           "linear-gradient(180deg, var(--grey-black, #000) 33%, rgba(0, 0, 0, 0.00) 100%)",
 
@@ -36,24 +36,27 @@ const config: Config = {
 
         "gray-gradient":
           "linear-gradient(90deg, rgba(78, 78, 78, 0.30) 0%, rgba(32, 40, 50, 0.25) 50%, rgba(78, 78, 78, 0.30) 92%)",
+
         "focus-gradient":
           "linear-gradient(90deg, rgba(57, 35, 162, 0.20) 0%, rgba(19, 136, 130, 0.20) 100%)",
+
         "teal-gradient":
           "linear-gradient(90deg, rgba(23, 60, 63, 0.40) -2.48%, rgba(23, 60, 63, 0.25) 99.35%)",
+
         "purple-gradient":
           "linear-gradient(90deg, rgba(83, 57, 211, 0.30) -17.49%, rgba(83, 57, 211, 0.15) 90.6%)",
+
         "red-gradient":
           "linear-gradient(90deg, rgba(255, 74, 74, 0.30) -12.7%, rgba(255, 74, 74, 0.20) 66.28%)",
       },
       colors: {
-        black1: "#010101",
-        black2: "#202025",
-        black3: "#545454",
-        black4: "#1E1D1D",
+        black1: "#202025",
+        black2: "#545454",
+        black3: "#1E1D1D",
 
         gray1: "#555555",
         gray2: "#454545",
-        gray3: "#706F6F",
+        gray3: "#878787",
         gray4: "#4B4B4B",
         gray5: "#AEAEAE",
         gray6: "#B5B5B5",
@@ -64,7 +67,6 @@ const config: Config = {
         gray11: "#858A8A",
         gray12: "#333333",
         gray13: "#8E8E8E",
-        gray14: "#878787",
 
         white1: "#F1F4F4",
         white2: "#F7FBFA",
@@ -72,25 +74,16 @@ const config: Config = {
         white4: "#D7D8D8",
         white5: "#DCD5FF",
 
-        blue1: "#1966F7",
-
-        aqua1: "#00D0C6",
-        aqua2: "#6DD3C2",
-        aqua3: "#BCE6EC",
-        aqua4: "#00D0C633",
-        aqua5: "#00D0C699",
-        aqua6: "#1EC8C0",
+        teal1: "#00D0C6",
+        teal2: "#1EC8C0",
         tealDark: "#173C3F",
         blackTeal: "#051B1D",
 
-        purple1: "#7839FF",
-        purple2: "#B9A9FB",
-        purple3: "#87A1FF",
-        PurpleDarker: "#2B2970",
-        purple4: "#522EFF",
-        purple5: "#5B6FFF",
-        purpleDark: "#522EFF33",
-        blackpurple: "#19152D",
+        purple1: "#87A1FF",
+        purple2: "#522EFF",
+        purple3: "#5B6FFF",
+        PurpleDark: "#2B2970",
+        blackPurple: "#19152D",
 
         orange1: "#FE9950",
 
@@ -114,9 +107,7 @@ const config: Config = {
         "24": "24px",
         "26": "26px",
         "27": "27px",
-
         "28": "28px",
-
         "30": "30px",
         "32": "32px",
         "33": "33px",
@@ -125,7 +116,6 @@ const config: Config = {
         "48": "48px",
         "52": "52px",
         "58": "58px",
-
         "64": "64px",
         "80": "80px",
         "114": "114px",
@@ -133,40 +123,25 @@ const config: Config = {
       borderRadius: {
         "10": "10px",
         "160": "160px",
-        "15": "15px",
         "2.5xl": "1.25rem",
       },
       lineHeight: {
         "3": "12px",
         "3.5": "14px",
-        "4.5": "18px",
         "5": "20px",
         "6.5": "26px",
-        "7.75": "31px",
         "10": "40px",
-        "11": "44px",
-        "12": "48px",
-        "14.5": "58px",
-        "16": "64px",
-        "20": "80px",
       },
       padding: {
         "5": "20px",
         "7.5": "30px",
         "9.5": "38px",
-        "4.5": "18px",
         "17.5": "70px",
-
-        "21": "84px",
       },
       margin: {
         "7.5": "30px",
-        "9.5": "38px",
-        "4.5": "18px",
         "12.5": "50px",
         "15": "60px",
-
-        "21": "84px",
       },
       screens: {
         xxs: "380px",

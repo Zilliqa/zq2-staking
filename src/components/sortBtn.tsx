@@ -23,7 +23,7 @@ const SortBtn: React.FC<SortBtnProps> = ({
       title={tooltip}
     >
       <div
-        className={`btn-filter group  ${isClicked ? (liquidType ? "bg-aqua6" : "bg-purple4") : "not-active"}`}
+        className={`btn-filter group  ${isClicked ? (liquidType ? "bg-teal2" : "bg-purple2") : "not-active"}`}
         onClick={onClick}
       >
         <svg
@@ -66,7 +66,7 @@ const SortBtn: React.FC<SortBtnProps> = ({
           />
         </svg>
 
-        <div className="small-base ml-1 duration-300 group-hover:text-white ease-in-out">
+        <div className="base ml-1 duration-300 group-hover:text-white ease-in-out">
           {variable}
         </div>
       </div>

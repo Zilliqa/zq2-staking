@@ -237,8 +237,8 @@ const UnstakingCalculator: React.FC = () => {
                       : !isUnstakingAvailable
                         ? "!text-gray-500"
                         : isPoolLiquid()
-                          ? "text-aqua1"
-                          : "text-purple3"
+                          ? "text-teal1"
+                          : "text-purple1"
                   } medium17`}
                 >
                   {unboudingPeriod}
@@ -247,7 +247,7 @@ const UnstakingCalculator: React.FC = () => {
             </div>
             <div className="flex flex-col gap-3">
               <Button
-                className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
+                className={`btn-secondary-teal ${isMaxValue && "!border-teal1"}`}
                 onClick={onMaxClick}
                 onMouseEnter={() => setIsMaxHovered(true)}
                 onMouseLeave={() => setIsMaxHovered(false)}
@@ -256,7 +256,7 @@ const UnstakingCalculator: React.FC = () => {
                 MAX
               </Button>
               <Button
-                className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
+                className={`btn-secondary-purple ${isMinValue && "!border-purple2"}`}
                 onClick={() => {
                   setZilToUnstake("1")
                   setIsMinValue(true)
@@ -313,7 +313,7 @@ const UnstakingCalculator: React.FC = () => {
 
           <LastTransaction txHash={unstakingCallTxHash} />
 
-          <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 mt-2.5 lg:mt-4 4k:mt-6 border-t border-black2 lg:pb-10">
+          <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 mt-2.5 lg:mt-4 4k:mt-6 border-t border-black1 lg:pb-10">
             <div className="flex flex-col lg:gap-2.5 gap-1 regular-base">
               <div className=" ">
                 Commission Fee:{" "}
@@ -332,7 +332,7 @@ const UnstakingCalculator: React.FC = () => {
                 Max transaction cost: ~{unstakingCallZilFees} ZIL
               </div>
               <div
-                className={`${isPoolLiquid() ? "text-aqua1" : "text-purple3"} `}
+                className={`${isPoolLiquid() ? "text-teal1" : "text-purple1"} `}
               >
                 <Tooltip
                   placement="top"

@@ -50,7 +50,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
 
   return (
     <div
-      className={` ${stakingPool.definition.poolType != StakingPoolType.LIQUID ? "purple-border-bottom" : "aqua-border-bottom"}  flex gap-2.5 4k:gap-3 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between`}
+      className={` ${stakingPool.definition.poolType != StakingPoolType.LIQUID ? "purple-border-bottom" : "teal-border-bottom"}  flex gap-2.5 4k:gap-3 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between`}
       onClick={() => {
         selectStakingPoolForView(stakingPool.definition.id)
         setViewClaim(true)
@@ -169,7 +169,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
 
   return (
     <div
-      className={` ${stakingPool.definition.poolType != StakingPoolType.LIQUID ? "purple-border-bottom" : "aqua-border-bottom"}  flex gap-2.5 4k:gap-4 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between`}
+      className={` ${stakingPool.definition.poolType != StakingPoolType.LIQUID ? "purple-border-bottom" : "teal-border-bottom"}  flex gap-2.5 4k:gap-4 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between`}
       onClick={() => {
         selectStakingPoolForView(stakingPool.definition.id)
         setViewClaim(true)
@@ -338,17 +338,17 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
     {
       name: "All ",
       type: "ALL",
-      activeGradient: "bg-aquaBlue",
+      activeGradient: "bg-aqua-blue",
     },
     {
       name: "Liquid",
       type: StakingPoolType.LIQUID,
-      activeGradient: "bg-aqua6",
+      activeGradient: "bg-teal2",
     },
     {
       name: "Non-liquid",
       type: StakingPoolType.NORMAL,
-      activeGradient: "bg-purple4",
+      activeGradient: "bg-purple2",
     },
   ]
   const filterByPoolType = (item: any) => {
@@ -402,7 +402,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       </div>
       {anyItemsAvailable && hasLiquid && hasNormal && (
         <div className="flex justify-center items-center gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6 px-4">
-          <div className="text-14 text-gray14">Filter by</div>
+          <div className="text-14 text-gray3">Filter by</div>
           {filters.map((filter, index) => (
             <FilterBtn
               key={index}

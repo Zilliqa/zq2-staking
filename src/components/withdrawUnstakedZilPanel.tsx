@@ -77,8 +77,8 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                     className={`${
                       stakingPoolData.definition.poolType ===
                       StakingPoolType.LIQUID
-                        ? "text-aqua1"
-                        : "text-purple5"
+                        ? "text-teal1"
+                        : "text-purple3"
                     }`}
                   >
                     Claimable Rewards
@@ -195,8 +195,8 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                       className={`${
                         stakingPoolData.definition.poolType ===
                         StakingPoolType.LIQUID
-                          ? "text-aqua1"
-                          : "text-purple5"
+                          ? "text-teal1"
+                          : "text-purple3"
                       }`}
                     >
                       Claimable Withdrawals

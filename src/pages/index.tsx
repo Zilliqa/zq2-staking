@@ -64,7 +64,7 @@ const HomePage = () => {
   }, [router.query.claims])
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 max-lg:pb-12 py-5 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
+    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black3/65 max-lg:pb-12 py-5 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
       {children}
     </div>
   )
@@ -74,7 +74,7 @@ const HomePage = () => {
       {!isWalletConnected && !stakingPoolForView ? (
         <LoginView />
       ) : stakingPoolForView ? (
-        <div className="bg-black4/[68%] 4k:rounded-2.5xl rounded-tl-2.5xl h-full">
+        <div className="bg-black3/[68%] 4k:rounded-2.5xl rounded-tl-2.5xl h-full">
           <StakingPoolDetailsView
             stakingPoolData={stakingPoolForView.stakingPool}
             userStakingPoolData={stakingPoolForView.userData.staked}
@@ -111,7 +111,7 @@ const HomePage = () => {
               {mobileShowClaims || stakingPoolForView ? (
                 <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
                   <div
-                    className="text-gray5 justify-start flex items-center bold12-s"
+                    className="text-gray5 justify-start flex items-center bold12"
                     onClick={() => {
                       router.back()
                     }}
@@ -132,8 +132,8 @@ const HomePage = () => {
 
               <div className="flex items-center gap-3">
                 <div
-                  className={`justify-start bold12-s relative max-lg:w-full lg:min-w-[320px] mx-auto whitespace-nowrap
-                        ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "text-aqua1" : "text-gray5"}
+                  className={`justify-start bold12 relative max-lg:w-full lg:min-w-[320px] mx-auto whitespace-nowrap
+                        ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "text-teal1" : "text-gray5"}
                         `}
                   onClick={() => {
                     if (stakingPoolForView) {
@@ -155,7 +155,7 @@ const HomePage = () => {
 
                   <span
                     className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1
-                  ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "bg-aqua1 " : " bg-transparent"}
+                  ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "bg-teal1 " : " bg-transparent"}
                      rounded-full`}
                   />
                 </div>
@@ -180,12 +180,12 @@ const HomePage = () => {
                   >
                     <div
                       className={` relative
-                    ${mobileShowClaims && !stakingPoolForView ? "text-aqua1" : "text-gray5"}
-                   whitespace-nowrap bold12-s`}
+                    ${mobileShowClaims && !stakingPoolForView ? "text-teal1" : "text-gray5"}
+                   whitespace-nowrap bold12`}
                     >
                       Claims
                       {mobileShowClaims && !stakingPoolForView && (
-                        <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full" />
+                        <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-teal1 rounded-full" />
                       )}
                     </div>
                     {availableForUnstaking.length + pendingUnstaking.length !=
@@ -209,7 +209,7 @@ const HomePage = () => {
               <div className="w-1/2">
                 <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
                   <div
-                    className="justify-start flex items-center bold12-s text-gray5"
+                    className="justify-start flex items-center bold12 text-gray5"
                     onClick={() => {
                       router.back()
                     }}

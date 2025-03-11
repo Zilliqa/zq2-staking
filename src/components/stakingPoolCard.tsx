@@ -27,7 +27,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         ${
           isStakingPoolSelected
             ? "gradient-bottom-border "
-            : "border-b-[1.5px] border-black2 rounded-10 hover:bg-gray-grad hover:border-black3  "
+            : "border-b-[1.5px] border-black1 rounded-10 hover:bg-gray-grad hover:border-black2  "
         } ${isStakingPoolSelected && "bg-black"} hover:cursor-pointer`}
       onClick={onClick}
     >
@@ -95,7 +95,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     }
                   >
                     <span
-                      className={`${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-aqua1" : "text-purple3"} regular15 `}
+                      className={`${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-teal1" : "text-purple1"} regular15 `}
                     >
                       {userStakingPoolData &&
                         `${formatUnitsToHumanReadable(

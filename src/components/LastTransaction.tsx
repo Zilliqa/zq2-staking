@@ -20,7 +20,7 @@ const LastTransaction: React.FC<LastTransactionProps> = ({ txHash }) => {
         className="text-gray8"
       >
         Last transaction:{" "}
-        <span className="text-white underline hover:text-aqua1 active:text-tealDark">
+        <span className="text-white underline hover:text-teal1 active:text-tealDark">
           {" "}
           {formatAddress(txHash)}
         </span>
