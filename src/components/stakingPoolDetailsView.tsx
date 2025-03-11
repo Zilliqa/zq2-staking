@@ -382,7 +382,10 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                         )} ${stakingPoolData.definition.tokenSymbol}`
                       : "-",
                     <>
-                      <div>Amount of unstaked ZIL available after the unbonding period</div>
+                      <div>
+                        Amount of unstaked ZIL available after the unbonding
+                        period
+                      </div>
                       {isPoolLiquid() &&
                         userStakingPoolData &&
                         pendingUnstakesValue &&
