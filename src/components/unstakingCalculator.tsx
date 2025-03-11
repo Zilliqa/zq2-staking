@@ -206,7 +206,7 @@ const UnstakingCalculator: React.FC = () => {
               <div className="flex items-center ">
                 {isPoolLiquid() && (
                   <span
-                    className={` ${
+                    className={` mr-3 ${
                       !isWalletConnected ||
                       (!isUnstakingAvailable && "text-gray4")
                     } medium17`}
@@ -239,7 +239,7 @@ const UnstakingCalculator: React.FC = () => {
                         : isPoolLiquid()
                           ? "text-aqua1"
                           : "text-purple3"
-                  } medium17 ml-3 `}
+                  } medium17`}
                 >
                   {unboudingPeriod}
                 </span>

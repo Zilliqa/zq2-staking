@@ -219,7 +219,7 @@ const StakingCalculator: React.FC = () => {
                     <>
                       {isPoolLiquid() && (
                         <span
-                          className={` ${
+                          className={` mr-3 ${
                             !isWalletConnected && "text-gray4"
                           } medium17`}
                         >
@@ -249,7 +249,7 @@ const StakingCalculator: React.FC = () => {
                                    .poolType === StakingPoolType.LIQUID
                                ? "text-aqua1"
                                : "text-purple3"
-                         } medium17 ml-3 mr-1`}
+                         } medium17 mr-1`}
                       >
                         ~
                         {formatPercentage(

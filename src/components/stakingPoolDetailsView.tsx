@@ -275,22 +275,22 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   title="Add token to wallet"
                 >
                   <div
-                    className={`ml-4 rounded-160 border-[1px] border-transparent ${isClicked && "hover:!border-purple4"}`}
+                    className={`ml-4 rounded-160 border-[1px] h-8 border-transparent ${isClicked && "hover:!border-purple4"}`}
                   >
                     <div
                       onMouseDown={handleMouseDown}
                       onMouseUp={handleMouseUp}
                       onClick={handleClickAaddToken}
                       onMouseLeave={handleMouseUp}
-                      className={`group btn-primary-purple px-2 py-1.5 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
+                      className={`group btn-primary-purple  w-fit px-2 py-0.5 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
                         ${isClicked && "hover:!shadow-[0px_0px_0px_0px_#522EFF]"}`}
                     >
                       <Image
-                        className="transition-all duration-300 flex-shrink-0 p-1"
+                        className="transition-all duration-300"
                         src={PlusIcon}
                         alt="plus icon"
-                        width={20}
-                        height={20}
+                        width={12}
+                        height={12}
                       />
                       <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-28">
                         <span className="ml-1.5 mr-1 text-10 font-medium tracking-normal text-white3 whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
@@ -382,7 +382,10 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                         )} ${stakingPoolData.definition.tokenSymbol}`
                       : "-",
                     <>
-                      <div>Amount of ZIL requested</div>
+                      <div>
+                        Amount of unstaked ZIL available after the unbonding
+                        period
+                      </div>
                       {isPoolLiquid() &&
                         userStakingPoolData &&
                         pendingUnstakesValue &&
@@ -475,7 +478,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                               pendingUnstakesValue
                             )} ${stakingPoolData.definition.tokenSymbol}`
                           : "-",
-                        "Amount of ZIL requested"
+                        "Amount of unstaked ZIL available after the unbonding period"
                       )}
                     </div>
                   )}
@@ -578,7 +581,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                             pendingUnstakesValue
                           )} ${stakingPoolData.definition.tokenSymbol}`
                         : "-",
-                      "Amount of ZIL requested"
+                      "Amount of unstaked ZIL available after the unbonding period"
                     )}
                     {stakingPoolForView != null &&
                       colorInfoEntry(
