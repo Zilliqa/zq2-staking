@@ -275,14 +275,14 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   title="Add token to wallet"
                 >
                   <div
-                    className={`ml-4 rounded-160 border-[1px] border-transparent ${isClicked && "hover:!border-purple4"}`}
+                    className={`ml-0.5 xxs:ml-4 rounded-160 border-[1px] border-transparent ${isClicked && "hover:!border-purple4"}`}
                   >
                     <div
                       onMouseDown={handleMouseDown}
                       onMouseUp={handleMouseUp}
                       onClick={handleClickAaddToken}
                       onMouseLeave={handleMouseUp}
-                      className={`group btn-primary-purple px-2 py-1.5 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
+                      className={`group btn-primary-purple px-0.5 xxs:px-2 py-0.5 xxs:py-1.5 border-purple4 border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
                         ${isClicked && "hover:!shadow-[0px_0px_0px_0px_#522EFF]"}`}
                     >
                       <Image
