@@ -252,7 +252,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   }
 
   return (
-    <div className="relative pb-10 lg:pb-2 4k:pb-4 flex flex-col h-full ">
+    <div className="relative pb-24 lg:pb-2 4k:pb-4 flex flex-col h-full ">
       <div className="items-center flex justify-between py-1 lg:py-7.5 px-4 lg:pr-2.5 4k:pr-6 xs:mx-5 lg:mx-7.5 4k:mx-10 ">
         <div className="max-lg:ms-1 items-center w-full flex justify-between mb-5">
           <div className="flex items-center">
