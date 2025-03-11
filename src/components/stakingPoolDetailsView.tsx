@@ -293,7 +293,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                         height={20}
                       />
                       <div className="overflow-hidden transition-all duration-300 max-w-0 group-hover:max-w-28">
-                        <span className="ml-1.5 mr-1 text-10 font-medium tracking-normal text-white3 whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                        <span className="ml-1.5 mr-1 text-13 font-medium tracking-normal text-white3 whitespace-nowrap block transform translate-x-[-100%] group-hover:translate-x-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                           Add Token
                         </span>
                       </div>
@@ -382,7 +382,10 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                         )} ${stakingPoolData.definition.tokenSymbol}`
                       : "-",
                     <>
-                      <div>Amount of ZIL requested</div>
+                      <div>
+                        Amount of unstaked ZIL available after the unbonding
+                        period
+                      </div>
                       {isPoolLiquid() &&
                         userStakingPoolData &&
                         pendingUnstakesValue &&
@@ -475,7 +478,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                               pendingUnstakesValue
                             )} ${stakingPoolData.definition.tokenSymbol}`
                           : "-",
-                        "Amount of ZIL requested"
+                        "Amount of unstaked ZIL available after the unbonding period"
                       )}
                     </div>
                   )}
@@ -578,7 +581,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                             pendingUnstakesValue
                           )} ${stakingPoolData.definition.tokenSymbol}`
                         : "-",
-                      "Amount of ZIL requested"
+                      "Amount of unstaked ZIL available after the unbonding period"
                     )}
                     {stakingPoolForView != null &&
                       colorInfoEntry(
