@@ -44,10 +44,8 @@ const MobilePopup = ({
           </button>
         </div>
         <div className="flex flex-col items-center justify-between text-center pt-4 pb-10 ">
-          <h2 className="text-white1 text-2xl leading-tight font-bold">
-            Start earning ZIL
-          </h2>
-          <p className="text-gray2 text-base font-medium leading-tight mt-3 ">
+          <h2 className="text-white1 body1">Start earning ZIL</h2>
+          <p className="text-gray2 medium15 mt-3 ">
             Stake ZIL. <br /> Earn Rewards.
             <br /> Secure the Network.
           </p>

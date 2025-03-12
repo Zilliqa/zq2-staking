@@ -111,7 +111,7 @@ const HomePage = () => {
               {mobileShowClaims || stakingPoolForView ? (
                 <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
                   <div
-                    className="text-gray1 justify-start flex items-center bold12"
+                    className="justify-start flex items-center bold12"
                     onClick={() => {
                       router.back()
                     }}
@@ -209,7 +209,7 @@ const HomePage = () => {
               <div className="w-1/2">
                 <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
                   <div
-                    className="justify-start flex items-center bold12 text-gray1"
+                    className="justify-start flex items-center bold12"
                     onClick={() => {
                       router.back()
                     }}

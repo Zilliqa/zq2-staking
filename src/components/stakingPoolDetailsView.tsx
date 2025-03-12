@@ -122,7 +122,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
     >
       <div className={`  ${isPoolLiquid() ? "lg:w-1/4 w-1/2" : "w-1/3"} `}>
         {value ? (
-          <div className="semi14 text-gray2 xl:whitespace-nowrap">{value}</div>
+          <div className="semi14 xl:whitespace-nowrap">{value}</div>
         ) : (
           <div className="loading-blur">0000</div>
         )}

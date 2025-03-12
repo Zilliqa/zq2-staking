@@ -166,7 +166,7 @@ button,
   .gray-base2 {
     @apply gray-base max-xs:text-11;
   }
- 
+
   .base-medium {
     @apply font-medium text-11 lg:text-13 4k:text-base text-gray1;
   }
@@ -208,7 +208,7 @@ button,
   }
 
   .bold12 {
-    @apply font-bold text-xs 4k:text-sm leading-6;
+    @apply font-bold text-xs 4k:text-sm leading-6 text-gray1;
   }
 
   .semi24 {
