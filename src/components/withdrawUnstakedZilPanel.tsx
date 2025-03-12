@@ -13,7 +13,7 @@ import {
 import { Button, Tooltip } from "antd"
 import { DateTime } from "luxon"
 import { formatUnits } from "viem"
-import LastTransaction from "./LastTransaction"
+import LastTransaction from "@/components/lastTransaction"
 
 interface WithdrawZilPanelProps {
   stakingPoolData: StakingPool

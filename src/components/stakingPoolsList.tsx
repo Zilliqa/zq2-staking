@@ -3,7 +3,7 @@ import StakingPoolCard from "./stakingPoolCard"
 import SortBtn from "./sortBtn"
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
-import FastFadeScroll from "@/components/FastFadeScroll"
+import FastFadeScroll from "@/components/fastFadeScroll"
 import { Tooltip } from "antd"
 
 interface StakingPoolsListProps {

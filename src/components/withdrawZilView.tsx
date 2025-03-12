@@ -17,7 +17,7 @@ import { Button, Tooltip } from "antd"
 import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
 import FilterBtn from "./filterBtn"
-import FastFadeScroll from "./FastFadeScroll"
+import FastFadeScroll from "@/components/fastFadeScroll"
 import { showNewMessage } from "@intercom/messenger-js-sdk"
 
 interface UnstakeCardProps {

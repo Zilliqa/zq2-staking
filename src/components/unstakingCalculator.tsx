@@ -12,10 +12,10 @@ import { formatUnits, parseEther, parseUnits } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { DateTime } from "luxon"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
-import FastFadeScroll from "@/components/FastFadeScroll"
+import FastFadeScroll from "@/components/fastFadeScroll"
 import { WalletConnector } from "@/contexts/walletConnector"
 import CustomWalletConnect from "./customWalletConnect"
-import LastTransaction from "./LastTransaction"
+import LastTransaction from "@/components/lastTransaction"
 
 const UnstakingCalculator: React.FC = () => {
   const inputRef = useRef<InputRef | null>(null)

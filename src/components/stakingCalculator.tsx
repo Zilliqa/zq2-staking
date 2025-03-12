@@ -14,7 +14,7 @@ import { StakingOperations } from "@/contexts/stakingOperations"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import CustomWalletConnect from "./customWalletConnect"
 import { DateTime } from "luxon"
-import LastTransaction from "./LastTransaction"
+import LastTransaction from "@/components/lastTransaction"
 
 const StakingCalculator: React.FC = () => {
   const inputRef = useRef<InputRef | null>(null)
