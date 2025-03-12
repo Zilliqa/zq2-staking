@@ -17,10 +17,10 @@ const LastTransaction: React.FC<LastTransactionProps> = ({ txHash }) => {
         target="_blank"
         href={getTxExplorerUrl(txHash, appConfig.chainId)}
         passHref={true}
-        className="text-gray8"
+        className="text-gray2"
       >
         Last transaction:{" "}
-        <span className="text-white underline hover:text-teal1 active:text-tealDark">
+        <span className="text-white underline hover:text-tealPrimary active:text-teal1">
           {" "}
           {formatAddress(txHash)}
         </span>

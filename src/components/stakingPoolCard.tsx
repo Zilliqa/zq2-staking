@@ -27,7 +27,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
         ${
           isStakingPoolSelected
             ? "gradient-bottom-border "
-            : "border-b-[1.5px] border-black1 rounded-10 hover:bg-gray-grad hover:border-black2  "
+            : "border-b-[1.5px] border-black1 rounded-10 hover:bg-gray-grad hover:border-gray3  "
         } ${isStakingPoolSelected && "bg-black"} hover:cursor-pointer`}
       onClick={onClick}
     >
@@ -54,7 +54,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                 height={40}
               />
               <h3 className="bold22">{stakingPoolData.definition.name}</h3>
-              <div className="base-medium text-gray13 mt-1">
+              <div className="base-medium text-gray2 mt-1">
                 {stakingPoolData.definition.tokenSymbol}
               </div>
             </div>
@@ -95,7 +95,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     }
                   >
                     <span
-                      className={`${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-teal1" : "text-purple1"} regular15 `}
+                      className={`${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? "text-tealPrimary" : "text-purple2"} regular15 `}
                     >
                       {userStakingPoolData &&
                         `${formatUnitsToHumanReadable(
@@ -115,7 +115,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                   <div
                     className={`lg:medium12 regular12 4k:pr-1.5 pr-1 xs:pr-3 ${
                       stakingPoolData.data.votingPower * 100 >= 50
-                        ? "text-red2"
+                        ? "text-red1"
                         : stakingPoolData.data.votingPower * 100 >= 30
                           ? "text-orange1"
                           : ""
@@ -130,7 +130,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     <span className="mr-1 4k:mr-1.5 ">0%</span>
                   </div>
                 )}
-                <div className="flex medium12 text-gray13 4k:pl-1.5 pl-1 xs:pl-3 border-l-[1px] border-gray4">
+                <div className="flex medium12 text-gray2 4k:pl-1.5 pl-1 xs:pl-3 border-l-[1px] border-gray3">
                   {stakingPoolData.data ? (
                     <>
                       {" "}

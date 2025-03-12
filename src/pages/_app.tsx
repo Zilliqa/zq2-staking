@@ -95,7 +95,7 @@ export default function App({ Component, pageProps }: AppProps) {
             fadeOut ? "opacity-0" : "opacity-100"
           }`}
         >
-          <div className=" text-end text-24 lg:text-27 font-extrabold sm:mr-10 sm:mt-9 sm:mb-2 mr-5 mt-5 mb-1">
+          <div className=" text-end text-2xl lg:text-3xl font-extrabold sm:mr-10 sm:mt-9 sm:mb-2 mr-5 mt-5 mb-1">
             {Math.round(loadingPercentage / 10) * 10}%
           </div>
 

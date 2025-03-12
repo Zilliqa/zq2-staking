@@ -98,11 +98,11 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
             <button
               className={`w-1/2 whitespace-nowrap py-3 4k:py-4 border-solid border-b transition-all duration-400 ease-in-out relative min-h-[60px] lg:min-h-[65px] 
                 after:transition-all after:duration-300 after:bottom-0 after:absolute border-black1
-                ${tab.type === StakingPoolType.LIQUID ? "after:bg-teal1 after:right-0" : "after:bg-purple2 after:left-0"}
+                ${tab.type === StakingPoolType.LIQUID ? "after:bg-tealPrimary after:right-0" : "after:bg-purplePrimary after:left-0"}
           ${
             selectedPoolType === tab.type
               ? "bold33 text-white1 after:h-[1px] after:w-full "
-              : `bold22 text-gray1 hover:text-white after:h-[1px] after:w-0 hover:after:w-full  ${
+              : `bold22 text-gray3 hover:text-white after:h-[1px] after:w-0 hover:after:w-full  ${
                   tab.type === StakingPoolType.LIQUID
                     ? "after:right-0"
                     : "after:left-0"

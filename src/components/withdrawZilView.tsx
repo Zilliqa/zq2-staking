@@ -58,7 +58,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
     >
       <div
         className={
-          "flex lg:flex-col  content-center  max-lg:px-3 py-6 4k:py-7 lg:pl-9.5 4k:pl-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full"
+          "flex lg:flex-col  content-center  max-lg:px-3 py-6 4k:py-7 lg:pl-9 4k:pl-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full"
         }
       >
         <div className="flex items-center gap-2 4k:gap-2.5">
@@ -70,9 +70,9 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
             height={31}
           />
           <div className="semi24">{stakingPool.definition.name}</div>
-          <div className="text-gray4 lg:hidden text-20">|</div>
+          <div className="text-gray3 lg:hidden text-xl">|</div>
           {stakingPool.definition.poolType != StakingPoolType.LIQUID && (
-            <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 flex ">
+            <div className="bg-gray3 text-white1 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 flex ">
               <Image
                 className="rounded"
                 src={requests}
@@ -107,7 +107,7 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
             )}
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex max-lg:justify-center lg:w-1/3 lg:max-w-[250px] w-full pr-3 lg:pb-0 pb-6 lg:pr-9.5 4k:pr-12">
+      <div className="max-lg:gap-2.5 max-lg:flex max-lg:justify-center lg:w-1/3 lg:max-w-[250px] w-full pr-3 lg:pb-0 pb-6 lg:pr-9 4k:pr-12">
         <div className="max-lg:w-1/2">
           <Button
             className={` 
@@ -175,7 +175,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
         setViewClaim(true)
       }}
     >
-      <div className="flex lg:flex-col  content-center max-lg:px-3 py-6 4k:py-7 lg:pl-9.5 4k:pl-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
+      <div className="flex lg:flex-col  content-center max-lg:px-3 py-6 4k:py-7 lg:pl-9 4k:pl-12 rounded-lg justify-between max-lg:items-center lg:w-2/3 w-full">
         <div className="flex items-center gap-2 4k:gap-2.5">
           <Image
             className="rounded"
@@ -185,9 +185,9 @@ const RewardCard: React.FC<RewardCardProps> = ({
             height={31}
           />
           <div className="semi24">{stakingPool.definition.name}</div>
-          <div className="text-gray4 lg:hidden text-20">|</div>
+          <div className="text-gray3 lg:hidden text-xl">|</div>
           {stakingPool.definition.poolType != StakingPoolType.LIQUID && (
-            <div className="bg-gray4 text-white3 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 flex ">
+            <div className="bg-gray3 text-white1 py-1 4k:py-1.5 px-2 4k:px-2.5 items-center gap-2 4k:gap-2.5 medium12 flex ">
               <Image
                 className="rounded"
                 src={rewards}
@@ -221,7 +221,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
             )}
         </div>
       </div>
-      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[250px] lg:pb-0 pb-6 lg:pr-9.5 4k:pr-12 max-lg:px-3">
+      <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[250px] lg:pb-0 pb-6 lg:pr-9 4k:pr-12 max-lg:px-3">
         <div className="max-lg:w-1/2">
           {stakingPool.definition.minimumStake > rewardInfo.zilRewardAmount ? (
             <Tooltip
@@ -343,12 +343,12 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
     {
       name: "Liquid",
       type: StakingPoolType.LIQUID,
-      activeGradient: "bg-teal2",
+      activeGradient: "bg-tealPrimary",
     },
     {
       name: "Non-liquid",
       type: StakingPoolType.NORMAL,
-      activeGradient: "bg-purple2",
+      activeGradient: "bg-purplePrimary",
     },
   ]
   const filterByPoolType = (item: any) => {
@@ -386,7 +386,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
         {anyItemsAvailable ? (
           <>
             <h1 className="bold33 text-white">Your Claims</h1>
-            <p className="mt-2 body2-v2 text-white4">
+            <p className="mt-2 body2-v2 text-white1">
               Here is a list of your current <br /> and upcoming claims.
             </p>
           </>
@@ -402,7 +402,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       </div>
       {anyItemsAvailable && hasLiquid && hasNormal && (
         <div className="flex justify-center items-center gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6 px-4">
-          <div className="text-14 text-gray3">Filter by</div>
+          <div className="text-sm text-gray2">Filter by</div>
           {filters.map((filter, index) => (
             <FilterBtn
               key={index}
@@ -467,7 +467,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto">
-            <div className="mb-8 body2-v2 text-white4 ">
+            <div className="mb-8 body2-v2 text-white1 ">
               Seems like you have nothing to claim yet. <br />
               Start staking and give us your thoughts !
             </div>

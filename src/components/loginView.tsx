@@ -10,12 +10,12 @@ const LoginView: React.FC = () => {
           Stake ZIL. <br /> Earn Rewards.
           <br /> Secure the Network.
         </h1>
-        <p className="mt-6 body2-v2 text-white4">
+        <p className="mt-6 body2-v2 text-white1">
           Give it a try, and give us your feedback !
         </p>
       </div>
 
-      <div className="flex flex-col items-center mt-12.5 ">
+      <div className="flex flex-col items-center mt-12 ">
         <CustomWalletConnect notConnectedClassName="btn-primary-teal !w-fit px-14 group flex items-center">
           <div className="flex">
             Connect wallet

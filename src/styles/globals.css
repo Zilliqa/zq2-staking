@@ -54,113 +54,113 @@ button,
   }
 
   .btn-primary-teal {
-    @apply bold16 py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-160 !bg-tealDark border-teal1 !text-white leading-6 !h-auto cursor-pointer duration-500 ease-in-out;
+    @apply bold16 py-1 lg:py-1.5 4k:py-2 px-10 4k:px-12 rounded-160 !bg-teal1 border-tealPrimary !text-white leading-6 !h-auto cursor-pointer duration-500 ease-in-out;
 
     &:hover:not(:disabled) {
-      @apply !bg-tealDark !border-transparent shadow-[0px_0px_8.2px_1.5px_#00FFF3];
+      @apply !bg-teal1 !border-transparent shadow-[0px_0px_8.2px_1.5px_#00FFF3];
     }
 
     &:disabled {
-      @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
+      @apply !bg-gray2/[20%] border-gray2 !text-gray2 cursor-not-allowed;
     }
   }
 
   .btn-primary-purple {
-    @apply btn-primary-teal !bg-blackPurple border-purple2;
+    @apply btn-primary-teal !bg-purple5 border-purplePrimary;
 
     &:hover:not(:disabled) {
-      @apply !bg-blackPurple !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
+      @apply !bg-purple5 !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
     }
   }
 
   .btn-primary-grey {
-    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[1px] border-white text-white items-center bold16 bg-gray8 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[1px] border-white text-white items-center bold16 bg-gray2 cursor-pointer duration-700 ease-in-out;
 
     &:hover:not(:disabled) {
       @apply !bg-transparent !text-white !border-white;
     }
 
     &:disabled {
-      @apply !bg-black3 border-gray4 !text-gray8 cursor-not-allowed;
+      @apply !bg-black1 border-gray3 !text-gray2 cursor-not-allowed;
     }
   }
 
   .btn-primary-grey:not(:disabled).liquid-hover:hover {
-    @apply !bg-tealDark !border-transparent shadow-[0px_0px_8.2px_1.5px_#00FFF3];
+    @apply !bg-teal1 !border-transparent shadow-[0px_0px_8.2px_1.5px_#00FFF3];
   }
   .btn-primary-grey:not(:disabled).non-liquid-hover:hover {
-    @apply !bg-blackPurple !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
+    @apply !bg-purple5 !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
   }
 
   .btn-primary-grey:not(:disabled).liquid-loading {
-    @apply !bg-blackTeal !border-teal1;
+    @apply !bg-teal2 !border-tealPrimary;
   }
   .btn-primary-grey:not(:disabled).non-liquid-loading {
-    @apply !bg-blackPurple !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
+    @apply !bg-purple5 !border-transparent shadow-[0px_0px_8.2px_1.5px_#522EFF];
   }
 
   .btn-secondary-grey {
-    @apply btn-primary-grey bg-gray12;
+    @apply btn-primary-grey bg-gray3;
 
     &:disabled {
-      @apply !bg-gray10/[20%] border-gray10 !text-gray11 cursor-not-allowed;
+      @apply !bg-gray2/[20%] border-gray2 !text-gray2 cursor-not-allowed;
     }
   }
 
   .btn-primary-teal-lg {
-    @apply btn-primary-teal py-2 4k:py-2.5 max-lg:text-17 4k:text-20;
+    @apply btn-primary-teal py-2 4k:py-2.5 max-lg:text-lg 4k:text-xl;
   }
 
   .btn-primary-purple-lg {
-    @apply btn-primary-purple py-2 4k:py-2.5 max-lg:text-17 4k:text-20;
+    @apply btn-primary-purple py-2 4k:py-2.5 max-lg:text-lg 4k:text-xl;
   }
 
   .btn-secondary-teal {
-    @apply !gap-0 !whitespace-normal py-1 lg:py-1.5 4k:py-2 px-5 4k:px-8 w-full font-bold text-13 4k:text-17 leading-6 !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full text-teal1 border-[1px] border-transparent bg-tealDark;
+    @apply !gap-0 !whitespace-normal py-1 lg:py-1.5 4k:py-2 px-5 4k:px-8 w-full font-bold text-13 4k:text-lg leading-6 !h-auto uppercase cursor-pointer duration-500 ease-in-out rounded-full text-tealPrimary border-[1px] border-transparent bg-teal1;
 
     &:hover:not(:disabled) {
-      @apply !text-teal1 !shadow-[0px_0px_10.8px_0px_#00FFF3] !bg-tealDark;
+      @apply !text-tealPrimary !shadow-[0px_0px_10.8px_0px_#00FFF3] !bg-teal1;
     }
 
     &:disabled {
-      @apply !text-gray4 border-gray4;
+      @apply !text-gray3 border-gray3;
       background-image: none !important;
     }
   }
 
   .btn-secondary-purple {
-    @apply btn-secondary-teal !text-white5 !bg-PurpleDark border-transparent;
+    @apply btn-secondary-teal !text-purple1 !bg-purple4 border-transparent;
 
     &:hover:not(:disabled) {
-      @apply !bg-PurpleDark !shadow-[0px_0px_12.0px_0px_#87A1FF] !text-purple1;
+      @apply !bg-purple4 !shadow-[0px_0px_12.0px_0px_#87A1FF] !text-purple2;
     }
 
     &:disabled {
-      @apply !text-gray4 !bg-[#0000000A] border-gray4;
+      @apply !text-gray3 !bg-[#0000000A] border-gray3;
       background-image: none !important;
     }
   }
 
   .btn-filter {
-    @apply flex w-fit py-1 4k:py-1.5 px-1.5 lg:px-2 4k:px-2.5 border border-none 4k:text-20 rounded-[8px] items-center bg-gray4/80 text-white3 cursor-pointer duration-300 ease-in-out;
+    @apply flex w-fit py-1 4k:py-1.5 px-1.5 lg:px-2 4k:px-2.5 border border-none 4k:text-xl rounded-[8px] items-center bg-gray3/80 text-white1 cursor-pointer duration-300 ease-in-out;
 
     &.not-active {
       &:hover {
-        @apply !bg-gray13/80 !text-white;
+        @apply !bg-gray2/80 !text-white;
       }
     }
   }
 
   .base {
-    @apply font-medium text-12 lg:text-13 4k:text-15 leading-5 lg:leading-6 text-white;
+    @apply font-medium text-xs lg:text-13 4k:text-base leading-5 lg:leading-6 text-white;
   }
 
   .regular-base {
-    @apply font-normal text-12 xs:text-14 lg:text-16 4k:text-20 leading-5 lg:leading-6 text-gray1;
+    @apply font-normal text-xs xs:text-sm lg:text-base 4k:text-xl leading-5 lg:leading-6 text-gray3;
   }
 
   .gray-base {
-    @apply regular-base text-gray8;
+    @apply regular-base text-gray2;
   }
 
   .gray-base2 {
@@ -168,83 +168,83 @@ button,
   }
 
   .base-medium {
-    @apply font-medium text-11 lg:text-13 4k:text-16 text-white3;
+    @apply font-medium text-11 lg:text-13 4k:text-base text-white1;
   }
 
   .info-label {
-    @apply font-normal text-10 lg:text-12 4k:text-16 leading-3 lg:leading-4 text-gray1;
+    @apply font-normal text-10 lg:text-xs 4k:text-base leading-3 lg:leading-4 text-gray3;
   }
 
   .body1 {
-    @apply font-bold text-16 lg:text-24 4k:text-28 leading-6 lg:leading-8 text-gray1;
+    @apply font-bold text-base lg:text-2xl 4k:text-3xl leading-6 lg:leading-8 text-gray3;
   }
 
   .body2 {
-    @apply font-normal lg:font-medium text-16 lg:text-20 4k:text-24 leading-5 lg:leading-8 text-white1;
+    @apply font-normal lg:font-medium text-base lg:text-xl 4k:text-2xl leading-5 lg:leading-8 text-white1;
   }
 
   .body2-v2 {
-    @apply font-light text-16 lg:text-20 4k:text-28 text-white1 sm:px-17.5;
+    @apply font-light text-base lg:text-xl 4k:text-3xl text-white1 sm:px-16;
   }
 
   .h4 {
-    @apply font-bold text-20 xs:text-22 lg:text-26 4k:text-30 leading-8 lg:leading-10 text-white2;
+    @apply font-bold text-xl xs:text-2xl lg:text-2xl 4k:text-3xl leading-8 lg:leading-10 text-white1;
   }
 
   .bold33 {
-    @apply font-bold text-22 lg:text-33 4k:text-38 lg:leading-10 text-white;
+    @apply font-bold text-2xl lg:text-3xl 4k:text-4xl lg:leading-10 text-white;
   }
 
   .bold22 {
-    @apply font-bold text-18 lg:text-22 4k:text-28 lg:leading-6.5 text-white;
+    @apply font-bold text-lg lg:text-2xl 4k:text-28 lg:leading-6 text-white;
   }
 
   .bold16 {
-    @apply font-bold text-10 lg:text-16 4k:text-20 lg:leading-6.5 text-white;
+    @apply font-bold text-10 lg:text-base 4k:text-xl lg:leading-6 text-white;
   }
 
   .bold15 {
-    @apply font-bold text-12 lg:text-15 4k:text-18 lg:leading-6.5 text-white;
+    @apply font-bold text-xs lg:text-base 4k:text-lg lg:leading-6 text-white;
   }
 
   .bold12 {
-    @apply font-bold text-12 4k:text-14 leading-6.5;
+    @apply font-bold text-xs 4k:text-sm leading-6;
   }
 
   .semi24 {
-    @apply font-semibold text-12 lg:text-24 4k:text-27 lg:leading-6.5 text-gray13;
+    @apply font-semibold text-xs lg:text-2xl 4k:text-3xl lg:leading-6 text-gray2;
   }
 
   .semi14 {
-    @apply font-semibold text-10 lg:text-14 4k:text-16 lg:leading-5 text-white;
+    @apply font-semibold text-10 lg:text-sm 4k:text-base lg:leading-5 text-white;
   }
 
   .semi13 {
-    @apply font-semibold text-15 4k:text-17 lg:leading-5 text-white;
+    @apply font-semibold text-base 4k:text-lg lg:leading-5 text-white;
   }
 
   .medium20 {
-    @apply font-medium text-18 lg:text-20 4k:text-24 lg:leading-6.5 text-white;
+    @apply font-medium text-lg lg:text-xl 4k:text-2xl lg:leading-6 text-white;
   }
 
   .medium17 {
-    @apply font-medium text-11 lg:text-17 4k:text-20 lg:leading-5 text-gray8;
+    @apply font-medium text-11 lg:text-lg 4k:text-xl lg:leading-5 text-gray2;
   }
 
   .medium15 {
-    @apply font-medium text-10 lg:text-15 4k:text-17 lg:leading-4 text-gray6;
+    @apply font-medium text-10 lg:text-base 4k:text-lg lg:leading-4 text-gray1;
   }
 
   .medium12 {
-    @apply font-medium text-10 lg:text-12 4k:text-14 lg:leading-3.5 text-white;
+    @apply font-medium text-10 lg:text-xs 4k:text-sm lg:leading-3 text-white;
   }
 
   .regular15 {
-    @apply font-normal text-12 lg:text-15 4k:text-17;
+    @apply font-normal text-xs lg:text-base 4k:text-lg;
   }
 
   .regular12 {
-    @apply font-normal text-10 lg:text-12 4k:text-15 lg:leading-3.5 text-white;
+    @apply font-normal text-10 lg:text-xs 4k:text-base lg:leading-3 text-white;
   }
 }
 
@@ -254,13 +254,13 @@ button,
   }
 
   .scrollbar-aqua::-webkit-scrollbar-thumb {
-    @apply bg-teal1 rounded-lg;
+    @apply bg-tealPrimary rounded-lg;
   }
   .scrollbar-purple::-webkit-scrollbar {
     width: 2px;
   }
   .scrollbar-purple::-webkit-scrollbar-thumb {
-    @apply bg-purple2 rounded-lg;
+    @apply bg-purplePrimary rounded-lg;
   }
 
   .scrollbar-hidden::-webkit-scrollbar-thumb {

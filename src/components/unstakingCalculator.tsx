@@ -175,7 +175,7 @@ const UnstakingCalculator: React.FC = () => {
                 <div
                   className={`${
                     !isWalletConnected || !isUnstakingAvailable
-                      ? "text-gray4"
+                      ? "text-gray3"
                       : "text-white1"
                   } bold33`}
                 >
@@ -187,12 +187,12 @@ const UnstakingCalculator: React.FC = () => {
                   ref={inputRef}
                   className={`${
                     tokensToUnstake === "0" || tokensToUnstake === ""
-                      ? "text-gray8"
+                      ? "text-gray2"
                       : "text-white1"
                   }   ${
                     !isWalletConnected || !isUnstakingAvailable
-                      ? "placeholder-gray4"
-                      : "placeholder-gray8 "
+                      ? "placeholder-gray3"
+                      : "placeholder-gray2 "
                   } flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
                   value={tokensToUnstake !== "0" ? tokensToUnstake || "" : ""}
                   placeholder="0"
@@ -208,7 +208,7 @@ const UnstakingCalculator: React.FC = () => {
                   <span
                     className={` mr-3 ${
                       !isWalletConnected ||
-                      (!isUnstakingAvailable && "text-gray4")
+                      (!isUnstakingAvailable && "text-gray3")
                     } medium17`}
                   >
                     {stakingPoolForView!.stakingPool.data ? (
@@ -233,12 +233,12 @@ const UnstakingCalculator: React.FC = () => {
                 <span
                   className={`${
                     !isWalletConnected || !isUnstakingAvailable
-                      ? "text-gray4"
+                      ? "text-gray3"
                       : !isUnstakingAvailable
                         ? "!text-gray-500"
                         : isPoolLiquid()
-                          ? "text-teal1"
-                          : "text-purple1"
+                          ? "text-tealPrimary"
+                          : "text-purple2"
                   } medium17`}
                 >
                   {unboudingPeriod}
@@ -247,7 +247,7 @@ const UnstakingCalculator: React.FC = () => {
             </div>
             <div className="flex flex-col gap-3">
               <Button
-                className={`btn-secondary-teal ${isMaxValue && "!border-teal1"}`}
+                className={`btn-secondary-teal ${isMaxValue && "!border-tealPrimary"}`}
                 onClick={onMaxClick}
                 onMouseEnter={() => setIsMaxHovered(true)}
                 onMouseLeave={() => setIsMaxHovered(false)}
@@ -256,7 +256,7 @@ const UnstakingCalculator: React.FC = () => {
                 MAX
               </Button>
               <Button
-                className={`btn-secondary-purple ${isMinValue && "!border-purple2"}`}
+                className={`btn-secondary-purple ${isMinValue && "!border-purplePrimary"}`}
                 onClick={() => {
                   setZilToUnstake("1")
                   setIsMinValue(true)
@@ -332,7 +332,7 @@ const UnstakingCalculator: React.FC = () => {
                 Max transaction cost: ~{unstakingCallZilFees} ZIL
               </div>
               <div
-                className={`${isPoolLiquid() ? "text-teal1" : "text-purple1"} `}
+                className={`${isPoolLiquid() ? "text-tealPrimary" : "text-purple2"} `}
               >
                 <Tooltip
                   placement="top"
@@ -350,7 +350,7 @@ const UnstakingCalculator: React.FC = () => {
                 <div className="flex flex-col max-xl:justify-between  max-lg:items-start xl:gap-3.5 xl:items-end">
                   <div className="flex   xl:gap-5 4k:gap-6">
                     <div className="lg:gray-base">Rate</div>
-                    <div className="text-gray9">
+                    <div className="text-gray1">
                       {stakingPoolForView!.stakingPool.data ? (
                         <>
                           1{" "}
@@ -377,7 +377,7 @@ const UnstakingCalculator: React.FC = () => {
                 </div>
               )}
 
-              <div className="text-gray9  flex flex-row xl:gap-5 4k:gap-6">
+              <div className="text-gray1  flex flex-row xl:gap-5 4k:gap-6">
                 <Tooltip
                   placement="top"
                   arrow={true}
