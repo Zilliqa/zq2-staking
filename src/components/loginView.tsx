@@ -10,7 +10,7 @@ const LoginView: React.FC = () => {
           Stake ZIL. <br /> Earn Rewards.
           <br /> Secure the Network.
         </h1>
-        <p className="mt-6 body2-v2 text-white1">
+        <p className="mt-6 body2-v2">
           Give it a try, and give us your feedback !
         </p>
       </div>

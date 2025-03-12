@@ -74,7 +74,7 @@ button,
   }
 
   .btn-primary-grey {
-    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[1px] border-white text-white items-center bold16 bg-gray2 cursor-pointer duration-700 ease-in-out;
+    @apply flex w-full py-1 lg:py-1.5 4k:py-2 px-1.5 lg:px-2 4k:px-3 rounded-full border-[1px] border-white items-center bold16 bg-gray2 cursor-pointer duration-700 ease-in-out;
 
     &:hover:not(:disabled) {
       @apply !bg-transparent !text-white !border-white;
@@ -156,7 +156,7 @@ button,
   }
 
   .regular-base {
-    @apply font-normal text-xs xs:text-sm lg:text-base 4k:text-xl leading-5 lg:leading-6 text-gray3;
+    @apply font-normal text-xs xs:text-sm lg:text-base 4k:text-xl leading-5 lg:leading-6 text-gray1;
   }
 
   .gray-base {
@@ -166,9 +166,9 @@ button,
   .gray-base2 {
     @apply gray-base max-xs:text-11;
   }
-
+ 
   .base-medium {
-    @apply font-medium text-11 lg:text-13 4k:text-base text-white1;
+    @apply font-medium text-11 lg:text-13 4k:text-base text-gray1;
   }
 
   .info-label {
@@ -236,7 +236,7 @@ button,
   }
 
   .medium12 {
-    @apply font-medium text-10 lg:text-xs 4k:text-sm lg:leading-3 text-white;
+    @apply font-medium text-10 lg:text-xs 4k:text-sm lg:leading-3 text-gray1;
   }
 
   .regular15 {
@@ -244,7 +244,7 @@ button,
   }
 
   .regular12 {
-    @apply font-normal text-10 lg:text-xs 4k:text-base lg:leading-3 text-white;
+    @apply font-normal text-10 lg:text-xs 4k:text-base lg:leading-3 text-gray1;
   }
 }
 

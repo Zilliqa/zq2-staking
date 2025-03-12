@@ -386,7 +386,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
         {anyItemsAvailable ? (
           <>
             <h1 className="bold33 text-white">Your Claims</h1>
-            <p className="mt-2 body2-v2 text-white1">
+            <p className="mt-2 body2-v2">
               Here is a list of your current <br /> and upcoming claims.
             </p>
           </>
@@ -467,7 +467,7 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
       ) : (
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto">
-            <div className="mb-8 body2-v2 text-white1 ">
+            <div className="mb-8 body2-v2">
               Seems like you have nothing to claim yet. <br />
               Start staking and give us your thoughts !
             </div>

@@ -54,7 +54,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                 height={40}
               />
               <h3 className="bold22">{stakingPoolData.definition.name}</h3>
-              <div className="base-medium text-gray2 mt-1">
+              <div className="base-medium mt-1">
                 {stakingPoolData.definition.tokenSymbol}
               </div>
             </div>
@@ -130,7 +130,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     <span className="mr-1 4k:mr-1.5 ">0%</span>
                   </div>
                 )}
-                <div className="flex medium12 text-gray2 4k:pl-1.5 pl-1 xs:pl-3 border-l-[1px] border-gray3">
+                <div className="flex medium12 4k:pl-1.5 pl-1 xs:pl-3 border-l-[1px] border-gray3">
                   {stakingPoolData.data ? (
                     <>
                       {" "}

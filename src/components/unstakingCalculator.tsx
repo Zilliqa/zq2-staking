@@ -235,7 +235,7 @@ const UnstakingCalculator: React.FC = () => {
                     !isWalletConnected || !isUnstakingAvailable
                       ? "text-gray3"
                       : !isUnstakingAvailable
-                        ? "!text-gray-500"
+                        ? "!text-gray2"
                         : isPoolLiquid()
                           ? "text-tealPrimary"
                           : "text-purple2"
@@ -377,7 +377,7 @@ const UnstakingCalculator: React.FC = () => {
                 </div>
               )}
 
-              <div className="text-gray1  flex flex-row xl:gap-5 4k:gap-6">
+              <div className="text-gray1 flex flex-row xl:gap-5 4k:gap-6">
                 <Tooltip
                   placement="top"
                   arrow={true}
