@@ -16,7 +16,7 @@ import {
 import { Button, Tooltip } from "antd"
 import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
-import FilterBtn from "./filterBtn"
+import FilterBtn from "@/components/filterBtn"
 import FastFadeScroll from "@/components/fastFadeScroll"
 import { showNewMessage } from "@intercom/messenger-js-sdk"
 

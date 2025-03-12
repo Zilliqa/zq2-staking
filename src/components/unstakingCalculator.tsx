@@ -14,7 +14,7 @@ import { DateTime } from "luxon"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "@/components/fastFadeScroll"
 import { WalletConnector } from "@/contexts/walletConnector"
-import CustomWalletConnect from "./customWalletConnect"
+import CustomWalletConnect from "@/components/customWalletConnect"
 import LastTransaction from "@/components/lastTransaction"
 
 const UnstakingCalculator: React.FC = () => {

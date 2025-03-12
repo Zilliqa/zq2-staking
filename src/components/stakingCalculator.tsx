@@ -12,7 +12,7 @@ import {
 import { formatUnits, parseEther } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
-import CustomWalletConnect from "./customWalletConnect"
+import CustomWalletConnect from "@/components/customWalletConnect"
 import { DateTime } from "luxon"
 import LastTransaction from "@/components/lastTransaction"
 

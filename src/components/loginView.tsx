@@ -1,6 +1,6 @@
 import Image from "next/image"
 import ArrowRightWhite from "../assets/svgs/arrow-right-white.svg"
-import CustomWalletConnect from "./customWalletConnect"
+import CustomWalletConnect from "@/components/customWalletConnect"
 
 const LoginView: React.FC = () => {
   return (

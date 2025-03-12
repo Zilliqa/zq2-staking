@@ -1,6 +1,6 @@
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
-import StakingPoolCard from "./stakingPoolCard"
-import SortBtn from "./sortBtn"
+import StakingPoolCard from "@/components/stakingPoolCard"
+import SortBtn from "@/components/sortBtn"
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import FastFadeScroll from "@/components/fastFadeScroll"
