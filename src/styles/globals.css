@@ -196,7 +196,7 @@ button,
   }
 
   .bold22 {
-    @apply font-bold text-lg lg:text-2xl 4k:text-28 lg:leading-6 text-white;
+    @apply font-bold text-lg lg:text-2xl 4k:text-3xl lg:leading-6 text-white;
   }
 
   .bold16 {
