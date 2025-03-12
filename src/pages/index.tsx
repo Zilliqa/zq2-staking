@@ -64,7 +64,7 @@ const HomePage = () => {
   }, [router.query.claims])
 
   const mobileOverlayWrapper = (children: React.ReactNode) => (
-    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black4/65 max-lg:pb-12 py-5 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
+    <div className="absolute lg:hidden top-0 left-0 z-25 h-full w-full lg:bg-black1/65 max-lg:pb-12 py-5 4k:p-6 border-t-[0.6px] border-[#4B4B4B] rounded-t-3xl">
       {children}
     </div>
   )
@@ -74,7 +74,7 @@ const HomePage = () => {
       {!isWalletConnected && !stakingPoolForView ? (
         <LoginView />
       ) : stakingPoolForView ? (
-        <div className="bg-black4/[68%] 4k:rounded-2.5xl rounded-tl-2.5xl h-full">
+        <div className="bg-black1/[68%] 4k:rounded-2.5xl rounded-tl-2.5xl h-full">
           <StakingPoolDetailsView
             stakingPoolData={stakingPoolForView.stakingPool}
             userStakingPoolData={stakingPoolForView.userData.staked}
@@ -103,15 +103,15 @@ const HomePage = () => {
         )
 
   const mobileBottomNavition = (
-    <div className="fixed bottom-0 left-0 lg:hidden w-full mt-7.5 pt-1.5">
+    <div className="fixed bottom-0 left-0 lg:hidden w-full mt-7t-1.5">
       <div className="flex justify-between items-center gap-1 mb-5 mt-2 mx-5 md:mx-7">
         {isWalletConnected ? (
           <>
-            <div className="flex justify-between items-center w-full max-lg:mr-15">
+            <div className="flex justify-between items-center w-full max-lg:mr-16">
               {mobileShowClaims || stakingPoolForView ? (
                 <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
                   <div
-                    className="text-gray5 justify-start flex items-center bold12-s"
+                    className="justify-start flex items-center bold12"
                     onClick={() => {
                       router.back()
                     }}
@@ -132,8 +132,8 @@ const HomePage = () => {
 
               <div className="flex items-center gap-3">
                 <div
-                  className={`justify-start bold12-s relative max-lg:w-full lg:min-w-[320px] mx-auto whitespace-nowrap
-                        ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "text-aqua1" : "text-gray5"}
+                  className={`justify-start bold12 relative max-lg:w-full lg:min-w-[320px] mx-auto whitespace-nowrap
+                        ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "text-tealPrimary" : "text-gray1"}
                         `}
                   onClick={() => {
                     if (stakingPoolForView) {
@@ -155,7 +155,7 @@ const HomePage = () => {
 
                   <span
                     className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1
-                  ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "bg-aqua1 " : " bg-transparent"}
+                  ${!mobileShowClaims || (mobileShowClaims && stakingPoolForView) ? "bg-tealPrimary " : " bg-transparent"}
                      rounded-full`}
                   />
                 </div>
@@ -180,18 +180,18 @@ const HomePage = () => {
                   >
                     <div
                       className={` relative
-                    ${mobileShowClaims && !stakingPoolForView ? "text-aqua1" : "text-gray5"}
-                   whitespace-nowrap bold12-s`}
+                    ${mobileShowClaims && !stakingPoolForView ? "text-tealPrimary" : "text-gray1"}
+                   whitespace-nowrap bold12`}
                     >
                       Claims
                       {mobileShowClaims && !stakingPoolForView && (
-                        <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-aqua1 rounded-full" />
+                        <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-1 h-1 bg-tealPrimary rounded-full" />
                       )}
                     </div>
                     {availableForUnstaking.length + pendingUnstaking.length !=
                       0 && (
                       <div
-                        className={`bg-red2 text-white rounded-full px-2 h-4 w-4
+                        className={`bg-red1 text-white rounded-full px-2 h-4 w-4
                       text-8 font-bold p-0.5 ml-1 mb-5 items-center flex justify-center
                      ${availableForUnstaking.length + pendingUnstaking.length != 0 && "text-white"}`}
                       >
@@ -209,7 +209,7 @@ const HomePage = () => {
               <div className="w-1/2">
                 <div className="max-lg:w-full lg:min-w-[320px] mx-auto">
                   <div
-                    className="justify-start flex items-center bold12-s text-gray5"
+                    className="justify-start flex items-center bold12"
                     onClick={() => {
                       router.back()
                     }}
@@ -356,7 +356,7 @@ const HomePage = () => {
         }`}
       >
         {/* Header */}
-        <div className="w-full flex flex-col items-center justify-center text-white border-b-[0.5px] border-gray2">
+        <div className="w-full flex flex-col items-center justify-center text-white border-b-[0.5px] border-gray3">
           <div className="flex max-w-screen-2xl w-full justify-between px-4 lg:px-8 xl:px-12 4k:px-16 4k:max-w-screen-4k items-center py-4 lg:py-5">
             <div className="flex items-center">
               <Logo
@@ -375,7 +375,7 @@ const HomePage = () => {
             </div>
           </div>
           {showAlert && (
-            <div className="w-full bg-red2 px-4 text-center text-13 font-bold leading-[1.2] py-2">
+            <div className="w-full bg-red1 px-4 text-center text-sm font-bold leading-[1.2] py-2">
               We’re experiencing issues with chain, platform might not be
               responsive.
             </div>

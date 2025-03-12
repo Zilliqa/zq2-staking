@@ -13,7 +13,7 @@ import {
 import { Button, Tooltip } from "antd"
 import { DateTime } from "luxon"
 import { formatUnits } from "viem"
-import LastTransaction from "./LastTransaction"
+import LastTransaction from "@/components/lastTransaction"
 
 interface WithdrawZilPanelProps {
   stakingPoolData: StakingPool
@@ -77,8 +77,8 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                     className={`${
                       stakingPoolData.definition.poolType ===
                       StakingPoolType.LIQUID
-                        ? "text-aqua1"
-                        : "text-purple5"
+                        ? "text-tealPrimary"
+                        : "text-purple3"
                     }`}
                   >
                     Claimable Rewards
@@ -195,8 +195,8 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                       className={`${
                         stakingPoolData.definition.poolType ===
                         StakingPoolType.LIQUID
-                          ? "text-aqua1"
-                          : "text-purple5"
+                          ? "text-tealPrimary"
+                          : "text-purple3"
                       }`}
                     >
                       Claimable Withdrawals
@@ -238,9 +238,9 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         <div
           className="flex flex-col min-h-[100px] lg:min-h-[132px] xl:min-h-[148px] justify-evenly  
          mb-2.5 lg:mb-4 4k:mb-6 py-2 lg:py-6 xl:py-8 4k:py-10 
-         px-3 lg:px-7.5 xl:px-10 4k:px-14 bg-grey-gradient rounded-xl w-full"
+         px-3 lg:px-7 xl:px-10 4k:px-14 bg-grey-gradient rounded-xl w-full"
         >
-          <div className="body2 text-gray1">Claim your unstaked ZIL in:</div>
+          <div className="body2 text-gray3">Claim your unstaked ZIL in:</div>
           <div className="h4 mt-2 w-full flex justify-between text-white1">
             <div>{getHumanFormDuration(pendingUnstake[0].availableAt)}</div>
             {stakingPoolData.data ? (
@@ -256,7 +256,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
           </div>
         </div>
       ) : !reward ? (
-        <div className="flex justify-center items-center h-full body2 text-gray1 ">
+        <div className="flex justify-center items-center h-full body2 text-gray3 ">
           No available Claims
         </div>
       ) : (

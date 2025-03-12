@@ -1,21 +1,21 @@
 import Image from "next/image"
 import ArrowRightWhite from "../assets/svgs/arrow-right-white.svg"
-import CustomWalletConnect from "./customWalletConnect"
+import CustomWalletConnect from "@/components/customWalletConnect"
 
 const LoginView: React.FC = () => {
   return (
     <div className="relative">
       <div className="text-center p-4">
-        <h1 className="bold33 text-white lg:mt-20 4k:mt-56">
+        <h1 className="bold33 lg:mt-20 4k:mt-56">
           Stake ZIL. <br /> Earn Rewards.
           <br /> Secure the Network.
         </h1>
-        <p className="mt-6 body2-v2 text-white4">
+        <p className="mt-6 body2-v2">
           Give it a try, and give us your feedback !
         </p>
       </div>
 
-      <div className="flex flex-col items-center mt-12.5 ">
+      <div className="flex flex-col items-center mt-12 ">
         <CustomWalletConnect notConnectedClassName="btn-primary-teal !w-fit px-14 group flex items-center">
           <div className="flex">
             Connect wallet

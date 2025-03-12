@@ -12,9 +12,9 @@ import {
 import { formatUnits, parseEther } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
-import CustomWalletConnect from "./customWalletConnect"
+import CustomWalletConnect from "@/components/customWalletConnect"
 import { DateTime } from "luxon"
-import LastTransaction from "./LastTransaction"
+import LastTransaction from "@/components/lastTransaction"
 
 const StakingCalculator: React.FC = () => {
   const inputRef = useRef<InputRef | null>(null)
@@ -185,7 +185,7 @@ const StakingCalculator: React.FC = () => {
                 <div className=" flex items-center gap-2">
                   <div
                     className={`${
-                      !isWalletConnected ? "text-gray4" : "text-white1"
+                      !isWalletConnected ? "text-gray3" : "text-white1"
                     } bold33`}
                   >
                     ZIL
@@ -195,14 +195,14 @@ const StakingCalculator: React.FC = () => {
                     placeholder="0"
                     className={` ${
                       zilToStake === "0" || zilToStake === ""
-                        ? "text-gray8"
+                        ? "text-gray2"
                         : "text-white1"
                     } 
                         
                     ${
                       !isWalletConnected
-                        ? "placeholder-gray4"
-                        : "placeholder-gray8"
+                        ? "placeholder-gray3"
+                        : "placeholder-gray2"
                     }
                          flex items-baseline !bg-transparent !border-transparent !shadow-none bold33 px-0`}
                     value={zilToStake !== "0" ? zilToStake || "" : ""}
@@ -220,7 +220,7 @@ const StakingCalculator: React.FC = () => {
                       {isPoolLiquid() && (
                         <span
                           className={` mr-3 ${
-                            !isWalletConnected && "text-gray4"
+                            !isWalletConnected && "text-gray3"
                           } medium17`}
                         >
                           ~
@@ -244,11 +244,11 @@ const StakingCalculator: React.FC = () => {
                         className={`
                          ${
                            !isWalletConnected
-                             ? "text-gray4"
+                             ? "text-gray3"
                              : stakingPoolForView?.stakingPool.definition
                                    .poolType === StakingPoolType.LIQUID
-                               ? "text-aqua1"
-                               : "text-purple3"
+                               ? "text-tealPrimary"
+                               : "text-purple2"
                          } medium17 mr-1`}
                       >
                         ~
@@ -267,11 +267,11 @@ const StakingCalculator: React.FC = () => {
                     className={`
                         ${
                           !isWalletConnected
-                            ? "text-gray4"
+                            ? "text-gray3"
                             : stakingPoolForView?.stakingPool.definition
                                   .poolType === StakingPoolType.LIQUID
-                              ? "text-aqua1"
-                              : "text-purple3"
+                              ? "text-tealPrimary"
+                              : "text-purple2"
                         } medium17`}
                   >
                     APR
@@ -281,7 +281,7 @@ const StakingCalculator: React.FC = () => {
 
               <div className="flex flex-col gap-3 ">
                 <Button
-                  className={`btn-secondary-teal ${isMaxValue && "!border-aqua1"}`}
+                  className={`btn-secondary-teal ${isMaxValue && "!border-tealPrimary"}`}
                   onClick={onMaxClick}
                   onMouseEnter={() => setIsMaxHovered(true)}
                   onMouseLeave={() => setIsMaxHovered(false)}
@@ -293,7 +293,7 @@ const StakingCalculator: React.FC = () => {
                   MAX
                 </Button>
                 <Button
-                  className={`btn-secondary-purple ${isMinValue && "!border-purple4"}`}
+                  className={`btn-secondary-purple ${isMinValue && "!border-purplePrimary"}`}
                   onClick={onMinClick}
                   onMouseEnter={() => setIsMinHovered(true)}
                   onMouseLeave={() => setIsMinHovered(false)}
@@ -359,7 +359,7 @@ const StakingCalculator: React.FC = () => {
 
             <LastTransaction txHash={stakingCallTxHash} />
 
-            <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 mt-2.5 lg:mt-4 4k:mt-6 border-t border-black2 lg:pb-10">
+            <div className="flex justify-between pt-2.5 lg:pt-5 4k:pt-7 mt-2.5 lg:mt-4 4k:mt-6 border-t border-black1 lg:pb-10">
               <div className="flex flex-col lg:gap-2.5 gap-1 4k:gap-4 regular-base">
                 <div className=" flex ">
                   Commission Fee:{" "}
@@ -391,7 +391,7 @@ const StakingCalculator: React.FC = () => {
                   <div className="flex  max-lg:gap-2 max-xl:justify-between max-lg:items-start flex-row xl:gap-5 4k:gap-6">
                     <div className=" ">Rate</div>
                     {stakingPoolForView!.stakingPool.data ? (
-                      <div className="text-gray9">
+                      <div className="text-gray1">
                         <>
                           1{" "}
                           {
@@ -419,8 +419,8 @@ const StakingCalculator: React.FC = () => {
                   className={`${
                     stakingPoolForView?.stakingPool.definition.poolType ===
                     StakingPoolType.LIQUID
-                      ? "text-aqua1"
-                      : "text-purple3"
+                      ? "text-tealPrimary"
+                      : "text-purple2"
                   }  flex flex-row xl:gap-5 4k:gap-6 `}
                 >
                   <Tooltip
@@ -434,8 +434,8 @@ const StakingCalculator: React.FC = () => {
                       className={`${
                         stakingPoolForView?.stakingPool.definition.poolType ===
                         StakingPoolType.LIQUID
-                          ? "text-aqua1"
-                          : "text-purple3"
+                          ? "text-tealPrimary"
+                          : "text-purple2"
                       } lg:gray-base gray-base2 `}
                     >
                       APR{" "}

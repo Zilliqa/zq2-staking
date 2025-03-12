@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 import close from "../assets/svgs/close-icon-small.svg"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import { useRouter } from "next/router"
-import CustomWalletConnect from "./customWalletConnect"
+import CustomWalletConnect from "@/components/customWalletConnect"
 import ArrowRightWhite from "../assets/svgs/arrow-icon.svg"
 interface MobilePopupProps {
   isOpen: boolean
@@ -33,7 +33,7 @@ const MobilePopup = ({
       onClick={onClose}
     >
       <div
-        className={`absolute bottom-0 left-0 right-0 rounded-t-15 border-t border-r border-l border-gray14 
+        className={`absolute bottom-0 left-0 right-0 rounded-t-15 border-t border-r border-l border-gray2 
                  bg-aqua-grey-gradient backdrop-blur-17 p-5 transform transition-transform duration-300 ease-out
                  ${isOpen ? "translate-y-0" : "translate-y-full"}`}
         onClick={(e) => e.stopPropagation()}
@@ -44,15 +44,13 @@ const MobilePopup = ({
           </button>
         </div>
         <div className="flex flex-col items-center justify-between text-center pt-4 pb-10 ">
-          <h2 className="text-white2 text-26 leading-tight font-bold">
-            Start earning ZIL
-          </h2>
-          <p className="text-gray14 text-16 font-medium leading-tight mt-3 ">
+          <h2 className="text-white1 body1">Start earning ZIL</h2>
+          <p className="text-gray2 medium15 mt-3 ">
             Stake ZIL. <br /> Earn Rewards.
             <br /> Secure the Network.
           </p>
           <div className="flex items-center space-x-4 mt-6">
-            <CustomWalletConnect notConnectedClassName="capitalize text-16  font-bold btn-primary-teal !w-fit  group flex items-center justify-center">
+            <CustomWalletConnect notConnectedClassName="capitalize text-base  font-bold btn-primary-teal !w-fit  group flex items-center justify-center">
               Connect wallet
               <Image
                 className="  h-4 w-4 transform transition-transform ease-out duration-500 group-hover:translate-x-2"
