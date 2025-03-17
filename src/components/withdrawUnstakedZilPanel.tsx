@@ -85,10 +85,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                   </span>
                 </div>
                 <div>
-                  {parseFloat(formatUnits(reward.zilRewardAmount, 18)).toFixed(
-                    5
-                  )}{" "}
-                  ZIL
+                  {`${formatUnitsToHumanReadable(reward.zilRewardAmount, 18)} ZIL`}
                 </div>
               </div>
             ) : (
@@ -203,7 +200,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
                     </span>
                   </div>
                   <div>
-                    {parseFloat(formatUnits(item.zilAmount, 18)).toFixed(3)} ZIL
+                    {formatUnitsToHumanReadable(item.zilAmount, 18)} ZIL
                   </div>
                 </div>
               ) : (
