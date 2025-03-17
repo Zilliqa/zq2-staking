@@ -48,8 +48,8 @@ export function convertTokenToZil(
   tokenAmount: bigint,
   zilToTokenRate: number
 ): bigint {
-  const rate = BigInt(Math.round((1 / zilToTokenRate) * 100))
-  const amount = (tokenAmount * rate) / 100n
+  const rate = BigInt(Math.round((1 / zilToTokenRate) * 10000000))
+  const amount = (tokenAmount * rate) / 10000000n
   return amount
 }
 
@@ -93,7 +93,8 @@ export function formatUnitsWithMaxPrecision(
 ): string {
   const raw = parseFloat(formatUnits(value, decimals))
 
-  return raw.toPrecision(maxPrecision).replace(/\.?0+$/, "")
+  const formatted = raw.toFixed(maxPrecision).replace(/\.?0+$/, "")
+  return formatted
 }
 
 export function getTxExplorerUrl(txHash: string, chainId: number) {
