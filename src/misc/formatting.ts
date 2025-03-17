@@ -53,7 +53,7 @@ export function convertTokenToZil(
   return amount
 }
 
-export function convertZilValueInToken(
+export function convertZilValueToToken(
   zilAmount: number,
   zilToTokenRate: number
 ) {

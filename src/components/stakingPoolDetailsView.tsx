@@ -354,20 +354,16 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                     <>
                       <div>Amount of ZIL currently staked</div>
                       {isPoolLiquid() &&
-                        userStakingPoolData &&
-                        userStakingPoolData.stakingTokenAmount &&
+                        userStakingPoolData?.stakingTokenAmount &&
                         stakingPoolData.data != null && (
                           <div className="mt-1">
-                            {`                    
-                      ( ~
-                          ${formatUnitsToHumanReadable(
-                            convertTokenToZil(
-                              userStakingPoolData.stakingTokenAmount,
-                              stakingPoolData.data.zilToTokenRate
-                            ),
-                            18
-                          )} 
-                      ZIL )`}
+                            {`( ~ ${formatUnitsToHumanReadable(
+                              convertTokenToZil(
+                                userStakingPoolData.stakingTokenAmount,
+                                stakingPoolData.data.zilToTokenRate
+                              ),
+                              18
+                            )} ZIL )`}
                           </div>
                         )}
                     </>
@@ -375,32 +371,13 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                   {colorInfoEntry(
                     "Unstaked ",
                     pendingUnstakesValue
-                      ? `${humanReadableStakingToken(
-                          pendingUnstakesValue
-                        )} ${stakingPoolData.definition.tokenSymbol}`
+                      ? `${humanReadableStakingToken(pendingUnstakesValue)} ZIL`
                       : "-",
                     <>
                       <div>
                         Amount of unstaked ZIL available after the unbonding
                         period
                       </div>
-                      {isPoolLiquid() &&
-                        userStakingPoolData &&
-                        pendingUnstakesValue &&
-                        stakingPoolData.data != null && (
-                          <div className="mt-1">
-                            {`                    
-                      ( ~
-                          ${formatUnitsToHumanReadable(
-                            convertTokenToZil(
-                              pendingUnstakesValue,
-                              stakingPoolData.data.zilToTokenRate
-                            ),
-                            18
-                          )} 
-                      ZIL )`}
-                          </div>
-                        )}
                     </>
                   )}
                   {colorInfoEntry(
@@ -474,7 +451,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                         pendingUnstakesValue
                           ? `${humanReadableStakingToken(
                               pendingUnstakesValue
-                            )} ${stakingPoolData.definition.tokenSymbol}`
+                            )} ZIL`
                           : "-",
                         "Amount of unstaked ZIL available after the unbonding period"
                       )}
@@ -572,7 +549,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                       pendingUnstakesValue
                         ? `${humanReadableStakingToken(
                             pendingUnstakesValue
-                          )} ${stakingPoolData.definition.tokenSymbol}`
+                          )} ZIL`
                         : "-",
                       "Amount of unstaked ZIL available after the unbonding period"
                     )}
