@@ -4,7 +4,7 @@ import { Button, Input, InputRef, Tooltip } from "antd"
 import { WalletConnector } from "@/contexts/walletConnector"
 import {
   formatPercentage,
-  convertZilValueInToken,
+  convertZilValueToToken,
   getHumanFormDuration,
   convertTokenToZil,
   formatUnitsWithMaxPrecision,
@@ -228,7 +228,7 @@ const StakingCalculator: React.FC = () => {
                           !isNaN(
                             stakingPoolForView.stakingPool.data.zilToTokenRate
                           )
-                            ? convertZilValueInToken(
+                            ? convertZilValueToToken(
                                 zilToStakeNumber,
                                 stakingPoolForView.stakingPool.data
                                   .zilToTokenRate
