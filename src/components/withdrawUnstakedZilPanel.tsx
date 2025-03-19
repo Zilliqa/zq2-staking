@@ -50,15 +50,16 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         claimA.availableAt.diff(claimB.availableAt).milliseconds
     )
 
-  const availableUnstake = userUnstakingPoolData
-    ?.filter((claim) => claim.availableAt <= DateTime.now())
-    .toSorted(
-      (claimA, claimB) =>
-        claimA.availableAt.diff(claimB.availableAt).milliseconds
-    )
+  const availableUnstake =
+    userUnstakingPoolData
+      ?.filter((claim) => claim.availableAt <= DateTime.now())
+      .reduce((acc, claim) => acc + claim.zilAmount, 0n) || 0n
 
   const hashToShow =
     claimRewardCallTxHash || stakeRewardCallTxHash || claimUnstakeCallTxHash
+
+  const otherPendingClaimsToShow =
+    availableUnstake > 0n ? pendingUnstake : pendingUnstake?.slice(1)
 
   return (
     <div className="h-full">
@@ -177,67 +178,66 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         </div>
       )}
 
-      {!!availableUnstake?.length ? (
-        availableUnstake.map((item, claimIdx) => (
-          <div
-            className=" min-h-[100px] lg:min-h-[124px] xl:min-h-[140px] 
-            flex flex-col justify-evenly gap-2 4k:gap-3 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl w-full"
-            key={claimIdx}
-          >
-            <div className="items-center h4 w-full flex justify-between text-white1">
-              {stakingPoolData.data ? (
-                <div>
-                  <div className="body2">
-                    <span
-                      className={`${
-                        stakingPoolData.definition.poolType ===
-                        StakingPoolType.LIQUID
-                          ? "text-tealPrimary"
-                          : "text-purple3"
-                      }`}
-                    >
-                      Claimable Withdrawals
-                    </span>
-                  </div>
-                  <div>
-                    {formatUnitsToHumanReadable(item.zilAmount, 18)} ZIL
-                  </div>
+      {availableUnstake > 0n ? (
+        <div
+          className=" min-h-[100px] lg:min-h-[124px] xl:min-h-[140px] 
+          flex flex-col justify-evenly gap-2 4k:gap-3 mb-2.5 lg:mb-4 4k:mb-6 p-3 lg:p-5 xl:p-7 4k:p-10 bg-grey-gradient rounded-xl w-full"
+        >
+          <div className="items-center h4 w-full flex justify-between text-white1">
+            {stakingPoolData.data ? (
+              <div>
+                <div className="body2">
+                  <span
+                    className={`${
+                      stakingPoolData.definition.poolType ===
+                      StakingPoolType.LIQUID
+                        ? "text-tealPrimary"
+                        : "text-purple3"
+                    }`}
+                  >
+                    Claimable Withdrawals
+                  </span>
                 </div>
-              ) : (
-                <div className="loading-blur">000.000 ZIL</div>
-              )}
-              <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[150px] sm:max-w-[250px] w-full">
-                <Button
-                  className={` 
-                    ${
-                      isClaimingUnstakeInProgress
-                        ? stakingPoolData.definition.poolType ===
-                          StakingPoolType.LIQUID
-                          ? "liquid-loading"
-                          : "non-liquid-loading"
-                        : ""
-                    }
-                    ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"} btn-primary-grey lg:py-5 py-4`}
-                  onClick={() => claimUnstake(item.address)}
-                  loading={isClaimingUnstakeInProgress}
-                >
-                  {preparingClaimUnstakeTx
-                    ? "Confirm in wallet"
-                    : isClaimingUnstakeInProgress
-                      ? "Processing"
-                      : "Claim"}
-                </Button>
+                <div>
+                  {formatUnitsToHumanReadable(availableUnstake, 18)} ZIL
+                </div>
               </div>
+            ) : (
+              <div className="loading-blur">000.000 ZIL</div>
+            )}
+            <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 max-w-[150px] sm:max-w-[250px] w-full">
+              <Button
+                className={` 
+                  ${
+                    isClaimingUnstakeInProgress
+                      ? stakingPoolData.definition.poolType ===
+                        StakingPoolType.LIQUID
+                        ? "liquid-loading"
+                        : "non-liquid-loading"
+                      : ""
+                  }
+                  ${stakingPoolData.definition.poolType === StakingPoolType.LIQUID ? " liquid-hover" : " non-liquid-hover"} btn-primary-grey lg:py-5 py-4`}
+                onClick={() => claimUnstake(stakingPoolData.definition.address)}
+                loading={isClaimingUnstakeInProgress}
+              >
+                {preparingClaimUnstakeTx
+                  ? "Confirm in wallet"
+                  : isClaimingUnstakeInProgress
+                    ? "Processing"
+                    : "Claim"}
+              </Button>
             </div>
           </div>
-        ))
+        </div>
       ) : !!pendingUnstake?.length ? (
         <div
           className="flex flex-col min-h-[100px] lg:min-h-[132px] xl:min-h-[148px] justify-evenly  
          mb-2.5 lg:mb-4 4k:mb-6 py-2 lg:py-6 xl:py-8 4k:py-10 
          px-3 lg:px-7 xl:px-10 4k:px-14 bg-grey-gradient rounded-xl w-full"
         >
-          <div className="body2 text-gray3">Claim your unstaked ZIL in:</div>
+          <div className="body2 text-gray3">
+            Next available withdrawal claim
+          </div>
           <div className="h4 mt-2 w-full flex justify-between text-white1">
             <div>{getHumanFormDuration(pendingUnstake[0].availableAt)}</div>
             {stakingPoolData.data ? (
@@ -260,11 +260,11 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
         <></>
       )}
 
-      {!!pendingUnstake?.length && (
+      {!!otherPendingClaimsToShow && (
         <div className="mt-3 ">
-          <div className="info-label mb-3">Pending Requests</div>
+          <div className="info-label mb-3">other pending claims</div>
 
-          {pendingUnstake?.map((claim, claimIdx) => (
+          {otherPendingClaimsToShow.map((claim, claimIdx) => (
             <div
               className="flex justify-between mb-3 items-center"
               key={claimIdx}
