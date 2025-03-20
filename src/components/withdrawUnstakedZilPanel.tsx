@@ -262,7 +262,7 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
 
       {!!otherPendingClaimsToShow && (
         <div className="mt-3 ">
-          <div className="info-label mb-3">other pending claims</div>
+          <div className="info-label mb-3">Other pending claims</div>
 
           {otherPendingClaimsToShow.map((claim, claimIdx) => (
             <div
