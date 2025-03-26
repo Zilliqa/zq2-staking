@@ -210,7 +210,7 @@ const StakingCalculator: React.FC = () => {
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     status={!canStake ? "warning" : undefined}
-                    disabled={!isWalletConnected}
+                    disabled={!isWalletConnected || isStakingInProgress}
                   />
                 </div>
 
@@ -287,7 +287,8 @@ const StakingCalculator: React.FC = () => {
                   onMouseLeave={() => setIsMaxHovered(false)}
                   disabled={
                     !isWalletConnected ||
-                    parseEther(minValue) > (zilAvailable || 0n)
+                    parseEther(minValue) > (zilAvailable || 0n) ||
+                    isStakingInProgress
                   }
                 >
                   MAX
@@ -297,7 +298,7 @@ const StakingCalculator: React.FC = () => {
                   onClick={onMinClick}
                   onMouseEnter={() => setIsMinHovered(true)}
                   onMouseLeave={() => setIsMinHovered(false)}
-                  disabled={!isWalletConnected}
+                  disabled={!isWalletConnected || isStakingInProgress}
                 >
                   MIN
                 </Button>

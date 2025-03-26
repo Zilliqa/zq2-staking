@@ -200,7 +200,7 @@ const UnstakingCalculator: React.FC = () => {
                   onBlur={handleBlur}
                   onFocus={handleFocus}
                   status={!canUnstake ? "error" : undefined}
-                  disabled={!isUnstakingAvailable}
+                  disabled={!isUnstakingAvailable || isUnstakingInProgress}
                 />
               </div>
               <div className="flex items-center ">
@@ -251,7 +251,7 @@ const UnstakingCalculator: React.FC = () => {
                 onClick={onMaxClick}
                 onMouseEnter={() => setIsMaxHovered(true)}
                 onMouseLeave={() => setIsMaxHovered(false)}
-                disabled={!isUnstakingAvailable}
+                disabled={!isUnstakingAvailable || isUnstakingInProgress}
               >
                 MAX
               </Button>
@@ -264,7 +264,7 @@ const UnstakingCalculator: React.FC = () => {
                 }}
                 onMouseEnter={() => setIsMinHovered(true)}
                 onMouseLeave={() => setIsMinHovered(false)}
-                disabled={!isUnstakingAvailable}
+                disabled={!isUnstakingAvailable || isUnstakingInProgress}
               >
                 MIN
               </Button>
