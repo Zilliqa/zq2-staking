@@ -118,6 +118,8 @@ const useStakingPoolsStorage = () => {
   const reloadUserStakingPoolsData = () => {
     if (!walletAddress) {
       setUserStakingPoolsData([])
+      setUserUnstakesData([])
+      setUserNonLiquidPoolRewards([])
       return
     }
 

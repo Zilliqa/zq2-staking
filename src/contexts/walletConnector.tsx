@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { createContainer } from "./context"
 import { DummyWallet } from "@/misc/walletsConfig"
-import { useBalance, useWalletClient } from "wagmi"
+import { useAccount, useBalance } from "wagmi"
 import { Address } from "viem"
 
 export enum ConnectedWalletType {
@@ -44,23 +44,25 @@ const useWalletConnector = () => {
   /**
    * Rainbow wallet section
    */
-  const { data: walletClient } = useWalletClient()
+  const walletAccount = useAccount()
 
   /**
    * Wallet data
    */
 
-  const isWalletConnected = walletClient || isDummyWalletConnected
-  const connectedWalletType = walletClient
-    ? ConnectedWalletType.RealWallet
-    : isDummyWalletConnected
-      ? ConnectedWalletType.MockWallet
+  const isWalletConnected = walletAccount.isConnected || isDummyWalletConnected
+  const connectedWalletType = isDummyWalletConnected
+    ? ConnectedWalletType.MockWallet
+    : walletAccount.isConnected
+      ? ConnectedWalletType.RealWallet
       : ConnectedWalletType.None
-  const walletAddress = walletClient
-    ? walletClient.account.address
-    : isDummyWalletConnected
+
+  const walletAddress =
+    connectedWalletType === ConnectedWalletType.MockWallet
       ? dummyWallet!.address
-      : null
+      : connectedWalletType === ConnectedWalletType.RealWallet
+        ? (walletAccount.address || null)
+        : null
 
   const { data: zilBalanceData, refetch: refetchZilBalance } = useBalance({
     address: walletAddress ? (walletAddress as Address) : undefined,
