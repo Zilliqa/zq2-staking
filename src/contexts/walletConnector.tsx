@@ -61,7 +61,7 @@ const useWalletConnector = () => {
     connectedWalletType === ConnectedWalletType.MockWallet
       ? dummyWallet!.address
       : connectedWalletType === ConnectedWalletType.RealWallet
-        ? dummyWallet!.address
+        ? (walletAccount.address || null)
         : null
 
   const { data: zilBalanceData, refetch: refetchZilBalance } = useBalance({
