@@ -474,7 +474,7 @@ export const stakingPoolsConfigForChainId: Record<
         minimumStake: 10000000000000000000n,
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
-      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
     {
       definition: {
@@ -504,7 +504,7 @@ export const stakingPoolsConfigForChainId: Record<
         minimumStake: 10000000000000000000n,
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
-      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
     {
       definition: {
@@ -519,7 +519,7 @@ export const stakingPoolsConfigForChainId: Record<
         minimumStake: 10000000000000000000n,
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
-      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
     {
       definition: {

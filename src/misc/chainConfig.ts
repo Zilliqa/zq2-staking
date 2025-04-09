@@ -52,7 +52,10 @@ export const CHAIN_ZQ2_PROTOMAINNET = defineChain({
   nativeCurrency: { name: "ZIL", symbol: "ZIL", decimals: 18 },
   rpcUrls: {
     default: {
-      http: ["https://api.zq2-protomainnet.zilliqa.com"],
+      http: [
+        // "https://api.zq2-protomainnet.zilliqa.com"
+        "http://stakingportal.zq2-protomainnet.zilliqa.com:4201/", // custom staking portal endpoint
+      ],
     },
   },
   blockExplorers: {
