@@ -1,4 +1,10 @@
+import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { WalletConnector } from "@/contexts/walletConnector"
+import {
+  CHAIN_ZQ2_DEVNET,
+  CHAIN_ZQ2_PROTOMAINNET,
+  CHAIN_ZQ2_PROTOTESTNET,
+} from "@/misc/chainConfig"
 import { Button, Modal } from "antd"
 import { useState } from "react"
 
@@ -8,11 +14,20 @@ const ZilGiveaway: React.FC = () => {
   const [zilRequestFailed, setZilRequestFailed] = useState(false)
   const [failureReason, setFailureReason] = useState("")
   const { walletAddress } = WalletConnector.useContainer()
+  const { appConfig } = AppConfigStorage.useContainer()
 
   const { updateWalletBalance } = WalletConnector.useContainer()
 
   const requestZil = async () => {
-    const url = "https://faucet.zq2-devnet.zilliqa.com"
+    const url =
+      appConfig.chainId === CHAIN_ZQ2_DEVNET.id
+        ? "https://faucet.zq2-devnet.zilliqa.com"
+        : CHAIN_ZQ2_PROTOTESTNET.id === appConfig.chainId
+          ? "https://faucet.zq2-prototestnet.zilliqa.com"
+          : CHAIN_ZQ2_PROTOMAINNET.id === appConfig.chainId
+            ? "https://faucet.zq2-protomainnet.zilliqa.com"
+            : "N/A"
+
     // const formData = new FormData()
     // formData.append("address", walletAddress!.toLowerCase())
     const params = new URLSearchParams()
