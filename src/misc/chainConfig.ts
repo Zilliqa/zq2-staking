@@ -53,8 +53,7 @@ export const CHAIN_ZQ2_PROTOMAINNET = defineChain({
   rpcUrls: {
     default: {
       http: [
-        // "https://api.zq2-protomainnet.zilliqa.com"
-        "http://stakingportal.zq2-protomainnet.zilliqa.com:4201/", // custom staking portal endpoint
+         "https://api.zq2-protomainnet.zilliqa.com"
       ],
     },
   },
