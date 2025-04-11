@@ -566,5 +566,20 @@ export const stakingPoolsConfigForChainId: Record<
       },
       delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
+    {
+      definition: {
+        id: "MHhlNTlE",
+        address: "0xe59D98b887e6D40F52f7Cc8d5fb4CF0F9Ed7C98B",
+        tokenAddress: "0xf564DF9BeB417FB50b38A58334CA7607B36D3BFb",
+        iconUrl: "/static/logo_stzill.webp",
+        name: "stZIL",
+        poolType: StakingPoolType.LIQUID,
+        tokenDecimals: 18,
+        tokenSymbol: "stZIL",
+        minimumStake: 10000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
+    },
   ],
 }
