@@ -21,10 +21,12 @@ import PlusIcon from "../assets/svgs/plus-icon.svg"
 import Image from "next/image"
 import CloseIcon from "../assets/svgs/close-icon.svg"
 import FastFadeScroll from "@/components/fastFadeScroll"
-import { formatUnits, parseEther } from "viem"
+import { parseEther } from "viem"
 import arrow from "../assets/svgs/arrow.svg"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import { Tooltip } from "antd"
+import { AppConfigStorage } from "@/contexts/appConfigStorage"
+import { CHAIN_ZQ2_PROTOMAINNET } from "@/misc/chainConfig"
 
 interface StakingPoolDetailsViewProps {
   stakingPoolData: StakingPool
@@ -44,6 +46,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const { selectStakingPoolForView } = StakingPoolsStorage.useContainer()
 
   const { zilAvailable } = WalletConnector.useContainer()
+  const { appConfig } = AppConfigStorage.useContainer()
 
   const [selectedPane, setSelectedPane] = useState<string>("Stake")
 
@@ -151,13 +154,25 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   const { watchAsset } = useWatchAsset()
 
-  const handleClickAaddToken = () =>
+  const handleClickAddToken = () => {
+    // this is a workaround for the protomainnet stZIL delegator, can be removed once we switch to actual mainnet
+    const symbol = (() => {
+      if (
+        appConfig.chainId === CHAIN_ZQ2_PROTOMAINNET.id &&
+        stakingPoolData.definition.tokenSymbol === "stZIL"
+      ) {
+        return "YourTokenSymbol"
+      } else {
+        return stakingPoolData.definition.tokenSymbol
+      }
+    })()
+
     watchAsset(
       {
         type: "ERC20",
         options: {
           address: stakingPoolData.definition.tokenAddress,
-          symbol: stakingPoolData.definition.tokenSymbol,
+          symbol: symbol,
           decimals: stakingPoolData.definition.tokenDecimals,
         },
       },
@@ -170,6 +185,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
         },
       }
     )
+  }
 
   const greyInfoEntries = [
     stakingPoolData.data &&
@@ -278,7 +294,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                     <div
                       onMouseDown={handleMouseDown}
                       onMouseUp={handleMouseUp}
-                      onClick={handleClickAaddToken}
+                      onClick={handleClickAddToken}
                       onMouseLeave={handleMouseUp}
                       className={`group btn-primary-purple px-0.5 xxs:px-1 py-0.5 xxs:py-1 border-purplePrimary border-[1px] flex items-center justify-center transition-all duration-300 cursor-pointer overflow-hidden
                         ${isClicked && "hover:!shadow-[0px_0px_0px_0px_#522EFF]"}`}
