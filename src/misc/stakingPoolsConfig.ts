@@ -572,7 +572,7 @@ export const stakingPoolsConfigForChainId: Record<
         address: "0xe59D98b887e6D40F52f7Cc8d5fb4CF0F9Ed7C98B",
         tokenAddress: "0xf564DF9BeB417FB50b38A58334CA7607B36D3BFb",
         iconUrl: "/static/logo_stzill.webp",
-        name: "stZIL",
+        name: "Amazing Pool - Avely and ZilPay",
         poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "stZIL",
