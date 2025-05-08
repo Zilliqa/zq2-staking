@@ -106,7 +106,7 @@ function getConnectorsForWallets(walletConnectApiKey: string, appUrl: string) {
       {
         groupName: "Recommended",
         wallets: [
-          zilPayWallet as any,
+          zilPayWallet,
           metaMaskWallet,
           walletConnectWallet,
           coinbaseWallet,

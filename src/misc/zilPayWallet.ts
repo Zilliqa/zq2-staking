@@ -1,5 +1,7 @@
 import {
   getWalletConnectConnector,
+  RainbowKitWalletConnectParameters,
+  Wallet,
 } from '@rainbow-me/rainbowkit';
 import { hasInjectedProvider, getInjectedConnector } from './connector';
 
@@ -7,11 +9,14 @@ import { hasInjectedProvider, getInjectedConnector } from './connector';
 export const zilPayWallet = ({
   projectId,
   walletConnectParameters,
-}) => {
-  const isZilPayInjected = hasInjectedProvider({ flag: 'isZilPay' });
+}: {
+    projectId: string;
+    walletConnectParameters?: RainbowKitWalletConnectParameters;
+}): Wallet => {
+  const isZilPayInjected = hasInjectedProvider({ flag: 'isZilPay', namespace: null });
   const shouldUseWalletConnect = !isZilPayInjected;
 
-  const getUri = (uri) => {
+  const getUri = (uri: string) => {
     return `zilpay://wc?uri=${encodeURIComponent(uri)}`;
   };
 
@@ -27,8 +32,6 @@ export const zilPayWallet = ({
       ios: 'https://apps.apple.com/app/zilpay/id1547105860',
       mobile: 'https://zilpay.io/',
       qrCode: 'https://zilpay.io/',
-      chrome: 'https://chromewebstore.google.com/detail/zilpay/klnaejjgbibmhlephnhpmaofohgkpgkd',
-      browserExtension: 'https://zilpay.io/',
     },
     mobile: {
       getUri: shouldUseWalletConnect ? getUri : undefined,
@@ -61,31 +64,6 @@ export const zilPayWallet = ({
           },
         }
       : undefined,
-    extension: {
-      instructions: {
-        learnMoreUrl: 'https://learn.zilpay.io/user-guide/how-to-install-zilpay',
-        steps: [
-          {
-            description:
-              'Install the ZilPay extension for your browser.',
-            step: 'install',
-            title: 'Install ZilPay Extension',
-          },
-          {
-            description:
-              'Create a new wallet or import an existing one in the extension.',
-            step: 'create',
-            title: 'Create or Import Wallet',
-          },
-          {
-            description:
-              'Once installed, refresh the page to connect.',
-            step: 'refresh',
-            title: 'Refresh the page',
-          },
-        ],
-      },
-    },
     createConnector: shouldUseWalletConnect
       ? getWalletConnectConnector({
           projectId,
@@ -93,6 +71,8 @@ export const zilPayWallet = ({
         })
       : getInjectedConnector({
           flag: 'isZilPay',
+          namespace: null,
+          target: null,
         }),
   };
 };
