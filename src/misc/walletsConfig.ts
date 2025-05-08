@@ -8,7 +8,6 @@ import { readContract } from "viem/actions"
 import { Address, erc20Abi, parseUnits } from "viem"
 import { baseDelegatorAbi, nonLiquidDelegatorAbi } from "./stakingAbis"
 
-
 export interface UserStakingPoolData {
   address: string
   stakingTokenAmount: bigint

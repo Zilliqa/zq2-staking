@@ -11,7 +11,7 @@ import {
 } from "@rainbow-me/rainbowkit/wallets"
 import { createClient, createPublicClient, defineChain, http } from "viem"
 import { createConfig } from "wagmi"
-import { zilPayWallet } from './zilPayWallet'
+import { zilPayWallet } from "./zilPayWallet"
 
 export const CHAIN_ZQ2_DEVNET = defineChain({
   id: 33469,
@@ -99,7 +99,7 @@ export const MOCK_CHAIN = defineChain({
 })
 
 function getConnectorsForWallets(walletConnectApiKey: string, appUrl: string) {
-  const projectId = walletConnectApiKey;
+  const projectId = walletConnectApiKey
 
   return connectorsForWallets(
     [
@@ -169,4 +169,3 @@ export function getViemClient(chainId: number) {
     transport: http(),
   })
 }
-
