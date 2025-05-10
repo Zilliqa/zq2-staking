@@ -1,21 +1,24 @@
-"use client"
-
-// src/wallets/getInjectedConnector.ts
 import { createConnector } from "wagmi"
 import { injected } from "wagmi/connectors"
-function getExplicitInjectedProvider(flag) {
-  const _window = typeof window !== "undefined" ? window : void 0
+
+interface Provider {
+  [key: string]: any
+}
+
+function getExplicitInjectedProvider(flag: string): Provider | undefined {
+  const _window = typeof window !== "undefined" ? window : undefined
   if (typeof _window === "undefined" || typeof _window.ethereum === "undefined")
-    return
+    return undefined
   const providers = _window.ethereum.providers
   return providers
-    ? providers.find((provider) => provider[flag])
+    ? providers.find((provider: Provider) => provider[flag])
     : _window.ethereum[flag]
       ? _window.ethereum
-      : void 0
+      : undefined
 }
-function getWindowProviderNamespace(namespace) {
-  const providerSearch = (provider, namespace2) => {
+
+function getWindowProviderNamespace(namespace: string): any {
+  const providerSearch = (provider: any, namespace2: string): any => {
     const [property, ...path] = namespace2.split(".")
     const _provider = provider[property]
     if (_provider) {
@@ -25,16 +28,30 @@ function getWindowProviderNamespace(namespace) {
   }
   if (typeof window !== "undefined") return providerSearch(window, namespace)
 }
-function hasInjectedProvider({ flag, namespace }) {
+
+function hasInjectedProvider({
+  flag,
+  namespace,
+}: {
+  flag?: string
+  namespace?: string
+}): boolean {
   if (namespace && typeof getWindowProviderNamespace(namespace) !== "undefined")
     return true
   if (flag && typeof getExplicitInjectedProvider(flag) !== "undefined")
     return true
   return false
 }
-function getInjectedProvider({ flag, namespace }) {
-  const _window = typeof window !== "undefined" ? window : void 0
-  if (typeof _window === "undefined") return
+
+function getInjectedProvider({
+  flag,
+  namespace,
+}: {
+  flag?: string
+  namespace?: string
+}): Provider | undefined {
+  const _window = typeof window !== "undefined" ? window : undefined
+  if (typeof _window === "undefined") return undefined
   if (namespace) {
     const windowProvider = getWindowProviderNamespace(namespace)
     if (windowProvider) return windowProvider
@@ -48,8 +65,10 @@ function getInjectedProvider({ flag, namespace }) {
     return providers[0]
   return _window.ethereum
 }
-function createInjectedConnector(provider) {
-  return (walletDetails) => {
+
+function createInjectedConnector(provider?: Provider) {
+  return (walletDetails: any) => {
+    // Use 'any' for walletDetails to avoid defining a new type
     const injectedConfig = provider
       ? {
           target: () => ({
@@ -60,13 +79,22 @@ function createInjectedConnector(provider) {
         }
       : {}
     return createConnector((config) => ({
-      // Spread the injectedConfig object, which may be empty or contain the target function
       ...injected(injectedConfig)(config),
       ...walletDetails,
     }))
   }
 }
-function getInjectedConnector({ flag, namespace, target }) {
+
+function getInjectedConnector({
+  flag,
+  namespace,
+  target,
+}: {
+  flag?: string
+  namespace?: string
+  target?: Provider
+}): any {
+  // Use 'any' because the return type of createConnector is complex and not directly exposed
   const provider = target ? target : getInjectedProvider({ flag, namespace })
   return createInjectedConnector(provider)
 }

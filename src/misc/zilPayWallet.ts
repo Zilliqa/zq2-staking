@@ -14,7 +14,6 @@ export const zilPayWallet = ({
 }): Wallet => {
   const isZilPayInjected = hasInjectedProvider({
     flag: "isZilPay",
-    namespace: null,
   })
   const shouldUseWalletConnect = !isZilPayInjected
 
@@ -72,8 +71,6 @@ export const zilPayWallet = ({
         })
       : getInjectedConnector({
           flag: "isZilPay",
-          namespace: null,
-          target: null,
         }),
   }
 }
