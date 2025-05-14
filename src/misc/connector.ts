@@ -1,5 +1,5 @@
 import { createConnector } from "wagmi"
-import { injected } from "wagmi/connectors"
+import { injected, InjectedParameters } from "wagmi/connectors"
 
 interface Provider {
   [key: string]: any
@@ -69,7 +69,7 @@ function getInjectedProvider({
 function createInjectedConnector(provider?: Provider) {
   return (walletDetails: any) => {
     // Use 'any' for walletDetails to avoid defining a new type
-    const injectedConfig = provider
+    const injectedConfig: any = provider
       ? {
           target: () => ({
             id: walletDetails.rkDetails.id,
