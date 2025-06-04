@@ -598,7 +598,7 @@ export const stakingPoolsConfigForChainId: Record<
     },
     {
       definition: {
-        id: "MHhkMDkw",
+        id: "MHgzM2NE",
         address: "0x33cDb55D7fD68d0Da1a3448F11bCdA5fDE3426B3",
         tokenAddress: "0x0000000000000000000000000000000000000000",
         iconUrl: "/static/logo_blacknodes.webp",
