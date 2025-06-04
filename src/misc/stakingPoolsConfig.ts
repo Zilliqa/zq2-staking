@@ -581,5 +581,20 @@ export const stakingPoolsConfigForChainId: Record<
       },
       delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
+    {
+      definition: {
+        id: "MHhkMDkw",
+        address: "0xd090424684a9108229b830437b490363eB250A58",
+        tokenAddress: "0xE10575244f8E8735d71ed00287e9d1403f03C960",
+        iconUrl: "/static/logo_pathrocknetwork.webp",
+        name: "PathrockNetwork",
+        poolType: StakingPoolType.LIQUID,
+        tokenDecimals: 18,
+        tokenSymbol: "zLST",
+        minimumStake: 10000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
+    },
   ],
 }
