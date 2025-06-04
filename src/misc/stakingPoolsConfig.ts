@@ -641,5 +641,20 @@ export const stakingPoolsConfigForChainId: Record<
       },
       delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
+    {
+      definition: {
+        id: "MHhhNDUx",
+        address: "0xa45114E92E26B978F0B37cF19E66634f997250f9",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo_stakefish.webp",
+        name: "Stakefish",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: 10000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+    },
   ],
 }
