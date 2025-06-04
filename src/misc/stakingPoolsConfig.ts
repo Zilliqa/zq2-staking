@@ -626,5 +626,20 @@ export const stakingPoolsConfigForChainId: Record<
       },
       delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
+    {
+      definition: {
+        id: "MHg2MjI2",
+        address: "0x62269F615E1a3E36f96dcB7fDDF8B823737DD618",
+        tokenAddress: "0x770a35A5A95c2107860E9F74c1845e20289cbfe6",
+        iconUrl: "/static/logo_torchwallet.webp",
+        name: "TorchWallet.io",
+        poolType: StakingPoolType.LIQUID,
+        tokenDecimals: 18,
+        tokenSymbol: "tZIL",
+        minimumStake: 10000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
+    },
   ],
 }
