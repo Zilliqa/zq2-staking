@@ -656,5 +656,20 @@ export const stakingPoolsConfigForChainId: Record<
       },
       delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
     },
+    {
+      definition: {
+        id: "MHgwMjM3",
+        address: "0x02376bA9e0f98439eA9F76A582FBb5d20E298177",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo_alphazil.svg",
+        name: "AlphaZIL (former Ezil)",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: 10000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+    },
   ],
 }
