@@ -42,6 +42,7 @@ export interface StakingPoolDefinition {
   iconUrl: string
   minimumStake: bigint
   withdrawPeriodInMinutes: number
+  description?: string
 }
 
 export interface StakingPoolData {
@@ -269,6 +270,8 @@ export const stakingPoolsConfigForChainId: Record<
       definition: {
         id: "pool2",
         name: "Plunderswap",
+        description:
+          "We pay extra. The only validator with airdrops + reward points. Your stake powers Zilliqa's top dev team. [Stake smarter!](https://stake.plunderswap.com/)",
         poolType: StakingPoolType.LIQUID,
         address: "0x82245678902345678902345678918278372382",
         tokenAddress: "0x1234567890234567890234567890234567231",
@@ -453,6 +456,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x0000000000000000000000000000000000000000",
         iconUrl: "/static/logo_moonlet.webp",
         name: "Moonlet",
+        description:
+          "Moonlet is a trusted validator offering secure, high-performance staking for top proof-of-stake networks.",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
@@ -498,6 +503,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x7B213b5AEB896bC290F0cD8B8720eaF427098186",
         iconUrl: "/static/logo_Plunderswap.webp",
         name: "PlunderSwap",
+        description:
+          "We pay extra. The only validator with airdrops + reward points. Your stake powers Zilliqa's top dev team. [Stake smarter!](https://stake.plunderswap.com/)",
         poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "pZIL",
@@ -513,6 +520,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x2c51C97b22E73AfD33911397A20Aa5176e7Ab951",
         iconUrl: "/static/logo_Luganodes.webp",
         name: "Luganodes",
+        description:
+          "Swiss-Operated, Non-Custodial, Institutional Grade Staking Provider with $3Bn+ in Assets, Supporting 50+ PoS Networks.",
         poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "LNZIL",
@@ -543,6 +552,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x0000000000000000000000000000000000000000",
         iconUrl: "/static/logo_shardpool.svg",
         name: "Shardpool",
+        description:
+          "Stake with Shardpool, a trusted Zilliqa validator delivering top-tier uptime, secure infrastructure, and consistent rewards. Backed by years of node-running expertise—you earn more, worry less.",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
@@ -558,6 +569,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0xA1Adc08C12c684AdB28B963f251d6cB1C6a9c0c1",
         iconUrl: "/static/logo_encapsulate.webp",
         name: "Encapsulate",
+        description:
+          "Others Trust, We Validate! Your Stake is Important to Us. Help us secure Zilliqa Network while You Earn Rewards",
         poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "encapZIL",
@@ -663,6 +676,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x0000000000000000000000000000000000000000",
         iconUrl: "/static/logo_alphazil.svg",
         name: "AlphaZIL (former Ezil)",
+        description:
+          "You trusted us with your hashrate - now trust us with your stake.",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
