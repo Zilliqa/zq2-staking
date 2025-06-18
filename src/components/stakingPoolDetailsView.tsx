@@ -36,6 +36,48 @@ interface StakingPoolDetailsViewProps {
   reward?: UserNonLiquidStakingPoolRewardData
 }
 
+function convertMarkdownLinksToNextJsObjects(
+  text: string
+): Array<
+  | { objectType: "text"; value: string }
+  | { objectType: "link"; value: Array<string> }
+> {
+  const results: Array<
+    | { objectType: "text"; value: string }
+    | { objectType: "link"; value: Array<string> }
+  > = []
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
+
+  let lastIndex = 0
+  let match
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    // 1. Capture the segment of text that comes *before* the current link match.
+    const precedingText = text.substring(lastIndex, match.index).trim()
+    if (precedingText) {
+      results.push({ objectType: "text", value: precedingText })
+    }
+
+    // 2. Capture the link parts from the regex match.
+    const linkText = match[1]
+    const linkUrl = match[2]
+    results.push({ objectType: "link", value: [linkText, linkUrl] })
+
+    // 3. Update our position in the string to the end of the current match.
+    lastIndex = linkRegex.lastIndex
+  }
+
+  // 4. After the loop, capture any remaining text that comes after the final link.
+  if (lastIndex < text.length) {
+    const trailingText = text.substring(lastIndex).trim()
+    if (trailingText) {
+      results.push({ objectType: "text", value: trailingText })
+    }
+  }
+
+  return results
+}
+
 const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   stakingPoolData,
   userStakingPoolData,
@@ -267,7 +309,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
 
   return (
     <div className="relative pb-24 lg:pb-2 4k:pb-4 flex flex-col h-full ">
-      <div className="items-center flex justify-between py-1 lg:py-7 px-4 lg:pr-2.5 4k:pr-6 xs:mx-5 lg:mx-7 4k:mx-10 ">
+      <div className="items-center flex justify-between pb-1 pt-1 lg:pt-7 px-4 lg:pr-2.5 4k:pr-6 xs:mx-5 lg:mx-7 4k:mx-10">
         <div className="max-lg:ms-1 items-center w-full flex justify-between mb-5">
           <div className="flex items-center">
             <span className="text-white1 bold33 lg:mr-6 mr-2">
@@ -317,6 +359,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
               </>
             )}
           </div>
+
           <div className="flex items-center">
             <div
               onMouseDown={handleMouseDownClose}
@@ -344,6 +387,32 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
           </div>
         </div>
       </div>
+
+      {stakingPoolData.definition.description && (
+        <div className="pb-7 px-4 lg:pr-2.5 4k:pr-6 xs:mx-5 lg:mx-7 4k:mx-10 text-gray2">
+          {convertMarkdownLinksToNextJsObjects(
+            stakingPoolData.definition.description
+          ).map((item) => {
+            if (item.objectType === "text") {
+              return <span key={item.value}>{item.value}</span>
+            } else if (item.objectType === "link") {
+              return (
+                <a
+                  key={item.value[1]}
+                  href={item.value[1]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-tealPrimary hover:underline mx-1"
+                >
+                  {item.value[0]}
+                </a>
+              )
+            }
+            return null
+          })}
+        </div>
+      )}
+
       <FastFadeScroll
         isPoolLiquid={stakingPoolData.definition.poolType}
         className="overflow-y-scroll max-lg:mx-2 lg:pr-5 4k:pr-6 xs:mx-5 lg:ml-7 lg:mr-5 4k:ml-12 4k:mr-6 "
