@@ -312,7 +312,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
       <div className="items-center flex justify-between pb-1 pt-1 lg:pt-7 px-4 lg:pr-2.5 4k:pr-6 xs:mx-5 lg:mx-7 4k:mx-10">
         <div className="max-lg:ms-1 items-center w-full flex justify-between mb-5">
           <div className="flex items-center">
-            <span className="text-white1 bold33 lg:mr-6 mr-2">
+            <span className="text-white1 bold22 lg:mr-6 mr-2">
               {stakingPoolData.definition.name}
             </span>
 
@@ -321,7 +321,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                 <span className="lg:text-4xl text-xl lg:h4 text-gray3  font-light">
                   |
                 </span>
-                <span className="medium20 text-gray1 lg:ml-6 ml-2">
+                <span className="medium15 text-gray1 lg:ml-6 ml-2">
                   {stakingPoolData.definition.tokenSymbol}
                 </span>
                 <Tooltip

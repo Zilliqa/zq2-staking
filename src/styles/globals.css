@@ -199,6 +199,9 @@ button,
     @apply font-bold text-lg lg:text-2xl 4k:text-3xl lg:leading-6 text-white;
   }
 
+  .bold20 {
+    @apply font-bold text-lg lg:text-xl 4k:text-2xl lg:leading-6 text-white;  }
+
   .bold16 {
     @apply font-bold text-10 lg:text-base 4k:text-xl lg:leading-6 text-white;
   }
