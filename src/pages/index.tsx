@@ -381,7 +381,7 @@ const HomePage = () => {
                 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px] after:bg-tealPrimary
                 after:w-0 group-hover:after:w-full after:transition-all after:duration-300"
                 >
-                  Legacy Stake
+                  Unstake from ZQ1
                 </span>
               </Link>
               {isWalletConnected && <ZilGiveaway />}
