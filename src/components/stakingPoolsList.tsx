@@ -102,7 +102,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
           ${
             selectedPoolType === tab.type
               ? "bold33 text-white1 after:h-[1px] after:w-full "
-              : `bold22 text-gray3 hover:text-white after:h-[1px] after:w-0 hover:after:w-full  ${
+              : `bold22 text-gray1 hover:text-white after:h-[1px] after:w-0 hover:after:w-full  ${
                   tab.type === StakingPoolType.LIQUID
                     ? "after:right-0"
                     : "after:left-0"
