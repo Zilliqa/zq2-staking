@@ -6,7 +6,7 @@ import logoUrl from "../assets/svgs/logo.svg"
 import { Button } from "antd"
 
 // Set your launch date here
-const LAUNCH_DATE = DateTime.fromISO("2025-06-26T13:00:00Z")  
+const LAUNCH_DATE = DateTime.fromISO("2025-06-30T13:00:00Z")  
 
 function getTimeLeft() {
   const now = DateTime.now()

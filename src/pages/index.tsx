@@ -16,6 +16,8 @@ import CustomWalletConnect from "@/components/customWalletConnect"
 import MobilePopup from "@/components/mobilePopup"
 import ZilGiveaway from "@/components/zilGiveaway"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
+import { Button } from "antd"
+import Link from "next/link"
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -368,6 +370,17 @@ const HomePage = () => {
             </div>
 
             <div className="flex gap-2 sm:gap-2.5 items-center">
+            <Link
+              href="https://legacy-stake.zilliqa.com"
+              className="group px-2 md:px-3 max-lg:min-h-[39px] flex items-center text-sm rounded transition-colors duration-200"
+              target="_blank" rel="noopener noreferrer"
+            >
+              <span className="relative text-white group-hover:text-tealPrimary transition-colors duration-200
+                after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px] after:bg-tealPrimary
+                after:w-0 group-hover:after:w-full after:transition-all after:duration-300">
+                Legacy Stake
+              </span>
+            </Link>
               {isWalletConnected && <ZilGiveaway />}
               <CustomWalletConnect notConnectedClassName="btn-primary-teal sm:px-10 w-full sm:max-w-fit">
                 Connect wallet
@@ -376,7 +389,7 @@ const HomePage = () => {
           </div>
           {showAlert && (
             <div className="w-full bg-red1 px-4 text-center text-sm font-bold leading-[1.2] py-2">
-              We’re experiencing issues with chain, platform might not be
+              We're experiencing issues with chain, platform might not be
               responsive.
             </div>
           )}

@@ -65,61 +65,7 @@ const ZilGiveaway: React.FC = () => {
     setZilRequestFailed(false)
   }
 
-  return (
-    <>
-      <Button
-        size="small"
-        className="btn-primary-teal px-2 md:px-3 max-lg:min-h-[39px] "
-        onClick={() => {
-          setShowRequestZilPopup(true)
-          requestZil()
-        }}
-      >
-        + ZIL
-      </Button>
-
-      <Modal
-        title={`Requesting ZIL for ${walletAddress}`}
-        open={showRequestZilPopup}
-        onOk={() => setShowRequestZilPopup(false)}
-        onCancel={() => setShowRequestZilPopup(false)}
-        cancelButtonProps={{ className: "hidden" }}
-        okButtonProps={{ className: "hidden" }}
-        maskClosable={false}
-      >
-        <div className="pt-5">
-          {zilRequestFailed ? (
-            <>
-              <div>Request failed</div>
-              <div>{failureReason}</div>
-              <div className="flex justify-end">
-                <Button className="btn-primary-cyan " onClick={closePopup}>
-                  Ok
-                </Button>
-              </div>
-            </>
-          ) : zilRequested ? (
-            <div>
-              <div>Free ZIL should be in your wallet soon!</div>
-              <div>
-                Remember that you can only make one request every 1 minute
-              </div>
-              <div className="flex justify-end">
-                <Button
-                  className="btn-primary-teal-lg mt-5"
-                  onClick={closePopup}
-                >
-                  Ok
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="loading-blur"> Loading...</div>
-          )}
-        </div>
-      </Modal>
-    </>
-  )
+  return <></>
 }
 
 export default ZilGiveaway
