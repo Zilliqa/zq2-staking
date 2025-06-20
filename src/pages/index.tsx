@@ -392,7 +392,7 @@ const HomePage = () => {
           </div>
           {showAlert && (
             <div className="w-full bg-red1 px-4 text-center text-sm font-bold leading-[1.2] py-2">
-              We're experiencing issues with chain, platform might not be
+              We&apos;re experiencing issues with chain, platform might not be
               responsive.
             </div>
           )}
