@@ -6,7 +6,7 @@ import logoUrl from "../assets/svgs/logo.svg"
 import { Button } from "antd"
 
 // Set your launch date here
-const LAUNCH_DATE = DateTime.fromISO("2025-06-30T13:00:00Z")  
+const LAUNCH_DATE = DateTime.fromISO("2025-06-30T13:00:00Z")
 
 function getTimeLeft() {
   const now = DateTime.now()
@@ -38,22 +38,33 @@ const ComingSoon = () => {
       <div className="min-h-screen flex flex-col justify-between text-white px-4 relative overflow-hidden">
         {/* Logo at the top */}
         <div className="w-full flex justify-center pt-8 pb-4">
-          <Image src={logoUrl} alt="Logo" width={192} height={64} className="mx-auto" />
+          <Image
+            src={logoUrl}
+            alt="Logo"
+            width={192}
+            height={64}
+            className="mx-auto"
+          />
         </div>
         {/* Centered content */}
         <div className="flex-1 flex flex-col items-center justify-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-center"> Coming Soon</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-center">
+            {" "}
+            Coming Soon
+          </h1>
           <p className="text-lg md:text-xl text-gray-300 mb-8 text-center max-w-xl">
-            We&apos;re working hard to bring you the new staking platform. Stay tuned as we migrate to Zilliqa 2.0!
+            We&apos;re working hard to bring you the new staking platform. Stay
+            tuned as we migrate to Zilliqa 2.0!
           </p>
           {/* Glass effect card for counter */}
           <div className="mb-8">
-            <div
-              className="relative group rounded-3xl px-8 py-8 flex gap-6 md:gap-12 shadow-2xl bg-white/10 backdrop-blur-xl overflow-hidden transition-transform duration-300 hover:scale-105"
-            >
+            <div className="relative group rounded-3xl px-8 py-8 flex gap-6 md:gap-12 shadow-2xl bg-white/10 backdrop-blur-xl overflow-hidden transition-transform duration-300 hover:scale-105">
               {/* Animated shimmer overlay */}
               <div className="pointer-events-none absolute inset-0 z-0">
-                <div className="w-full h-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-60" style={{backgroundSize: '200% 100%'}} />
+                <div
+                  className="w-full h-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-60"
+                  style={{ backgroundSize: "200% 100%" }}
+                />
               </div>
               {/* Counter content */}
               <div className="relative z-10 flex gap-6 md:gap-12">
@@ -61,7 +72,10 @@ const ComingSoon = () => {
                   { label: "Days", value: timeLeft.days },
                   { label: "Hours", value: timeLeft.hours },
                 ].map(({ label, value }) => (
-                  <div key={label} className="flex flex-col items-center min-w-[80px]">
+                  <div
+                    key={label}
+                    className="flex flex-col items-center min-w-[80px]"
+                  >
                     <span className="text-5xl md:text-6xl font-mono font-extrabold tabular-nums drop-shadow-lg text-white">
                       {String(value).padStart(2, "0")}
                     </span>
@@ -74,8 +88,16 @@ const ComingSoon = () => {
             </div>
           </div>
           {/* Add primary button below counter */}
-          <a href="https://blog.zilliqa.com" target="_blank" rel="noopener noreferrer" className="mt-2">
-            <Button type="primary" className="btn-primary-teal px-10 py-2 text-lg font-bold rounded-full shadow-lg transition-transform duration-200 hover:scale-105">
+          <a
+            href="https://blog.zilliqa.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2"
+          >
+            <Button
+              type="primary"
+              className="btn-primary-teal px-10 py-2 text-lg font-bold rounded-full shadow-lg transition-transform duration-200 hover:scale-105"
+            >
               Latest Updates
             </Button>
           </a>
@@ -89,4 +111,4 @@ const ComingSoon = () => {
   )
 }
 
-export default ComingSoon 
+export default ComingSoon
