@@ -2,7 +2,7 @@ import Head from "next/head"
 import { useEffect, useState } from "react"
 import { DateTime } from "luxon"
 import Image from "next/image"
-import logoUrl from "../assets/svgs/logo.svg"
+import logoUrl from "../assets/svgs/zilliqa_general_logo.svg"
 import { Button } from "antd"
 
 // Set your launch date here

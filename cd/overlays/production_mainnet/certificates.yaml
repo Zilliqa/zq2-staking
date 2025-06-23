@@ -7,4 +7,4 @@ metadata:
     app.kubernetes.io/name: zq2-stake-frontend
 spec:
   domains:
-    - stake.zilliqa.com
+    - xbridge.zilliqa.com

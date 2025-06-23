@@ -7,4 +7,4 @@ metadata:
     app.kubernetes.io/name: zq2-stake-frontend
 data:
   ZQ2_STAKING_CHAIN_ID: "32770"
-  ZQ2_STAKING_APP_URL: "https://stake.zilliqa.com"
+  ZQ2_STAKING_APP_URL: "https://xbridge.zilliqa.com"
