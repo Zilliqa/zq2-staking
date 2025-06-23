@@ -89,7 +89,7 @@ const ComingSoon = () => {
           </div>
           {/* Add primary button below counter */}
           <a
-            href="https://blog.zilliqa.com"
+            href="https://x.com/zilliqa"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2"
