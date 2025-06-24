@@ -30,6 +30,10 @@ const HomePage = () => {
   const { appConfig } = AppConfigStorage.useContainer()
   const router = useRouter()
 
+  if (appConfig.appUrl === "https://stake.zilliqa.com") {
+    router.replace("/coming-soon")
+  }
+
   const { isWalletConnected, walletAddress } = WalletConnector.useContainer()
 
   const {
