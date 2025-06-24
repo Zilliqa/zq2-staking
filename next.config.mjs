@@ -24,15 +24,6 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/coming-soon",
-        permanent: false, // set to true if this redirect will remain long-term
-      },
-    ]
-  },
 }
 
 export default nextConfig
