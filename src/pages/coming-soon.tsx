@@ -53,16 +53,8 @@ const ComingSoon = () => {
             Coming Soon
           </h1>
           <p className="text-lg md:text-xl text-gray-300 mb-8 text-center max-w-xl">
-            We&apos;re working hard to bring you the new staking platform.{" "}
-            <a
-              href="https://x.com/zilliqa"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#00D0C6] hover:underline"
-            >
-              Stay tuned
-            </a>{" "}
-            as we migrate to Zilliqa 2.0!
+            We&apos;re working hard to bring you the new staking platform. Stay
+            tuned as we migrate to Zilliqa 2.0!
           </p>
           {/* Glass effect card for counter */}
           <div className="mb-8">
@@ -95,22 +87,20 @@ const ComingSoon = () => {
               </div>
             </div>
           </div>
-
-          <div className="mt-8 text-center max-w-lg">
-            <p className="mb-4">
-              If you have staked on the legacy staking you can now unstake your
-              tokens immediately.
-              <br />
-              <Button
-                href="https://zillion.zilliqa.com"
-                target="_blank"
-                type="primary"
-                className="mt-5 btn-primary-teal px-10 py-2 text-lg font-bold rounded-full shadow-lg transition-transform duration-200 hover:scale-105"
-              >
-                Unstake now
-              </Button>
-            </p>
-          </div>
+          {/* Add primary button below counter */}
+          <a
+            href="https://x.com/zilliqa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2"
+          >
+            <Button
+              type="primary"
+              className="btn-primary-teal px-10 py-2 text-lg font-bold rounded-full shadow-lg transition-transform duration-200 hover:scale-105"
+            >
+              Latest Updates
+            </Button>
+          </a>
         </div>
         {/* Footer at the bottom */}
         <footer className="w-full text-gray-500 text-sm text-center py-6">
