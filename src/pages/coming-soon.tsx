@@ -101,6 +101,24 @@ const ComingSoon = () => {
               Latest Updates
             </Button>
           </a>
+
+          {/* a block that informs users about unstaking on the legacy staking website (zillion.zilliqa.com) */}
+          <div className="mt-8 text-center max-w-2xl">
+            <p className="text-gray-300 mb-4">
+              If you have staked on the legacy staking you can now unstake your tokens immediately.<br />
+              The legacy staking portal is now available at{" "}
+              (
+              <a
+                href="https://zillion.zilliqa.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:underline"
+              >
+                zillion.zilliqa.com
+              </a>
+              )
+            </p>
+          </div>
         </div>
         {/* Footer at the bottom */}
         <footer className="w-full text-gray-500 text-sm text-center py-6">
