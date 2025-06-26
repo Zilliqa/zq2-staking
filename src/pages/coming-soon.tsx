@@ -102,6 +102,8 @@ const ComingSoon = () => {
               tokens immediately.
               <br />
               <Button
+                href="https://zillion.zilliqa.com"
+                target="_blank"
                 type="primary"
                 className="mt-5 btn-primary-teal px-10 py-2 text-lg font-bold rounded-full shadow-lg transition-transform duration-200 hover:scale-105"
               >
