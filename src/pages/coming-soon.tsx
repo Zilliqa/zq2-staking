@@ -96,8 +96,7 @@ const ComingSoon = () => {
             </div>
           </div>
 
-          {/* a block that informs users about unstaking on the legacy staking website (zillion.zilliqa.com) */}
-          <div className="mt-8 text-center max-w-2xl">
+          <div className="mt-8 text-center max-w-lg">
             <p className="mb-4">
               If you have staked on the legacy staking you can now unstake your
               tokens immediately.
