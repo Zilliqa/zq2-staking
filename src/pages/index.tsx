@@ -16,7 +16,6 @@ import CustomWalletConnect from "@/components/customWalletConnect"
 import MobilePopup from "@/components/mobilePopup"
 import ZilGiveaway from "@/components/zilGiveaway"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
-import { Button } from "antd"
 import Link from "next/link"
 
 const HomePage = () => {
@@ -27,11 +26,18 @@ const HomePage = () => {
     setIsVisible(true)
   }, [])
 
-  const { appConfig } = AppConfigStorage.useContainer()
+  const { appConfig, isPreviewAuthenticated } = AppConfigStorage.useContainer()
   const router = useRouter()
 
   if (appConfig.appUrl === "https://stake.zilliqa.com") {
     router.replace("/coming-soon")
+  }
+
+  if (
+    appConfig.appUrl === "https://stake-preview.zilliqa.com" &&
+    !isPreviewAuthenticated
+  ) {
+    router.replace("/preview_auth")
   }
 
   const { isWalletConnected, walletAddress } = WalletConnector.useContainer()
