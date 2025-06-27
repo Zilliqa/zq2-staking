@@ -15,8 +15,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const { secretHash } = req.query
 
-  console.log({ secretHash })
-
   if (secretHash !== previewSecret) {
     res.status(401).json({})
     return
