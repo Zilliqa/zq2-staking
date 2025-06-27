@@ -723,5 +723,5 @@ export const stakingPoolsConfigForChainId: Record<
       },
       delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
-  ]
+  ],
 }
