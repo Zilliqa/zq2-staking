@@ -98,6 +98,23 @@ export const MOCK_CHAIN = defineChain({
   },
 })
 
+export const CHAIN_MAINNET = defineChain({
+  id: 32769,
+  name: "Zilliqa Mainnet",
+  nativeCurrency: { name: "ZIL", symbol: "ZIL", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://api.zilliqa.com"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Otterscan",
+      url: "https://otterscan.zilliqa.com",
+    },
+  },
+})
+
 function getConnectorsForWallets(walletConnectApiKey: string, appUrl: string) {
   const projectId = walletConnectApiKey
 
@@ -132,6 +149,7 @@ export function getChain(chainId: number) {
     CHAIN_ZQ2_PROTOTESTNET,
     CHAIN_ZQ2_PROTOMAINNET,
     CHAIN_ZQ2_DOCKERCOMPOSE,
+    CHAIN_MAINNET,
     MOCK_CHAIN,
   ].find((chain) => chain.id === chainId)
 
