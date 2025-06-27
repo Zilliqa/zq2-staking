@@ -6,5 +6,5 @@ metadata:
   labels:
     app.kubernetes.io/name: zq2-stake-frontend
 data:
-  ZQ2_STAKING_CHAIN_ID: "32770"
+  ZQ2_STAKING_CHAIN_ID: "32769"
   ZQ2_STAKING_APP_URL: "https://stake.zilliqa.com"

@@ -13,6 +13,7 @@ import {
   MOCK_CHAIN,
   CHAIN_ZQ2_DEVNET,
   CHAIN_ZQ2_PROTOMAINNET,
+  CHAIN_MAINNET,
 } from "./chainConfig"
 import { readContract } from "viem/actions"
 import {
@@ -685,6 +686,42 @@ export const stakingPoolsConfigForChainId: Record<
         withdrawPeriodInMinutes: twoWeeksInMinutes,
       },
       delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+    },
+  ],
+  [CHAIN_MAINNET.id]: [
+    {
+      definition: {
+        id: "MHg2OTE2",
+        address: "0x691682FCa60Fa6B702a0a69F60d045c08f404220",
+        tokenAddress: "0xc85b0db68467dede96A7087F4d4C47731555cA7A",
+        iconUrl: "/static/logo_Plunderswap.webp",
+        name: "PlunderSwap",
+        description:
+          "We pay extra. The only validator with airdrops + reward points. Your stake powers Zilliqa's top dev team. [Stake smarter!](https://stake.plunderswap.com/)",
+        poolType: StakingPoolType.LIQUID,
+        tokenDecimals: 18,
+        tokenSymbol: "pZIL",
+        minimumStake: 10000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
+    },
+    {
+      definition: {
+        id: "MHgxMzEx",
+        address: "0x1311059DD836D7000Dc673eA4Cc834fe04e9933C",
+        tokenAddress: "0x8E3073b22F670d3A09C66D0Abb863f9E358402d2",
+        iconUrl: "/static/logo_encapsulate.webp",
+        name: "Encapsulate",
+        description:
+          "Others Trust, We Validate! Your Stake is Important to Us. Help us secure Zilliqa Network while You Earn Rewards",
+        poolType: StakingPoolType.LIQUID,
+        tokenDecimals: 18,
+        tokenSymbol: "encapZIL",
+        minimumStake: 10000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchLiquidDelegatorDataFromNetwork,
     },
   ],
 }
