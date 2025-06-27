@@ -61,6 +61,7 @@ jobs:
         application:
           - zq2-stake-protomainnet
           - zq2-stake-mainnet
+          - zq2-stake-mainnet-preview
     env:
       APP_NAME: ${{ matrix.application }}
       Z_ENV: infra/live/gcp/production/prj-p-prod-apps/z_ase1.yaml
