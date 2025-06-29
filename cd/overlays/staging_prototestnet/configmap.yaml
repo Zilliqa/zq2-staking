@@ -8,4 +8,3 @@ metadata:
 data:
   ZQ2_STAKING_CHAIN_ID: "33103"
   ZQ2_STAKING_APP_URL: "https://stake.zq2-prototestnet.zilliqa.com"
-  ZQ2_PREVIEW_SECRET_HASH: "N/A"

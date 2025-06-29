@@ -55,6 +55,6 @@ spec:
                   key: ZQ2_STAKING_GTM_ID
             - name: ZQ2_PREVIEW_SECRET_HASH
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: zq2-stake-frontend
                   key: ZQ2_PREVIEW_SECRET_HASH
