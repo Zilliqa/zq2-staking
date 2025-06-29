@@ -253,7 +253,7 @@ const StakingCalculator: React.FC = () => {
                       >
                         ~
                         {formatPercentage(
-                          stakingPoolForView!.stakingPool.data.apr
+                          stakingPoolForView!.stakingPool.data.apr || 0
                         )}
                       </span>
                     </>
@@ -446,7 +446,7 @@ const StakingCalculator: React.FC = () => {
                     <>
                       ~
                       {formatPercentage(
-                        stakingPoolForView!.stakingPool.data.apr
+                        stakingPoolForView!.stakingPool.data.apr || 0
                       )}
                     </>
                   ) : (

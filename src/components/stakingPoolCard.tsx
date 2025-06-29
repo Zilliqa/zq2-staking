@@ -159,7 +159,7 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
                     <span>APR </span>
                   </Tooltip>
 
-                  {formatPercentage(stakingPoolData.data.apr)}
+                  {formatPercentage(stakingPoolData.data.apr || 0)}
                 </>
               ) : (
                 <div className=" whitespace-nowrap mr-1 4k:mr-1.5 loading-blur">
