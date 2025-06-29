@@ -391,7 +391,9 @@ const UnstakingCalculator: React.FC = () => {
                 {stakingPoolForView!.stakingPool.data ? (
                   <>
                     ~
-                    {formatPercentage(stakingPoolForView!.stakingPool.data.apr || 0)}
+                    {formatPercentage(
+                      stakingPoolForView!.stakingPool.data.apr || 0
+                    )}
                   </>
                 ) : (
                   <div className="loading-blur  "> ~11%</div>
