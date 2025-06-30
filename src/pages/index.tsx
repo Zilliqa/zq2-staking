@@ -15,7 +15,6 @@ import ArrowBackAqua from "../assets/svgs/arrow-back-aqua.svg"
 import MobilePopup from "@/components/mobilePopup"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import Header from "@/components/header"
-import FaqButton from "@/components/faqButton"
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -263,7 +262,15 @@ const HomePage = () => {
           title="Home Page"
           selectedPoolType={selectedPoolType}
           isWalletConnected={!!isWalletConnected}
-          onClick={() => router.back()}
+          onClick={() =>
+            router.push(
+              {
+                query: {},
+              },
+              undefined,
+              { shallow: true }
+            )
+          }
         />
         {/* Header section end */}
         <div className="grow relative mx-auto overflow-y-hidden max-w-screen-4k w-full">
@@ -305,7 +312,6 @@ const HomePage = () => {
           <div>{dummyWalletPopupContent?.content}</div>
         </Modal>
       </div>
-      <FaqButton />
     </>
   )
 }

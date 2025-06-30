@@ -140,6 +140,19 @@ const Header: React.FC<HeaderProps> = ({
 
         <div className="flex gap-2 sm:gap-2.5 items-center">
           <Link
+            href="/faq"
+            className="group px-2 md:px-3 max-lg:min-h-[39px] flex items-center text-sm rounded transition-colors duration-200"
+            rel="noopener noreferrer"
+          >
+            <span
+              className="relative text-white group-hover:text-tealPrimary transition-colors duration-200
+            after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px] after:bg-tealPrimary
+            after:w-0 group-hover:after:w-full after:transition-all after:duration-300"
+            >
+              FAQ
+            </span>
+          </Link>
+          <Link
             href="https://legacy-stake.zilliqa.com"
             className="group px-2 md:px-3 max-lg:min-h-[39px] flex items-center text-sm rounded transition-colors duration-200"
             target="_blank"

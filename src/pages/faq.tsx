@@ -1,34 +1,85 @@
-import Head from "next/head"
 import { useState } from "react"
-import Image from "next/image"
-import logoUrl from "../assets/svgs/logo.svg"
 import { Button } from "antd"
+import { WalletConnector } from "@/contexts/walletConnector"
 import Header from "@/components/header"
+import { useRouter } from "next/router"
+import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 
 const faqs = [
   {
-    question: "What is Zilliqa Staking?",
-    answer:
-      "Zilliqa Staking allows you to earn rewards by participating in the network's security and governance through token delegation.",
+    question: "What is the minimum ZIL balance required to delegate?",
+    answer: "The minimum required balance is 100 ZIL.",
   },
   {
-    question: "When will the new platform launch?",
-    answer:
-      "The new staking platform is scheduled to launch on June 30, 2025. Stay tuned for updates.",
+    question: "Which wallets are supported on the Zillion staking platform?",
+    answer: "You can use ZilPay, MetaMask, Rabby, and Ledger.",
   },
   {
-    question: "What is Zilliqa 2.0?",
+    question: "How long is a reward cycle?",
     answer:
-      "Zilliqa 2.0 is an upgraded protocol version designed for better scalability, faster transactions, and EVM compatibility.",
+      "There is no fixed reward cycle. Rewards are distributed with every block.",
   },
   {
-    question: "Where can I find updates?",
+    question: "How long does unstaking take?",
     answer:
-      "Follow our official Twitter account at https://x.com/zilliqa for the latest announcements and updates.",
+      "Unstaking takes 1,209,600 blocks, which is approximately 14 days, once the network returns to ~1 second block times.",
+  },
+  {
+    question:
+      "My transaction failed due to a low gas limit when claiming staking rewards. What should I do?",
+    answer:
+      "Try increasing the gas limit to 200,000 and then attempt to claim rewards again.\nEnsure your account has at least 400 ZIL to cover the transaction with this gas setting. Do not change any other gas parameters.",
+  },
+  {
+    question:
+      "I tried with a 200000 gas limit but the transaction still failed. What are the next steps?",
+    answer: {
+      pre: "Please contact us at enquiry@zilliqa.com.\n\nInclude the following details in your message:",
+      bullets: [
+        "Your public ZIL address",
+        "The SSN (staking service node) you used for staking",
+      ],
+      post: "We'll get back to you as soon as possible.",
+    },
+  },
+  {
+    question: "Why am I not able to unstake?",
+    answer:
+      "Ensure you have claimed all pending staking rewards first. Unstaking is only possible after that. Sometimes there may be dust rewards (very small amounts not visible in the UI), which can block unstaking. If unstaking fails, always try claiming rewards first.",
+  },
+  {
+    question:
+      "What is the difference between Liquid Staking and Non-Liquid Staking?",
+    answer: [
+      { type: "bold", content: "Liquid Staking:" },
+      {
+        type: "normal",
+        content: " You receive exchangeable liquid tokens for your staked ZIL.",
+      },
+      { type: "break", content: "" },
+      { type: "bold", content: "Non-Liquid Staking:" },
+      {
+        type: "normal",
+        content:
+          " Your ZIL is locked with a validator. You earn rewards but do not receive liquid tokens.",
+      },
+    ],
+  },
+  {
+    question: "Is there a staking tutorial?",
+    answer:
+      "Yes. Please refer to the following tutorial: \nhttps://blog.zilliqa.com/how-to-restake-on-zilliqa-evm/",
+  },
+  {
+    question: "Can we change delegators without unstaking first?",
+    answer:
+      "No. You must unstake first and wait for the unbonding period to complete. Only then can you delegate with a different validator. This mechanism helps secure the blockchain and prevents malicious activity.",
   },
 ]
 
 const FAQPage = () => {
+  const router = useRouter()
+  const { isWalletConnected } = WalletConnector.useContainer()
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   const toggle = (index: number) => {
@@ -37,22 +88,20 @@ const FAQPage = () => {
 
   return (
     <>
-      <Head>
-        <title>FAQ | Zilliqa Staking</title>
-        <meta
-          name="description"
-          content="Frequently Asked Questions about Zilliqa Staking"
-        />
-      </Head>
+      {/* Header */}
+      <Header
+        showBackButton={true}
+        onBack={() => {}}
+        title="Home Page"
+        selectedPoolType={StakingPoolType.LIQUID}
+        isWalletConnected={!!isWalletConnected}
+        onClick={() => router.push("/")}
+      />
 
-      <div className="min-h-screen flex flex-col justify-between text-white px-4 relative overflow-hidden">
-        {/* Logo */}
-        <div className="w-full flex justify-center pt-8 pb-4">
-          <Image src={logoUrl} alt="Logo" width={192} height={64} />
-        </div>
-
+      {/* Page Container */}
+      <div className="min-h-screen max-h-screen overflow-y-auto text-white px-4">
         {/* Main Content */}
-        <div className="flex-1 flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center pt-8 pb-4">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-center">
             FAQ
           </h1>
@@ -83,7 +132,7 @@ const FAQPage = () => {
             ))}
           </div>
 
-          {/* Button */}
+          {/* Follow Button */}
           <a
             href="https://x.com/zilliqa"
             target="_blank"
