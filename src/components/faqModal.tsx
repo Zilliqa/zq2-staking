@@ -1,7 +1,8 @@
-import { Modal } from "antd"
+import { Modal, Tooltip } from "antd"
 import Image from "next/image"
 import CloseIcon from "../assets/svgs/close-icon.svg"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
+import { useRouter } from "next/router"
 
 interface FaqModalProps {
   open: boolean
@@ -32,7 +33,7 @@ const FAQS = [
   {
     question: "I tried with a 200000 gas limit but the transaction still failed. What are the next steps?",
     answer: {
-      pre: "Please contact us at enquiry@zilliqa.com. Include the following details in your message:",
+      pre: "Please contact us at enquiry@zilliqa.com.\n\nInclude the following details in your message:",
       bullets: [
         "Your public ZIL address",
         "The SSN (staking service node) you used for staking",
@@ -46,11 +47,17 @@ const FAQS = [
   },
   {
     question: "What is the difference between Liquid Staking and Non-Liquid Staking?",
-    answer: "Liquid Staking: You receive exchangeable liquid tokens for your staked ZIL..\nNon-Liquid Staking: Your ZIL is locked with a validator. You earn rewards but do not receive liquid tokens.",
+    answer: [
+      { type: 'bold', content: 'Liquid Staking:' },
+      { type: 'normal', content: ' You receive exchangeable liquid tokens for your staked ZIL.' },
+      { type: 'break', content: '' },
+      { type: 'bold', content: 'Non-Liquid Staking:' },
+      { type: 'normal', content: ' Your ZIL is locked with a validator. You earn rewards but do not receive liquid tokens.' },
+    ]
   },
   {
     question: "Is there a staking tutorial?",
-    answer: "Yes. Please refer to the following tutorial: https://docs.zilliqa.com/staking",
+    answer: "Yes. Please refer to the following tutorial: \nhttps://blog.zilliqa.com/how-to-restake-on-zilliqa-evm/",
   },
   {
     question: "Can we change delegators without unstaking first?",
@@ -58,37 +65,104 @@ const FAQS = [
   },
 ]
 
-// Helper to convert URLs in text to clickable links
+// Add a slugify helper function to create URL-friendly IDs
+const slugify = (text: string) => {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "") // remove special chars
+    .replace(/\s+/g, "-") // replace spaces with -
+}
+
+// A single, unified component for handling both links and emails
+function SmartLink({ link }: { link: string }) {
+  const isEmail = link.includes('@');
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(link);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const tooltipText = isEmail
+    ? copied ? "Email address copied!" : "Copy to clipboard"
+    : "Open in a new tab";
+
+  return (
+    <Tooltip title={tooltipText}>
+      <a
+        href={isEmail ? `mailto:${link}` : link}
+        onClick={isEmail ? handleCopy : undefined}
+        target={isEmail ? undefined : '_blank'}
+        rel={isEmail ? undefined : 'noopener noreferrer'}
+        className="text-white underline hover:text-tealPrimary transition-colors break-all"
+      >
+        {link}
+      </a>
+    </Tooltip>
+  );
+}
+
+// Helper to convert URLs and emails in text to clickable links
 function renderAnswerWithLinks(text: string) {
-  // Regex to match URLs
-  const urlRegex = /(https?:\/\/[^\s]+)/g
-  // Split by URLs
-  const parts = text.split(urlRegex)
-  return parts.map((part, i) => {
-    if (urlRegex.test(part)) {
-      return (
-        <a
-          key={i}
-          href={part}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-tealPrimary underline break-all"
-        >
-          {part}
-        </a>
-      )
+  const parts: (string | JSX.Element)[] = []
+  let lastIndex = 0
+  const regex = /(https?:\/\/[^\s]+)|([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g
+  let i = 0
+
+  let match
+  while ((match = regex.exec(text)) !== null) {
+    const key = `part-${i++}`
+    // Add the text before the match
+    if (match.index > lastIndex) {
+      parts.push(text.substring(lastIndex, match.index))
     }
-    // For line breaks
-    return part.split(/\n/).map((line, j, arr) =>
-      j < arr.length - 1 ? [line, <br key={j} />] : line
-    )
+
+    const matchedText = match[0]
+    parts.push(<SmartLink key={key} link={matchedText} />)
+    lastIndex = regex.lastIndex
+  }
+
+  // Add the remaining text after the last match
+  if (lastIndex < text.length) {
+    parts.push(text.substring(lastIndex))
+  }
+
+  // Now process line breaks for all string parts
+  return parts.flatMap((part, i) => {
+    if (typeof part === "string") {
+      return part.split("\n").map((line, j, arr) => (
+        <span key={`${i}-${j}`}>
+          {line}
+          {j < arr.length - 1 && <br />}
+        </span>
+      ))
+    }
+    return part
   })
 }
 
-function renderFaqAnswer(answer: string | { pre: string; bullets: string[]; post?: string }) {
+function renderFaqAnswer(answer: string | { pre: string; bullets: string[]; post?: string } | Array<{ type: string; content: string }>) {
   if (typeof answer === "string") {
     return <div className="text-gray2 break-words whitespace-pre-line w-full">{renderAnswerWithLinks(answer)}</div>
+  } else if (Array.isArray(answer)) {
+    // Handle the new array format for mixed styling
+    return (
+      <div className="text-gray2 break-words w-full">
+        {answer.map((part, idx) => {
+          if (part.type === 'bold') {
+            return <strong key={idx}>{part.content}</strong>
+          }
+          if (part.type === 'break') {
+            return <br key={idx} />
+          }
+          return <span key={idx}>{part.content}</span>
+        })}
+      </div>
+    )
   } else {
+    // Handle the bulleted list format
     return (
       <div className="text-gray2 break-words whitespace-pre-line w-full">
         {renderAnswerWithLinks(answer.pre)}
@@ -105,6 +179,42 @@ function renderFaqAnswer(answer: string | { pre: string; bullets: string[]; post
 
 const FaqModal: React.FC<FaqModalProps> = ({ open, onClose }) => {
   const [isClickedClose, setIsClickedClose] = useState(false)
+  const router = useRouter()
+  const faqContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // When the modal opens and there's a specific faq in the query...
+    if (open && typeof router.query.faq === "string" && router.query.faq !== "true") {
+      setTimeout(() => { // Use a timeout to ensure the element is rendered
+        const element = document.getElementById(router.query.faq as string)
+        if (element) {
+          // Use the modern, reliable way to scroll
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          })
+
+          /*
+          // Highlight the linked question for better UX
+          element.style.transition = "background-color 0.5s ease"
+          element.style.backgroundColor = "rgba(255, 255, 255, 0.1)"
+          setTimeout(() => {
+            element.style.backgroundColor = "transparent"
+          }, 2000)
+          */
+        }
+      }, 100)
+    }
+  }, [open, router.query.faq])
+
+  const handleQuestionClick = (slug: string) => {
+    // Update the URL to reflect the clicked question for easy sharing
+    router.push(
+      { query: { ...router.query, faq: slug } },
+      undefined,
+      { shallow: true, scroll: false }
+    )
+  }
 
   const handleMouseDownClose = () => setIsClickedClose(true)
   const handleMouseUpClose = () => setIsClickedClose(false)
@@ -114,7 +224,6 @@ const FaqModal: React.FC<FaqModalProps> = ({ open, onClose }) => {
       open={open}
       onCancel={onClose}
       footer={null}
-      width={500}
       centered
       closable={false}
       bodyStyle={{
@@ -126,7 +235,7 @@ const FaqModal: React.FC<FaqModalProps> = ({ open, onClose }) => {
         maxHeight: 440,
         overflow: "hidden"
       }}
-      className="dark-faq-modal"
+      className="dark-faq-modal w-[90%] max-w-[500px]"
     >
       {/* Validator-style Close Button with natural width and animated text */}
       <div
@@ -160,13 +269,21 @@ const FaqModal: React.FC<FaqModalProps> = ({ open, onClose }) => {
       </div>
 
       {/* FAQ List */}
-      <div className="px-10 pb-10 max-h-[320px] overflow-y-auto overflow-x-hidden scrollbar-aqua">
-        {FAQS.map((faq, idx) => (
-          <div key={idx} className="py-4 border-b border-white/10 last:border-0">
-            <div className="bold20 break-words w-full mb-1">{faq.question}</div>
-            {renderFaqAnswer(faq.answer)}
-          </div>
-        ))}
+      <div ref={faqContainerRef} className="px-10 pb-10 max-h-[320px] overflow-y-auto overflow-x-hidden scrollbar-aqua">
+        {FAQS.map((faq, idx) => {
+          const slug = slugify(faq.question);
+          return (
+            <div key={idx} id={slug} className="py-4 border-b border-white/10 last:border-0 scroll-mt-8">
+              <div 
+                className="bold20 break-words w-full mb-1 cursor-pointer"
+                onClick={() => handleQuestionClick(slug)}
+              >
+                {faq.question}
+              </div>
+              {renderFaqAnswer(faq.answer)}
+            </div>
+          )
+        })}
       </div>
     </Modal>
   )

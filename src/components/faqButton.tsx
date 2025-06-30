@@ -1,12 +1,25 @@
 import { Button } from "antd"
-import { useState } from "react"
 import FaqModal from "@/components/faqModal"
+import { useRouter } from "next/router"
 
 const FaqButton = () => {
-  const [open, setOpen] = useState(false)
+  const router = useRouter()
+  // The modal is open if the `faq` query param exists.
+  const isFaqOpen = !!router.query.faq
 
   const handleFaqClick = () => {
-    setOpen(true)
+    // Open the modal by setting a generic query param.
+    router.push(
+      { query: { ...router.query, faq: "true" } },
+      undefined,
+      { shallow: true }
+    )
+  }
+
+  const handleClose = () => {
+    // Close the modal by removing the `faq` query param from the URL.
+    const { faq, ...rest } = router.query
+    router.push({ query: rest }, undefined, { shallow: true })
   }
 
   return (
@@ -28,7 +41,7 @@ const FaqButton = () => {
           ?
         </Button>
       </div>
-      <FaqModal open={open} onClose={() => setOpen(false)} />
+      <FaqModal open={isFaqOpen} onClose={handleClose} />
     </>
   )
 }
