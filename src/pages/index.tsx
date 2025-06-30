@@ -381,7 +381,7 @@ const HomePage = () => {
 
             <div className="flex gap-2 sm:gap-2.5 items-center">
               <Link
-                href="https://legacy-stake.zilliqa.com"
+                href="https://zillion.zilliqa.com"
                 className="group px-2 md:px-3 max-lg:min-h-[39px] flex items-center text-sm rounded transition-colors duration-200"
                 target="_blank"
                 rel="noopener noreferrer"

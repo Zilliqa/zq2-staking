@@ -748,7 +748,7 @@ export const stakingPoolsConfigForChainId: Record<
         iconUrl: "/static/logo_Dteam.webp",
         name: "DTEAM",
         description:
-          "[DTeam.tech](https://dteam.tech) provides reliable infrastructure to support and scale projects effectively, along with building essential tools tailored for project communities, node operators and developers.",
+          "[dteam.tech](https://dteam.tech) provides reliable infrastructure to support and scale projects effectively, along with building essential tools tailored for project communities, node operators and developers.",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
@@ -796,6 +796,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x9e4E0F7A06E50DA13c78cF8C83E907f792DE54fd",
         iconUrl: "/static/logo_torchwallet.webp",
         name: "TorchWallet.io",
+        description:
+          "Torch is the most advanced and widely used mobile and desktop wallet for Zilliqa. It offers a smooth experience for staking, transactions, swapping, full support for both Legacy and EVM accounts, and more. [Try it out now!](https://torchwallet.io/)",
         poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "tZIL",
@@ -961,6 +963,21 @@ export const stakingPoolsConfigForChainId: Record<
         name: "Citadel.one",
         description:
           "Citadel.one is a multi-asset non-custodial staking platform that lets anyone become a part of decentralized infrastructure and earn passive income. Stake with our nodes or any other validator across multiple networks in a few clicks.",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: 100000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+    },
+    {
+      definition: {
+        id: "MHhlNjdl",
+        address: "0xe67e119DCdC1168EC8089F4647702A72A0fCBc7f",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo_pathrocknetwork.webp",
+        name: "PathrockNetwork",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
