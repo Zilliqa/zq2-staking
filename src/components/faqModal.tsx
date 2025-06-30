@@ -96,7 +96,7 @@ const FaqModal: React.FC<FaqModalProps> = ({ open, onClose }) => {
       <div className="px-10 pb-10 max-h-[320px] overflow-y-auto scrollbar-aqua">
         {FAQS.map((faq, idx) => (
           <div key={idx} className="py-4 border-b border-white/10 last:border-0">
-            <div className="semi14 xl:whitespace-nowrap mb-1">{faq.question}</div>
+            <div className="bold20 xl:whitespace-nowrap mb-1">{faq.question}</div>
             <div className="text-gray2">{faq.answer}</div>
           </div>
         ))}
