@@ -17,6 +17,7 @@ import MobilePopup from "@/components/mobilePopup"
 import ZilGiveaway from "@/components/zilGiveaway"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import Link from "next/link"
+import FaqButton from "@/components/faqButton"
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -446,6 +447,7 @@ const HomePage = () => {
           <div>{dummyWalletPopupContent?.content}</div>
         </Modal>
       </div>
+      <FaqButton />
     </>
   )
 }
