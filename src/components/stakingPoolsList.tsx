@@ -136,7 +136,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
       </nav>
 
       <>
-        <div className="flex gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6  px-4 xs:px-6 4k:px-10">
+        {/* <div className="flex gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6  px-4 xs:px-6 4k:px-10">
           <SortBtn
             liquidType={selectedPoolType === StakingPoolType.LIQUID}
             variable="APR"
@@ -158,7 +158,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
             onClick={() => handleSortClick("Commission")}
             tooltip="Percentage of your staking rewards paid to the validator."
           />
-        </div>
+        </div> */}
 
         <FastFadeScroll
           isPoolLiquid={stakingPoolForView?.stakingPool.definition.poolType}
