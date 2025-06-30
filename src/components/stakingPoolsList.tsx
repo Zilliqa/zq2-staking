@@ -29,37 +29,53 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
   const [isAscending, setIsAscending] = useState(true)
 
   // Function to get the value to sort by based on the criteria
-  const getSortValue = (data: any, criteria: string | null) => {
-    if (!data) return 0
+  // const getSortValue = (data: any, criteria: string | null) => {
+  //   if (!data) return 0
 
-    switch (criteria) {
-      case "APR":
-        return data.apr || 0
-      case "VP":
-        return (data.votingPower || 0) * 100
-      case "Commission":
-        return (data.commission || 0) * 100
+  //   switch (criteria) {
+  //     case "APR":
+  //       return data.apr || 0
+  //     case "VP":
+  //       return (data.votingPower || 0) * 100
+  //     case "Commission":
+  //       return (data.commission || 0) * 100
 
-      default:
-        return 0
+  //     default:
+  //       return 0
+  //   }
+  // }
+
+  // const orderBySortCriteria = (a: any, b: any) => {
+  //   const aValue = getSortValue(a.stakingPool.data, sortCriteria)
+  //   const bValue = getSortValue(b.stakingPool.data, sortCriteria)
+  //   return isAscending ? aValue - bValue : bValue - aValue
+  // }
+
+  // const sortedLiquidStakingPoolsData = useMemo(
+  //   () =>
+  //     combinedStakingPoolsData
+  //       .filter(
+  //         (pool) => pool.stakingPool.definition.poolType === selectedPoolType
+  //       )
+  //       .toSorted(orderBySortCriteria),
+  //   [combinedStakingPoolsData, sortCriteria, isAscending, selectedPoolType]
+  // )
+
+  function shuffleOrder<T>(arr: T[]): T[] {
+    const a = arr.slice()
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[a[i], a[j]] = [a[j], a[i]]
     }
+    return a
   }
 
-  const orderBySortCriteria = (a: any, b: any) => {
-    const aValue = getSortValue(a.stakingPool.data, sortCriteria)
-    const bValue = getSortValue(b.stakingPool.data, sortCriteria)
-    return isAscending ? aValue - bValue : bValue - aValue
-  }
-
-  const sortedLiquidStakingPoolsData = useMemo(
-    () =>
-      combinedStakingPoolsData
-        .filter(
-          (pool) => pool.stakingPool.definition.poolType === selectedPoolType
-        )
-        .toSorted(orderBySortCriteria),
-    [combinedStakingPoolsData, sortCriteria, isAscending, selectedPoolType]
-  )
+  const sortedLiquidStakingPoolsData = useMemo(() => {
+    const filtered = combinedStakingPoolsData.filter(
+      (pool) => pool.stakingPool.definition.poolType === selectedPoolType
+    )
+    return shuffleOrder(filtered)
+  }, [combinedStakingPoolsData, selectedPoolType])
 
   const handleSortClick = (criteria: "APR" | "VP" | "Commission") => {
     if (sortCriteria === criteria) {
@@ -120,7 +136,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
       </nav>
 
       <>
-        <div className="flex gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6  px-4 xs:px-6 4k:px-10">
+        {/* <div className="flex gap-x-2.5 mt-3 4k:mt-6 mb-2.5 4k:mb-5 max-h-[5vh] mx-3 lg:mx-2 xl:mx-5 4k:mx-6  px-4 xs:px-6 4k:px-10">
           <SortBtn
             liquidType={selectedPoolType === StakingPoolType.LIQUID}
             variable="APR"
@@ -142,7 +158,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
             onClick={() => handleSortClick("Commission")}
             tooltip="Percentage of your staking rewards paid to the validator."
           />
-        </div>
+        </div> */}
 
         <FastFadeScroll
           isPoolLiquid={stakingPoolForView?.stakingPool.definition.poolType}
