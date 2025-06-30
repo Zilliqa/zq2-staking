@@ -26,19 +26,8 @@ const HomePage = () => {
     setIsVisible(true)
   }, [])
 
-  const { appConfig, isPreviewAuthenticated } = AppConfigStorage.useContainer()
+  const { appConfig } = AppConfigStorage.useContainer()
   const router = useRouter()
-
-  if (appConfig.appUrl === "https://stake.zilliqa.com") {
-    router.replace("/coming-soon")
-  }
-
-  if (
-    appConfig.appUrl === "https://stake-preview.zilliqa.com" &&
-    !isPreviewAuthenticated
-  ) {
-    router.replace("/preview_auth")
-  }
 
   const { isWalletConnected, walletAddress } = WalletConnector.useContainer()
 
