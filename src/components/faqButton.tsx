@@ -9,11 +9,9 @@ const FaqButton = () => {
 
   const handleFaqClick = () => {
     // Open the modal by setting a generic query param.
-    router.push(
-      { query: { ...router.query, faq: "true" } },
-      undefined,
-      { shallow: true }
-    )
+    router.push({ query: { ...router.query, faq: "true" } }, undefined, {
+      shallow: true,
+    })
   }
 
   const handleClose = () => {
@@ -46,4 +44,4 @@ const FaqButton = () => {
   )
 }
 
-export default FaqButton 
+export default FaqButton
