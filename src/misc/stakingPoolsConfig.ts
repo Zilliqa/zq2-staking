@@ -990,5 +990,20 @@ export const stakingPoolsConfigForChainId: Record<
       },
       delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
     },
+    {
+      definition: {
+        id: "MHgyNjMy",
+        address: "0x26322705FcBF5d3065707C408B6594912dAa3488",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo_cryptec.jpg",
+        name: "Cryptech-Hacken",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: 100000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+    },
   ],
 }
