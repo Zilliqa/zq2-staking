@@ -98,6 +98,10 @@ const useStakingPoolsStorage = () => {
 
   const [isUnstakingDataLoading, setIsUnstakingDataLoading] = useState(false)
 
+  const [combinedStakingPoolsData, setCombinedStakingPoolsData] = useState<
+    any[]
+  >([])
+
   /**
    * This interval forces rerender and state recalculation for subset of items
    * that have availableAt property. This is done by simply copying such state.
@@ -236,30 +240,39 @@ const useStakingPoolsStorage = () => {
     }
   }
 
-  const combinedStakingPoolsData = availableStakingPoolsData
-    .map((stakingPool) => {
-      const userStakingPoolData = userStakingPoolsData.find(
-        (userPool) => userPool.address === stakingPool.definition.address
-      )
+  useEffect(() => {
+    if (!availableStakingPoolsData || !userStakingPoolsData) {
+      setCombinedStakingPoolsData([])
+      return
+    }
 
-      return {
-        stakingPool,
-        userData: userStakingPoolData,
-      }
-    })
-    .toSorted((a, b) => {
-      const diff =
-        (b.userData?.stakingTokenAmount || 0n) -
-        (a.userData?.stakingTokenAmount || 0n)
-
-      if (diff === 0n) {
-        return a.stakingPool.definition.name.localeCompare(
-          b.stakingPool.definition.name
+    const combined = availableStakingPoolsData
+      .map((stakingPool) => {
+        const userStakingPoolData = userStakingPoolsData.find(
+          (userPool) => userPool.address === stakingPool.definition.address
         )
-      }
 
-      return diff > 0 ? 1 : -1
-    })
+        return {
+          stakingPool,
+          userData: userStakingPoolData,
+        }
+      })
+      .toSorted((a, b) => {
+        const diff =
+          (b.userData?.stakingTokenAmount || 0n) -
+          (a.userData?.stakingTokenAmount || 0n)
+
+        if (diff === 0n) {
+          return a.stakingPool.definition.name.localeCompare(
+            b.stakingPool.definition.name
+          )
+        }
+
+        return diff > 0 ? 1 : -1
+      })
+
+    setCombinedStakingPoolsData(combined)
+  }, [availableStakingPoolsData, userStakingPoolsData])
 
   const combinedSelectedStakingPoolForViewData = stakingPoolForView
     ? {
