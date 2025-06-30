@@ -137,7 +137,7 @@ const FAQPage = () => {
             href="https://x.com/zilliqa"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-10"
+            className="mt-10 px-4 py-4 block"
           >
             <Button
               type="primary"
