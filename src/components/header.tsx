@@ -1,5 +1,3 @@
-// components/Header.tsx
-
 import React from "react"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import { useEffect, useState } from "react"
