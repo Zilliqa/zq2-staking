@@ -232,10 +232,12 @@ const FaqModal: React.FC<FaqModalProps> = ({ open, onClose }) => {
         borderRadius: 18,
         boxShadow: "0 8px 32px 0 rgba(0,0,0,0.45)",
         border: "1px solid rgba(255,255,255,0.07)",
-        maxHeight: 440,
-        overflow: "hidden"
+        maxHeight: "70vh",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
       }}
-      className="dark-faq-modal w-[90%] max-w-[500px]"
+      className="dark-faq-modal w-[90%] max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-[1400px]"
     >
       {/* Validator-style Close Button with natural width and animated text */}
       <div
@@ -263,13 +265,13 @@ const FaqModal: React.FC<FaqModalProps> = ({ open, onClose }) => {
       </div>
 
       {/* Custom Header with Gradient Underline */}
-      <div className="px-8 pt-8 pb-4 relative">
+      <div className="px-8 pt-8 pb-4 relative shrink-0">
         <div className="body1 text-white">FAQ</div>
         <div className="h-0.5 w-24 mt-2 rounded" style={{ background: "linear-gradient(90deg, #00d0c6 0%, #522eff 100%)", opacity: 0.7 }} />
       </div>
 
       {/* FAQ List */}
-      <div ref={faqContainerRef} className="px-10 pb-10 max-h-[320px] overflow-y-auto overflow-x-hidden scrollbar-aqua">
+      <div ref={faqContainerRef} className="grow px-10 pb-10 overflow-y-auto overflow-x-hidden scrollbar-aqua">
         {FAQS.map((faq, idx) => {
           const slug = slugify(faq.question);
           return (
