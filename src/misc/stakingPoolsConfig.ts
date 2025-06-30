@@ -632,6 +632,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x245E6AB0d092672B18F27025385f98E2EC3a3275",
         iconUrl: "/static/logo_lithiumdigital.webp",
         name: "Lithium Digital",
+        description:
+          "Institutional Grade Security and User-Level Simplicity. Lithium Digital is Reliability You Can Stake On.",
         poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "litZil",
@@ -978,6 +980,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x0000000000000000000000000000000000000000",
         iconUrl: "/static/logo_pathrocknetwork.webp",
         name: "PathrockNetwork",
+        description:
+          "PathrockNetwork provides secure, non-custodial staking for Proof-of-Stake blockchains by operating highly reliable validators across multiple networks. Come and Stake with us.",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
