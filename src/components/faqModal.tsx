@@ -10,31 +10,98 @@ interface FaqModalProps {
 
 const FAQS = [
   {
-    question: "What is Zilliqa staking?",
-    answer:
-      "Staking on Zilliqa allows you to delegate your ZIL tokens to validators and earn rewards while helping secure the network.",
+    question: "What is the minimum ZIL balance required to delegate?",
+    answer: "The minimum required balance is 100 ZIL.",
   },
   {
-    question: "How do I claim my staking rewards?",
-    answer:
-      "You can claim your rewards from the staking portal by clicking the 'Claim' button when rewards are available.",
+    question: "Which wallets are supported on the Zillion staking platform?",
+    answer: "You can use ZilPay, MetaMask, Rabby, and Ledger.",
   },
   {
-    question: "Is there a minimum amount to stake?",
-    answer:
-      "Yes, there is a minimum staking amount. Please refer to the pool details for the exact value.",
+    question: "How long is a reward cycle?",
+    answer: "There is no fixed reward cycle. Rewards are distributed with every block.",
   },
   {
-    question: "How long does it take to unstake?",
-    answer:
-      "Unstaking periods may vary by pool. Please check the pool details for specific timings.",
+    question: "How long does unstaking take?",
+    answer: "Unstaking takes 1,209,600 blocks, which is approximately 14 days, once the network returns to ~1 second block times.",
   },
   {
-    question: "Are my funds safe while staking?",
-    answer:
-      "Staking is generally safe, but always do your own research and choose reputable validators.",
+    question: "My transaction failed due to a low gas limit when claiming staking rewards. What should I do?",
+    answer: "Try increasing the gas limit to 200,000 and then attempt to claim rewards again.\nEnsure your account has at least 400 ZIL to cover the transaction with this gas setting. Do not change any other gas parameters.",
+  },
+  {
+    question: "I tried with a 200000 gas limit but the transaction still failed. What are the next steps?",
+    answer: {
+      pre: "Please contact us at enquiry@zilliqa.com. Include the following details in your message:",
+      bullets: [
+        "Your public ZIL address",
+        "The SSN (staking service node) you used for staking",
+      ],
+      post: "We'll get back to you as soon as possible.",
+    },
+  },
+  {
+    question: "Why am I not able to unstake?",
+    answer: "Ensure you have claimed all pending staking rewards first. Unstaking is only possible after that. Sometimes there may be dust rewards (very small amounts not visible in the UI), which can block unstaking. If unstaking fails, always try claiming rewards first.",
+  },
+  {
+    question: "What is the difference between Liquid Staking and Non-Liquid Staking?",
+    answer: "Liquid Staking: You receive exchangeable liquid tokens for your staked ZIL..\nNon-Liquid Staking: Your ZIL is locked with a validator. You earn rewards but do not receive liquid tokens.",
+  },
+  {
+    question: "Is there a staking tutorial?",
+    answer: "Yes. Please refer to the following tutorial: https://docs.zilliqa.com/staking",
+  },
+  {
+    question: "Can we change delegators without unstaking first?",
+    answer: "No. You must unstake first and wait for the unbonding period to complete. Only then can you delegate with a different validator. This mechanism helps secure the blockchain and prevents malicious activity.",
   },
 ]
+
+// Helper to convert URLs in text to clickable links
+function renderAnswerWithLinks(text: string) {
+  // Regex to match URLs
+  const urlRegex = /(https?:\/\/[^\s]+)/g
+  // Split by URLs
+  const parts = text.split(urlRegex)
+  return parts.map((part, i) => {
+    if (urlRegex.test(part)) {
+      return (
+        <a
+          key={i}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-tealPrimary underline break-all"
+        >
+          {part}
+        </a>
+      )
+    }
+    // For line breaks
+    return part.split(/\n/).map((line, j, arr) =>
+      j < arr.length - 1 ? [line, <br key={j} />] : line
+    )
+  })
+}
+
+function renderFaqAnswer(answer: string | { pre: string; bullets: string[]; post?: string }) {
+  if (typeof answer === "string") {
+    return <div className="text-gray2 break-words whitespace-pre-line w-full">{renderAnswerWithLinks(answer)}</div>
+  } else {
+    return (
+      <div className="text-gray2 break-words whitespace-pre-line w-full">
+        {renderAnswerWithLinks(answer.pre)}
+        <ul className="list-disc pl-6 my-2">
+          {answer.bullets.map((item, idx) => (
+            <li key={idx}>{item}</li>
+          ))}
+        </ul>
+        {answer.post && <div>{renderAnswerWithLinks(answer.post)}</div>}
+      </div>
+    )
+  }
+}
 
 const FaqModal: React.FC<FaqModalProps> = ({ open, onClose }) => {
   const [isClickedClose, setIsClickedClose] = useState(false)
@@ -93,11 +160,11 @@ const FaqModal: React.FC<FaqModalProps> = ({ open, onClose }) => {
       </div>
 
       {/* FAQ List */}
-      <div className="px-10 pb-10 max-h-[320px] overflow-y-auto scrollbar-aqua">
+      <div className="px-10 pb-10 max-h-[320px] overflow-y-auto overflow-x-hidden scrollbar-aqua">
         {FAQS.map((faq, idx) => (
           <div key={idx} className="py-4 border-b border-white/10 last:border-0">
-            <div className="bold20 xl:whitespace-nowrap mb-1">{faq.question}</div>
-            <div className="text-gray2">{faq.answer}</div>
+            <div className="bold20 break-words w-full mb-1">{faq.question}</div>
+            {renderFaqAnswer(faq.answer)}
           </div>
         ))}
       </div>
