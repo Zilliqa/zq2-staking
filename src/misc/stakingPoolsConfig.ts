@@ -997,6 +997,42 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x0000000000000000000000000000000000000000",
         iconUrl: "/static/logo_cryptec.jpg",
         name: "Cryptech-Hacken",
+        description:
+          "Cryptech is Hacken's official node validator provider, combining Cryptech's expertise in validation with Hacken's top cybersecurity services to ensure secure, efficient, and robust staking operations.",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: 100000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+    },
+    {
+      definition: {
+        id: "MHg2MDU3",
+        address: "0x60571E6c6d55109e6705d17956201a0Cf39f1198",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo_rockx.jpg",
+        name: "RockX",
+        description:
+          "The largest Asian-based institutional grade staking and RPC provider.",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: 100000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+    },
+    {
+      definition: {
+        id: "MHhiYTY2",
+        address: "0xba669Cc6B49218624E84920dc8136a05411B1Ec8",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo_stakin.jpg",
+        name: "Stakin",
+        description:
+          "[Stakin.com](Stakin.com) Leading institutional-grade web3 infrastructure and non-custodial staking service provider. ISO27001 Certified and Audited.",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
