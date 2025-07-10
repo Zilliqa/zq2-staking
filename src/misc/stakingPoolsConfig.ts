@@ -929,10 +929,10 @@ export const stakingPoolsConfigForChainId: Record<
         id: "MHhGN0Y0",
         address: "0xF7F4049e7472fC32805Aae5bcCE909419a34D254",
         tokenAddress: "0x737EBf814D2C14fb21E00Fd2990AFc364C2AF506",
-        iconUrl: "/static/logo_shark.png",
-        name: "Stake Shark",
+        iconUrl: "/static/logo_shark.svg",
+        name: "StakeShark",
         description:
-          "Industry Leader. Trusted by 200,000 delegators since 2019. Over $200 million in staked assets across 30+ networks.",
+          "StakeShark ([https://www.stakeshark.io](https://www.stakeshark.io)) is a trusted staking validator with 200.000 clients offering secure and profitable staking across 15+ PoS networks",
         poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "shZIL",
