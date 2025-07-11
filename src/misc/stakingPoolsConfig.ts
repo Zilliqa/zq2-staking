@@ -932,7 +932,7 @@ export const stakingPoolsConfigForChainId: Record<
         iconUrl: "/static/logo_shark.svg",
         name: "StakeShark",
         description:
-          "[StakeShark](https://www.stakeshark.io) is a trusted staking validator with 200.000 clients offering secure and profitable staking across 15+ PoS networks",
+          "[Stake Shark](https://www.stakeshark.io) is a trusted staking validator with 200.000 clients offering secure and profitable staking across 15+ PoS networks",
         poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "shZIL",
