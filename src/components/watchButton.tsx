@@ -10,7 +10,7 @@ const WatchButton = () => {
 
   const handleWatchClick = () => {
     if (walletAddress) {
-      router.push(`/watch/address=${walletAddress}`)
+      router.push(`/watch?address=${walletAddress}`)
     } else {
       router.push("/watch")
     }
