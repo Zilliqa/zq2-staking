@@ -40,3 +40,4 @@ renders/
 secrets.cache.yaml
 
 .trunk/
+.vscode/
