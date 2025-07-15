@@ -18,6 +18,7 @@ import ZilGiveaway from "@/components/zilGiveaway"
 import { StakingPoolType } from "@/misc/stakingPoolsConfig"
 import Link from "next/link"
 import FaqButton from "@/components/faqButton"
+import WatchButton from "@/components/watchButton"
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -437,6 +438,7 @@ const HomePage = () => {
         </Modal>
       </div>
       <FaqButton />
+      <WatchButton />
     </>
   )
 }

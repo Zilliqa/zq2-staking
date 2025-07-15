@@ -100,3 +100,27 @@ export function formatUnitsWithMaxPrecision(
 export function getTxExplorerUrl(txHash: string, chainId: number) {
   return `${getChain(chainId).blockExplorers.default.url}/tx/${txHash}`
 }
+
+/**
+ * Formats ZIL amount for display with appropriate precision
+ */
+export function formatZil(amount: bigint): string {
+  const zilAmount = parseFloat(formatUnits(amount, 18))
+
+  if (zilAmount === 0) {
+    return "0"
+  }
+
+  if (zilAmount < 0.001) {
+    return "< 0.001"
+  }
+
+  if (zilAmount < 1) {
+    return zilAmount.toFixed(3).replace(/\.?0+$/, "")
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(zilAmount)
+}
