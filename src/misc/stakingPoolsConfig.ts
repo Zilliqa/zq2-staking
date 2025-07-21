@@ -63,7 +63,8 @@ export interface StakingPoolConfig {
   definition: StakingPoolDefinition
   delegatorDataProvider: (
     definition: StakingPoolDefinition,
-    chainId: number
+    chainId: number,
+    averageBlockTimeInSeconds: number
   ) => Promise<StakingPoolData>
 }
 
@@ -80,7 +81,8 @@ async function mockDelegatorDataProvider(
 
 async function fetchLiquidDelegatorDataFromNetwork(
   definition: StakingPoolDefinition,
-  chainId: number
+  chainId: number,
+  averageBlockTimeInSeconds: number
 ): Promise<StakingPoolData> {
   const viemClient = getViemClient(chainId)
 
@@ -140,9 +142,11 @@ async function fetchLiquidDelegatorDataFromNetwork(
     const votingPower =
       Number((delegatorStake * bigintDivisionPrecision) / depositTotalStake) /
       Number(bigintDivisionPrecision)
+    const blockTimeAdjustement = 1 / averageBlockTimeInSeconds
     const rewardsPerYearInZil = 51000 * 24 * 365
 
-    const delegatorYearReward = votingPower * rewardsPerYearInZil
+    const delegatorYearReward =
+      votingPower * rewardsPerYearInZil * blockTimeAdjustement
     const delegatorRewardForShare = delegatorYearReward * (1 - commission)
     const apr =
       delegatorRewardForShare / parseFloat(formatUnits(delegatorStake, 18))
@@ -162,7 +166,8 @@ async function fetchLiquidDelegatorDataFromNetwork(
 
 async function fetchNonLiquidDelegatorDataFromNetwork(
   definition: StakingPoolDefinition,
-  chainId: number
+  chainId: number,
+  averageBlockTimeInSeconds: number
 ): Promise<StakingPoolData> {
   const viemClient = getViemClient(chainId)
 
@@ -215,8 +220,10 @@ async function fetchNonLiquidDelegatorDataFromNetwork(
       Number((delegatorStake * bigintDivisionPrecision) / depositTotalStake) /
       Number(bigintDivisionPrecision)
     const rewardsPerYearInZil = 51000 * 24 * 365
+    const blockTimeAdjustement = 1 / averageBlockTimeInSeconds
 
-    const delegatorYearReward = votingPower * rewardsPerYearInZil
+    const delegatorYearReward =
+      votingPower * rewardsPerYearInZil * blockTimeAdjustement
     const delegatorRewardForShare = delegatorYearReward * (1 - commission)
     const apr =
       delegatorRewardForShare / parseFloat(formatUnits(delegatorStake, 18))
