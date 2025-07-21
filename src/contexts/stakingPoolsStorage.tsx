@@ -18,6 +18,7 @@ import {
 } from "@/misc/walletsConfig"
 import { AppConfigStorage } from "./appConfigStorage"
 import { useRouter } from "next/router"
+import { getViemClient } from "@/misc/chainConfig"
 
 // all available withdraws for one delegator are withdrawn using single tx, so we aggregate them to shoow only one UI entry
 function mergeAvailableWithdrawUnstakeRequests(
@@ -159,29 +160,49 @@ const useStakingPoolsStorage = () => {
       }))
     )
 
-    Promise.all(
-      stakingPoolsConfig.map(async (config) => {
-        const data = await config.delegatorDataProvider(
-          config.definition,
-          appConfig.chainId
-        )
+    const { getBlock } = getViemClient(appConfig.chainId)
+    const blocksSpanToAverage = 10000n
 
-        setAvailableStakingPoolsData((prev) => {
-          const updated = prev.map((entry) => {
-            if (entry.definition.id === config.definition.id) {
-              return {
-                ...entry,
-                data,
-              }
-            }
+    getBlock().then((latestBlock) => {
+      const { timestamp: latestBlockTimestamp, number: latestBlockNumber } =
+        latestBlock
 
-            return entry
+      getBlock({
+        blockNumber: latestBlockNumber - blocksSpanToAverage,
+      }).then((oldBlock) => {
+        const { timestamp: oldBlockTimestamp } = oldBlock
+
+        const averageBlockTime =
+          (parseFloat(`${latestBlockTimestamp}`) -
+            parseFloat(`${oldBlockTimestamp}`)) /
+          parseFloat(`${blocksSpanToAverage}`)
+
+        Promise.all(
+          stakingPoolsConfig.map(async (config) => {
+            const data = await config.delegatorDataProvider(
+              config.definition,
+              appConfig.chainId,
+              averageBlockTime
+            )
+
+            setAvailableStakingPoolsData((prev) => {
+              const updated = prev.map((entry) => {
+                if (entry.definition.id === config.definition.id) {
+                  return {
+                    ...entry,
+                    data,
+                  }
+                }
+
+                return entry
+              })
+
+              return updated
+            })
           })
-
-          return updated
-        })
+        )
       })
-    )
+    })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {

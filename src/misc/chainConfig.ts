@@ -181,9 +181,18 @@ export function getWagmiConfig(
   return wagmiConfig
 }
 
+const chainIdViemClientMap: Record<
+  number,
+  ReturnType<typeof createPublicClient>
+> = {}
+
 export function getViemClient(chainId: number) {
-  return createPublicClient({
-    chain: getChain(chainId),
-    transport: http(),
-  })
+  if (!chainIdViemClientMap[chainId]) {
+    chainIdViemClientMap[chainId] = createPublicClient({
+      chain: getChain(chainId),
+      transport: http(),
+    })
+  }
+
+  return chainIdViemClientMap[chainId]
 }
