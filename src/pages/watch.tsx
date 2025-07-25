@@ -64,7 +64,11 @@ const WatchPage = () => {
     try {
       const [stakingData, unstakingData, rewardsData] = await Promise.all([
         getWalletStakingData(searchAddress, appConfig.chainId),
-        getWalletUnstakingData(searchAddress, appConfig.chainId),
+        getWalletUnstakingData(
+          searchAddress,
+          appConfig.chainId,
+          appConfig.averageBlockTime
+        ),
         getWalletNonLiquidStakingPoolRewardData(
           searchAddress,
           appConfig.chainId

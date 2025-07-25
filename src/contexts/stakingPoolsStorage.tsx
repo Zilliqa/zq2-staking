@@ -128,11 +128,15 @@ const useStakingPoolsStorage = () => {
       return
     }
 
-    getWalletStakingData(walletAddress, appConfig!.chainId)
+    getWalletStakingData(walletAddress, appConfig.chainId)
       .then(setUserStakingPoolsData)
       .catch(console.error)
     setIsUnstakingDataLoading(true)
-    getWalletUnstakingData(walletAddress, appConfig!.chainId)
+    getWalletUnstakingData(
+      walletAddress,
+      appConfig.chainId,
+      appConfig.averageBlockTime
+    )
       .then(setUserUnstakesData)
       .catch(console.error)
       .finally(() => setIsUnstakingDataLoading(false))
@@ -160,49 +164,30 @@ const useStakingPoolsStorage = () => {
       }))
     )
 
-    const { getBlock } = getViemClient(appConfig.chainId)
-    const blocksSpanToAverage = 10000n
-
-    getBlock().then((latestBlock) => {
-      const { timestamp: latestBlockTimestamp, number: latestBlockNumber } =
-        latestBlock
-
-      getBlock({
-        blockNumber: latestBlockNumber - blocksSpanToAverage,
-      }).then((oldBlock) => {
-        const { timestamp: oldBlockTimestamp } = oldBlock
-
-        const averageBlockTime =
-          (parseFloat(`${latestBlockTimestamp}`) -
-            parseFloat(`${oldBlockTimestamp}`)) /
-          parseFloat(`${blocksSpanToAverage}`)
-
-        Promise.all(
-          stakingPoolsConfig.map(async (config) => {
-            const data = await config.delegatorDataProvider(
-              config.definition,
-              appConfig.chainId,
-              averageBlockTime
-            )
-
-            setAvailableStakingPoolsData((prev) => {
-              const updated = prev.map((entry) => {
-                if (entry.definition.id === config.definition.id) {
-                  return {
-                    ...entry,
-                    data,
-                  }
-                }
-
-                return entry
-              })
-
-              return updated
-            })
-          })
+    Promise.all(
+      stakingPoolsConfig.map(async (config) => {
+        const data = await config.delegatorDataProvider(
+          config.definition,
+          appConfig.chainId,
+          appConfig.averageBlockTime
         )
+
+        setAvailableStakingPoolsData((prev) => {
+          const updated = prev.map((entry) => {
+            if (entry.definition.id === config.definition.id) {
+              return {
+                ...entry,
+                data,
+              }
+            }
+
+            return entry
+          })
+
+          return updated
+        })
       })
-    })
+    )
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
