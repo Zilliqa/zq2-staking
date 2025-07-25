@@ -315,7 +315,8 @@ export async function getWalletStakingData(
 
 export async function getWalletUnstakingData(
   wallet: string,
-  chainId: number
+  chainId: number,
+  averageBlockTimeInSeconds: number
 ): Promise<UserUnstakingPoolData[]> {
   if (chainId === MOCK_CHAIN.id) {
     return new Promise((resolve) => {
@@ -371,7 +372,8 @@ export async function getWalletUnstakingData(
             ...uwd.blockNumberAndAmount.map((bna) => {
               const blocksRemaining = Number(bna[0] - currentBlockNumber)
 
-              const blocksRemainingInSeconds = blocksRemaining * 1 // seconds per block
+              const blocksRemainingInSeconds =
+                blocksRemaining * averageBlockTimeInSeconds
 
               return {
                 zilAmount: bna[1],
