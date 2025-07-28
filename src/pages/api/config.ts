@@ -63,7 +63,7 @@ export default async function handler(
   }
 
   const { getBlock } = getViemClient(config.chainId)
-  const blocksSpanToAverage = 10000n
+  const blocksSpanToAverage = 465230n // 1 week of blocks at ~1.3s per block
 
   try {
     const latestBlock = await getBlock()
