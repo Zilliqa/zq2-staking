@@ -1057,8 +1057,7 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x0000000000000000000000000000000000000000",
         iconUrl: "/static/logo_binance.jpg",
         name: "Binance",
-        description:
-          "[Binance.com](https://www.binance.com/en/earn) Earn.",
+        description: "[Binance.com](https://www.binance.com/en/earn) Earn.",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
