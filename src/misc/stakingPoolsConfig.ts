@@ -1050,5 +1050,21 @@ export const stakingPoolsConfigForChainId: Record<
       },
       delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
     },
+    {
+      definition: {
+        id: "MHhlNDZl",
+        address: "0xe46e5D9aDC2617141c50a995FBEbd898943B20Dd",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo_binance.jpg",
+        name: "Binance",
+        description: "[Binance.com](https://www.binance.com/en/earn) Earn.",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: 100000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+    },
   ],
 }
