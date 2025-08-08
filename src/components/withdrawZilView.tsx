@@ -4,6 +4,7 @@ import rewards from "../assets/svgs/rewards.svg"
 import requests from "../assets/svgs/requests.svg"
 
 import {
+  formatBlockNumber,
   formatUnitsToHumanReadable,
   getHumanFormDuration,
 } from "@/misc/formatting"
@@ -120,14 +121,28 @@ const UnstakeCard: React.FC<UnstakeCardProps> = ({
             }}
             loading={isInProgress && available}
           >
-            {available
-              ? preparingClaimUnstakeTx && isCurrentWalletOperationAboutThisPool
-                ? "Confirm in wallet"
-                : isInProgress
-                  ? "Processing"
-                  : "Claim"
-              : getHumanFormDuration(unstakeInfo.availableAt) + " left"}
+            {available ? (
+              preparingClaimUnstakeTx &&
+              isCurrentWalletOperationAboutThisPool ? (
+                "Confirm in wallet"
+              ) : isInProgress ? (
+                "Processing"
+              ) : (
+                "Claim"
+              )
+            ) : (
+              <div className="flex flex-col items-center">
+                <span>
+                  {getHumanFormDuration(unstakeInfo.availableAt) + " left"}
+                </span>
+              </div>
+            )}
           </Button>
+          {!available && (
+            <div className="flex text-xs text-gray1 mt-1 items-center justify-center">
+              Available from block {formatBlockNumber(unstakeInfo.targetBlock)}
+            </div>
+          )}
         </div>
       </div>
     </div>

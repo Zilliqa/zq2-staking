@@ -2,6 +2,7 @@ import { StakingOperations } from "@/contexts/stakingOperations"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 
 import {
+  formatBlockNumber,
   formatUnitsToHumanReadable,
   getHumanFormDuration,
 } from "@/misc/formatting"
@@ -239,7 +240,15 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
             Next available withdrawal claim
           </div>
           <div className="h4 mt-2 w-full flex justify-between text-white1">
-            <div>{getHumanFormDuration(pendingUnstake[0].availableAt)}</div>
+            <div className="flex flex-col">
+              <div>{getHumanFormDuration(pendingUnstake[0].availableAt)}</div>
+              {pendingUnstake[0].targetBlock && (
+                <div className="text-xs text-gray2">
+                  Available from block{" "}
+                  {formatBlockNumber(pendingUnstake[0].targetBlock)}
+                </div>
+              )}
+            </div>
             {stakingPoolData.data ? (
               <div>
                 {parseFloat(
@@ -279,8 +288,13 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               ) : (
                 <div className="loading-blur">00.000 ZIL</div>
               )}
-              <div className="regular-base text-white1">
-                {getHumanFormDuration(claim.availableAt)}
+              <div className="regular-base text-white1 flex flex-col items-end">
+                <div>{getHumanFormDuration(claim.availableAt)}</div>
+                {claim.targetBlock && (
+                  <div className="text-xs text-gray2">
+                    Available from block {formatBlockNumber(claim.targetBlock)}
+                  </div>
+                )}
               </div>
             </div>
           ))}
