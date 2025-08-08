@@ -124,3 +124,11 @@ export function formatZil(amount: bigint): string {
     maximumFractionDigits: 2,
   }).format(zilAmount)
 }
+
+/**
+ * Formats block number for display
+ */
+export function formatBlockNumber(blockNumber?: number): string {
+  if (!blockNumber) return ""
+  return `${blockNumber}`
+}

@@ -22,6 +22,7 @@ export interface UserUnstakingPoolData {
   address: string
   zilAmount: bigint
   availableAt: DateTime
+  targetBlock: number
 }
 
 export interface DummyWallet {
@@ -52,11 +53,13 @@ export const dummyWallets: Array<DummyWallet> = [
         address: "0x1234567890234567890234567890234567890",
         zilAmount: parseUnits("62712.323", 18),
         availableAt: DateTime.now().minus({ days: 1 }),
+        targetBlock: 1234567,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         zilAmount: parseUnits("1000", 18),
         availableAt: DateTime.now().plus({ days: 1 }),
+        targetBlock: 1235678,
       },
     ],
     nonLiquidRewards: [],
@@ -105,26 +108,31 @@ export const dummyWallets: Array<DummyWallet> = [
         address: "0x1234567890234567890234567890234567890",
         zilAmount: parseUnits("9000", 18),
         availableAt: DateTime.now().minus({ days: 1 }),
+        targetBlock: 1234500,
       },
       {
         address: "0x82245678902345678902345678918278372382",
         zilAmount: parseUnits("1044", 18),
         availableAt: DateTime.now().minus({ days: 5 }),
+        targetBlock: 1230000,
       },
       {
         address: "0x82245678902345678902345678918278372382",
         zilAmount: parseUnits("1000000", 18),
         availableAt: DateTime.now().plus({ days: 1 }),
+        targetBlock: 1240000,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         zilAmount: parseUnits("500", 18),
         availableAt: DateTime.now().plus({ days: 5 }),
+        targetBlock: 1260000,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         zilAmount: parseUnits("10000", 18),
         availableAt: DateTime.now().plus({ days: 13 }),
+        targetBlock: 1300000,
       },
     ],
     nonLiquidRewards: [],
@@ -144,16 +152,19 @@ export const dummyWallets: Array<DummyWallet> = [
         address: "0x96525678902345678902345678918278372212",
         zilAmount: parseUnits("89", 18),
         availableAt: DateTime.now().plus({ days: 5 }),
+        targetBlock: 1300000,
       },
       {
         address: "0xe863906941de820bde06701a0d804dd0b8575d67",
         zilAmount: parseUnits("220.2", 18),
         availableAt: DateTime.now().minus({ days: 5 }),
+        targetBlock: 1300000,
       },
       {
         address: "0xe863906941de820bde06701a0d804dd0b8575d67",
         zilAmount: parseUnits("440.2", 18),
         availableAt: DateTime.now().plus({ days: 5 }),
+        targetBlock: 1300000,
       },
     ],
     nonLiquidRewards: [
@@ -182,76 +193,91 @@ export const dummyWallets: Array<DummyWallet> = [
         address: "0x96525678902345678902345678918278372212",
         zilAmount: parseUnits("89", 18),
         availableAt: DateTime.now().minus({ days: 5 }),
+        targetBlock: 1300000,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         zilAmount: parseUnits("123", 18),
         availableAt: DateTime.now().minus({ days: 4 }),
+        targetBlock: 1300000,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         zilAmount: parseUnits("1992", 18),
         availableAt: DateTime.now().minus({ days: 3 }),
+        targetBlock: 1300000,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         zilAmount: parseUnits("2311", 18),
         availableAt: DateTime.now().minus({ days: 2 }),
+        targetBlock: 1300000,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         zilAmount: parseUnits("2311", 18),
         availableAt: DateTime.now().plus({ days: 5 }),
+        targetBlock: 1300000,
       },
       {
         address: "0x96525678902345678902345678918278372212",
         zilAmount: parseUnits("122", 18),
         availableAt: DateTime.now().plus({ days: 15 }),
+        targetBlock: 1300000,
       },
       {
         address: "0xe863906941de820bde06701a0d804dd0b8575d67",
         zilAmount: parseUnits("220.2", 18),
         availableAt: DateTime.now().minus({ days: 5 }),
+        targetBlock: 1300000,
       },
       {
         address: "0xe863906941de820bde06701a0d804dd0b8575d67",
         zilAmount: parseUnits("1111.2", 18),
         availableAt: DateTime.now().minus({ days: 3 }),
+        targetBlock: 1300000,
       },
       {
         address: "0xe863906941de820bde06701a0d804dd0b8575d67",
         zilAmount: parseUnits("220.2", 18),
         availableAt: DateTime.now().plus({ days: 5 }),
+        targetBlock: 1300000,
       },
       {
         address: "0xe863906941de820bde06701a0d804dd0b8575d67",
         zilAmount: parseUnits("440.2", 18),
         availableAt: DateTime.now().plus({ days: 5 }),
+        targetBlock: 1300000,
       },
       {
         address: "0x82245678902345678902345678918278372382",
         zilAmount: parseUnits("1000000", 18),
         availableAt: DateTime.now().plus({ days: 1 }),
+        targetBlock: 1300000,
       },
       {
         address: "0x82245678902345678902345678918278372382",
         zilAmount: parseUnits("1000000", 18),
         availableAt: DateTime.now().plus({ days: 5 }),
+        targetBlock: 1300000,
       },
       {
         address: "0x82245678902345678902345678918278372382",
         zilAmount: parseUnits("1000000", 18),
         availableAt: DateTime.now().plus({ days: 15 }),
+        targetBlock: 1300000,
       },
       {
         address: "0x82245678902345678902345678918278372382",
         zilAmount: parseUnits("1000000", 18),
         availableAt: DateTime.now().plus({ days: 10 }),
+        targetBlock: 1300000,
       },
       {
         address: "0x82245678902345678902345678918278372382",
         zilAmount: parseUnits("1000000", 18),
         availableAt: DateTime.now().minus({ days: 1 }),
+        targetBlock: 1300000,
       },
     ],
     nonLiquidRewards: [
@@ -360,10 +386,19 @@ export async function getWalletUnstakingData(
         const claims: UserUnstakingPoolData[] = []
 
         if (uwd.claimableNow > 0) {
+          const latestAvailableBlock = uwd.blockNumberAndAmount
+            .map((bna) => {
+              return Number(bna[0])
+            })
+            .reduce((acc, curr) => {
+              return Math.max(acc, curr)
+            }, 0)
+
           claims.push({
             zilAmount: uwd.claimableNow,
             availableAt: DateTime.now().minus({ days: 1 }), // just to make sure it displays
             address: uwd.address,
+            targetBlock: latestAvailableBlock,
           })
         }
 
@@ -381,6 +416,7 @@ export async function getWalletUnstakingData(
                   seconds: blocksRemainingInSeconds,
                 }),
                 address: uwd.address,
+                targetBlock: Number(bna[0]), // Store the target block number
               }
             })
           )
