@@ -1066,5 +1066,20 @@ export const stakingPoolsConfigForChainId: Record<
       },
       delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
     },
+    {
+      definition: {
+        id: "MHgyYjVl",
+        address: "0x2b5e0D8Db793955684ddC4eaD286900Cb791cc3F",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo_r3to.webp",
+        name: "r3to",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: 100000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+    },
   ],
 }
