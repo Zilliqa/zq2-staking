@@ -19,7 +19,6 @@ import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
 import FilterBtn from "@/components/filterBtn"
 import FastFadeScroll from "@/components/fastFadeScroll"
-import { showNewMessage } from "@intercom/messenger-js-sdk"
 
 interface UnstakeCardProps {
   available: boolean
@@ -483,16 +482,8 @@ const WithdrawZilView: React.FC<WithdrawZilViewProps> = ({ setViewClaim }) => {
         !isUnstakingDataLoading && (
           <div className="text-center text-white mx-auto">
             <div className="mb-8 body2-v2">
-              Seems like you have nothing to claim yet. <br />
-              Start staking and give us your thoughts !
+              Seems like you have nothing to claim yet.
             </div>
-            <Button
-              type="primary"
-              className="btn-primary-teal-lg !w-fit px-11 4k:px-12 group mt-8"
-              onClick={() => showNewMessage("")}
-            >
-              Leave Feedback
-            </Button>
           </div>
         )
       )}

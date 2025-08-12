@@ -4,7 +4,6 @@ import type { NextApiRequest, NextApiResponse } from "next"
 export type AppConfig = {
   chainId: number
   walletConnectPrivateKey: string
-  intercomKey: string
   appUrl: string
   gtmId: string
   averageBlockTime: number
@@ -36,7 +35,6 @@ const config: AppConfig = {
   walletConnectPrivateKey: getStringFromEnv(
     "ZQ2_STAKING_WALLET_CONNECT_API_KEY"
   ),
-  intercomKey: getStringFromEnv("ZQ2_STAKING_INTERCOM_KEY"),
   appUrl: getStringFromEnv("ZQ2_STAKING_APP_URL"),
   gtmId: getStringFromEnv("ZQ2_STAKING_GTM_ID"),
   averageBlockTime: 1,
