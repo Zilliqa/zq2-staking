@@ -346,18 +346,6 @@ button,
   }
 }
 
-.intercom-lightweight-app-launcher {
-  bottom: 15px !important;
-  right: 32px !important;
-}
-
-@media (max-width: 1024px) {
-  .intercom-lightweight-app-launcher {
-    bottom: 15px !important;
-    right: 16px !important;
-  }
-}
-
 .grey-gradient {
   border-image: "linear-gradient(90deg, #ff7e5f, #feb47b) 1";
 }

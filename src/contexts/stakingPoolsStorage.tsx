@@ -18,7 +18,6 @@ import {
 } from "@/misc/walletsConfig"
 import { AppConfigStorage } from "./appConfigStorage"
 import { useRouter } from "next/router"
-import { getViemClient } from "@/misc/chainConfig"
 
 // all available withdraws for one delegator are withdrawn using single tx, so we aggregate them to shoow only one UI entry
 function mergeAvailableWithdrawUnstakeRequests(
@@ -52,6 +51,10 @@ function mergeAvailableWithdrawUnstakeRequests(
               zilAmount:
                 unstakeData.unstakeInfo.zilAmount +
                 acc[existingIdx].unstakeInfo.zilAmount,
+              targetBlock: Math.max(
+                unstakeData.unstakeInfo.targetBlock,
+                acc[existingIdx].unstakeInfo.targetBlock
+              ),
             },
           }
         } else {

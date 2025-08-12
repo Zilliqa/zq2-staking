@@ -6,7 +6,6 @@ import { AppConfigStorage } from "@/contexts/appConfigStorage"
 import { StakingOperations } from "@/contexts/stakingOperations"
 import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 import { WalletConnector } from "@/contexts/walletConnector"
-import Intercom from "@intercom/messenger-js-sdk"
 import { Modal } from "antd"
 import Image from "next/image"
 import { useRouter } from "next/router"
@@ -47,15 +46,6 @@ const HomePage = () => {
   } = StakingPoolsStorage.useContainer()
 
   const [mobileShowClaims, setMobileShowClaims] = useState<boolean>(false)
-
-  useEffect(() => {
-    if (walletAddress) {
-      Intercom({
-        app_id: appConfig.intercomKey,
-        user_id: walletAddress,
-      })
-    }
-  }, [walletAddress])
 
   useEffect(() => {
     if (router.query.claims) {
