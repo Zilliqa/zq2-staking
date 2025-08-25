@@ -14,8 +14,9 @@ import {
   UserNonLiquidStakingPoolRewardData,
 } from "@/misc/walletsConfig"
 import { stakingPoolsConfigForChainId } from "@/misc/stakingPoolsConfig"
-import { formatZil } from "@/misc/formatting"
+import { convertTokenToZil, formatZil } from "@/misc/formatting"
 import { DateTime } from "luxon"
+import { StakingPoolsStorage } from "@/contexts/stakingPoolsStorage"
 
 interface WatchData {
   address: string
@@ -31,6 +32,7 @@ const WatchPage = () => {
   const [watchData, setWatchData] = useState<WatchData | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const { availableStakingPools } = StakingPoolsStorage.useContainer()
 
   // Check if address is provided in URL
   useEffect(() => {
@@ -105,12 +107,28 @@ const WatchPage = () => {
     return pool?.definition.name || "Unknown Pool"
   }
 
+  const getPoolStakingToken = (address: string) => {
+    const pool = stakingPoolsConfigForChainId[appConfig.chainId]?.find(
+      (pool) => pool.definition.address === address
+    )
+    return pool?.definition.tokenSymbol || ""
+  }
+
   const getTotalDeposits = () => {
     if (!watchData) return 0n
-    return watchData.stakingData.reduce(
-      (total, stake) => total + stake.stakingTokenAmount,
-      0n
-    )
+    return watchData.stakingData.reduce((total, stake) => {
+      const relevantStakingPool = availableStakingPools.find(
+        (pool) => pool.definition.address === stake.address
+      )
+
+      return (
+        total +
+        convertTokenToZil(
+          stake.stakingTokenAmount,
+          relevantStakingPool?.data?.zilToTokenRate || 1
+        )
+      )
+    }, 0n)
   }
 
   const getTotalUnclaimedRewards = () => {
@@ -155,7 +173,9 @@ const WatchPage = () => {
               <div className="text-xl md:text-2xl font-bold text-tealPrimary">
                 {formatZil(totalDeposits)}
               </div>
-              <div className="text-gray1 text-sm">Total Deposits</div>
+              <div className="text-gray1 text-sm">
+                Total Deposits estimated in ZIL
+              </div>
             </div>
           </Card>
 
@@ -213,7 +233,8 @@ const WatchPage = () => {
                       </div>
                       <div className="text-left sm:text-right">
                         <div className="font-bold text-tealPrimary">
-                          {formatZil(stake.stakingTokenAmount)} ZIL
+                          {formatZil(stake.stakingTokenAmount)}{" "}
+                          {getPoolStakingToken(stake.address)}
                         </div>
                       </div>
                     </div>
