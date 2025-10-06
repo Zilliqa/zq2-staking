@@ -1073,7 +1073,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x0000000000000000000000000000000000000000",
         iconUrl: "/static/logo_htx.jpg",
         name: "HTX",
-        description: "As a world-leading blockchain industry player, HTX Group was founded in 2013 to make breakthroughs in core blockchain technology and integrate it with other industries.",
+        description:
+          "As a world-leading blockchain industry player, HTX Group was founded in 2013 to make breakthroughs in core blockchain technology and integrate it with other industries.",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
