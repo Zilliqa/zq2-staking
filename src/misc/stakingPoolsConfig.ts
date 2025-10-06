@@ -1068,6 +1068,22 @@ export const stakingPoolsConfigForChainId: Record<
     },
     {
       definition: {
+        id: "MHhCMkQ1",
+        address: "0xB2D5dd48830ab8AeC288a44ee868EeE3251922bd",
+        tokenAddress: "0x0000000000000000000000000000000000000000",
+        iconUrl: "/static/logo_htx.jpg",
+        name: "HTX",
+        description: "As a world-leading blockchain industry player, HTX Group was founded in 2013 to make breakthroughs in core blockchain technology and integrate it with other industries.",
+        poolType: StakingPoolType.NORMAL,
+        tokenDecimals: 18,
+        tokenSymbol: "ZIL",
+        minimumStake: 100000000000000000000n,
+        withdrawPeriodInMinutes: twoWeeksInMinutes,
+      },
+      delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
+    },
+    {
+      definition: {
         id: "MHgyYjVl",
         address: "0x2b5e0D8Db793955684ddC4eaD286900Cb791cc3F",
         tokenAddress: "0x0000000000000000000000000000000000000000",
