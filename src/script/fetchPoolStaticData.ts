@@ -52,7 +52,7 @@ async function readLiquidDelegator(
     }),
   ])
 
-  const twoWeeksInMinutes = 60 * 24 * 14
+  const oneWeekInMinutes = 60 * 24 * 7
 
   return {
     id: poolDefinitionId,
@@ -64,7 +64,7 @@ async function readLiquidDelegator(
     tokenDecimals,
     tokenSymbol,
     minimumStake,
-    withdrawPeriodInMinutes: twoWeeksInMinutes,
+    withdrawPeriodInMinutes: oneWeekInMinutes,
   }
 }
 
@@ -85,7 +85,7 @@ async function readNonLiquidDelegator(
     }),
   ])
 
-  const twoWeeksInMinutes = 60 * 24 * 14
+  const oneWeekInMinutes = 60 * 24 * 7
 
   return {
     id: poolDefinitionId,
@@ -97,7 +97,7 @@ async function readNonLiquidDelegator(
     tokenDecimals: 18,
     tokenSymbol: "ZIL",
     minimumStake,
-    withdrawPeriodInMinutes: twoWeeksInMinutes,
+    withdrawPeriodInMinutes: oneWeekInMinutes,
   }
 }
 
