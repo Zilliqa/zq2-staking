@@ -1039,9 +1039,9 @@ export const stakingPoolsConfigForChainId: Record<
         address: "0xba669Cc6B49218624E84920dc8136a05411B1Ec8",
         tokenAddress: "0x0000000000000000000000000000000000000000",
         iconUrl: "/static/logo_stakin.jpg",
-        name: "Stakin",
+        name: "Stakin by The Tie",
         description:
-          "[Stakin.com](Stakin.com) Leading institutional-grade web3 infrastructure and non-custodial staking service provider. ISO27001 Certified and Audited.",
+          "Institutional-grade staking services and Web3 infrastructure provider. T&Cs apply, visit our website.",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
