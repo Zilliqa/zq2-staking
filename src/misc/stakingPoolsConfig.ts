@@ -1105,7 +1105,8 @@ export const stakingPoolsConfigForChainId: Record<
         tokenAddress: "0x0000000000000000000000000000000000000000",
         iconUrl: "/static/logo_ltin.jpg",
         name: "LTIN",
-        description: "LTIN (Liechtenstein Trust Integrity Network) is a blockchain infrastructure initiative focused on trust, integrity, and professional validation services. The LTIN staking pool supports long-term, secure participation in the Zilliqa network.",
+        description:
+          "LTIN (Liechtenstein Trust Integrity Network) is a blockchain infrastructure initiative focused on trust, integrity, and professional validation services. The LTIN staking pool supports long-term, secure participation in the Zilliqa network.",
         poolType: StakingPoolType.NORMAL,
         tokenDecimals: 18,
         tokenSymbol: "ZIL",
