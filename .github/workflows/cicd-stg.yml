@@ -67,7 +67,6 @@ jobs:
       fail-fast: false
       matrix:
         application:
-          - zq2-stake-prototestnet
           - zq2-stake-devnet
     env:
       APP_NAME: ${{ matrix.application }}
