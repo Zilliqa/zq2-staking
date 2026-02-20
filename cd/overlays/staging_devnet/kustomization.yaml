@@ -5,6 +5,7 @@ namespace: zq2-stake-stg-devnet
 
 resources:
   - ../../base
+  - backendpolicy.yaml
   - httproute.yaml
 
 patches:

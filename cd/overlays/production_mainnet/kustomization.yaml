@@ -5,6 +5,7 @@ namespace: zq2-stake-prd-mainnet
 
 resources:
   - ../../base
+  - backendpolicy.yaml
   - httproute.yaml
 
 patches:
