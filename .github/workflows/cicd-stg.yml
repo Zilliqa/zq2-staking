@@ -15,6 +15,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      security-events: write
     runs-on: ubuntu-22.04
     if: github.actor != 'dependabot[bot]' && github.ref_name == 'main'
     name: "Build image"
