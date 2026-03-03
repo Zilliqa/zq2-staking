@@ -28,7 +28,7 @@ jobs:
       REGISTRY: asia-docker.pkg.dev/prj-p-devops-services-tvwmrf63/zilliqa-public
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: "true"
           ref: ${{ github.event.pull_request.head.ref }}
@@ -74,7 +74,7 @@ jobs:
       REGISTRY: asia-docker.pkg.dev
     steps:
       - name: Checkout
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+        uses: actions/checkout@v6
         with:
           repository: Zilliqa/devops
           token: ${{ env.GITHUB_PAT }}
