@@ -42,7 +42,7 @@ jobs:
           fetch-depth: 0
 
       - name: Docker build and push - staging
-        uses: Zilliqa/gh-actions-workflows/actions/ci-dockerized-app-build-push@v3
+        uses: Zilliqa/gh-actions-workflows/actions/ci-dockerized-app-build-push@v4
         with:
           file: ${{ matrix.file }}
           context: ${{ matrix.context }}
