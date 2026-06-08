@@ -8,7 +8,11 @@ import {
   formatUnitsToHumanReadable,
   formatUnitsWithMaxPrecision,
 } from "@/misc/formatting"
-import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
+import {
+  isStakingPoolActive,
+  StakingPool,
+  StakingPoolType,
+} from "@/misc/stakingPoolsConfig"
 import {
   UserNonLiquidStakingPoolRewardData,
   UserStakingPoolData,
@@ -90,12 +94,17 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   const { zilAvailable } = WalletConnector.useContainer()
   const { appConfig } = AppConfigStorage.useContainer()
 
-  const [selectedPane, setSelectedPane] = useState<string>("Stake")
+  // Retired pools (active: false) must never offer a Stake surface; default to
+  // Unstake so a wallet with a bonded position lands on the action it can take.
+  const poolIsActive = isStakingPoolActive(stakingPoolData.definition)
+  const defaultPane = poolIsActive ? "Stake" : "Unstake"
+
+  const [selectedPane, setSelectedPane] = useState<string>(defaultPane)
 
   useEffect(() => {
     if (viewClaim === true) setSelectedPane("Claim")
-    else setSelectedPane("Stake")
-  }, [viewClaim])
+    else setSelectedPane(defaultPane)
+  }, [viewClaim, defaultPane])
 
   const isPoolLiquid = () =>
     stakingPoolData.definition.poolType === StakingPoolType.LIQUID
@@ -680,8 +689,15 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
           </>
         )}
 
-        <div className="lg:mx-10 mx-3 grid grid-cols-3 my-4 lg:gap-20 gap-5">
-          {["Stake", "Unstake", "Claim"].map((pane) => (
+        <div
+          className={`lg:mx-10 mx-3 grid ${
+            poolIsActive ? "grid-cols-3" : "grid-cols-2"
+          } my-4 lg:gap-20 gap-5`}
+        >
+          {(poolIsActive
+            ? ["Stake", "Unstake", "Claim"]
+            : ["Unstake", "Claim"]
+          ).map((pane) => (
             <div
               key={pane}
               className={`semi13 text-center py-2 4k:py-6 cursor-pointer border-solid border-b transition-all duration-400 ease-in-out relative ${
