@@ -44,7 +44,33 @@ export interface StakingPoolDefinition {
   minimumStake: bigint
   withdrawPeriodInMinutes: number
   description?: string
+  /**
+   * Soft-delete flag. `undefined` (default) or `true` => the pool is active and
+   * shown in the "Available to stake" selector. `false` retires the pool: it is
+   * hidden from "Available to stake" (unless the connected wallet still has a
+   * bonded stake in it) while all withdrawal / claim / reward paths keep working,
+   * so a wallet with a still-bonded position can still unstake and claim.
+   */
+  active?: boolean
 }
+
+/**
+ * A pool is active unless it has been explicitly retired with `active: false`.
+ * `undefined` is treated as active so existing pool definitions keep working.
+ */
+export const isStakingPoolActive = (
+  definition: StakingPoolDefinition
+): boolean => definition.active !== false
+
+/**
+ * Whether a pool should appear in the "Available to stake" selector. Retired
+ * pools stay visible only while the connected wallet still has a bonded stake in
+ * them, so the user keeps the UI surface to unstake; otherwise they are hidden.
+ */
+export const isPoolVisibleInStakeSelector = (
+  definition: StakingPoolDefinition,
+  bondedStakeAmount: bigint | undefined
+): boolean => isStakingPoolActive(definition) || (bondedStakeAmount ?? 0n) > 0n
 
 export interface StakingPoolData {
   tvl: bigint
