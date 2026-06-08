@@ -12,11 +12,13 @@ interface FaqModalProps {
 const FAQS = [
   {
     question: "What is the minimum ZIL balance required to delegate?",
-    answer: "The minimum required balance is 100 ZIL.",
+    answer:
+      "The minimum amount you can delegate is 100 ZIL per transaction. Note: after a partial unstake your remaining delegated balance may be lower than this.",
   },
   {
     question: "Which wallets are supported on the Zillion staking platform?",
-    answer: "You can use ZilPay, MetaMask, Rabby, and Ledger.",
+    answer:
+      "You can use Bearby Wallet, MetaMask, Rabby, Ledger, WalletConnect, Coinbase Wallet, Trust Wallet, and Rainbow.",
   },
   {
     question: "How long is a reward cycle?",
@@ -26,13 +28,13 @@ const FAQS = [
   {
     question: "How long does unstaking take?",
     answer:
-      "Unstaking takes 1,209,600 blocks, which is approximately 14 days, once the network returns to ~1 second block times.",
+      "Unstaking has an unbonding period of 461,680 blocks, roughly 6 days at current block times (about 5.3 days once the network is at ~1 second per block). Your ZIL can be withdrawn after this period.",
   },
   {
     question:
       "My transaction failed due to a low gas limit when claiming staking rewards. What should I do?",
     answer:
-      "Try increasing the gas limit to 200,000 and then attempt to claim rewards again.\nEnsure your account has at least 400 ZIL to cover the transaction with this gas setting. Do not change any other gas parameters.",
+      "Try increasing the gas limit to 200,000 and then attempt to claim rewards again.\nEnsure your account has at least 450 ZIL to cover the transaction with this gas setting. Do not change any other gas parameters.",
   },
   {
     question:
@@ -72,7 +74,7 @@ const FAQS = [
   {
     question: "Is there a staking tutorial?",
     answer:
-      "Yes. Please refer to the following tutorial: \nhttps://blog.zilliqa.com/how-to-restake-on-zilliqa-evm/",
+      "Yes. Please refer to the following tutorial: \nhttps://blog.zilliqa.com/how-to-stake-on-zilliqa-evm/",
   },
   {
     question: "Can we change delegators without unstaking first?",
