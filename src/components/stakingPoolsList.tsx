@@ -18,7 +18,7 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
   setSelectedPoolType,
 }) => {
   const {
-    combinedStakingPoolsData,
+    activeStakingPoolsData,
     selectStakingPoolForView,
     stakingPoolForView,
   } = StakingPoolsStorage.useContainer()
@@ -71,11 +71,11 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
   }
 
   const sortedLiquidStakingPoolsData = useMemo(() => {
-    const filtered = combinedStakingPoolsData.filter(
+    const filtered = activeStakingPoolsData.filter(
       (pool) => pool.stakingPool.definition.poolType === selectedPoolType
     )
     return shuffleOrder(filtered)
-  }, [combinedStakingPoolsData, selectedPoolType])
+  }, [activeStakingPoolsData, selectedPoolType])
 
   const handleSortClick = (criteria: "APR" | "VP" | "Commission") => {
     if (sortCriteria === criteria) {
