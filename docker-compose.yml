@@ -1,5 +1,5 @@
-# ABOUTME: Local Docker Compose for the staking portal — dev (hot reload) + prod-like profiles
-# ABOUTME: Defaults to .env.mocked (override with ENV_FILE=...); `docker compose --profile dev up` or `--profile prod up --build`
+# ABOUTME: Local Docker Compose for the staking portal — dev (mocked, hot reload) + prod-like (mainnet) profiles
+# ABOUTME: dev => .env.mocked, prod => .env.mainnet; override either with ENV_FILE=...; `--profile dev up` / `--profile prod up --build`
 services:
   web-dev:
     profiles: ["dev"]
@@ -22,6 +22,6 @@ services:
     build:
       context: .
       dockerfile: images/frontend/Dockerfile
-    env_file: ${ENV_FILE:-.env.mocked}
+    env_file: ${ENV_FILE:-.env.mainnet}
     ports:
       - "3000:3000"
