@@ -26,6 +26,14 @@ COPY --from=builder --chown=nextjs:nodejs /build/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /build/.next/server ./.next/server
 COPY --from=builder /build/public ./public
 
+# next/image optimization requires the native `sharp` library at runtime in
+# standalone mode. Install only sharp (musl build) into a temp prefix and merge
+# it into the standalone node_modules, leaving the traced dependency tree intact.
+RUN npm install --omit=dev --prefix /tmp/sharp sharp@0.33.5 \
+  && cp -a /tmp/sharp/node_modules/. ./node_modules/ \
+  && rm -rf /tmp/sharp \
+  && chown -R nextjs:nodejs ./node_modules
+
 RUN chown nextjs:nodejs ./.next
 
 USER nextjs
