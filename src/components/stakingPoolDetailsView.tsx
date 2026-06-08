@@ -97,6 +97,9 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   // Retired pools (active: false) must never offer a Stake surface; default to
   // Unstake so a wallet with a bonded position lands on the action it can take.
   const poolIsActive = isStakingPoolActive(stakingPoolData.definition)
+  const panes = poolIsActive
+    ? ["Stake", "Unstake", "Claim"]
+    : ["Unstake", "Claim"]
   const defaultPane = poolIsActive ? "Stake" : "Unstake"
 
   const [selectedPane, setSelectedPane] = useState<string>(defaultPane)
@@ -694,10 +697,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
             poolIsActive ? "grid-cols-3" : "grid-cols-2"
           } my-4 lg:gap-20 gap-5`}
         >
-          {(poolIsActive
-            ? ["Stake", "Unstake", "Claim"]
-            : ["Unstake", "Claim"]
-          ).map((pane) => (
+          {panes.map((pane) => (
             <div
               key={pane}
               className={`semi13 text-center py-2 4k:py-6 cursor-pointer border-solid border-b transition-all duration-400 ease-in-out relative ${

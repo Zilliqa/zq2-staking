@@ -28,39 +28,6 @@ const StakingPoolsList: React.FC<StakingPoolsListProps> = ({
   >(null)
   const [isAscending, setIsAscending] = useState(true)
 
-  // Function to get the value to sort by based on the criteria
-  // const getSortValue = (data: any, criteria: string | null) => {
-  //   if (!data) return 0
-
-  //   switch (criteria) {
-  //     case "APR":
-  //       return data.apr || 0
-  //     case "VP":
-  //       return (data.votingPower || 0) * 100
-  //     case "Commission":
-  //       return (data.commission || 0) * 100
-
-  //     default:
-  //       return 0
-  //   }
-  // }
-
-  // const orderBySortCriteria = (a: any, b: any) => {
-  //   const aValue = getSortValue(a.stakingPool.data, sortCriteria)
-  //   const bValue = getSortValue(b.stakingPool.data, sortCriteria)
-  //   return isAscending ? aValue - bValue : bValue - aValue
-  // }
-
-  // const sortedLiquidStakingPoolsData = useMemo(
-  //   () =>
-  //     combinedStakingPoolsData
-  //       .filter(
-  //         (pool) => pool.stakingPool.definition.poolType === selectedPoolType
-  //       )
-  //       .toSorted(orderBySortCriteria),
-  //   [combinedStakingPoolsData, sortCriteria, isAscending, selectedPoolType]
-  // )
-
   function shuffleOrder<T>(arr: T[]): T[] {
     const a = arr.slice()
     for (let i = a.length - 1; i > 0; i--) {

@@ -287,11 +287,15 @@ const useStakingPoolsStorage = () => {
   // "Available to stake" projection: hide retired (active: false) pools, but keep
   // any pool the wallet still has a bonded stake in so the unstake path stays
   // reachable. All other combiners below intentionally keep the unfiltered list.
-  const activeStakingPoolsData = combinedStakingPoolsData.filter((pool) =>
-    isPoolVisibleInStakeSelector(
-      pool.stakingPool.definition,
-      pool.userData?.stakingTokenAmount
-    )
+  const activeStakingPoolsData = useMemo(
+    () =>
+      combinedStakingPoolsData.filter((pool) =>
+        isPoolVisibleInStakeSelector(
+          pool.stakingPool.definition,
+          pool.userData?.stakingTokenAmount
+        )
+      ),
+    [combinedStakingPoolsData]
   )
 
   const combinedSelectedStakingPoolForViewData = stakingPoolForView
