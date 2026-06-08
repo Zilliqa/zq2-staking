@@ -1,4 +1,5 @@
 # ABOUTME: Orientation for Claude Code / contributors working in the zq2-staking repo
+
 # ABOUTME: Architecture, commands, conventions, gotchas, and operational runbooks
 
 # CLAUDE.md
@@ -80,9 +81,11 @@ ENV_FILE=.env.zq2_testnet docker compose --profile dev up   # override env
 ## Runbooks
 
 ### Add a delegator pool
+
 `npx tsx src/script/fetchPoolStaticData.ts --network_id <id> --contract_address <addr> --name <name> --icon_url /static/<file> --type LIQUID|NON_LIQUID`, then paste the printed `definition` into `stakingPoolsConfigForChainId` in `stakingPoolsConfig.ts`.
 
 ### Recover the wallets staking in a (non-liquid) pool
+
 Per-delegator lists are not directly enumerable and `eth_getLogs` is throttled, but the RPC exposes the Otterscan index. To list current delegators of a pool:
 
 ```bash
@@ -94,6 +97,7 @@ npx tsx src/script/recoverPoolDelegators.ts \
 It walks `ots_searchTransactionsBefore` to collect every address that touched the contract, then reads `getDelegatedAmount()` from each (a non-zero result = current delegator) and checks the sum against `getDelegatedTotal()`. Useful before/after retiring a pool (e.g. to notify delegators).
 
 Manual equivalent with Foundry `cast`:
+
 ```bash
 cast call <pool> "getDelegatedTotal()(uint256)" --rpc-url https://api.zilliqa.com
 cast call <pool> "getDelegatedAmount()(uint256)" --from <wallet> --rpc-url https://api.zilliqa.com
