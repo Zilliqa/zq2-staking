@@ -52,6 +52,11 @@ export interface StakingPoolDefinition {
    * so a wallet with a still-bonded position can still unstake and claim.
    */
   active?: boolean
+  /**
+   * Optional custom retirement notice shown in the UI when the pool is retired
+   * (`active: false`). Falls back to `DEFAULT_RETIREMENT_NOTICE` when omitted.
+   */
+  retirementNotice?: string
 }
 
 /**
@@ -71,6 +76,24 @@ export const isPoolVisibleInStakeSelector = (
   definition: StakingPoolDefinition,
   bondedStakeAmount: bigint | undefined
 ): boolean => isStakingPoolActive(definition) || (bondedStakeAmount ?? 0n) > 0n
+
+/**
+ * Default copy shown for a retired pool when it has no custom `retirementNotice`.
+ */
+export const DEFAULT_RETIREMENT_NOTICE =
+  "This validator has been retired and no longer accepts new stake. Please unstake and claim your funds."
+
+/**
+ * The retirement notice to display for a pool, or `null` when the pool is
+ * active. Retired pools use their custom `retirementNotice` if set, otherwise
+ * the default copy.
+ */
+export const getPoolRetirementNotice = (
+  definition: StakingPoolDefinition
+): string | null =>
+  isStakingPoolActive(definition)
+    ? null
+    : (definition.retirementNotice ?? DEFAULT_RETIREMENT_NOTICE)
 
 export interface StakingPoolData {
   tvl: bigint

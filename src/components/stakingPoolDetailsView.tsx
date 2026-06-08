@@ -9,6 +9,7 @@ import {
   formatUnitsWithMaxPrecision,
 } from "@/misc/formatting"
 import {
+  getPoolRetirementNotice,
   isStakingPoolActive,
   StakingPool,
   StakingPoolType,
@@ -97,6 +98,7 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
   // Retired pools (active: false) must never offer a Stake surface; default to
   // Unstake so a wallet with a bonded position lands on the action it can take.
   const poolIsActive = isStakingPoolActive(stakingPoolData.definition)
+  const retirementNotice = getPoolRetirementNotice(stakingPoolData.definition)
   const panes = poolIsActive
     ? ["Stake", "Unstake", "Claim"]
     : ["Unstake", "Claim"]
@@ -690,6 +692,13 @@ const StakingPoolDetailsView: React.FC<StakingPoolDetailsViewProps> = ({
                 )}
             </div>
           </>
+        )}
+
+        {retirementNotice && (
+          <div className="lg:mx-10 mx-3 mt-4 p-3 lg:p-4 rounded-xl bg-grey-gradient text-white1 body2 flex gap-2 items-start">
+            <span aria-hidden="true">⚠</span>
+            <span>{retirementNotice}</span>
+          </div>
         )}
 
         <div

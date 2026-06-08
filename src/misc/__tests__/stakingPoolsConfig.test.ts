@@ -2,6 +2,8 @@
 // ABOUTME: Covers isStakingPoolActive + isPoolVisibleInStakeSelector for DEVOPS-365
 import { describe, expect, it } from "vitest"
 import {
+  DEFAULT_RETIREMENT_NOTICE,
+  getPoolRetirementNotice,
   isPoolVisibleInStakeSelector,
   isStakingPoolActive,
   StakingPoolDefinition,
@@ -54,6 +56,29 @@ describe("isPoolVisibleInStakeSelector", () => {
     expect(
       isPoolVisibleInStakeSelector(makeDefinition({ active: false }), 350n)
     ).toBe(true)
+  })
+})
+
+describe("getPoolRetirementNotice", () => {
+  it("returns null for an active pool", () => {
+    expect(getPoolRetirementNotice(makeDefinition())).toBeNull()
+    expect(getPoolRetirementNotice(makeDefinition({ active: true }))).toBeNull()
+  })
+
+  it("returns the default notice for a retired pool with no custom copy", () => {
+    expect(getPoolRetirementNotice(makeDefinition({ active: false }))).toBe(
+      DEFAULT_RETIREMENT_NOTICE
+    )
+  })
+
+  it("returns the custom notice for a retired pool that sets one", () => {
+    const def = makeDefinition({
+      active: false,
+      retirementNotice: "r3to has wound down. Withdraw via the Claim tab.",
+    })
+    expect(getPoolRetirementNotice(def)).toBe(
+      "r3to has wound down. Withdraw via the Claim tab."
+    )
   })
 })
 
