@@ -9,7 +9,11 @@ import {
   getHumanFormDuration,
 } from "@/misc/formatting"
 import FeedbackIcon from "../assets/svgs/feedback-icon.svg"
-import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
+import {
+  isStakingPoolActive,
+  StakingPool,
+  StakingPoolType,
+} from "@/misc/stakingPoolsConfig"
 import {
   UserNonLiquidStakingPoolRewardData,
   UserUnstakingPoolData,
@@ -181,6 +185,9 @@ const RewardCard: React.FC<RewardCardProps> = ({
   const isStakeRewardInProgress =
     isStakingRewardInProgress && isCurrentWalletOperationAboutThisPool
 
+  // Retired pools must never accept new stake, including re-staking rewards.
+  const poolIsActive = isStakingPoolActive(stakingPool.definition)
+
   return (
     <div
       className={` ${stakingPool.definition.poolType != StakingPoolType.LIQUID ? "purple-border-bottom" : "teal-border-bottom"}  flex gap-2.5 4k:gap-4 lg:w-full max-lg:flex-col bg-aqua-gradient rounded-[20px] items-center cursor-pointer lg:justify-between`}
@@ -237,15 +244,20 @@ const RewardCard: React.FC<RewardCardProps> = ({
       </div>
       <div className="max-lg:gap-2.5 max-lg:flex lg:w-1/3 w-full lg:max-w-[250px] lg:pb-0 pb-6 lg:pr-9 4k:pr-12 max-lg:px-3">
         <div className="max-lg:w-1/2">
-          {stakingPool.definition.minimumStake > rewardInfo.zilRewardAmount ? (
+          {!poolIsActive ||
+          stakingPool.definition.minimumStake > rewardInfo.zilRewardAmount ? (
             <Tooltip
               placement="top"
               arrow={true}
               overlayClassName="custom-tooltip"
-              title={`Reward is less than the minimal staking amount of ${formatUnitsToHumanReadable(
-                stakingPool.definition.minimumStake,
-                18
-              )} ZIL`}
+              title={
+                !poolIsActive
+                  ? "This pool is retired and no longer accepts new stakes"
+                  : `Reward is less than the minimal staking amount of ${formatUnitsToHumanReadable(
+                      stakingPool.definition.minimumStake,
+                      18
+                    )} ZIL`
+              }
             >
               <Button
                 className={`

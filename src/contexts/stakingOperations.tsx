@@ -6,6 +6,7 @@ import { WalletConnector } from "./walletConnector"
 import { StakingPoolsStorage } from "./stakingPoolsStorage"
 import { Address, formatUnits, WriteContractParameters } from "viem"
 import { baseDelegatorAbi, nonLiquidDelegatorAbi } from "@/misc/stakingAbis"
+import { isStakingPoolActive } from "@/misc/stakingPoolsConfig"
 import { useConfig } from "wagmi"
 import { useGasPrice } from "wagmi"
 import { DateTime } from "luxon"
@@ -196,6 +197,15 @@ const useStakingOperations = () => {
     setStakingPoolIdForInProgressOperation(pool?.definition.id || null)
   }
 
+  // Retired pools (active: false) must never accept new value, including
+  // re-staking rewards. Backstops the UI guards for any programmatic caller.
+  const isDelegatorPoolActive = (address: string) => {
+    const pool = availableStakingPools.find(
+      (pool) => pool.definition.address === address
+    )
+    return !pool || isStakingPoolActive(pool.definition)
+  }
+
   /**
    * STAKING
    */
@@ -223,6 +233,7 @@ const useStakingOperations = () => {
   )
 
   const stake = (delegatorAddress: string, weiToStake: bigint) => {
+    if (!isDelegatorPoolActive(delegatorAddress)) return
     setStakingPoolIdForInProgressOperationByAddress(delegatorAddress)
     callContractStakeRaw({
       address: delegatorAddress as Address,
@@ -390,6 +401,7 @@ const useStakingOperations = () => {
   )
 
   const stakeReward = (delegatorAddress: string) => {
+    if (!isDelegatorPoolActive(delegatorAddress)) return
     setStakingPoolIdForInProgressOperationByAddress(delegatorAddress)
     callContractStakeRewardRaw({
       address: delegatorAddress as Address,

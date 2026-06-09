@@ -44,7 +44,56 @@ export interface StakingPoolDefinition {
   minimumStake: bigint
   withdrawPeriodInMinutes: number
   description?: string
+  /**
+   * Soft-delete flag. `undefined` (default) or `true` => the pool is active and
+   * shown in the "Available to stake" selector. `false` retires the pool: it is
+   * hidden from "Available to stake" (unless the connected wallet still has a
+   * bonded stake in it) while all withdrawal / claim / reward paths keep working,
+   * so a wallet with a still-bonded position can still unstake and claim.
+   */
+  active?: boolean
+  /**
+   * Optional custom retirement notice shown in the UI when the pool is retired
+   * (`active: false`). Falls back to `DEFAULT_RETIREMENT_NOTICE` when omitted.
+   */
+  retirementNotice?: string
 }
+
+/**
+ * A pool is active unless it has been explicitly retired with `active: false`.
+ * `undefined` is treated as active so existing pool definitions keep working.
+ */
+export const isStakingPoolActive = (
+  definition: StakingPoolDefinition
+): boolean => definition.active !== false
+
+/**
+ * Whether a pool should appear in the "Available to stake" selector. Retired
+ * pools stay visible only while the connected wallet still has a bonded stake in
+ * them, so the user keeps the UI surface to unstake; otherwise they are hidden.
+ */
+export const isPoolVisibleInStakeSelector = (
+  definition: StakingPoolDefinition,
+  bondedStakeAmount: bigint | undefined
+): boolean => isStakingPoolActive(definition) || (bondedStakeAmount ?? 0n) > 0n
+
+/**
+ * Default copy shown for a retired pool when it has no custom `retirementNotice`.
+ */
+export const DEFAULT_RETIREMENT_NOTICE =
+  "This validator has been retired and no longer accepts new stake. Please unstake and claim your funds."
+
+/**
+ * The retirement notice to display for a pool, or `null` when the pool is
+ * active. Retired pools use their custom `retirementNotice` if set, otherwise
+ * the default copy.
+ */
+export const getPoolRetirementNotice = (
+  definition: StakingPoolDefinition
+): string | null =>
+  isStakingPoolActive(definition)
+    ? null
+    : (definition.retirementNotice ?? DEFAULT_RETIREMENT_NOTICE)
 
 export interface StakingPoolData {
   tvl: bigint
@@ -1047,6 +1096,7 @@ export const stakingPoolsConfigForChainId: Record<
         tokenSymbol: "ZIL",
         minimumStake: 100000000000000000000n,
         withdrawPeriodInMinutes: oneWeekInMinutes,
+        active: false,
       },
       delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
     },
@@ -1095,6 +1145,7 @@ export const stakingPoolsConfigForChainId: Record<
         tokenSymbol: "ZIL",
         minimumStake: 100000000000000000000n,
         withdrawPeriodInMinutes: oneWeekInMinutes,
+        active: false,
       },
       delegatorDataProvider: fetchNonLiquidDelegatorDataFromNetwork,
     },

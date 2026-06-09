@@ -3,7 +3,11 @@ import {
   formatPercentage,
   formatUnitsToHumanReadable,
 } from "@/misc/formatting"
-import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
+import {
+  isStakingPoolActive,
+  StakingPool,
+  StakingPoolType,
+} from "@/misc/stakingPoolsConfig"
 import { UserStakingPoolData } from "@/misc/walletsConfig"
 import { Tooltip } from "antd"
 import Image from "next/image"
@@ -57,6 +61,11 @@ const StakingPoolCard: React.FC<StakingPoolCardProps> = ({
               <div className="base-medium mt-1">
                 {stakingPoolData.definition.tokenSymbol}
               </div>
+              {!isStakingPoolActive(stakingPoolData.definition) && (
+                <span className="regular12 px-2 py-0.5 rounded-full border border-gray3 text-gray2 whitespace-nowrap">
+                  Retired
+                </span>
+              )}
             </div>
             <div>
               {userStakingPoolData &&

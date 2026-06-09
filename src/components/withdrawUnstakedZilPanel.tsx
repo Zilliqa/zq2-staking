@@ -6,7 +6,11 @@ import {
   formatUnitsToHumanReadable,
   getHumanFormDuration,
 } from "@/misc/formatting"
-import { StakingPool, StakingPoolType } from "@/misc/stakingPoolsConfig"
+import {
+  isStakingPoolActive,
+  StakingPool,
+  StakingPoolType,
+} from "@/misc/stakingPoolsConfig"
 import {
   UserNonLiquidStakingPoolRewardData,
   UserUnstakingPoolData,
@@ -62,6 +66,9 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
   const otherPendingClaimsToShow =
     availableUnstake > 0n ? pendingUnstake : pendingUnstake?.slice(1)
 
+  // Retired pools must never accept new stake, including re-staking rewards.
+  const poolIsActive = isStakingPoolActive(stakingPoolData.definition)
+
   return (
     <div className="h-full">
       <LastTransaction txHash={hashToShow} />
@@ -94,17 +101,22 @@ const WithdrawZilPanel: React.FC<WithdrawZilPanelProps> = ({
               <div className="loading-blur"> 00000 zil</div>
             )}
             <div className=" lg:w-1/3 max-w-[150px] sm:max-w-[250px] w-full">
-              {getMinimalPoolStakingAmount(reward.address) >
-              reward.zilRewardAmount ? (
+              {!poolIsActive ||
+              getMinimalPoolStakingAmount(reward.address) >
+                reward.zilRewardAmount ? (
                 <Tooltip
                   placement="top"
                   arrow={true}
                   overlayClassName="custom-tooltip"
                   className="mr-1"
-                  title={`Reward is less than the minimal staking amount of ${formatUnitsToHumanReadable(
-                    getMinimalPoolStakingAmount(reward.address),
-                    18
-                  )} ZIL`}
+                  title={
+                    !poolIsActive
+                      ? "This pool is retired and no longer accepts new stakes"
+                      : `Reward is less than the minimal staking amount of ${formatUnitsToHumanReadable(
+                          getMinimalPoolStakingAmount(reward.address),
+                          18
+                        )} ZIL`
+                  }
                 >
                   <Button
                     className={` 

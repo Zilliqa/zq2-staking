@@ -5,6 +5,7 @@ import { createContainer } from "./context"
 import { WalletConnector } from "./walletConnector"
 import { DateTime } from "luxon"
 import {
+  isPoolVisibleInStakeSelector,
   StakingPool,
   stakingPoolsConfigForChainId,
 } from "@/misc/stakingPoolsConfig"
@@ -283,6 +284,20 @@ const useStakingPoolsStorage = () => {
     setCombinedStakingPoolsData(combined)
   }, [availableStakingPoolsData, userStakingPoolsData])
 
+  // "Available to stake" projection: hide retired (active: false) pools, but keep
+  // any pool the wallet still has a bonded stake in so the unstake path stays
+  // reachable. All other combiners below intentionally keep the unfiltered list.
+  const activeStakingPoolsData = useMemo(
+    () =>
+      combinedStakingPoolsData.filter((pool) =>
+        isPoolVisibleInStakeSelector(
+          pool.stakingPool.definition,
+          pool.userData?.stakingTokenAmount
+        )
+      ),
+    [combinedStakingPoolsData]
+  )
+
   const combinedSelectedStakingPoolForViewData = stakingPoolForView
     ? {
         stakingPool: stakingPoolForView,
@@ -359,6 +374,7 @@ const useStakingPoolsStorage = () => {
     stakingPoolForView: combinedSelectedStakingPoolForViewData,
     selectStakingPoolForView,
     combinedStakingPoolsData,
+    activeStakingPoolsData,
     availableForUnstaking,
     pendingUnstaking,
     nonLiquidRewards: combinedUserNonLiquidPoolRewards,

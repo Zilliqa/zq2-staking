@@ -11,7 +11,7 @@ import {
 } from "@/misc/formatting"
 import { formatUnits, parseEther } from "viem"
 import { StakingOperations } from "@/contexts/stakingOperations"
-import { StakingPoolType } from "@/misc/stakingPoolsConfig"
+import { isStakingPoolActive, StakingPoolType } from "@/misc/stakingPoolsConfig"
 import CustomWalletConnect from "@/components/customWalletConnect"
 import { DateTime } from "luxon"
 import LastTransaction from "@/components/lastTransaction"
@@ -95,6 +95,13 @@ const StakingCalculator: React.FC = () => {
       return {
         canStake: false,
         whyCantStake: "Loading staking pool data",
+      }
+    } else if (
+      !isStakingPoolActive(stakingPoolForView.stakingPool.definition)
+    ) {
+      return {
+        canStake: false,
+        whyCantStake: "This pool is retired and no longer accepts new stakes",
       }
     } else if (!isWalletConnected) {
       return {
