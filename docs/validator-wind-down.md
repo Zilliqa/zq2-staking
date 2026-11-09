@@ -28,7 +28,7 @@ All commands target **mainnet (chain id 32769)**.
 | **Pending claim**                                                          | Each `unstake()` adds an entry `[readyBlock, zilAmount]` to the delegator's queue. `getPendingClaims()` lists the entries not ready yet; `getClaimable()` sums the ready ones.                                                                                                                                                                    |
 | **Deposit contract**                                                       | `0x00000000005a494c4445504f53495450524f5859`. It holds validator deposits. The `z2 unstake` / `z2 withdraw` CLI commands act on this contract and are **for validator operators, not delegators**.                                                                                                                                                |
 | **Portal retirement**                                                      | Setting `active: false` on a pool definition. The pool is hidden from "Available to stake" and new staking is blocked, while unstake and claim keep working. See `CLAUDE.md`, "Pool soft-delete".                                                                                                                                                 |
-| **Wind-down ticket**                                                       | The internal tracker item where every value, tx hash and decision for this wind-down is recorded. The Owner opens it before Phase A.                                                                                                                                                                                                              |
+| **Wind-down ticket**                                                       | The internal tracker item where every value, tx hash and decision for this wind-down is recorded. The Owner opens it before Phase A. Zilliqa's own delegator wallets, custodians and deploy details are kept in internal operations documents, not in this public repo.                                                                           |
 
 > **The most common mistake:** using the validator path (`z2 unstake`, `z2 withdraw`, `leavePool`) to withdraw a _delegation_. A delegator always uses `unstake()` and then `claim()` on the **pool contract**, signed by the **delegator wallet**.
 
@@ -57,7 +57,7 @@ Set these once:
 ```bash
 RPC=https://api.zilliqa.com          # mainnet, chain id 32769
 POOL=<pool contract address from stakingPoolsConfig.ts>
-DELEGATOR=<delegator wallet address>
+DELEGATOR=<delegator wallet address>   # Zilliqa delegations: from the internal delegation registry
 ```
 
 1. **Find the pool** in `src/misc/stakingPoolsConfig.ts` under `[CHAIN_MAINNET.id]`. Note its `poolType` and whether it already has `active: false`. Check the type on-chain: `getLST()` returns an address on a liquid pool and reverts on a non-liquid one.
@@ -123,7 +123,7 @@ Start this **as soon as Phase A.4 confirms the shutdown**, in parallel with Phas
    npm run test
    npx tsc --noEmit 2>&1 | grep -v "svg' or its corresponding type declarations"
    ```
-4. **Deploy.** CI no longer deploys production: `.github/workflows/cicd-prd.yml` only builds the image when a release is published. Production (stake.zilliqa.com) is deployed by the Deployer from the manifests in `cd/overlays/production_mainnet/`. Ask them, and record the deploy date in the ticket.
+4. **Deploy.** CI no longer deploys production: `.github/workflows/cicd-prd.yml` only builds the image when a release is published. Production (stake.zilliqa.com) is deployed by the Deployer from the manifests in `cd/overlays/production_mainnet/`, following the internal deploy procedure (a new release tag comes first). Ask them, and record the deploy date in the ticket.
 5. Confirm on stake.zilliqa.com that:
    - the pool is gone from "Available to stake" for a wallet with no position;
    - a wallet with a position still sees it, with the retirement notice and working Unstake and Claim buttons.
