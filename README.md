@@ -32,6 +32,10 @@ This one makes the app connected to locally run docker-compose ZQ2 network.
 
 1. Fetch delegator static data using `npx tsx src/script/fetchPoolStaticData.ts`
 
+## Winding down a validator / retiring a pool
+
+See [docs/validator-wind-down.md](docs/validator-wind-down.md).
+
 ## Deployment
 
-The app is powered by `z app` utility. The `prototestnet` deployment is automatic on push to `main` branch. The `protomainnet` deployment is automatic on release. Deployment to `devnet` environment requires manual `z app sync`.
+The app is powered by `z app` utility. The `prototestnet` deployment is automatic on push to `main` branch. Production (stake.zilliqa.com) is not deployed by CI: publishing a release only builds the image (`.github/workflows/cicd-prd.yml`), and the deployment itself is done manually from `cd/overlays/production_mainnet/`. Deployment to `devnet` environment requires manual `z app sync`.
