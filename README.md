@@ -34,4 +34,4 @@ This one makes the app connected to locally run docker-compose ZQ2 network.
 
 ## Deployment
 
-The app is powered by `z app` utility. The `protomainnet` deployment is automatic on release. There is no permanent staging or devnet deployment: run the app locally against devnet (see `chainConfig.ts`) when needed.
+The app is powered by `z app` utility. Production images are built and published on release; the mainnet deployment (`cd/overlays/production_mainnet`, `stake.zilliqa.com`) is managed through `z app`. There is no permanent staging or devnet deployment: to use devnet, run the app locally with `ZQ2_STAKING_CHAIN_ID=33469`.
