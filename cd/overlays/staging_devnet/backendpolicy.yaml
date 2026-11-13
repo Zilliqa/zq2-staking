@@ -1,9 +1,0 @@
-apiVersion: networking.gke.io/v1
-kind: GCPBackendPolicy
-metadata:
-  name: zq2-stake-frontend
-spec:
-  targetRef:
-    group: ""
-    kind: Service
-    name: zq2-stake-frontend

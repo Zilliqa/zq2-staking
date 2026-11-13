@@ -34,4 +34,4 @@ This one makes the app connected to locally run docker-compose ZQ2 network.
 
 ## Deployment
 
-The app is powered by `z app` utility. The `prototestnet` deployment is automatic on push to `main` branch. The `protomainnet` deployment is automatic on release. Deployment to `devnet` environment requires manual `z app sync`.
+The app is powered by `z app` utility. The `protomainnet` deployment is automatic on release. There is no permanent staging or devnet deployment: run the app locally against devnet (see `chainConfig.ts`) when needed.
