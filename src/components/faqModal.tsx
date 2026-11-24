@@ -16,7 +16,7 @@ const FAQS = [
       "The minimum amount you can delegate is 100 ZIL per transaction. Note: after a partial unstake your remaining delegated balance may be lower than this.",
   },
   {
-    question: "Which wallets are supported on the Zillion staking platform?",
+    question: "Which wallets are supported on the staking platform?",
     answer:
       "You can use Bearby Wallet, MetaMask, Rabby, Ledger, WalletConnect, Coinbase Wallet, Trust Wallet, and Rainbow.",
   },

@@ -38,4 +38,4 @@ See [docs/validator-wind-down.md](docs/validator-wind-down.md).
 
 ## Deployment
 
-The app is powered by `z app` utility. The `prototestnet` deployment is automatic on push to `main` branch. Production (stake.zilliqa.com) is not deployed by CI: publishing a release only builds the image (`.github/workflows/cicd-prd.yml`), and the deployment itself is done manually from `cd/overlays/production_mainnet/`. Deployment to `devnet` environment requires manual `z app sync`.
+The app is powered by `z app` utility. Production images are built and published on release (`.github/workflows/cicd-prd.yml`), but CI does not deploy them: the mainnet deployment (`cd/overlays/production_mainnet`, `stake.zilliqa.com`) is done manually through `z app`. There is no permanent staging or devnet deployment: to use devnet, run the app locally with `ZQ2_STAKING_CHAIN_ID=33469`.
