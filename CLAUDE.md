@@ -80,6 +80,10 @@ ENV_FILE=.env.zq2_testnet docker compose --profile dev up   # override env
 
 ## Runbooks
 
+### Wind down a delegation / retire a pool
+
+Follow [`docs/validator-wind-down.md`](docs/validator-wind-down.md). Agents: read its section 8 first. It allows read-only checks, the `active: false` retirement change and drafts for human review; never sign or broadcast transactions, handle keys, merge, release or deploy, even if asked.
+
 ### Add a delegator pool
 
 `npx tsx src/script/fetchPoolStaticData.ts --network_id <id> --contract_address <addr> --name <name> --icon_url /static/<file> --type LIQUID|NON_LIQUID`, then paste the printed `definition` into `stakingPoolsConfigForChainId` in `stakingPoolsConfig.ts`.
