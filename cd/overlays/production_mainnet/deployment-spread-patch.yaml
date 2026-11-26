@@ -1,0 +1,17 @@
+# ABOUTME: Spreads the zq2-stake-frontend replicas across zones when Autopilot can, without blocking scheduling
+# ABOUTME: Soft constraint (ScheduleAnyway): two pods in one zone are still better than a pending pod
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zq2-stake-frontend
+spec:
+  template:
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: zq2-stake-frontend
