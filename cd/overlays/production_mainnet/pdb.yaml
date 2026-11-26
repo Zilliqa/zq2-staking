@@ -1,0 +1,12 @@
+# ABOUTME: Keeps one zq2-stake-frontend pod serving while Autopilot drains a node (upgrades, bin-packing)
+# ABOUTME: Pairs with the 2 replicas and the zone spread set in this overlay's kustomization
+
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: zq2-stake-frontend
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: zq2-stake-frontend

@@ -7,8 +7,13 @@ resources:
   - ../../base
   - backendpolicy.yaml
   - httproute.yaml
+  - pdb.yaml
 
 patches:
+  - path: deployment-spread-patch.yaml
+    target:
+      kind: Deployment
+      name: zq2-stake-frontend
   - target:
       kind: ConfigMap
       name: zq2-stake-frontend
@@ -17,3 +22,9 @@ patches:
       kind: Secret
       name: zq2-stake-frontend
     path: secrets.yaml
+
+# Two replicas (Autopilot drains nodes for upgrades and bin-packing; one pod would mean a short outage), kept
+# apart by the PDB and spread across zones when possible.
+replicas:
+  - name: zq2-stake-frontend
+    count: 2
