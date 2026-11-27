@@ -627,7 +627,7 @@ export const stakingPoolsConfigForChainId: Record<
         iconUrl: "/static/logo_encapsulate.webp",
         name: "Encapsulate",
         description:
-          "Others Trust, We Validate! Your Stake is Important to Us. Help us secure Zilliqa Network while You Earn Rewards",
+          "Validator infrastructure for new chains, since 2020. Early to testnet, quick to upgrade, easy to reach. Trusted by Sui, NEAR, Monad, Lido, Starknet and more. [encapsulate.xyz](https://encapsulate.xyz)",
         poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "encapZIL",
@@ -774,7 +774,7 @@ export const stakingPoolsConfigForChainId: Record<
         iconUrl: "/static/logo_encapsulate.webp",
         name: "Encapsulate",
         description:
-          "Others Trust, We Validate! Your Stake is Important to Us. Help us secure Zilliqa Network while You Earn Rewards",
+          "Validator infrastructure for new chains, since 2020. Early to testnet, quick to upgrade, easy to reach. Trusted by Sui, NEAR, Monad, Lido, Starknet and more. [encapsulate.xyz](https://encapsulate.xyz)",
         poolType: StakingPoolType.LIQUID,
         tokenDecimals: 18,
         tokenSymbol: "encapZIL",
